@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['saveconfig_0',['saveConfig',['../class_fourier_1_1_group_command.html#a12c872d0665713cd9cade2daae69e49d',1,'Fourier::GroupCommand']]],
+  ['sendcommand_1',['sendCommand',['../class_fourier_1_1_group.html#acc7dcbc154ac82ed36fcba9865a953ab',1,'Fourier::Group']]],
+  ['sendfeedbackrequest_2',['sendFeedbackRequest',['../class_fourier_1_1_group.html#ad1dfe7ff7f4eba4b6d1bc4219f4f4416',1,'Fourier::Group']]],
+  ['setcommandlifetimems_3',['setCommandLifetimeMs',['../class_fourier_1_1_group.html#acf31bd144b5a9d7b56b2254051a507b4',1,'Fourier::Group']]],
+  ['setcurrent_4',['setCurrent',['../class_fourier_1_1_group_command.html#ace6b626662f721853d7c9b8ae1a815fe',1,'Fourier::GroupCommand']]],
+  ['setfeedbackfrequencyhz_5',['setFeedbackFrequencyHz',['../class_fourier_1_1_group.html#ac5fbe3f16a3a9db5492b5602cab94c3d',1,'Fourier::Group']]],
+  ['setlookupfrequencyhz_6',['setLookupFrequencyHz',['../class_fourier_1_1_lookup.html#ab8b0c020b4184733d48be479dce779bd',1,'Fourier::Lookup']]],
+  ['setmotionctrlconfig_7',['setMotionCtrlConfig',['../class_fourier_1_1_group_command.html#aeeca6b8f0b4e37013e16b41144f17205',1,'Fourier::GroupCommand']]],
+  ['setmotorconfig_8',['setMotorConfig',['../class_fourier_1_1_group_command.html#a301aea767cb0a2a4cd0bb12d3dd30aa5',1,'Fourier::GroupCommand']]],
+  ['setnetworks_9',['setNetWorks',['../class_fourier_1_1_lookup.html#a45f683c483d8dee1e19d1744d3ae01c2',1,'Fourier::Lookup']]],
+  ['setnetworksetting_10',['setNetworkSetting',['../class_fourier_1_1_group_command.html#ae120dcc50d1c2d5e6a738a5f3dac5231',1,'Fourier::GroupCommand']]],
+  ['setposition_11',['setPosition',['../class_fourier_1_1_group_command.html#abba4bcbd70582529e6d17cf7a03ecfb8',1,'Fourier::GroupCommand']]],
+  ['settrapezoidalmove_12',['setTrapezoidalMove',['../class_fourier_1_1_group_command.html#a1bd38ae9add611423f408ad09bcec670',1,'Fourier::GroupCommand']]],
+  ['settraptraj_13',['setTrapTraj',['../class_fourier_1_1_group_command.html#afd87f5b8fb5a4ba2038786d58fcc4ddb',1,'Fourier::GroupCommand']]],
+  ['setvelocity_14',['setVelocity',['../class_fourier_1_1_group_command.html#ad50ad2ec22f183e5a01245689b3908af',1,'Fourier::GroupCommand']]],
+  ['setvelocityramp_15',['setVelocityRamp',['../class_fourier_1_1_group_command.html#a06710c7322da7e18b6d7065f907ea69a',1,'Fourier::GroupCommand']]],
+  ['size_16',['size',['../class_fourier_1_1_group.html#ad217c52c67f176acecd72db56647bcd6',1,'Fourier::Group::size()'],['../class_fourier_1_1_group_command.html#a037ec49bde07dc1a6719ab853d1819c6',1,'Fourier::GroupCommand::size()'],['../class_fourier_1_1_group_feedback.html#aa8f45465cce991844fe72b55853d6546',1,'Fourier::GroupFeedback::size()']]]
+];

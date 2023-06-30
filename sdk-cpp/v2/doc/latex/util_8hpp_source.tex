@@ -1,0 +1,27 @@
+\hypertarget{util_8hpp_source}{}\doxysection{util.\+hpp}
+\label{util_8hpp_source}\index{D:/ws/Fourier/sdk/fourier-\/cpp/src/util.hpp@{D:/ws/Fourier/sdk/fourier-\/cpp/src/util.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ clang-\/format\ off}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ FOURIER\_DISABLE\_COPY\_MOVE(Class)\ \(\backslash\)}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{}\textcolor{comment}{/*\ Disable\ copy\ constructor.\ */}\textcolor{preprocessor}{\ \(\backslash\)}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{Class(const\ Class\&\ other)\ =\ delete;\ \(\backslash\)}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{}\textcolor{comment}{/*\ Disable\ move\ constructor.\ */}\textcolor{preprocessor}{\ \(\backslash\)}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{Class(Class\&\&\ other)\ =\ delete;\ \(\backslash\)}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{}\textcolor{comment}{/*\ Disable\ copy\ assigment\ operator.\ */}\textcolor{preprocessor}{\ \(\backslash\)}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{Class\&\ operator=\ (const\ Class\&\ other)\ =\ delete;\ \(\backslash\)}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{}\textcolor{comment}{/*\ Disable\ move\ assigment\ operator.\ */}\textcolor{preprocessor}{\ \(\backslash\)}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{Class\&\ operator=\ (Class\&\&\ other)\ =\ delete;}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ FOURIER\_DISABLE\_COPY(Class)\ \(\backslash\)}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{}\textcolor{comment}{/*\ Disable\ copy\ constructor.\ */}\textcolor{preprocessor}{\ \(\backslash\)}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{Class(const\ Class\&\ other)\ =\ delete;\ \(\backslash\)}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{}\textcolor{comment}{/*\ Disable\ copy\ assigment\ operator.\ */}\textcolor{preprocessor}{\ \(\backslash\)}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{Class\&\ operator=\ (const\ Class\&\ other)\ =\ delete;}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ clang-\/format\ on}}
+
+\end{DoxyCode}

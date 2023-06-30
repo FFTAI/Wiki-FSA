@@ -1,0 +1,60 @@
+\hypertarget{class_fourier_1_1_group_feedback}{}\doxysection{Fourier\+::Group\+Feedback Class Reference}
+\label{class_fourier_1_1_group_feedback}\index{Fourier::GroupFeedback@{Fourier::GroupFeedback}}
+
+
+A list of Feedback objects that can be received from a \mbox{\hyperlink{class_fourier_1_1_group}{Group}} of modules; the \mbox{\hyperlink{class_fourier_1_1_group_feedback_aa8f45465cce991844fe72b55853d6546}{size()}} must match the number of modules in the group.  
+
+
+
+
+{\ttfamily \#include $<$group\+Feedback.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_fourier_1_1_group_feedback_add9e16cdfa04fdfde1e3c5df8ad267dc}\label{class_fourier_1_1_group_feedback_add9e16cdfa04fdfde1e3c5df8ad267dc}} 
+{\bfseries Group\+Feedback} (size\+\_\+t number\+\_\+of\+\_\+modules)
+\begin{DoxyCompactList}\small\item\em Create a group feedback with the specified number of modules. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_fourier_1_1_group_feedback_a428645ba291c5d50100e79df989b93f8}{Group\+Feedback}} (Fourier\+Group\+Feedback\+Ptr group\+\_\+feedback)
+\item 
+\mbox{\Hypertarget{class_fourier_1_1_group_feedback_ac6e6dd6e91a9b03b97fb249d9199e970}\label{class_fourier_1_1_group_feedback_ac6e6dd6e91a9b03b97fb249d9199e970}} 
+{\bfseries $\sim$\+Group\+Feedback} () noexcept
+\begin{DoxyCompactList}\small\item\em Destructor cleans up group feedback object as necessary. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_fourier_1_1_group_feedback_aa8f45465cce991844fe72b55853d6546}\label{class_fourier_1_1_group_feedback_aa8f45465cce991844fe72b55853d6546}} 
+size\+\_\+t {\bfseries size} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of module feedbacks in this group feedback. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_fourier_1_1_group_feedback_afa214cc6ea00d5182433181c1466cc1a}\label{class_fourier_1_1_group_feedback_afa214cc6ea00d5182433181c1466cc1a}} 
+const Fourier\+Feedback\+Ptr \& {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index) const
+\begin{DoxyCompactList}\small\item\em Access the feedback for an individual module. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Fourier\+Group\+Feedback\+Ptr \mbox{\hyperlink{class_fourier_1_1_group_feedback_a68ec309c1b6086229e127d7a29cf143e}{internal\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A list of Feedback objects that can be received from a \mbox{\hyperlink{class_fourier_1_1_group}{Group}} of modules; the \mbox{\hyperlink{class_fourier_1_1_group_feedback_aa8f45465cce991844fe72b55853d6546}{size()}} must match the number of modules in the group. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fourier_1_1_group_feedback_a428645ba291c5d50100e79df989b93f8}\label{class_fourier_1_1_group_feedback_a428645ba291c5d50100e79df989b93f8}} 
+\index{Fourier::GroupFeedback@{Fourier::GroupFeedback}!GroupFeedback@{GroupFeedback}}
+\index{GroupFeedback@{GroupFeedback}!Fourier::GroupFeedback@{Fourier::GroupFeedback}}
+\doxysubsubsection{\texorpdfstring{GroupFeedback()}{GroupFeedback()}}
+{\footnotesize\ttfamily Fourier\+::\+Group\+Feedback\+::\+Group\+Feedback (\begin{DoxyParamCaption}\item[{Fourier\+Group\+Feedback\+Ptr}]{group\+\_\+feedback }\end{DoxyParamCaption})}
+
+TODO\+: 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_fourier_1_1_group_feedback_a68ec309c1b6086229e127d7a29cf143e}\label{class_fourier_1_1_group_feedback_a68ec309c1b6086229e127d7a29cf143e}} 
+\index{Fourier::GroupFeedback@{Fourier::GroupFeedback}!internal\_@{internal\_}}
+\index{internal\_@{internal\_}!Fourier::GroupFeedback@{Fourier::GroupFeedback}}
+\doxysubsubsection{\texorpdfstring{internal\_}{internal\_}}
+{\footnotesize\ttfamily Fourier\+Group\+Feedback\+Ptr Fourier\+::\+Group\+Feedback\+::internal\+\_\+}
+
+C-\/style group feedback object. NOTE\+: this should not be used except by library functions! 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/ws/\+Fourier/sdk/fourier-\/cpp/src/group\+Feedback.\+hpp\item 
+D\+:/ws/\+Fourier/sdk/fourier-\/cpp/src/group\+Feedback.\+cpp\end{DoxyCompactItemize}

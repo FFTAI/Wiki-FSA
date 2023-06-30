@@ -1,0 +1,171 @@
+\hypertarget{class_fourier_1_1_group}{}\doxysection{Fourier\+::Group Class Reference}
+\label{class_fourier_1_1_group}\index{Fourier::Group@{Fourier::Group}}
+
+
+Represents a group of physical Fourier actuator, and allows Command, Feedback, and Info objects to be sent to and recieved from the actuator.  
+
+
+
+
+{\ttfamily \#include $<$group.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_fourier_1_1_group_ae7dcad5e737224ae505e518c5662bf0d}{Group}} (Fourier\+Group\+Ptr group, float initial\+\_\+feedback\+\_\+frequency=0.\+0f, int32\+\_\+t initial\+\_\+command\+\_\+lifetime=0)
+\item 
+\mbox{\Hypertarget{class_fourier_1_1_group_a5544c845d44e87780aa01f59bc9e00f1}\label{class_fourier_1_1_group_a5544c845d44e87780aa01f59bc9e00f1}} 
+{\bfseries $\sim$\+Group} () noexcept
+\begin{DoxyCompactList}\small\item\em Destructor cleans up group. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_fourier_1_1_group_ad217c52c67f176acecd72db56647bcd6}\label{class_fourier_1_1_group_ad217c52c67f176acecd72db56647bcd6}} 
+int {\bfseries size} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of modules in the group. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_fourier_1_1_group_acf31bd144b5a9d7b56b2254051a507b4}\label{class_fourier_1_1_group_acf31bd144b5a9d7b56b2254051a507b4}} 
+bool {\bfseries set\+Command\+Lifetime\+Ms} (int32\+\_\+t ms)
+\begin{DoxyCompactList}\small\item\em Sets the command lifetime for the modules in this group. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_fourier_1_1_group_acc7dcbc154ac82ed36fcba9865a953ab}{send\+Command}} (const \mbox{\hyperlink{class_fourier_1_1_group_command}{Group\+Command}} \&group\+\_\+command)
+\begin{DoxyCompactList}\small\item\em Send a command to the given group, requesting an acknowledgement of transmission to be sent back. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_fourier_1_1_group_ad1dfe7ff7f4eba4b6d1bc4219f4f4416}{send\+Feedback\+Request}} (Fourier\+Feedback\+Code feedback\+Code=Fourier\+Feedback\+All)
+\begin{DoxyCompactList}\small\item\em Requests feedback from the group. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_fourier_1_1_group_a3449b7d6cfd38fa7f59337fb4b112ebc}{get\+Next\+Feedback}} (\mbox{\hyperlink{class_fourier_1_1_group_feedback}{Group\+Feedback}} \&feedback, int32\+\_\+t timeout\+\_\+ms=DEFAULT\+\_\+\+TIMEOUT\+\_\+\+MS)
+\begin{DoxyCompactList}\small\item\em Returns the most recently stored feedback from a sent feedback request, or returns the next one received (up to the requested timeout). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_fourier_1_1_group_ac5fbe3f16a3a9db5492b5602cab94c3d}{set\+Feedback\+Frequency\+Hz}} (float frequency)
+\begin{DoxyCompactList}\small\item\em Sets the frequency of the internal feedback request + callback thread. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_fourier_1_1_group_a3241d2cfa4cb520e7733308af068040e}{get\+Feedback\+Frequency\+Hz}} ()
+\item 
+void \mbox{\hyperlink{class_fourier_1_1_group_a9e1f1d2109018e18ac1ef5189cd8693a}{add\+Feedback\+Handler}} (Group\+Feedback\+Handler handler)
+\item 
+void \mbox{\hyperlink{class_fourier_1_1_group_ab3214986c71cb832102a4912d08e98d0}{clear\+Feedback\+Handlers}} ()
+\item 
+\mbox{\Hypertarget{class_fourier_1_1_group_a12f32a895c390794e38c216089aa86d5}\label{class_fourier_1_1_group_a12f32a895c390794e38c216089aa86d5}} 
+Fourier\+Feedback\+Error\+Ptr {\bfseries get\+Error} (int idx)
+\begin{DoxyCompactList}\small\item\em Gets the actuator error message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_fourier_1_1_group_aeed53550c5d7395ae3077adbe0360f07}\label{class_fourier_1_1_group_aeed53550c5d7395ae3077adbe0360f07}} 
+static const int32\+\_\+t {\bfseries DEFAULT\+\_\+\+TIMEOUT\+\_\+\+MS} = 500
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_fourier_1_1_group_a227b2aa72257b306fafdd58aa2ebfd9e}{callback\+Wrapper}} (Fourier\+Group\+Feedback\+Ptr group\+\_\+feedback, void $\ast$user\+\_\+data)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a group of physical Fourier actuator, and allows Command, Feedback, and Info objects to be sent to and recieved from the actuator. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_fourier_1_1_group_ae7dcad5e737224ae505e518c5662bf0d}\label{class_fourier_1_1_group_ae7dcad5e737224ae505e518c5662bf0d}} 
+\index{Fourier::Group@{Fourier::Group}!Group@{Group}}
+\index{Group@{Group}!Fourier::Group@{Fourier::Group}}
+\doxysubsubsection{\texorpdfstring{Group()}{Group()}}
+{\footnotesize\ttfamily Fourier\+::\+Group\+::\+Group (\begin{DoxyParamCaption}\item[{Fourier\+Group\+Ptr}]{group,  }\item[{float}]{initial\+\_\+feedback\+\_\+frequency = {\ttfamily 0.0f},  }\item[{int32\+\_\+t}]{initial\+\_\+command\+\_\+lifetime = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Creates a group from the underlying C-\/style group object. This should only be called to create groups from the lookup class, not from user code! 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_fourier_1_1_group_a9e1f1d2109018e18ac1ef5189cd8693a}\label{class_fourier_1_1_group_a9e1f1d2109018e18ac1ef5189cd8693a}} 
+\index{Fourier::Group@{Fourier::Group}!addFeedbackHandler@{addFeedbackHandler}}
+\index{addFeedbackHandler@{addFeedbackHandler}!Fourier::Group@{Fourier::Group}}
+\doxysubsubsection{\texorpdfstring{addFeedbackHandler()}{addFeedbackHandler()}}
+{\footnotesize\ttfamily void Fourier\+::\+Group\+::add\+Feedback\+Handler (\begin{DoxyParamCaption}\item[{Group\+Feedback\+Handler}]{handler }\end{DoxyParamCaption})}
+
+TODO\+: \mbox{\Hypertarget{class_fourier_1_1_group_ab3214986c71cb832102a4912d08e98d0}\label{class_fourier_1_1_group_ab3214986c71cb832102a4912d08e98d0}} 
+\index{Fourier::Group@{Fourier::Group}!clearFeedbackHandlers@{clearFeedbackHandlers}}
+\index{clearFeedbackHandlers@{clearFeedbackHandlers}!Fourier::Group@{Fourier::Group}}
+\doxysubsubsection{\texorpdfstring{clearFeedbackHandlers()}{clearFeedbackHandlers()}}
+{\footnotesize\ttfamily void Fourier\+::\+Group\+::clear\+Feedback\+Handlers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+TODO\+: \mbox{\Hypertarget{class_fourier_1_1_group_a3241d2cfa4cb520e7733308af068040e}\label{class_fourier_1_1_group_a3241d2cfa4cb520e7733308af068040e}} 
+\index{Fourier::Group@{Fourier::Group}!getFeedbackFrequencyHz@{getFeedbackFrequencyHz}}
+\index{getFeedbackFrequencyHz@{getFeedbackFrequencyHz}!Fourier::Group@{Fourier::Group}}
+\doxysubsubsection{\texorpdfstring{getFeedbackFrequencyHz()}{getFeedbackFrequencyHz()}}
+{\footnotesize\ttfamily float Fourier\+::\+Group\+::get\+Feedback\+Frequency\+Hz (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+TODO\+: \mbox{\Hypertarget{class_fourier_1_1_group_a3449b7d6cfd38fa7f59337fb4b112ebc}\label{class_fourier_1_1_group_a3449b7d6cfd38fa7f59337fb4b112ebc}} 
+\index{Fourier::Group@{Fourier::Group}!getNextFeedback@{getNextFeedback}}
+\index{getNextFeedback@{getNextFeedback}!Fourier::Group@{Fourier::Group}}
+\doxysubsubsection{\texorpdfstring{getNextFeedback()}{getNextFeedback()}}
+{\footnotesize\ttfamily bool Fourier\+::\+Group\+::get\+Next\+Feedback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_fourier_1_1_group_feedback}{Group\+Feedback}} \&}]{feedback,  }\item[{int32\+\_\+t}]{timeout\+\_\+ms = {\ttfamily DEFAULT\+\_\+TIMEOUT\+\_\+MS} }\end{DoxyParamCaption})}
+
+
+
+Returns the most recently stored feedback from a sent feedback request, or returns the next one received (up to the requested timeout). 
+
+Note that a feedback request can be sent either with the send\+Feedback\+Request function.
+
+Warning\+: other data in the provided \textquotesingle{}Feedback\textquotesingle{} object is erased!
+
+
+\begin{DoxyParams}{Parameters}
+{\em feedback} & On success, the group feedback read from the group are written into this structure.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if feedback was returned, otherwise {\ttfamily false} on failure (i.\+e., connection error or timeout waiting for response). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_fourier_1_1_group_acc7dcbc154ac82ed36fcba9865a953ab}\label{class_fourier_1_1_group_acc7dcbc154ac82ed36fcba9865a953ab}} 
+\index{Fourier::Group@{Fourier::Group}!sendCommand@{sendCommand}}
+\index{sendCommand@{sendCommand}!Fourier::Group@{Fourier::Group}}
+\doxysubsubsection{\texorpdfstring{sendCommand()}{sendCommand()}}
+{\footnotesize\ttfamily bool Fourier\+::\+Group\+::send\+Command (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_fourier_1_1_group_command}{Group\+Command}} \&}]{group\+\_\+command }\end{DoxyParamCaption})}
+
+
+
+Send a command to the given group, requesting an acknowledgement of transmission to be sent back. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em group\+\_\+command} & The \mbox{\hyperlink{class_fourier_1_1_group_command}{Group\+Command}} object containing information to be sent to the group.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if an acknowledgement was successfully received (guaranteeing the group received this command), or a negative number for an error otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_fourier_1_1_group_ad1dfe7ff7f4eba4b6d1bc4219f4f4416}\label{class_fourier_1_1_group_ad1dfe7ff7f4eba4b6d1bc4219f4f4416}} 
+\index{Fourier::Group@{Fourier::Group}!sendFeedbackRequest@{sendFeedbackRequest}}
+\index{sendFeedbackRequest@{sendFeedbackRequest}!Fourier::Group@{Fourier::Group}}
+\doxysubsubsection{\texorpdfstring{sendFeedbackRequest()}{sendFeedbackRequest()}}
+{\footnotesize\ttfamily bool Fourier\+::\+Group\+::send\+Feedback\+Request (\begin{DoxyParamCaption}\item[{Fourier\+Feedback\+Code}]{feedback\+Code = {\ttfamily FourierFeedbackAll} }\end{DoxyParamCaption})}
+
+
+
+Requests feedback from the group. 
+
+Sends a background request to the modules in the group; if/when all modules return feedback, any associated handler functions are called. This returned feedback is also stored to be returned by the next call to get\+Next\+Feedback (any previously returned data is discarded).
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if feedback was request was successfully sent, otherwise {\ttfamily false} on failure (i.\+e., connection error). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_fourier_1_1_group_ac5fbe3f16a3a9db5492b5602cab94c3d}\label{class_fourier_1_1_group_ac5fbe3f16a3a9db5492b5602cab94c3d}} 
+\index{Fourier::Group@{Fourier::Group}!setFeedbackFrequencyHz@{setFeedbackFrequencyHz}}
+\index{setFeedbackFrequencyHz@{setFeedbackFrequencyHz}!Fourier::Group@{Fourier::Group}}
+\doxysubsubsection{\texorpdfstring{setFeedbackFrequencyHz()}{setFeedbackFrequencyHz()}}
+{\footnotesize\ttfamily bool Fourier\+::\+Group\+::set\+Feedback\+Frequency\+Hz (\begin{DoxyParamCaption}\item[{float}]{frequency }\end{DoxyParamCaption})}
+
+
+
+Sets the frequency of the internal feedback request + callback thread. 
+
+TODO\+: 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the frequency successfully was set, or {\ttfamily false} if the parameter was outside the accepted range (less than zero or faster than supported maximum). 
+\end{DoxyReturn}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_fourier_1_1_group_a227b2aa72257b306fafdd58aa2ebfd9e}\label{class_fourier_1_1_group_a227b2aa72257b306fafdd58aa2ebfd9e}} 
+\index{Fourier::Group@{Fourier::Group}!callbackWrapper@{callbackWrapper}}
+\index{callbackWrapper@{callbackWrapper}!Fourier::Group@{Fourier::Group}}
+\doxysubsubsection{\texorpdfstring{callbackWrapper}{callbackWrapper}}
+{\footnotesize\ttfamily void callback\+Wrapper (\begin{DoxyParamCaption}\item[{Fourier\+Group\+Feedback\+Ptr}]{group\+\_\+feedback,  }\item[{void $\ast$}]{user\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+TODO\+: 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/ws/\+Fourier/sdk/fourier-\/cpp/src/group.\+hpp\item 
+D\+:/ws/\+Fourier/sdk/fourier-\/cpp/src/group.\+cpp\end{DoxyCompactItemize}
