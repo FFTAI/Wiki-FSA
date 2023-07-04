@@ -5,7 +5,7 @@ server_ip_list = []
 
 
 def main():
-    server_ip_list = fsa.broadcast_func()
+    server_ip_list = fsa.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
@@ -18,15 +18,7 @@ def main():
 
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            dict = {
-                'actuator_type': fsa.FSAActuatorType.TYPE_60_120.value,  # use None to not set here, if use not None, it will be set
-                'motor_number': 1,
-                'motor_direction': fsa.MotorDirection.ACB.value,
-                'encoder_resolution': 4000,  # 4000 pulse/rev
-                'encoder_phase_offset': -200,
-                'reduction_ratio': 120,
-            }
-            fsa.set_config(server_ip_list[i], dict)
+            fsa.clear_flag_of_operation(server_ip_list[i])
 
         print('\n')
         time.sleep(1)

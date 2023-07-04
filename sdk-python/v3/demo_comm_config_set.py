@@ -20,7 +20,7 @@ def main():
         # Notice : set static_IP should config DHCP_enable to be False! Otherwise, it will not work!
         for i in range(len(server_ip_list)):
             dict = {
-                'name': 'FAS-' + str(i),
+                'name': 'FSA-' + str(i),
                 'DHCP_enable': True,
                 'SSID': 'FSA',
                 'password': 'fftai2015',

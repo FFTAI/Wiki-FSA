@@ -79,6 +79,11 @@ class FSAInputMode(Enum):
     INPUT_MODE_TORQUE_RAMP = 6
 
 
+class MotorDirection(Enum):
+    ABC = 1
+    ACB = 2
+
+
 default_fsa_timeout = 0.2
 default_fsa_port_ctrl = 2333
 default_fsa_port_comm = 2334
@@ -481,6 +486,119 @@ def clear_pid_param(server_ip):
         return None
 
 
+def get_flag_of_operation(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/flag_of_operation",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fsa.get_root_config() except")
+        return None
+
+
+def set_flag_of_operation(server_ip, dict):
+    data = {"method": "SET",
+            "reqTarget": "/flag_of_operation",
+            "property": "",
+            "flag_do_calibrate_adc": dict["flag_do_calibrate_adc"],
+            "flag_do_calibrate_motor": dict["flag_do_calibrate_motor"],
+            "flag_do_calibrate_encoder": dict["flag_do_calibrate_encoder"],
+            "flag_do_calibrate_direction": dict["flag_do_calibrate_direction"],
+            "flag_do_calibrate_offset": dict["flag_do_calibrate_offset"],
+            "flag_do_use_store_motor_direction": dict["flag_do_use_store_motor_direction"],
+            "flag_do_use_store_encoder_phase_offset": dict["flag_do_use_store_encoder_phase_offset"],
+            }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        return None
+
+
+def clear_flag_of_operation(server_ip):
+    data = {"method": "SET",
+            "reqTarget": "/flag_of_operation",
+            "property": "clear",
+            }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        return None
+
+
 # fsa Get Root Config property
 # Parameters: including device IP
 # Get fsa bus voltage over-voltage and under-voltage protection threshold
@@ -529,8 +647,10 @@ def set_config(server_ip, dict):
             "property": "",
             "actuator_type": dict["actuator_type"],
             "motor_number": dict["motor_number"],
-            "reduction_ratio": dict["reduction_ratio"],
+            "motor_direction": dict["motor_direction"],
             "encoder_resolution": dict["encoder_resolution"],
+            "encoder_phase_offset": dict["encoder_phase_offset"],
+            "reduction_ratio": dict["reduction_ratio"],
             }
 
     json_str = json.dumps(data)
@@ -820,6 +940,48 @@ def get_pvcc(server_ip):
         if json_obj.get("status") == "OK":
             return json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current"), json_obj.get(
                 "current_id")
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return FSAFunctionResult.FAIL
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return FSAFunctionResult.TIMEOUT
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fsa.get_pvc() except")
+        return FSAFunctionResult.FAIL
+
+
+def get_pvcccc(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/measured",
+        "position": True,
+        "velocity": True,
+        "current": True,
+        "current_id": True,
+        "phase_current_ib": True,
+        "phase_current_ic": True,
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current"), \
+                json_obj.get("current_id"), json_obj.get("phase_current_ib"), json_obj.get("phase_current_ic")
         else:
             fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
             return FSAFunctionResult.FAIL
