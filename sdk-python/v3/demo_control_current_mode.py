@@ -59,7 +59,7 @@ def main():
                 for j in range(len(server_ip_list)):
                     # cmd_current for actuator 36 with 30 reduction ratio should larger than 0.30
                     # cmd_current for actuator 60 should larger than 0.30
-                    fsa.set_current_control(server_ip_list[j], 1.00)
+                    fsa.set_current_control(server_ip_list[j], 1.0)
                 time.sleep(0.01)
 
             for i in range(len(server_ip_list)):

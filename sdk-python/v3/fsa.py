@@ -79,9 +79,9 @@ class FSAInputMode(Enum):
     INPUT_MODE_TORQUE_RAMP = 6
 
 
-class MotorDirection(Enum):
+class FSAMotorDirection(Enum):
     ABC = 1
-    ACB = 2
+    ACB = -1
 
 
 default_fsa_timeout = 0.2
@@ -415,11 +415,17 @@ def set_pid_param(server_ip, dict):
     data = {"method": "SET",
             "reqTarget": "/pid_param",
             "property": "",
-            "position_control_kp": dict["position_control_kp"],
-            "velocity_control_kp": dict["velocity_control_kp"],
-            "velocity_control_ki": dict["velocity_control_ki"],
-            "current_control_kp": dict["current_control_kp"],
-            "current_control_ki": dict["current_control_ki"],
+            "control_position_kp": dict["control_position_kp"],
+            "control_velocity_kp": dict["control_velocity_kp"],
+            "control_velocity_ki": dict["control_velocity_ki"],
+            "control_current_kp": dict["control_current_kp"],
+            "control_current_ki": dict["control_current_ki"],
+            "control_position_output_max": dict["control_position_output_max"],
+            "control_position_output_min": dict["control_position_output_min"],
+            "control_velocity_output_max": dict["control_velocity_output_max"],
+            "control_velocity_output_min": dict["control_velocity_output_min"],
+            "control_current_output_max": dict["control_current_output_max"],
+            "control_current_output_min": dict["control_current_output_min"],
             }
 
     json_str = json.dumps(data)
@@ -531,8 +537,10 @@ def set_flag_of_operation(server_ip, dict):
             "flag_do_calibrate_encoder": dict["flag_do_calibrate_encoder"],
             "flag_do_calibrate_direction": dict["flag_do_calibrate_direction"],
             "flag_do_calibrate_offset": dict["flag_do_calibrate_offset"],
-            "flag_do_use_store_motor_direction": dict["flag_do_use_store_motor_direction"],
-            "flag_do_use_store_encoder_phase_offset": dict["flag_do_use_store_encoder_phase_offset"],
+            "flag_do_use_store_motor_param": dict["flag_do_use_store_motor_param"],
+            "flag_do_use_store_encoder_param": dict["flag_do_use_store_encoder_param"],
+            "flag_do_use_store_pid_param": dict["flag_do_use_store_pid_param"],
+            "flag_do_use_store_control_param": dict["flag_do_use_store_control_param"],
             }
 
     json_str = json.dumps(data)
@@ -646,11 +654,15 @@ def set_config(server_ip, dict):
             "reqTarget": "/config",
             "property": "",
             "actuator_type": dict["actuator_type"],
-            "motor_number": dict["motor_number"],
+            "actuator_reduction_ratio": dict["actuator_reduction_ratio"],
+            "motor_index": dict["motor_index"],
+            "motor_vbus": dict["motor_vbus"],
             "motor_direction": dict["motor_direction"],
+            "motor_pole_pairs": dict["motor_pole_pairs"],
+            "motor_max_speed": dict["motor_max_speed"],
+            "encoder_direction": dict["encoder_direction"],
             "encoder_resolution": dict["encoder_resolution"],
             "encoder_phase_offset": dict["encoder_phase_offset"],
-            "reduction_ratio": dict["reduction_ratio"],
             }
 
     json_str = json.dumps(data)

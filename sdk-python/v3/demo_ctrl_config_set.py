@@ -20,11 +20,17 @@ def main():
         for i in range(len(server_ip_list)):
             dict = {
                 'actuator_type': fsa.FSAActuatorType.TYPE_60_120.value,  # use None to not set here, if use not None, it will be set
-                'motor_number': 1,
-                'motor_direction': fsa.MotorDirection.ACB.value,
+                'actuator_reduction_ratio': 120,
+                
+                'motor_index': 1,
+                'motor_vbus': 48,
+                'motor_direction': fsa.FSAMotorDirection.ACB.value,
+                'motor_pole_pairs': 10,
+                'motor_max_speed': 3000,  # [rpm]
+
+                'encoder_direction': -1,
                 'encoder_resolution': 4000,  # 4000 pulse/rev
-                'encoder_phase_offset': -200,
-                'reduction_ratio': 120,
+                'encoder_phase_offset': 200,
             }
             fsa.set_config(server_ip_list[i], dict)
 
