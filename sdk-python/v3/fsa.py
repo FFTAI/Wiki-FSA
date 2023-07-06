@@ -30,15 +30,19 @@ class FSAFlagState(Enum):
 
 
 class FSAActuatorType(Enum):
-    TYPE_DEFAULT = 0
-    TYPE_60_1 = 1
-    TYPE_60_120 = 2
-    TYPE_36_1 = 3
-    TYPE_36_30 = 4
-    TYPE_80_1 = 5
-    TYPE_80_7 = 6
-    TYPE_130_1 = 7
-    TYPE_130_7 = 8
+    TYPE_DEFAULT = 0x0001
+    TYPE_60A_1 = 0x0101
+    TYPE_60A_120 = 0x0201
+    TYPE_36A_1 = 0x0301
+    TYPE_36A_30 = 0x0401
+    TYPE_36B_1 = 0x0302
+    TYPE_36B_30 = 0x0402
+    TYPE_80A_1 = 0x0501
+    TYPE_80A_7 = 0x0601
+    TYPE_130A_1 = 0x0701
+    TYPE_130A_7 = 0x0801
+    TYPE_130B_1 = 0x0702
+    TYPE_130B_7 = 0x0802
 
 
 class FSAControlWord(Enum):
@@ -540,7 +544,6 @@ def set_flag_of_operation(server_ip, dict):
             "flag_do_use_store_motor_param": dict["flag_do_use_store_motor_param"],
             "flag_do_use_store_encoder_param": dict["flag_do_use_store_encoder_param"],
             "flag_do_use_store_pid_param": dict["flag_do_use_store_pid_param"],
-            "flag_do_use_store_control_param": dict["flag_do_use_store_control_param"],
             }
 
     json_str = json.dumps(data)

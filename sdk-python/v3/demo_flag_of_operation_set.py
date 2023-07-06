@@ -28,7 +28,6 @@ def main():
                 'flag_do_use_store_motor_param': fsa.FSAFlagState.SET.value,
                 'flag_do_use_store_encoder_param': fsa.FSAFlagState.SET.value,
                 'flag_do_use_store_pid_param': fsa.FSAFlagState.SET.value,
-                'flag_do_use_store_control_param': fsa.FSAFlagState.SET.value,
             }
             fsa.set_flag_of_operation(server_ip_list[i], dict)
 

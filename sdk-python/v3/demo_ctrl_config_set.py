@@ -19,18 +19,23 @@ def main():
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
-                'actuator_type': fsa.FSAActuatorType.TYPE_60_120.value,  # use None to not set here, if use not None, it will be set
-                'actuator_reduction_ratio': 120,
+                # Notice:
+                # if use TYPE_DEFAULT, the following parameters will be used,
+                # otherwise, the parameters will be used according to the type.
+                # 'actuator_type': fsa.FSAActuatorType.TYPE_130B_7.value,
+                'actuator_type': fsa.FSAActuatorType.TYPE_DEFAULT.value,
+
+                'actuator_reduction_ratio': 7,
                 
                 'motor_index': 1,
-                'motor_vbus': 48,
+                'motor_vbus': 36,
                 'motor_direction': fsa.FSAMotorDirection.ACB.value,
-                'motor_pole_pairs': 10,
+                'motor_pole_pairs': 21,
                 'motor_max_speed': 3000,  # [rpm]
 
-                'encoder_direction': -1,
+                'encoder_direction': 1,
                 'encoder_resolution': 4000,  # 4000 pulse/rev
-                'encoder_phase_offset': 200,
+                'encoder_phase_offset': 0,
             }
             fsa.set_config(server_ip_list[i], dict)
 
