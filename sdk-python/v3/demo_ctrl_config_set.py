@@ -22,8 +22,8 @@ def main():
                 # Notice:
                 # if use TYPE_DEFAULT, the following parameters will be used,
                 # otherwise, the parameters will be used according to the type.
-                # 'actuator_type': fsa.FSAActuatorType.TYPE_130B_7.value,
-                'actuator_type': fsa.FSAActuatorType.TYPE_DEFAULT.value,
+                'actuator_type': fsa.FSAActuatorType.TYPE_60_ACB_120.value,
+                # 'actuator_type': fsa.FSAActuatorType.TYPE_DEFAULT.value,
 
                 'actuator_reduction_ratio': 7,
                 

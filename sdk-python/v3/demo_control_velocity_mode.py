@@ -60,7 +60,7 @@ def main():
         for i in range(count_max):
             for j in range(len(server_ip_list)):
                 # set_velocity = 1080.0 * math.sin(i / 1000.0)  # [deg/s]
-                set_velocity = 30.0 * math.sin(i / 1000.0)  # [deg/s]
+                set_velocity = 20.0 * math.sin(i / 1000.0)  # [deg/s]
                 fsa.set_velocity_control(server_ip_list[j], set_velocity)
             time.sleep(0.01)
 
