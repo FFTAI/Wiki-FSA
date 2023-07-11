@@ -42,7 +42,7 @@ PORT_pt = 10000  # Passthrough port
 
 # network = '10.0.0.255'
 # network = '255.255.255.255'
-network = '192.168.31.255'
+network = '10.10.10.255'
 
 
 # AIOS enable
@@ -1041,7 +1041,7 @@ def getCVP_pt(server_ip):
 # 参数：无
 # 返回 成功 失败 超时
 def broadcast_func():
-    print('Listening for broadcast at ', s.getsockname())
+    # print('Listening for broadcast at ', s.getsockname())
     timeout = 3
     found_server = False
     address_list = []
