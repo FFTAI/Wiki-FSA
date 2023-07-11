@@ -26,7 +26,7 @@ def main():
                 # 'actuator_type': fsa.FSAActuatorType.TYPE_60_ACB_1.value,
                 # 'actuator_type': fsa.FSAActuatorType.TYPE_60_ACB_120.value,
 
-                'actuator_reduction_ratio': 1,
+                'actuator_reduction_ratio': 120,
                 
                 'motor_index': 1,
                 'motor_vbus': 36,
