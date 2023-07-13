@@ -622,6 +622,7 @@ def set_flag_of_operation(server_ip, dict):
             "flag_do_use_store_motor_param": dict["flag_do_use_store_motor_param"],
             "flag_do_use_store_encoder_param": dict["flag_do_use_store_encoder_param"],
             "flag_do_use_store_pid_param": dict["flag_do_use_store_pid_param"],
+            "flag_do_auto_calibrate_offset": dict["flag_do_auto_calibrate_offset"],
             }
 
     json_str = json.dumps(data)
