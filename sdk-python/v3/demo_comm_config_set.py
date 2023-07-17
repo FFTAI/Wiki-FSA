@@ -5,7 +5,7 @@ server_ip_list = []
 
 
 def main():
-    server_ip_list = fsa.broadcast_func()
+    server_ip_list = fsa.broadcast_func_with_filter("Actuator")
 
     if server_ip_list:
 
@@ -24,8 +24,8 @@ def main():
                 'DHCP_enable': True,
                 'SSID': 'FSA',
                 'password': 'fftai2015',
-                'static_IP': [192, 168, 31, i + 50],
-                'gateway': [192, 168, 31, 1],
+                'static_IP': [192, 168, 137, i + 50],
+                'gateway': [192, 168, 137, 1],
                 'subnet_mask': [255, 255, 255, 0],
                 'dns_1': [114, 114, 114, 114],
                 'dns_2': [8, 8, 8, 8]

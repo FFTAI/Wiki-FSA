@@ -26,12 +26,12 @@ def main():
                 # 'actuator_type': fsa.FSAActuatorType.TYPE_60_ACB_1.value,
                 # 'actuator_type': fsa.FSAActuatorType.TYPE_60_ACB_120.value,
 
-                'actuator_reduction_ratio': 120,
+                'actuator_reduction_ratio': 30,
                 
                 'motor_index': 1,
                 'motor_vbus': 36,
-                'motor_direction': fsa.FSAMotorDirection.ACB.value,
-                'motor_pole_pairs': 10,
+                'motor_direction': fsa.FSAMotorDirection.ABC.value,
+                'motor_pole_pairs': 21,
                 'motor_max_speed': 3000,  # [rpm]
 
                 'encoder_direction': -1,
