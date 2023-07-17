@@ -2,3 +2,7 @@
 /sdk-python/v1/log/
 /sdk-python/v2/log/
 /sdk-python/v3/log/
+.vscode
+GPATH
+GRTAGS
+GTAGS

@@ -32,7 +32,7 @@ ordered_json set_pid_params_json = {
     {"reqTarget", "/pid_param"},
     {"property", ""},
     {"control_position_kp", 200.0},
-    {"control_velocity_kp", 0.04},
+    {"control_velocity_kp", 20},
     {"control_velocity_ki", 0.002},
     {"control_current_kp", 0.02},
     {"control_current_ki", 0.0015},
@@ -43,48 +43,17 @@ ordered_json set_pid_params_json = {
     {"control_current_output_max", 6.0},
     {"control_current_output_min", -6.0}};
 
+ordered_json set_operation_mode_json = {{"method", "SET"}, {"reqTarget", "/mode_of_operation"}, {"mode_of_operation", Status::POSITION_CONTROL}};
+
 ordered_json get_pid_params_json = {{"method", "GET"}, {"reqTarget", "/pid_param"}, {"property", ""}};
 
-ordered_json get_cvp_json = {{"method", "GET"}, {"reqTarget", "/m1/CVP"}};
+ordered_json set_pos_json = {{"method", "SET"}, {"reqTarget", "/position_control"}, {"reply_enable", true}, {"position", 0}, {"velocity_ff", 0}, {"current_ff", 0}};
 
-ordered_json get_trapezoidal_trajectory_param_json = {{"method", "GET"}, {"reqTarget", "/m1/trap_traj"}};
+ordered_json set_vel_json = {{"method", "SET"}, {"reqTarget", "/velocity_control"}, {"reply_enable", true}, {"velocity", 0}, {"current_ff", 0}};
 
-ordered_json set_trapezoidal_trajectory_param_json = {{"method", "SET"},
-                                                      {"reqTarget", "/m1/trap_traj"},
-                                                      {"accel_limit", 20000},
-                                                      {"decel_limit", 20000},
-                                                      {"vel_limit", 60000}};
+ordered_json set_cur_json = {{"method", "SET"}, {"reqTarget", "/current_control"}, {"reply_enable", true}, {"current", 0}};
 
-ordered_json get_motion_controller_config_json = {{"method", "GET"}, {"reqTarget", "/m1/controller/config"}};
+ordered_json get_pvc_json = {{"method", "GET"}, {"reqTarget", "/measured"}, {"position", true}, {"velocity", true}, {"current", true}};
 
-ordered_json set_motion_controller_config_json = {
-    {"method", "SET"}, {"reqTarget", "/m1/controller/config"}, {"pos_gain", 20.0}, {"vel_gain", 0.0005}, {"vel_integrator_gain", 0.0002}, {"vel_limit", 400000}, {"vel_limit_tolerance", 1.2}};
-
-ordered_json move_to_json = {{"method", "SET"}, {"reqTarget", "/m1/trapezoidalMove"}, {"property", 0}, {"reply_enable", false}};
-
-ordered_json set_linear_count_json = {{"method", "SET"}, {"reqTarget", "/m1/encoder"}, {"set_linear_count", 0}};
-
-ordered_json ext_pos_json = {
-    {"method", "SET"}, {"reqTarget", "/m1/setPosition"}, {"position", 0}, {"velocity_ff", 0}, {"current_ff", 0}};
-
-ordered_json ext_vel_json = {{"method", "SET"}, {"reqTarget", "/m1/setVelocity"}, {"velocity", 0}, {"current_ff", 0}};
-
-ordered_json ext_cur_json = {
-    {"method", "SET"},
-    {"reqTarget", "/m1/setCurrent"},
-    {"current", 0},
-};
-
-ordered_json vel_ramp_enable_json = {
-    {"method", "SET"},
-    {"reqTarget", "/m1/controller"},
-    {"vel_ramp_enable", true},
-};
-
-ordered_json set_vel_ramp_target_json = {
-    {"method", "SET"},
-    {"reqTarget", "/m1/controller"},
-    {"vel_ramp_target", 0},
-};
 } // namespace JsonData
 } // namespace FSA_CONNECT

@@ -4,15 +4,17 @@
 namespace FSA_CONNECT {
 namespace FSAConfig {
 struct FSAPIDParams {
-    double gear_ratio;
-    double pos_gain;
-    double vel_gain;
-    double vel_integrator_gain;
-    double pos_max_limit;
-    double pos_min_limit;
-    double vel_limit;
-    double vel_limit_tolerance;
-    double torque_limit;
+    double control_position_kp;
+    double control_velocity_kp;
+    double control_velocity_ki;
+    double control_current_kp;
+    double control_current_ki;
+    double control_position_output_max;
+    double control_position_output_min;
+    double control_velocity_output_max;
+    double control_velocity_output_min;
+    double control_current_output_max;
+    double control_current_output_min;
 };
 
 struct FSAControlConfig {

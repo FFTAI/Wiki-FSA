@@ -33,11 +33,17 @@ class FSA {
 
     std::shared_ptr<Transmit::UDPSocket> ctrl_udp_socket;
     std::shared_ptr<Transmit::UDPSocket> root_udp_socket;
-    int SetControlConfig(FSAConfig::FSAControlConfig &config);
-    int SetPIDParams(FSAConfig::FSAPIDParams &pidparams);
+    int SetControlConfig(const FSAConfig::FSAControlConfig &config);
+    int SetPIDParams(const FSAConfig::FSAPIDParams &pidparams);
     int GetPIDParams();
     int GetControlConfig();
-
+    int SetPosition(const double &pos, const double &vel_ff, const double &cur_ff);
+    int SetVelocity(const double &vel, const double &cur_ff);
+    int SetCurrent(const double &cur);
+    int GetPVC(double &pos, double &vel, double &cur);
+    int EnablePosControl();
+    int EnableVelControl();
+    int EnableCurControl();
     // std::shared_ptr<Transmit::UDPSocket> pt_udp_socket;
 
   private:
@@ -49,14 +55,17 @@ class FSA {
     int get_ctrlcfg_state = 0;
     int set_pid_state = 0;
     int get_pid_state = 0;
+    int set_pos_state = 0;
+    int set_vel_state = 0;
+    int set_cur_state = 0;
+    int getpvc_state = 0;
+    int control_state = 0;
 
     std::string ip_;
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
     std::chrono::milliseconds int_ms;
     bool motor_drive_ready_;
-
-    int is_enabled_;
 };
 
 } // namespace FSA_CONNECT

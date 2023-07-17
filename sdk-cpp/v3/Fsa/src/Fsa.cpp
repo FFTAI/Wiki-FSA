@@ -286,7 +286,7 @@ int FSA_CONNECT::FSA::Disable() {
     return NOT_EXECUTE;
 };
 
-int FSA_CONNECT::FSA::SetControlConfig(FSAConfig::FSAControlConfig &config) {
+int FSA_CONNECT::FSA::SetControlConfig(const FSAConfig::FSAControlConfig &config) {
 
     using namespace FSA_CONNECT::JsonData;
     using namespace FSA_CONNECT::ResultCode;
@@ -312,7 +312,7 @@ int FSA_CONNECT::FSA::SetControlConfig(FSAConfig::FSAControlConfig &config) {
 
             ret = ctrl_udp_socket->SendData(set_control_mode_json.dump());
             if (ret < 0) {
-                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: ", ip_, ret);
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
                 return ret;
             }
             // data send succeed
@@ -325,7 +325,7 @@ int FSA_CONNECT::FSA::SetControlConfig(FSAConfig::FSAControlConfig &config) {
             ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
 
             if (ret < 0) {
-                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: ", ip_, ret);
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
                 set_ctrlcfg_state = 0;
                 return ret;
             }
@@ -381,7 +381,7 @@ int FSA_CONNECT::FSA::GetControlConfig() {
 
             ret = ctrl_udp_socket->SendData(get_control_mode_json.dump());
             if (ret < 0) {
-                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: ", ip_, ret);
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
                 return ret;
             }
             // data send succeed
@@ -393,7 +393,7 @@ int FSA_CONNECT::FSA::GetControlConfig() {
             // receive error
             ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
             if (ret < 0) {
-                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: ", ip_, ret);
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
                 get_ctrlcfg_state = 0;
                 return ret;
             }
@@ -434,7 +434,7 @@ int FSA_CONNECT::FSA::GetControlConfig() {
     return NOT_EXECUTE;
 };
 
-int FSA_CONNECT::FSA::SetPIDParams(FSAConfig::FSAPIDParams &pidparams) {
+int FSA_CONNECT::FSA::SetPIDParams(const FSAConfig::FSAPIDParams &pidparams) {
 
     using namespace FSA_CONNECT::JsonData;
     using namespace FSA_CONNECT::ResultCode;
@@ -447,9 +447,21 @@ int FSA_CONNECT::FSA::SetPIDParams(FSAConfig::FSAPIDParams &pidparams) {
         switch (set_pid_state) {
         case 0: // enable
             begin = std::chrono::steady_clock::now();
+            // set_pid_params_json["control_position_kp"] = pidparams.control_position_kp;
+            // set_pid_params_json["control_velocity_kp"] = pidparams.control_velocity_kp;
+            // set_pid_params_json["control_velocity_ki"] = pidparams.control_velocity_ki;
+            // set_pid_params_json["control_current_kp"] = pidparams.control_current_kp;
+            // set_pid_params_json["control_current_ki"] = pidparams.control_current_ki;
+            // set_pid_params_json["control_position_output_max"] = pidparams.control_position_output_max;
+            // set_pid_params_json["control_position_output_min"] = pidparams.control_position_output_min;
+            // set_pid_params_json["control_velocity_output_max"] = pidparams.control_velocity_output_max;
+            // set_pid_params_json["control_velocity_output_min"] = pidparams.control_velocity_output_min;
+            // set_pid_params_json["control_current_output_max"] = pidparams.control_current_output_max;
+            // set_pid_params_json["control_current_output_min"] = pidparams.control_current_output_min;
+
             ret = ctrl_udp_socket->SendData(set_pid_params_json.dump());
             if (ret < 0) {
-                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: ", ip_, ret);
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
                 return ret;
             }
             // data send succeed
@@ -461,7 +473,7 @@ int FSA_CONNECT::FSA::SetPIDParams(FSAConfig::FSAPIDParams &pidparams) {
             // receive error
             ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
             if (ret < 0) {
-                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: ", ip_, ret);
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
                 set_pid_state = 0;
                 return ret;
             }
@@ -516,7 +528,7 @@ int FSA_CONNECT::FSA::GetPIDParams() {
             begin = std::chrono::steady_clock::now();
             ret = ctrl_udp_socket->SendData(get_pid_params_json.dump());
             if (ret < 0) {
-                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: ", ip_, ret);
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
                 return ret;
             }
             // data send succeed
@@ -528,7 +540,7 @@ int FSA_CONNECT::FSA::GetPIDParams() {
             // receive error
             ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
             if (ret < 0) {
-                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: ", ip_, ret);
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
                 get_pid_state = 0;
                 return ret;
             }
@@ -562,6 +574,491 @@ int FSA_CONNECT::FSA::GetPIDParams() {
 
         default:
             get_pid_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+};
+
+int FSA_CONNECT::FSA::EnablePosControl() {
+
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int ret;
+    std::string recv_data_str;
+    json recv_data_json;
+    std::string receive_state;
+    while (1) {
+        switch (control_state) {
+        case 0: // enable
+            begin = std::chrono::steady_clock::now();
+            set_operation_mode_json["mode_of_operation"] = Status::POSITION_CONTROL;
+            ret = ctrl_udp_socket->SendData(set_operation_mode_json.dump());
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            control_state = 1;
+            break;
+
+        case 1: // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
+                control_state = 0;
+                return ret;
+            }
+            // receive something
+            if (!recv_data_str.empty()) {
+                recv_data_json = json::parse(recv_data_str);
+                receive_state = recv_data_json.at("status");
+                //!="OK"
+                if (receive_state.compare("OK")) {
+                    control_state = 0;
+                    FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE POSITION CONTROL FAILED! ", ip_);
+
+                    return DISABLE_FAILED;
+                }
+                control_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {},  ENABLE POSITION CONTROL SUCCESS! ", ip_);
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast<chrono::milliseconds>(end - begin);
+            if (int_ms.count() > 3000) {
+                control_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE POSITION CONTROL TIMEOUT! ", ip_);
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            control_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+};
+
+int FSA_CONNECT::FSA::EnableVelControl() {
+
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int ret;
+    std::string recv_data_str;
+    json recv_data_json;
+    std::string receive_state;
+    while (1) {
+        switch (control_state) {
+        case 0: // enable
+            begin = std::chrono::steady_clock::now();
+            set_operation_mode_json["mode_of_operation"] = Status::VELOCITY_CONTROL;
+            ret = ctrl_udp_socket->SendData(set_operation_mode_json.dump());
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            control_state = 1;
+            break;
+
+        case 1: // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
+                control_state = 0;
+                return ret;
+            }
+            // receive something
+            if (!recv_data_str.empty()) {
+                recv_data_json = json::parse(recv_data_str);
+                receive_state = recv_data_json.at("status");
+                //!="OK"
+                if (receive_state.compare("OK")) {
+                    control_state = 0;
+                    FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE VELOCITY CONTROL FAILED! ", ip_);
+
+                    return DISABLE_FAILED;
+                }
+                control_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {},  ENABLE VELOCITY CONTROL SUCCESS! ", ip_);
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast<chrono::milliseconds>(end - begin);
+            if (int_ms.count() > 3000) {
+                control_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE VELOCITY CONTROL TIMEOUT! ", ip_);
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            control_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+};
+
+int FSA_CONNECT::FSA::EnableCurControl() {
+
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int ret;
+    std::string recv_data_str;
+    json recv_data_json;
+    std::string receive_state;
+    while (1) {
+        switch (control_state) {
+        case 0: // enable
+            begin = std::chrono::steady_clock::now();
+            set_operation_mode_json["mode_of_operation"] = Status::CURRENT_CLOSE_LOOP_CONTROL;
+            ret = ctrl_udp_socket->SendData(set_operation_mode_json.dump());
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            control_state = 1;
+            break;
+
+        case 1: // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
+                control_state = 0;
+                return ret;
+            }
+            // receive something
+            if (!recv_data_str.empty()) {
+                recv_data_json = json::parse(recv_data_str);
+                receive_state = recv_data_json.at("status");
+                //!="OK"
+                if (receive_state.compare("OK")) {
+                    control_state = 0;
+                    FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE CURRENT CONTROL FAILED! ", ip_);
+
+                    return DISABLE_FAILED;
+                }
+                control_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {},  ENABLE CURRENT CONTROL SUCCESS! ", ip_);
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast<chrono::milliseconds>(end - begin);
+            if (int_ms.count() > 3000) {
+                control_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE CURRENT CONTROL TIMEOUT! ", ip_);
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            control_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+};
+
+int FSA_CONNECT::FSA::SetPosition(const double &pos, const double &vel_ff, const double &cur_ff) {
+
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int ret;
+    std::string recv_data_str;
+    json recv_data_json;
+    std::string receive_state;
+    while (1) {
+        switch (set_pos_state) {
+        case 0: // enable
+            begin = std::chrono::steady_clock::now();
+            set_pos_json["positon"] = pos;
+            set_pos_json["velocity_ff"] = vel_ff;
+            set_pos_json["current_ff"] = cur_ff;
+
+            ret = ctrl_udp_socket->SendData(set_pos_json.dump());
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            set_pos_state = 1;
+            break;
+
+        case 1: // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
+                set_pos_state = 0;
+                return ret;
+            }
+            // receive something
+            if (!recv_data_str.empty()) {
+                recv_data_json = json::parse(recv_data_str);
+                receive_state = recv_data_json.at("status");
+                //!="OK"
+                if (receive_state.compare("OK")) {
+                    set_pos_state = 0;
+                    FSA_CONNECT::LOG::INFO("MOTOR: {}, SET POSITION FAILED! ", ip_);
+
+                    return DISABLE_FAILED;
+                }
+                set_pos_state = 0;
+                // FSA_CONNECT::LOG::INFO("MOTOR: {},  SET POS SUCCESS! ", ip_);
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast<chrono::milliseconds>(end - begin);
+            if (int_ms.count() > 3000) {
+                set_pos_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, SET POSITION TIMEOUT! ", ip_);
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            set_pos_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+};
+
+int FSA_CONNECT::FSA::SetVelocity(const double &vel, const double &cur_ff) {
+
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int ret;
+    std::string recv_data_str;
+    json recv_data_json;
+    std::string receive_state;
+    while (1) {
+        switch (set_pos_state) {
+        case 0: // enable
+            begin = std::chrono::steady_clock::now();
+            set_vel_json["velocity"] = vel;
+            set_vel_json["current_ff"] = cur_ff;
+
+            ret = ctrl_udp_socket->SendData(set_vel_json.dump());
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            set_pos_state = 1;
+            break;
+
+        case 1: // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
+                set_pos_state = 0;
+                return ret;
+            }
+            // receive something
+            if (!recv_data_str.empty()) {
+                recv_data_json = json::parse(recv_data_str);
+                receive_state = recv_data_json.at("status");
+                //!="OK"
+                if (receive_state.compare("OK")) {
+                    set_pos_state = 0;
+                    FSA_CONNECT::LOG::INFO("MOTOR: {}, SET VELOCITY FAILED! ", ip_);
+
+                    return DISABLE_FAILED;
+                }
+                set_pos_state = 0;
+                // FSA_CONNECT::LOG::INFO("MOTOR: {},  SET POS SUCCESS! ", ip_);
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast<chrono::milliseconds>(end - begin);
+            if (int_ms.count() > 3000) {
+                set_pos_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, SET VELOCITY TIMEOUT! ", ip_);
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            set_pos_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+};
+
+int FSA_CONNECT::FSA::SetCurrent(const double &cur) {
+
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int ret;
+    std::string recv_data_str;
+    json recv_data_json;
+    std::string receive_state;
+    while (1) {
+        switch (set_pos_state) {
+        case 0: // enable
+            begin = std::chrono::steady_clock::now();
+
+            set_cur_json["current"] = cur;
+
+            ret = ctrl_udp_socket->SendData(set_cur_json.dump());
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            set_pos_state = 1;
+            break;
+
+        case 1: // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_nrt(recv_data_str);
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
+                set_pos_state = 0;
+                return ret;
+            }
+            // receive something
+            if (!recv_data_str.empty()) {
+                recv_data_json = json::parse(recv_data_str);
+                receive_state = recv_data_json.at("status");
+                //!="OK"
+                if (receive_state.compare("OK")) {
+                    set_pos_state = 0;
+                    FSA_CONNECT::LOG::INFO("MOTOR: {}, SET CURRENT FAILED! ", ip_);
+
+                    return DISABLE_FAILED;
+                }
+                set_pos_state = 0;
+                // FSA_CONNECT::LOG::INFO("MOTOR: {},  SET POS SUCCESS! ", ip_);
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast<chrono::milliseconds>(end - begin);
+            if (int_ms.count() > 3000) {
+                set_pos_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, SET CURRENT TIMEOUT! ", ip_);
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            set_pos_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+};
+
+int FSA_CONNECT::FSA::GetPVC(double &pos, double &vel, double &cur) {
+
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int ret;
+    std::string recv_data_str;
+    json recv_data_json;
+    std::string receive_state;
+    while (1) {
+        switch (set_pos_state) {
+        case 0: // enable
+            begin = std::chrono::steady_clock::now();
+            ret = ctrl_udp_socket->SendData(get_pvc_json.dump());
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET SEND FAILED! ERROR CODE: {}", ip_, ret);
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            set_pos_state = 1;
+            break;
+
+        case 1: // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_rt(recv_data_str);
+            if (ret < 0) {
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, UDP SOCKET RECEIVE FAILED! ERROR CODE: {}", ip_, ret);
+                set_pos_state = 0;
+                return ret;
+            }
+            // receive something
+            if (!recv_data_str.empty()) {
+                recv_data_json = json::parse(recv_data_str);
+                receive_state = recv_data_json.at("status");
+                //!="OK"
+                if (receive_state.compare("OK")) {
+                    set_pos_state = 0;
+                    FSA_CONNECT::LOG::INFO("MOTOR: {}, SET CURRENT FAILED! ", ip_);
+
+                    return DISABLE_FAILED;
+                }
+                set_pos_state = 0;
+                pos = recv_data_json.at("position");
+                vel = recv_data_json.at("velocity");
+                cur = recv_data_json.at("current");
+                // FSA_CONNECT::LOG::INFO("MOTOR: {},  SET POS SUCCESS! ", ip_);
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast<chrono::milliseconds>(end - begin);
+            if (int_ms.count() > 3000) {
+                set_pos_state = 0;
+                FSA_CONNECT::LOG::INFO("MOTOR: {}, SET CURRENT TIMEOUT! ", ip_);
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            set_pos_state = 0;
             break;
         };
     }
