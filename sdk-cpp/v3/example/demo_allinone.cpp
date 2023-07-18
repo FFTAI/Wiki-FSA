@@ -25,15 +25,15 @@ int main() {
     // fsa.Disable();
     // fsa.GetControlConfig();
     // fsa.GetRootConfig();
-    fsa.SetPIDParams(pid1);
-    fsa.GetPIDParams();
+    // fsa.SetPIDParams(pid1);
+    // fsa.GetPIDParams();
     fsa.EnableVelControl();
     double pos;
     double vel;
     double cur;
     while (1) {
         fsa.SetVelocity(2, 0);
-        usleep(600);
+        usleep(2000);
         fsa.GetPVC(pos, vel, cur);
         std::cout << "pos: " << pos << "vel: " << vel << "cur: " << cur << std::endl;
     }

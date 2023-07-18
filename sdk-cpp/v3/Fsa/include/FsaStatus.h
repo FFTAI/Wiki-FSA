@@ -8,6 +8,14 @@ enum FSAFlagState {
     SET = 1,
 };
 
+/**
+ * @enum  FSAModeOfOperation
+ * @brief which control mode you want use
+ * @details dont use current control if not necessarys
+ * @note TRAPEZOIDAL_CONTROL can not use now
+ * @attention  only need choose once before realtime control,if you want change control mode, must choose this mode before
+ */
+
 enum FSAModeOfOperation {
     NONE = 0,
     POSITION_CONTROL = 1,
@@ -45,6 +53,14 @@ enum InternalControlMode {
     mode_vel_ramp = 4,
     mode_trapezoidal_move = 5,
 };
+
+/**
+ * @enum  FSAActuatorType
+ * @brief all type of our motor
+ * @details you don not need choose this because we havev default config
+ * @note noting
+ * @attention  noting
+ */
 
 enum FSAActuatorType {
     TYPE_DEFAULT = 0x0001,
