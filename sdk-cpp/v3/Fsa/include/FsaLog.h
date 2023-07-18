@@ -11,7 +11,11 @@ namespace FSA_CONNECT {
  */
 namespace LOG {
 /**
- * @brief log class, include DEBUG, INFO, WARN, ERROR
+ * @brief log class, include DEBUG, INFO, WARN, ERROR, must config spdlog level before main program. such as :
+ *     FSA_CONNECT::LOG::LOG mylog;
+ *   mylog.setLevel(spdlog::level::level_enum::info);
+ *
+ * recommand read example
  */
 class LOG {
   public:
