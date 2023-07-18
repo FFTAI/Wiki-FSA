@@ -1,6 +1,9 @@
 #pragma once
 
 namespace FSA_CONNECT {
+/**
+ * @brief this namespace for enum of motor result, include result and error, every function will return result code, please find code here
+ */
 namespace ResultCode {
 
 enum FSAFunctionResult {

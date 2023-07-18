@@ -6,8 +6,13 @@
 #include "spdlog/spdlog.h"
 
 namespace FSA_CONNECT {
+/**
+ * @brief this namespace for log info, you do not need care.
+ */
 namespace LOG {
-
+/**
+ * @brief log class, include DEBUG, INFO, WARN, ERROR
+ */
 class LOG {
   public:
     LOG();

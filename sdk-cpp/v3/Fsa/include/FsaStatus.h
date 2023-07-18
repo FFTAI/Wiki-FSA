@@ -1,6 +1,11 @@
+
+
 #pragma once
 
 namespace FSA_CONNECT {
+/**
+ * @brief this namespace for enum of motor status, include control mode, control word, actuator type and so on
+ */
 namespace Status {
 
 enum FSAFlagState {

@@ -5,6 +5,9 @@
 using namespace nlohmann;
 
 namespace FSA_CONNECT {
+/**
+ * @brief this namespace for json data, you can get and set these json to actuator drive
+ */
 namespace JsonData {
 extern ordered_json get_root_config_json;
 extern ordered_json get_state_json;
@@ -21,4 +24,4 @@ extern ordered_json set_cur_json;
 extern ordered_json get_pvc_json;
 
 } // namespace JsonData
-} // namespace FSA
+} // namespace FSA_CONNECT

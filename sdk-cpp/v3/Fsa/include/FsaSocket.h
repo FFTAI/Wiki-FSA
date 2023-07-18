@@ -9,7 +9,14 @@
 #include <unistd.h>
 
 namespace FSA_CONNECT {
+/**
+ * @brief this namespace for transmit, but only has udp socket now
+ */
 namespace Transmit {
+/**
+ * @brief udp socket receive and send, use udp port 2333 and 2334
+ * 2333 for control, 2334 for root config
+ */
 class UDPSocket {
   public:
     UDPSocket(std::string ip, uint16_t remote_port);

@@ -2,7 +2,15 @@
 
 #include <string>
 namespace FSA_CONNECT {
+/**
+ * @brief this namespace for config of actuator, include pid config and control config.
+ * both of these struct has default config in every actuator drive.
+ */
 namespace FSAConfig {
+
+/**
+ * @brief this struct include position kp, velocity kp, ki, current kp,ki and limit.
+ */
 struct FSAPIDParams {
     double control_position_kp;
     double control_velocity_kp;
@@ -17,6 +25,9 @@ struct FSAPIDParams {
     double control_current_output_min;
 };
 
+/**
+ * @brief this struct you do not need config.
+ */
 struct FSAControlConfig {
     int actuator_type;
     int actuator_reduction_ratio;

@@ -46,7 +46,7 @@ int FSA_CONNECT::FSA::GetRootConfig() {
                 recv_data_json = json::parse(recv_data_str);
 
                 receive_state = recv_data_json.at("status");
-                //!="OK"
+
                 if (receive_state.compare("OK")) {
                     get_root_config = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, GET ROOT CONFIG FAILED", ip_);
@@ -116,7 +116,6 @@ int FSA_CONNECT::FSA::GetState() {
 
                 receive_state = recv_data_json.at("status");
                 // std::cout << "json: " << receive_state << std::endl;
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     get_root_config = 0;
                     return GET_ROOT_FAILED;
@@ -183,7 +182,6 @@ int FSA_CONNECT::FSA::Enable() {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     poweron_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE FAILED! ", ip_);
@@ -254,7 +252,6 @@ int FSA_CONNECT::FSA::Disable() {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     poweroff_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, DISABLE FAILED! ", ip_);
@@ -333,7 +330,6 @@ int FSA_CONNECT::FSA::SetControlConfig(const FSAConfig::FSAControlConfig &config
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     set_ctrlcfg_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, SET CONTROL CONFIG FAILED! ", ip_);
@@ -401,7 +397,6 @@ int FSA_CONNECT::FSA::GetControlConfig() {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     get_ctrlcfg_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, GET CONTROL CONFIG FAILED! ", ip_);
@@ -481,7 +476,6 @@ int FSA_CONNECT::FSA::SetPIDParams(const FSAConfig::FSAPIDParams &pidparams) {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     set_pid_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, SET PID PARAMS FAILED! ", ip_);
@@ -548,7 +542,6 @@ int FSA_CONNECT::FSA::GetPIDParams() {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     get_pid_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, SET PID PARAMS FAILED! ", ip_);
@@ -617,7 +610,6 @@ int FSA_CONNECT::FSA::EnablePosControl() {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     control_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE POSITION CONTROL FAILED! ", ip_);
@@ -685,7 +677,6 @@ int FSA_CONNECT::FSA::EnableVelControl() {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     control_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE VELOCITY CONTROL FAILED! ", ip_);
@@ -753,7 +744,6 @@ int FSA_CONNECT::FSA::EnableCurControl() {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     control_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, ENABLE CURRENT CONTROL FAILED! ", ip_);
@@ -824,7 +814,6 @@ int FSA_CONNECT::FSA::SetPosition(const double &pos, const double &vel_ff, const
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     set_pos_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, SET POSITION FAILED! ", ip_);
@@ -894,7 +883,6 @@ int FSA_CONNECT::FSA::SetVelocity(const double &vel, const double &cur_ff) {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     set_pos_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, SET VELOCITY FAILED! ", ip_);
@@ -964,7 +952,6 @@ int FSA_CONNECT::FSA::SetCurrent(const double &cur) {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     set_pos_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, SET CURRENT FAILED! ", ip_);
@@ -1031,7 +1018,6 @@ int FSA_CONNECT::FSA::GetPVC(double &pos, double &vel, double &cur) {
             if (!recv_data_str.empty()) {
                 recv_data_json = json::parse(recv_data_str);
                 receive_state = recv_data_json.at("status");
-                //!="OK"
                 if (receive_state.compare("OK")) {
                     set_pos_state = 0;
                     FSA_CONNECT::LOG::INFO("MOTOR: {}, SET CURRENT FAILED! ", ip_);
