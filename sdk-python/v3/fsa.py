@@ -31,18 +31,22 @@ class FSAFlagState(Enum):
 
 class FSAActuatorType(Enum):
     TYPE_DEFAULT = 0x00000001
-    TYPE_36_10_C_1 = 0x01010301
-    TYPE_36_10_C_30 = 0x01010303
-    TYPE_36_10_D_1 = 0x01010401
-    TYPE_36_10_D_30 = 0x01010403
-    TYPE_60_10_D_1 = 0x02010401
-    TYPE_60_10_D_120 = 0x02010405
-    TYPE_80_21_C_1 = 0x03020301
-    TYPE_80_21_C_30 = 0x03020303
-    TYPE_100_21_B_1 = 0x04020201
-    TYPE_100_21_B_7 = 0x04020202
-    TYPE_130_21_B_1 = 0x05020201
-    TYPE_130_21_B_7 = 0x05020202
+    TYPE_25_10_C_1 = 0x01010301
+    TYPE_25_10_C_30 = 0x01010303
+    TYPE_25_10_D_1 = 0x01010401
+    TYPE_25_10_D_30 = 0x01010403
+    TYPE_36_10_C_1 = 0x02010301
+    TYPE_36_10_C_30 = 0x02010303
+    TYPE_36_10_D_1 = 0x02010401
+    TYPE_36_10_D_30 = 0x02010403
+    TYPE_60_10_D_1 = 0x03010401
+    TYPE_60_10_D_120 = 0x03010405
+    TYPE_80_21_C_1 = 0x04020301
+    TYPE_80_21_C_30 = 0x04020303
+    TYPE_100_21_B_1 = 0x05020201
+    TYPE_100_21_B_7 = 0x05020202
+    TYPE_130_21_B_1 = 0x06020201
+    TYPE_130_21_B_7 = 0x06020202
 
 
 class FSAControlWord(Enum):
@@ -614,6 +618,7 @@ def set_flag_of_operation(server_ip, dict):
             "flag_do_use_store_motor_param": dict["flag_do_use_store_motor_param"],
             "flag_do_use_store_encoder_param": dict["flag_do_use_store_encoder_param"],
             "flag_do_use_store_pid_param": dict["flag_do_use_store_pid_param"],
+            "flag_do_use_store_protect_param": dict["flag_do_use_store_protect_param"],
             "flag_do_auto_calibrate_offset": dict["flag_do_auto_calibrate_offset"],
             }
 
