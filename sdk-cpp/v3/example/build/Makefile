@@ -150,114 +150,6 @@ demo_allinone.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/demo_allinone.cpp.s
 .PHONY : demo_allinone.cpp.s
 
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.o: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.o
-
-# target to build an object file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.i: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.i
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.i
-
-# target to preprocess a source file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.i
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.i
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.s: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.s
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.s
-
-# target to generate assembly for a file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.s
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.s
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.o: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.o
-
-# target to build an object file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.i: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.i
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.i
-
-# target to preprocess a source file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.i
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.i
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.s: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.s
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.s
-
-# target to generate assembly for a file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.s
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.s
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.o: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.o
-
-# target to build an object file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.i: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.i
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.i
-
-# target to preprocess a source file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.i
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.i
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.s: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.s
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.s
-
-# target to generate assembly for a file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.s
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.s
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.o: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.o
-
-# target to build an object file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.i: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.i
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.i
-
-# target to preprocess a source file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.i
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.i
-
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.s: home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.s
-
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.s
-
-# target to generate assembly for a file
-home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.s
-.PHONY : home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -270,18 +162,6 @@ help:
 	@echo "... demo_allinone.o"
 	@echo "... demo_allinone.i"
 	@echo "... demo_allinone.s"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.o"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.i"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.s"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.o"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.i"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.s"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.o"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.i"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.s"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.o"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.i"
-	@echo "... home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.s"
 .PHONY : help
 
 

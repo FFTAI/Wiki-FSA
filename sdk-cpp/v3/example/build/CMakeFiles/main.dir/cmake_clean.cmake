@@ -1,9 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/main.dir/demo_allinone.cpp.o"
-  "CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o"
-  "CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o"
-  "CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o"
-  "CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o"
   "main"
   "main.pdb"
 )
