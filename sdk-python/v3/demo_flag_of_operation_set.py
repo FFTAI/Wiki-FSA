@@ -28,6 +28,7 @@ def main():
                 'flag_do_use_store_motor_param': fsa.FSAFlagState.SET.value,
                 'flag_do_use_store_encoder_param': fsa.FSAFlagState.SET.value,
                 'flag_do_use_store_pid_param': fsa.FSAFlagState.SET.value,
+                'flag_do_use_store_protect_param': fsa.FSAFlagState.SET.value,
 
                 'flag_do_auto_calibrate_offset': fsa.FSAFlagState.SET.value,
             }

@@ -30,7 +30,7 @@ def main():
                 
                 'motor_index': 1,
                 'motor_vbus': 36,
-                'motor_direction': fsa.FSAMotorDirection.ABC.value,
+                'motor_direction': fsa.FSAMotorDirection.ACB.value,
                 'motor_pole_pairs': 21,
                 'motor_max_speed': 3000,  # [rpm]
 
