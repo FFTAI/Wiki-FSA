@@ -686,6 +686,82 @@ def clear_flag_of_operation(server_ip):
         return None
 
 
+def get_protect_param(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/protect_param",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fsa.get_root_config() except")
+        return None
+
+
+# fsa set Root Config properties
+# Parameter: The protection threshold of bus voltage overvoltage and undervoltage
+# Return success or failure
+def set_protect_param(server_ip, dict):
+    data = {"method": "SET",
+            "reqTarget": "/protect_param",
+            "property": "",
+            "protect_current_limit_max": dict["protect_current_limit_max"],
+            "protect_current_limit_min": dict["protect_current_limit_min"],
+            }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        return None
+
+
 # fsa Get Root Config property
 # Parameters: including device IP
 # Get fsa bus voltage over-voltage and under-voltage protection threshold
