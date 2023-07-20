@@ -70,77 +70,17 @@ CMakeFiles/main.dir/demo_allinone.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/demo_allinone.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/demo_allinone.cpp -o CMakeFiles/main.dir/demo_allinone.cpp.s
 
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o: /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o -c /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp > CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.i
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp -o CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.s
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o: /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o -c /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp > CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.i
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp -o CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.s
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o: /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o -c /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp > CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.i
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp -o CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.s
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o: /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o -c /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp > CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.i
-
-CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp -o CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.s
-
 # Object files for target main
 main_OBJECTS = \
-"CMakeFiles/main.dir/demo_allinone.cpp.o" \
-"CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o" \
-"CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o" \
-"CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o" \
-"CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o"
+"CMakeFiles/main.dir/demo_allinone.cpp.o"
 
 # External object files for target main
 main_EXTERNAL_OBJECTS =
 
 main: CMakeFiles/main.dir/demo_allinone.cpp.o
-main: CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/Fsa.cpp.o
-main: CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaJsonData.cpp.o
-main: CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaLog.cpp.o
-main: CMakeFiles/main.dir/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src/FsaSocket.cpp.o
 main: CMakeFiles/main.dir/build.make
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

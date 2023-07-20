@@ -6,5 +6,5 @@ CXX_FLAGS =   -std=gnu++17
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/include -I/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/thirdparty 
+CXX_INCLUDES = -I/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/../fsa-cpp-sdk/include -I/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/../thirdparty 
 

@@ -1,0 +1,3 @@
+[submodule "sdk-cpp/v3/fsa-cpp-sdk"]
+	path = sdk-cpp/v3/fsa-cpp-sdk
+	url = https://gitee.com/FourierIntelligence/fsa-cpp-sdk.git

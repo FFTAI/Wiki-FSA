@@ -3,13 +3,15 @@ cmake_minimum_required(VERSION 3.16.1)
 set(CMAKE_CXX_STANDARD 17)
 project(main)
 
-include_directories("/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/include")
-include_directories("/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/thirdparty")
+include_directories(${PROJECT_SOURCE_DIR}/../fsa-cpp-sdk/include)
 
-aux_source_directory(/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/Fsa/src dir_fsa)
+link_directories(${PROJECT_SOURCE_DIR}/../fsa-cpp-sdk/lib)
+
+include_directories(${PROJECT_SOURCE_DIR}/../thirdparty)
 
 add_executable(main
 
-    /home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/demo_allinone.cpp
-    ${dir_fsa}
+    ${PROJECT_SOURCE_DIR}/demo_allinone.cpp
 )
+
+target_link_libraries(main fsasdk)
