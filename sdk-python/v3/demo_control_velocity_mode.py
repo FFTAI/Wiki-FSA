@@ -7,7 +7,7 @@ server_ip_list = []
 
 
 def main():
-    server_ip_list = fsa.broadcast_func()
+    server_ip_list = fsa.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
@@ -49,10 +49,12 @@ def main():
 
         # set work at current control mode
         for i in range(len(server_ip_list)):
-            fsa.set_mode_of_operation(server_ip_list[i], fsa.FSAModeOfOperation.VELOCITY_CONTROL.value[0])
+            fsa.set_mode_of_operation(server_ip_list[i], fsa.FSAModeOfOperation.VELOCITY_CONTROL)
 
         print('\n')
         time.sleep(1)
+
+        # ------------------------------------------------------
 
         # create sine wave
         count_max = round(1000 * 2 * math.pi)
@@ -69,6 +71,8 @@ def main():
 
         time.sleep(1)
 
+        # ------------------------------------------------------
+
         for i in range(len(server_ip_list)):
             fsa.set_disable(server_ip_list[i])
 
@@ -76,7 +80,7 @@ def main():
 
         # set work at none control mode
         for i in range(len(server_ip_list)):
-            fsa.set_mode_of_operation(server_ip_list[i], fsa.FSAModeOfOperation.VELOCITY_CONTROL.value[0])
+            fsa.set_mode_of_operation(server_ip_list[i], fsa.FSAModeOfOperation.VELOCITY_CONTROL)
 
 
 if __name__ == '__main__':

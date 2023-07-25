@@ -5,7 +5,7 @@ server_ip_list = []
 
 
 def main():
-    server_ip_list = fsa.broadcast_func()
+    server_ip_list = fsa.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
@@ -19,11 +19,11 @@ def main():
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
-                'control_position_kp': 200.0,
+                'control_position_kp': 30.0,
                 'control_velocity_kp': 0.04,
                 'control_velocity_ki': 0.0002,
-                'control_current_kp': 0.02,
-                'control_current_ki': 0.00015,
+                'control_current_kp': 0.01,
+                'control_current_ki': 0.0001,
 
                 'control_position_output_max': 3000,
                 'control_position_output_min': -3000,
@@ -42,6 +42,10 @@ def main():
             fsa.get_config(server_ip_list[i])
 
         print('\n')
+
+        # reboot all FAS
+        for i in range(len(server_ip_list)):
+            fsa.reboot(server_ip_list[i])
 
 
 if __name__ == '__main__':

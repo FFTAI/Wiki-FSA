@@ -7,7 +7,7 @@ server_ip_list = []
 
 
 def main():
-    server_ip_list = fsa.broadcast_func()
+    server_ip_list = fsa.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 

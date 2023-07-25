@@ -36,7 +36,7 @@ def main():
 
         # set work at current control mode
         for i in range(len(server_ip_list)):
-            fsa.set_mode_of_operation(server_ip_list[i], fsa.FSAModeOfOperation.CURRENT_CLOSE_LOOP_CONTROL.value[0])
+            fsa.set_mode_of_operation(server_ip_list[i], fsa.FSAModeOfOperation.CURRENT_CLOSE_LOOP_CONTROL)
 
         time.sleep(1)
 
@@ -48,7 +48,9 @@ def main():
 
         time.sleep(1)
 
-        if flag_enabled:
+        # ------------------------------------------------------
+
+        if flag_enabled == fsa.FSAFunctionResult.SUCCESS:
 
             for i in range(len(server_ip_list)):
                 fsa.set_current_control(server_ip_list[i], 0.0)
@@ -59,7 +61,7 @@ def main():
                 for j in range(len(server_ip_list)):
                     # cmd_current for actuator 36 with 30 reduction ratio should larger than 0.30
                     # cmd_current for actuator 60 should larger than 0.30
-                    fsa.set_current_control(server_ip_list[j], 2.0)
+                    fsa.set_current_control(server_ip_list[j], -1.0)
                 time.sleep(0.01)
 
             for i in range(len(server_ip_list)):
@@ -67,14 +69,16 @@ def main():
 
             time.sleep(1)
 
-            for i in range(len(server_ip_list)):
-                fsa.set_disable(server_ip_list[i])
+        # ------------------------------------------------------
 
-            time.sleep(1)
+        for i in range(len(server_ip_list)):
+            fsa.set_disable(server_ip_list[i])
 
-            # set work at none control mode
-            for i in range(len(server_ip_list)):
-                fsa.set_mode_of_operation(server_ip_list[i], fsa.FSAModeOfOperation.CURRENT_CLOSE_LOOP_CONTROL.value[0])
+        time.sleep(1)
+
+        # set work at none control mode
+        for i in range(len(server_ip_list)):
+            fsa.set_mode_of_operation(server_ip_list[i], fsa.FSAModeOfOperation.CURRENT_CLOSE_LOOP_CONTROL)
 
 
 if __name__ == '__main__':

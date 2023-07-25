@@ -5,7 +5,7 @@ server_ip_list = []
 
 
 def main():
-    server_ip_list = fsa.broadcast_func()
+    server_ip_list = fsa.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
@@ -19,18 +19,18 @@ def main():
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
-                'flag_do_calibrate_adc': fsa.FSAFlagState.SET.value,
-                'flag_do_calibrate_motor': fsa.FSAFlagState.SET.value,
-                'flag_do_calibrate_encoder': fsa.FSAFlagState.SET.value,
-                'flag_do_calibrate_direction': fsa.FSAFlagState.SET.value,
-                'flag_do_calibrate_offset': fsa.FSAFlagState.SET.value,
+                'flag_do_calibrate_adc': fsa.FSAFlagState.SET,
+                'flag_do_calibrate_motor': fsa.FSAFlagState.SET,
+                'flag_do_calibrate_encoder': fsa.FSAFlagState.SET,
+                'flag_do_calibrate_direction': fsa.FSAFlagState.SET,
+                'flag_do_calibrate_offset': fsa.FSAFlagState.SET,
 
-                'flag_do_use_store_motor_param': fsa.FSAFlagState.SET.value,
-                'flag_do_use_store_encoder_param': fsa.FSAFlagState.SET.value,
-                'flag_do_use_store_pid_param': fsa.FSAFlagState.SET.value,
-                'flag_do_use_store_protect_param': fsa.FSAFlagState.SET.value,
+                'flag_do_use_store_motor_param': fsa.FSAFlagState.SET,
+                'flag_do_use_store_encoder_param': fsa.FSAFlagState.SET,
+                'flag_do_use_store_pid_param': fsa.FSAFlagState.SET,
+                'flag_do_use_store_protect_param': fsa.FSAFlagState.SET,
 
-                'flag_do_auto_calibrate_offset': fsa.FSAFlagState.SET.value,
+                'flag_do_auto_calibrate_offset': fsa.FSAFlagState.SET,
             }
             fsa.set_flag_of_operation(server_ip_list[i], dict)
 
@@ -42,6 +42,10 @@ def main():
             fsa.get_config(server_ip_list[i])
 
         print('\n')
+
+        # reboot all FAS
+        for i in range(len(server_ip_list)):
+            fsa.reboot(server_ip_list[i])
 
 
 if __name__ == '__main__':

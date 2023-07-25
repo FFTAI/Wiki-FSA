@@ -14,7 +14,7 @@ from fsa_logger import fsa_logger
 from fsa_config import gl_rcs_config
 
 
-class FSAFunctionResult(Enum):
+class FSAFunctionResult:
     SUCCESS = 0
     FAIL = -1
     RUNNING = 1
@@ -24,12 +24,12 @@ class FSAFunctionResult(Enum):
     TIMEOUT = 5
 
 
-class FSAFlagState(Enum):
+class FSAFlagState:
     CLEAR = 0
     SET = 1
 
 
-class FSAActuatorType(Enum):
+class FSAActuatorType:
     TYPE_DEFAULT = 0x00000001
     TYPE_25_10_C_1 = 0x01010301
     TYPE_25_10_C_30 = 0x01010303
@@ -43,25 +43,25 @@ class FSAActuatorType(Enum):
     TYPE_60_10_D_120 = 0x03010405
     TYPE_80_21_C_1 = 0x04020301
     TYPE_80_21_C_30 = 0x04020303
-    TYPE_100_21_B_1 = 0x05020201
-    TYPE_100_21_B_7 = 0x05020202
-    TYPE_130_21_B_1 = 0x06020201
-    TYPE_130_21_B_7 = 0x06020202
+    TYPE_100_21_A_1 = 0x05020101
+    TYPE_100_21_A_7 = 0x05020102
+    TYPE_130_21_A_1 = 0x06020101
+    TYPE_130_21_A_7 = 0x06020102
 
 
-class FSAControlWord(Enum):
-    NONE = 0,
-    CALIBRATE_ADC = 1,
-    CALIBRATE_MOTOR = 2,
-    OPEN_LOOP_CONTORL = 3,
-    CURRENT_CLOSE_LOOP_CONTROL = 4,
-    SERVO_OFF = 0X06,
-    SERVO_ON = 0X0F,
-    MOTION_ABS = 0X103F,
-    CLEAR_FAULT = 0X86,
+class FSAControlWord:
+    NONE = 0
+    CALIBRATE_ADC = 1
+    CALIBRATE_MOTOR = 2
+    OPEN_LOOP_CONTORL = 3
+    CURRENT_CLOSE_LOOP_CONTROL = 4
+    SERVO_OFF = 0x06
+    SERVO_ON = 0x0F
+    MOTION_ABS = 0x103F
+    CLEAR_FAULT = 0x86
 
 
-class FSAState(Enum):
+class FSAState:
     UNDEFINED = 0
     IDLE = 1
     STARTUP_SEQUENCE = 2
@@ -70,15 +70,15 @@ class FSAState(Enum):
     ENABLE = 8
 
 
-class FSAModeOfOperation(Enum):
-    NONE = 0,
-    CURRENT_CLOSE_LOOP_CONTROL = 4,
-    VELOCITY_CONTROL = 3,
-    POSITION_CONTROL = 1,
-    TRAPEZOIDAL_CONTROL = 5,
+class FSAModeOfOperation:
+    NONE = 0
+    CURRENT_CLOSE_LOOP_CONTROL = 4
+    VELOCITY_CONTROL = 3
+    POSITION_CONTROL = 1
+    TRAPEZOIDAL_CONTROL = 5
 
 
-class FSAInputMode(Enum):
+class FSAInputMode:
     INPUT_MODE_INACTIVE = 0
     INPUT_MODE_PASSTHROUGH = 1
     INPUT_MODE_VEL_RAMP = 2
@@ -87,9 +87,66 @@ class FSAInputMode(Enum):
     INPUT_MODE_TORQUE_RAMP = 6
 
 
-class FSAMotorDirection(Enum):
+class FSAActuatorDirection:
+    DIRECTION_NORMAL = 1
+    DIRECTION_REVERSE = -1
+
+
+class FSAActuatorReductionRatio:
+    REDUCTION_RATIO_7 = 7
+    REDUCTION_RATIO_30 = 30
+    REDUCTION_RATIO_50 = 50
+
+
+class FSAMotorIndex:
+    INDEX_1 = 1
+
+
+class FSAMotorDirection:
     ABC = 1
     ACB = -1
+
+
+class FSAMotorVBUS:
+    VBUS_36V = 36
+    VBUS_48V = 48
+
+
+class FSAMotorPolePairs:
+    POLE_PAIRS_7 = 7
+    POLE_PAIRS_10 = 10
+    POLE_PAIRS_21 = 21
+
+
+class FSAMotorMaxSpeed:
+    MAX_SPEED_3000 = 3000  # rpm
+
+
+class FSAMotorVIBCADCRatio:
+    _ADC_PRECISION = 4096.0
+    _ADC_SHUNT_RESISTANCE_2mR = 0.002
+    _ADC_SHUNT_RESISTANCE_05mR = 0.0005
+    _ADC_REF_V = 3.3
+    _ADC_AMPLIFIER = 20
+    VIBC_ADC_RATIO_2mR = (_ADC_REF_V / _ADC_PRECISION / _ADC_SHUNT_RESISTANCE_2mR / _ADC_AMPLIFIER)
+    VIBC_ADC_RATIO_05mR = (_ADC_REF_V / _ADC_PRECISION / _ADC_SHUNT_RESISTANCE_05mR / _ADC_AMPLIFIER)
+
+
+class FSAMotorVBUSADCRatio:
+    _ADC_PRECISION = 4096.0
+    _UP_SHUNT_RESISTANCE = 18000
+    _DOWN_SHUNT_RESISTANCE = 1000
+    _ADC_REF_V = 3.3
+    VBUS_ADC_RATIO = (_ADC_REF_V / _ADC_PRECISION * (_UP_SHUNT_RESISTANCE + _DOWN_SHUNT_RESISTANCE) / _DOWN_SHUNT_RESISTANCE)
+
+
+class FSAEncoderDirection:
+    DIRECTION_CW = -1
+    DIRECTION_CCW = 1
+
+
+class FSAEncoderResolution:
+    RESOLUTION_4000 = 4000  # 4000 pulse/rev
 
 
 default_fsa_timeout = 0.2
@@ -184,7 +241,7 @@ def set_enable(server_ip):
         "method": "SET",
         "reqTarget": "/control_word",
         "property": "",
-        "control_word": FSAControlWord.SERVO_ON.value[0],
+        "control_word": FSAControlWord.SERVO_ON,
     }
 
     json_str = json.dumps(data)
@@ -225,7 +282,7 @@ def set_disable(server_ip):
         "method": "SET",
         "reqTarget": "/control_word",
         "property": "",
-        "control_word": FSAControlWord.SERVO_OFF.value[0],  # enum output is a tuple
+        "control_word": FSAControlWord.SERVO_OFF,
     }
 
     json_str = json.dumps(data)
@@ -808,13 +865,19 @@ def set_config(server_ip, dict):
     data = {"method": "SET",
             "reqTarget": "/config",
             "property": "",
+
             "actuator_type": dict["actuator_type"],
+            "actuator_direction": dict["actuator_direction"],
             "actuator_reduction_ratio": dict["actuator_reduction_ratio"],
+
             "motor_index": dict["motor_index"],
             "motor_vbus": dict["motor_vbus"],
             "motor_direction": dict["motor_direction"],
             "motor_pole_pairs": dict["motor_pole_pairs"],
             "motor_max_speed": dict["motor_max_speed"],
+            "motor_vibc_adc_ratio": dict["motor_vibc_adc_ratio"],
+            "motor_vbus_adc_ratio": dict["motor_vbus_adc_ratio"],
+
             "encoder_direction": dict["encoder_direction"],
             "encoder_resolution": dict["encoder_resolution"],
             "encoder_phase_offset": dict["encoder_phase_offset"],
@@ -1303,7 +1366,7 @@ def enable_group(server_ips):
         data = {
             "method": "SET",
             "reqTarget": "/control_word",
-            "property": FSAControlWord.SERVO_ON.value[0],
+            "property": FSAControlWord.SERVO_ON[0],
         }
 
         json_str = json.dumps(data)
@@ -1393,7 +1456,7 @@ def disable_group(server_ips):
         data = {
             "method": "SET",
             "reqTarget": "/control_word",
-            "property": FSAControlWord.SERVO_OFF.value[0],
+            "property": FSAControlWord.SERVO_OFF,
         }
         json_str = json.dumps(data)
 
