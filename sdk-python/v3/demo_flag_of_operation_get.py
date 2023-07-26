@@ -1,4 +1,4 @@
-import fsa
+import fi_fsa
 import time
 
 server_ip_list = []

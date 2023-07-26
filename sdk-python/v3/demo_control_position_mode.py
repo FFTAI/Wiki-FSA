@@ -1,4 +1,4 @@
-import fsa
+import fi_fsa
 import time
 import math
 

@@ -1,4 +1,4 @@
-import fsa
+import fi_fsa
 
 server_ip_list = []
 filter_ip_list = []

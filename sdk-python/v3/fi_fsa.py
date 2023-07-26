@@ -7,11 +7,11 @@ from enum import Enum
 from math import *
 import struct
 
-from fsa_logger import fsa_logger
+from fi_fsa_logger import fsa_logger
 
 # if add to Robot-RCS project, uncomment this line!!!
 # from fi_rcs_config import gl_rcs_config
-from fsa_config import gl_rcs_config
+from fi_fsa_config import gl_rcs_config
 
 
 class FSAFunctionResult:
