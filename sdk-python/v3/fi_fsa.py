@@ -230,7 +230,7 @@ def get_root(server_ip):
     except socket.timeout:  # fail after 1 second of no activity
         fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_root() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_root() except")
 
 
 # fsa enable
@@ -270,7 +270,7 @@ def set_enable(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.enable() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.enable() except")
         return None
 
 
@@ -311,7 +311,7 @@ def set_disable(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.disable() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.disable() except")
         return None
 
 
@@ -352,7 +352,7 @@ def get_state(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_state() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_state() except")
         return None
 
 
@@ -392,7 +392,7 @@ def set_mode_of_operation(server_ip, mode_of_operation):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.control_mode() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.control_mode() except")
         return None
 
 
@@ -428,7 +428,7 @@ def get_home_offset(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
         return None
 
 
@@ -466,7 +466,7 @@ def set_home_offset(server_ip, home_offset):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_linear_count() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_linear_count() except")
         return None
 
 
@@ -500,7 +500,7 @@ def set_home_position(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_linear_count() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_linear_count() except")
         return None
 
 
@@ -539,7 +539,7 @@ def get_pid_param(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
         return None
 
 
@@ -588,7 +588,7 @@ def set_pid_param(server_ip, dict):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
         return None
 
 
@@ -623,7 +623,7 @@ def clear_pid_param(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
         return None
 
 
@@ -659,7 +659,7 @@ def get_flag_of_operation(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
         return None
 
 
@@ -704,7 +704,7 @@ def set_flag_of_operation(server_ip, dict):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
         return None
 
 
@@ -739,7 +739,7 @@ def clear_flag_of_operation(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
         return None
 
 
@@ -775,7 +775,7 @@ def get_protect_param(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
         return None
 
 
@@ -815,7 +815,7 @@ def set_protect_param(server_ip, dict):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
         return None
 
 
@@ -854,7 +854,7 @@ def get_config(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
         return None
 
 
@@ -908,7 +908,7 @@ def set_config(server_ip, dict):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
         return None
 
 
@@ -946,7 +946,7 @@ def save_config(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.save_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.save_config() except")
         return None
 
 
@@ -984,7 +984,7 @@ def erase_config(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.erase_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.erase_config() except")
         return None
 
 
@@ -1022,7 +1022,7 @@ def reboot(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.reboot_motor_drive() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.reboot_motor_drive() except")
         return None
 
 
@@ -1060,7 +1060,7 @@ def get_error_code(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_error() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_error() except")
         return None
 
 
@@ -1098,7 +1098,7 @@ def clear_error_code(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.clear_error() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.clear_error() except")
         return None
 
 
@@ -1139,7 +1139,7 @@ def get_pvc(server_ip):
         return FSAFunctionResult.TIMEOUT
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_pvc() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
         return FSAFunctionResult.FAIL
 
 
@@ -1179,7 +1179,7 @@ def get_pvcc(server_ip):
         return FSAFunctionResult.TIMEOUT
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_pvc() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
         return FSAFunctionResult.FAIL
 
 
@@ -1221,7 +1221,7 @@ def get_pvcccc(server_ip):
         return FSAFunctionResult.TIMEOUT
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_pvc() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
         return FSAFunctionResult.FAIL
 
 
@@ -1265,7 +1265,7 @@ def set_position_control(server_ip, position, velocity_ff=0.0, current_ff=0.0):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_position() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_position() except")
         return None
 
 
@@ -1308,7 +1308,7 @@ def set_velocity_control(server_ip, velocity, current_ff=0.0):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_velocity() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_velocity() except")
         return None
 
 
@@ -1350,7 +1350,7 @@ def set_current_control(server_ip, current):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_current() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_current() except")
         return None
 
 
@@ -1694,7 +1694,7 @@ def get_error_group(server_ips, motor_numbers=None):
 
         except:
             response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            fsa_logger.print_trace_warning(server_ip + " fsa.get_error_group() except")
+            fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_error_group() except")
             continue
 
     axis = []
@@ -1785,7 +1785,7 @@ def clear_error_group(server_ips, motor_numbers=None):
 
         except:
             response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            fsa_logger.print_trace_warning(server_ip + " fsa.clear_error_group() except")
+            fsa_logger.print_trace_warning(server_ip + " fi_fsa.clear_error_group() except")
             continue
 
     func_result = []
@@ -1870,7 +1870,7 @@ def get_pvc_group(server_ips, motor_numbers=None):
 
         except:
             response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            fsa_logger.print_trace_warning(server_ip + " fsa.get_pvc_group() except")
+            fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_pvc_group() except")
             continue
 
     positions = []
@@ -2011,7 +2011,7 @@ def get_comm_root(server_ip):
     except socket.timeout:  # fail after 1 second of no activity
         fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_root() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_root() except")
 
 
 # fsa Get Root Config property
@@ -2049,7 +2049,7 @@ def get_comm_config(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
         return None
 
 
@@ -2097,7 +2097,7 @@ def set_comm_config(server_ip, dict):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.set_root_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
         return None
 
 
@@ -2135,7 +2135,7 @@ def save_comm_config(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.save_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.save_config() except")
         return None
 
 
@@ -2173,7 +2173,7 @@ def erase_comm_config(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.erase_config() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.erase_config() except")
         return None
 
 
@@ -2211,7 +2211,7 @@ def reboot_comm(server_ip):
         return None
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.reboot() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.reboot() except")
         return None
 
 
@@ -2281,7 +2281,7 @@ def reboot_comm_group(server_ips):
 
         except:
             response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            fsa_logger.print_trace_warning(server_ip + " fsa.reboot_group() except")
+            fsa_logger.print_trace_warning(server_ip + " fi_fsa.reboot_group() except")
             continue
 
     func_result = []
@@ -2333,7 +2333,7 @@ def get_abs_encoder_angle(server_ip):
         return FSAFunctionResult.TIMEOUT
 
     except:
-        fsa_logger.print_trace_warning(server_ip + " fsa.get_abs_encoder_angle() except")
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_abs_encoder_angle() except")
         return FSAFunctionResult.FAIL
 
 

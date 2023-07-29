@@ -21,20 +21,20 @@ int main() {
 
     FSA_CONNECT::FSA fsa(ip);
 
-    fsa.Enable();
-    // fsa.Disable();
-    // fsa.GetControlConfig();
-    // fsa.GetRootConfig();
-    // fsa.SetPIDParams(pid1);
-    // fsa.GetPIDParams();
-    fsa.EnableVelControl();
+    fi_fsa.Enable();
+    // fi_fsa.Disable();
+    // fi_fsa.GetControlConfig();
+    // fi_fsa.GetRootConfig();
+    // fi_fsa.SetPIDParams(pid1);
+    // fi_fsa.GetPIDParams();
+    fi_fsa.EnableVelControl();
     double pos;
     double vel;
     double cur;
     while (1) {
-        fsa.SetVelocity(2, 0);
+        fi_fsa.SetVelocity(2, 0);
         usleep(2000);
-        fsa.GetPVC(pos, vel, cur);
+        fi_fsa.GetPVC(pos, vel, cur);
         std::cout << "pos: " << pos << "vel: " << vel << "cur: " << cur << std::endl;
     }
 

@@ -7,14 +7,14 @@ server_ip_list = [
 
 
 def main():
-    # server_ip_list = fsa.broadcast_func()
+    # server_ip_list = fi_fsa.broadcast_func()
 
     if server_ip_list:
 
         for j in range(10000):
 
             for i in range(len(server_ip_list)):
-                angle = fsa.get_abs_encoder_angle(server_ip_list[i])
+                angle = fi_fsa.get_abs_encoder_angle(server_ip_list[i])
                 print("Angle = %f" % angle)
 
             time.sleep(0.2)  # sleep 1 second

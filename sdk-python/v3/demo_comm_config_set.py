@@ -5,13 +5,13 @@ server_ip_list = []
 
 
 def main():
-    server_ip_list = fsa.broadcast_func_with_filter("Actuator")
+    server_ip_list = fi_fsa.broadcast_func_with_filter("Actuator")
 
     if server_ip_list:
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            fsa.get_comm_config(server_ip_list[i])
+            fi_fsa.get_comm_config(server_ip_list[i])
 
         print('\n')
         time.sleep(1)
@@ -30,14 +30,14 @@ def main():
                 'dns_1': [114, 114, 114, 114],
                 'dns_2': [8, 8, 8, 8]
             }
-            fsa.set_comm_config(server_ip_list[i], dict)
+            fi_fsa.set_comm_config(server_ip_list[i], dict)
 
         print('\n')
         time.sleep(1)
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            fsa.get_comm_config(server_ip_list[i])
+            fi_fsa.get_comm_config(server_ip_list[i])
 
         print('\n')
 
