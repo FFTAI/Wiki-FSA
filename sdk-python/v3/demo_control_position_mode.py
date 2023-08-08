@@ -65,7 +65,7 @@ def main():
         reduction_ratio = 1.0
         for t in range(0, count_max):
             for i in range(len(server_ip_list)):
-                set_position = 360.0 * 3.0 * math.sin(t / 1000.0)  # [deg]
+                set_position = 360.0 * math.sin(t / 1000.0)  # [deg]
                 fi_fsa.set_position_control(server_ip_list[i], set_position)
             time.sleep(0.01)
 

@@ -96,6 +96,7 @@ class FSAActuatorReductionRatio:
     REDUCTION_RATIO_7 = 7
     REDUCTION_RATIO_30 = 30
     REDUCTION_RATIO_50 = 50
+    REDUCTION_RATIO_120 = 120
 
 
 class FSAMotorIndex:
@@ -555,12 +556,6 @@ def set_pid_param(server_ip, dict):
             "control_velocity_ki": dict["control_velocity_ki"],
             "control_current_kp": dict["control_current_kp"],
             "control_current_ki": dict["control_current_ki"],
-            "control_position_output_max": dict["control_position_output_max"],
-            "control_position_output_min": dict["control_position_output_min"],
-            "control_velocity_output_max": dict["control_velocity_output_max"],
-            "control_velocity_output_min": dict["control_velocity_output_min"],
-            "control_current_output_max": dict["control_current_output_max"],
-            "control_current_output_min": dict["control_current_output_min"],
             }
 
     json_str = json.dumps(data)
@@ -667,16 +662,10 @@ def set_flag_of_operation(server_ip, dict):
     data = {"method": "SET",
             "reqTarget": "/flag_of_operation",
             "property": "",
-            "flag_do_calibrate_adc": dict["flag_do_calibrate_adc"],
-            "flag_do_calibrate_motor": dict["flag_do_calibrate_motor"],
-            "flag_do_calibrate_encoder": dict["flag_do_calibrate_encoder"],
-            "flag_do_calibrate_direction": dict["flag_do_calibrate_direction"],
-            "flag_do_calibrate_offset": dict["flag_do_calibrate_offset"],
+            "flag_do_use_store_actuator_param": dict["flag_do_use_store_actuator_param"],
             "flag_do_use_store_motor_param": dict["flag_do_use_store_motor_param"],
             "flag_do_use_store_encoder_param": dict["flag_do_use_store_encoder_param"],
             "flag_do_use_store_pid_param": dict["flag_do_use_store_pid_param"],
-            "flag_do_use_store_protect_param": dict["flag_do_use_store_protect_param"],
-            "flag_do_auto_calibrate_offset": dict["flag_do_auto_calibrate_offset"],
             }
 
     json_str = json.dumps(data)
@@ -712,82 +701,6 @@ def clear_flag_of_operation(server_ip):
     data = {"method": "SET",
             "reqTarget": "/flag_of_operation",
             "property": "clear",
-            }
-
-    json_str = json.dumps(data)
-
-    if fsa_debug is True:
-        fsa_logger.print_trace("Send JSON Obj:", json_str)
-
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
-    try:
-        data, address = s.recvfrom(1024)
-
-        if fsa_debug is True:
-            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        json_obj = json.loads(data.decode("utf-8"))
-
-        if json_obj.get("status") == "OK":
-            return FSAFunctionResult.SUCCESS
-        else:
-            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
-            return None
-
-    except socket.timeout:  # fail after 1 second of no activity
-        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
-        return None
-
-
-def get_protect_param(server_ip):
-    data = {
-        "method": "GET",
-        "reqTarget": "/protect_param",
-        "property": ""
-    }
-
-    json_str = json.dumps(data)
-
-    if fsa_debug is True:
-        fsa_logger.print_trace("Send JSON Obj:", json_str)
-
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
-    try:
-        data, address = s.recvfrom(1024)
-
-        if fsa_debug is True:
-            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        json_obj = json.loads(data.decode("utf-8"))
-
-        if json_obj.get("status") == "OK":
-            return FSAFunctionResult.SUCCESS
-        else:
-            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
-            return None
-
-    except socket.timeout:  # fail after 1 second of no activity
-        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
-        return None
-
-
-# fsa set Root Config properties
-# Parameter: The protection threshold of bus voltage overvoltage and undervoltage
-# Return success or failure
-def set_protect_param(server_ip, dict):
-    data = {"method": "SET",
-            "reqTarget": "/protect_param",
-            "property": "",
-            "protect_current_limit_max": dict["protect_current_limit_max"],
-            "protect_current_limit_min": dict["protect_current_limit_min"],
             }
 
     json_str = json.dumps(data)
@@ -870,17 +783,15 @@ def set_config(server_ip, dict):
             "actuator_direction": dict["actuator_direction"],
             "actuator_reduction_ratio": dict["actuator_reduction_ratio"],
 
-            "motor_index": dict["motor_index"],
+            "motor_type": dict["motor_type"],
+            "motor_hardware_type": dict["motor_hardware_type"],
             "motor_vbus": dict["motor_vbus"],
             "motor_direction": dict["motor_direction"],
             "motor_pole_pairs": dict["motor_pole_pairs"],
             "motor_max_speed": dict["motor_max_speed"],
-            "motor_vibc_adc_ratio": dict["motor_vibc_adc_ratio"],
-            "motor_vbus_adc_ratio": dict["motor_vbus_adc_ratio"],
+            "motor_max_current": dict["motor_max_current"],
 
             "encoder_direction": dict["encoder_direction"],
-            "encoder_resolution": dict["encoder_resolution"],
-            "encoder_phase_offset": dict["encoder_phase_offset"],
             }
 
     json_str = json.dumps(data)

@@ -25,20 +25,18 @@ def main():
                 'actuator_type': fi_fsa.FSAActuatorType.TYPE_DEFAULT,
                 # 'actuator_type': fi_fsa.FSAActuatorType.TYPE_130_21_A_7,
 
-                'actuator_direction': fi_fsa.FSAActuatorDirection.DIRECTION_REVERSE,
-                'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_7,
+                'actuator_direction': fi_fsa.FSAActuatorDirection.DIRECTION_NORMAL,
+                'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_120,
 
-                'motor_index': fi_fsa.FSAMotorIndex.INDEX_1,
+                'motor_type': 0,
+                'motor_hardware_type': 0,
                 'motor_vbus': fi_fsa.FSAMotorVBUS.VBUS_36V,
                 'motor_direction': fi_fsa.FSAMotorDirection.ACB,
                 'motor_pole_pairs': fi_fsa.FSAMotorPolePairs.POLE_PAIRS_21,
                 'motor_max_speed': fi_fsa.FSAMotorMaxSpeed.MAX_SPEED_3000,
-                'motor_vibc_adc_ratio': fi_fsa.FSAMotorVIBCADCRatio.VIBC_ADC_RATIO_05mR,
-                'motor_vbus_adc_ratio': fi_fsa.FSAMotorVBUSADCRatio.VBUS_ADC_RATIO,
+                'motor_max_current': 10,
 
                 'encoder_direction': fi_fsa.FSAEncoderDirection.DIRECTION_CCW,
-                'encoder_resolution': fi_fsa.FSAEncoderResolution.RESOLUTION_4000,
-                'encoder_phase_offset': 0,
             }
             fi_fsa.set_config(server_ip_list[i], dict)
 

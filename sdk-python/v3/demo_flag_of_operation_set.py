@@ -19,18 +19,10 @@ def main():
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
-                'flag_do_calibrate_adc': fi_fsa.FSAFlagState.SET,
-                'flag_do_calibrate_motor': fi_fsa.FSAFlagState.SET,
-                'flag_do_calibrate_encoder': fi_fsa.FSAFlagState.SET,
-                'flag_do_calibrate_direction': fi_fsa.FSAFlagState.SET,
-                'flag_do_calibrate_offset': fi_fsa.FSAFlagState.SET,
-
+                'flag_do_use_store_actuator_param': fi_fsa.FSAFlagState.SET,
                 'flag_do_use_store_motor_param': fi_fsa.FSAFlagState.SET,
                 'flag_do_use_store_encoder_param': fi_fsa.FSAFlagState.SET,
                 'flag_do_use_store_pid_param': fi_fsa.FSAFlagState.SET,
-                'flag_do_use_store_protect_param': fi_fsa.FSAFlagState.SET,
-
-                'flag_do_auto_calibrate_offset': fi_fsa.FSAFlagState.SET,
             }
             fi_fsa.set_flag_of_operation(server_ip_list[i], dict)
 
