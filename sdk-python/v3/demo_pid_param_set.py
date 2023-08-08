@@ -22,15 +22,8 @@ def main():
                 'control_position_kp': 30.0,
                 'control_velocity_kp': 0.04,
                 'control_velocity_ki': 0.0002,
-                'control_current_kp': 0.01,
-                'control_current_ki': 0.0001,
-
-                'control_position_output_max': 3000,
-                'control_position_output_min': -3000,
-                'control_velocity_output_max': 6.0,
-                'control_velocity_output_min': -6.0,
-                'control_current_output_max': 6.0,
-                'control_current_output_min': -6.0,
+                'control_current_kp': 0.01,  # not work for now
+                'control_current_ki': 0.0001,  # not work for now
             }
             fi_fsa.set_pid_param(server_ip_list[i], dict)
 

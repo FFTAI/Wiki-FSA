@@ -22,9 +22,10 @@ def main():
                 # Notice:
                 # if use TYPE_DEFAULT, the following parameters will be used,
                 # otherwise, the parameters will be used according to the type.
-                'actuator_type': fi_fsa.FSAActuatorType.TYPE_DEFAULT,
+
                 # 'actuator_type': fi_fsa.FSAActuatorType.TYPE_130_21_A_7,
 
+                'actuator_type': fi_fsa.FSAActuatorType.TYPE_DEFAULT,
                 'actuator_direction': fi_fsa.FSAActuatorDirection.DIRECTION_NORMAL,
                 'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_120,
 
@@ -33,8 +34,9 @@ def main():
                 'motor_vbus': fi_fsa.FSAMotorVBUS.VBUS_36V,
                 'motor_direction': fi_fsa.FSAMotorDirection.ACB,
                 'motor_pole_pairs': fi_fsa.FSAMotorPolePairs.POLE_PAIRS_21,
-                'motor_max_speed': fi_fsa.FSAMotorMaxSpeed.MAX_SPEED_3000,
-                'motor_max_current': 10,
+                'motor_max_speed': fi_fsa.FSAMotorMaxSpeed.MAX_SPEED_3000,  # rpm
+                'motor_max_acceleration': 60000,  # rpm/s
+                'motor_max_current': 10,  # A
 
                 'encoder_direction': fi_fsa.FSAEncoderDirection.DIRECTION_CCW,
             }
