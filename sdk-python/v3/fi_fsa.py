@@ -75,7 +75,7 @@ class FSAControlWord:
     SERVO_OFF = 0x06
     SERVO_ON = 0x0F
     MOTION_ABS = 0x103F
-    CLEAR_FAULT = 0x00
+    CLEAR_FAULT = 0x86
 
 
 class FSAModeOfOperation:
@@ -133,6 +133,14 @@ class FSAMotorType:
     FSA130V0 = 7
 
 
+class FSAHardwareType:
+    TYPE_YC_V01 = 0
+    TYPE_ODrive_V36 = 1
+    TYPE_H95V104 = 2
+    TYPE_H66V104 = 3
+    TYPE_H46V104 = 4
+    TYPE_H30V303 = 5
+
 class FSAMotorDirection:
     ABC = 1
     ACB = -1
@@ -151,6 +159,10 @@ class FSAMotorPolePairs:
 
 class FSAMotorMaxSpeed:
     MAX_SPEED_3000 = 3000  # rpm
+
+
+class FSAMotorMaxAcceleration:
+    MAX_ACCELERATION_60000 = 60000  # rpm/s
 
 
 class FSAMotorVIBCADCRatio:
@@ -820,6 +832,7 @@ def set_config(server_ip, dict):
             "motor_direction": dict["motor_direction"],
             "motor_pole_pairs": dict["motor_pole_pairs"],
             "motor_max_speed": dict["motor_max_speed"],
+            "motor_max_acceleration": dict["motor_max_acceleration"],
             "motor_max_current": dict["motor_max_current"],
 
             "encoder_direction": dict["encoder_direction"],

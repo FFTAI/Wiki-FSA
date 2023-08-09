@@ -29,13 +29,13 @@ def main():
                 'actuator_direction': fi_fsa.FSAActuatorDirection.DIRECTION_NORMAL,
                 'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_120,
 
-                'motor_type': 0,
-                'motor_hardware_type': 0,
+                'motor_type': fi_fsa.FSAMotorType.FSA60V0,
+                'motor_hardware_type': fi_fsa.FSAHardwareType.TYPE_H66V104,
                 'motor_vbus': fi_fsa.FSAMotorVBUS.VBUS_36V,
                 'motor_direction': fi_fsa.FSAMotorDirection.ACB,
-                'motor_pole_pairs': fi_fsa.FSAMotorPolePairs.POLE_PAIRS_21,
+                'motor_pole_pairs': fi_fsa.FSAMotorPolePairs.POLE_PAIRS_10,
                 'motor_max_speed': fi_fsa.FSAMotorMaxSpeed.MAX_SPEED_3000,  # rpm
-                'motor_max_acceleration': 60000,  # rpm/s
+                'motor_max_acceleration': fi_fsa.FSAMotorMaxAcceleration.MAX_ACCELERATION_60000,  # rpm/s
                 'motor_max_current': 10,  # A
 
                 'encoder_direction': fi_fsa.FSAEncoderDirection.DIRECTION_CCW,
