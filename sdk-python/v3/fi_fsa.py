@@ -359,6 +359,88 @@ def set_disable(server_ip):
         return None
 
 
+# CALIBRATE_ENCODER = 0xA3
+
+# fsa Calibrate Encoder 
+# Parameters: including device IP and motor number
+# Auto rotate clockwise once ,then change direction turn around
+def set_calibrate_encoder(server_ip):
+    data = {
+        "method": "SET",
+        "reqTarget": "/control_word",
+        "property": "",
+        "control_word": FSAControlWord.CALIBRATE_ENCODER,
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip + " : Recv Data Error !")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_calibrate_motor() except")
+        return None
+
+# fsa Clear Fault
+# Parameters: including device IP and motor number
+# Clear Fault
+def clear_fault(server_ip):
+    data = {
+        "method": "SET",
+        "reqTarget": "/control_word",
+        "property": "",
+        "control_word": FSAControlWord.CLEAR_FAULT,
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip + " : Recv Data Error !")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_clear_fault() except")
+        return None
+
 # fsa Get current status
 # Parameters: including device IP
 # Get fsa Get current status
