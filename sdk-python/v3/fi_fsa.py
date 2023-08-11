@@ -158,10 +158,14 @@ class FSAMotorPolePairs:
 
 
 class FSAMotorMaxSpeed:
+    MAX_SPEED_1000 = 1000  # rpm
+    MAX_SPEED_2000 = 2000  # rpm
     MAX_SPEED_3000 = 3000  # rpm
 
 
 class FSAMotorMaxAcceleration:
+    MAX_ACCELERATION_10000 = 10000  # rpm/s
+    MAX_ACCELERATION_30000 = 30000  # rpm/s
     MAX_ACCELERATION_60000 = 60000  # rpm/s
 
 
@@ -746,6 +750,84 @@ def clear_pid_param(server_ip):
         fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
         return None
 
+
+# fsa Get Root Config property
+# Parameters: including device IP
+# Get fsa bus voltage over-voltage and under-voltage protection threshold
+def get_control_param(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/control_param",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_control_param() except")
+        return None
+
+# fsa set Control Config properties
+# Parameter: Set Motor Max Speed ,acceleration and current
+# Return success or failure
+def set_control_param(server_ip, dict):
+    data = {"method": "SET",
+            "reqTarget": "/control_param",
+            "property": "",
+            "motor_max_speed": dict["motor_max_speed"],
+            "motor_max_acceleration": dict["motor_max_acceleration"],
+            "motor_max_current": dict["motor_max_current"],
+            }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_control_param() except")
+        return None
 
 def get_flag_of_operation(server_ip):
     data = {
