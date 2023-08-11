@@ -127,12 +127,13 @@ class FSAInputMode:
 class FSAMotorType:
     TYPE_MOTOR_NULL = 0
     TYPE_JIOALONG = 1
-    FSA130V0 = 2
-    FSA100V0 = 3
-    FSA80V0 = 4
-    FSA60V0 = 5
-    FSA36V0 = 6
-    FSA25V0 = 7    
+    FSA130_20V0 = 2
+    FSA100_15V0 = 3
+    FSA80_10V0 = 4
+    FSA60_08V0 = 5
+    FSA36_08V0 = 6
+    FSA25_08V0 = 7    
+    FSA36_10V0 = 8
 
 
 class FSAHardwareType:
@@ -167,6 +168,7 @@ class FSAMotorMaxSpeed:
 
 
 class FSAMotorMaxAcceleration:
+    MAX_ACCELERATION_6000 = 6000  # rpm/s
     MAX_ACCELERATION_10000 = 10000  # rpm/s
     MAX_ACCELERATION_30000 = 30000  # rpm/s
     MAX_ACCELERATION_60000 = 60000  # rpm/s

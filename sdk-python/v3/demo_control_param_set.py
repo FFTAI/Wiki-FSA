@@ -19,14 +19,14 @@ def main():
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
-                'motor_max_speed': 1234.5,
-                'motor_max_acceleration': 5432.1,
-                'motor_max_current': 8.6,
+                'motor_max_speed': 1500.5,
+                'motor_max_acceleration': 6000.1,
+                'motor_max_current': 10.2,
             }
             fi_fsa.set_control_param(server_ip_list[i], dict)
 
-        print('\n')
-        time.sleep(1)
+        # print('\n')
+        # time.sleep(1)
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
