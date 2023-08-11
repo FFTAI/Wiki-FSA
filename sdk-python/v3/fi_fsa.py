@@ -125,21 +125,24 @@ class FSAInputMode:
 
 
 class FSAMotorType:
-    FSA25V0 = 2
-    FSA36V0 = 3
-    FSA60V0 = 4
-    FSA80V0 = 5
-    FSA100V0 = 6
-    FSA130V0 = 7
+    TYPE_MOTOR_NULL = 0
+    TYPE_JIOALONG = 1
+    FSA130V0 = 2
+    FSA100V0 = 3
+    FSA80V0 = 4
+    FSA60V0 = 5
+    FSA36V0 = 6
+    FSA25V0 = 7    
 
 
 class FSAHardwareType:
-    TYPE_YC_V01 = 0
+    TYPE_HARDWARE_NULL = 0
     TYPE_ODrive_V36 = 1
     TYPE_H95V104 = 2
     TYPE_H66V104 = 3
     TYPE_H46V104 = 4
     TYPE_H30V303 = 5
+
 
 class FSAMotorDirection:
     ABC = 1
