@@ -94,25 +94,32 @@ class FSAState:
     ENCODER_CAIL = 4
 
 
-class FSAErrorCode:
+class FSAErrorCode(Enum):
     ERROR_NONE = 0x0
     ERROR_ADC_CAL_FAULT = 0x01
     ERROR_CAN_COM_TIMEOUT = 0x02
     ERROR_OVER_CURRENT = 0x04
     ERROR_OVER_VBUS = 0x08
+    
     ERROR_UNDER_VBUS = 0x10
     ERROR_OVER_TEMP_TRIP = 0x20
     ERROR_OVER_TEMP_MOSFET = 0x40
     ERROR_OVER_PHASE_A_CURRENT = 0x80
+    
     ERROR_OVER_PHASE_B_CURRENT = 0x100
     ERROR_OVER_PHASE_C_CURRENT = 0x200
     ERROR_OVER_HARD_PHASE_CURRENT = 0x400
     ERROR_OPD_FAULT = 0x800
+    
     ERROR_ENCODER_NOT_CALIBRATED = 0x1000
     ERROR_ENCODER_LOSS = 0x2000
     ERROR_FLASH_ERROR = 0x4000
     ERROR_MOTOR_STALL = 0x8000
+    
     ERROR_POSITION_LIMIT_ERROR = 0x10000
+    ERROR_ENCODER_REVERSAL = 0x20000
+    ERROR_MOTOR_TYPE_NULL = 0x40000
+    ERROR_HARDWARE_TYPE_NULL = 0x80000
 
 
 class FSAInputMode:
@@ -1174,6 +1181,13 @@ def get_error_code(server_ip):
         json_obj = json.loads(data.decode("utf-8"))
 
         if json_obj.get("status") == "OK":
+            temp = json_obj.get("error_code")
+            count = 0
+            for i in FSAErrorCode:
+                temp_error_code = (temp << 1 >> count) & 0x01
+                if temp_error_code == 1:
+                    fsa_logger.print_trace("Now Error Type = ",i.name)
+                count = count + 1
             return json_obj.get("error_code")
         else:
             fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
@@ -1185,44 +1199,6 @@ def get_error_code(server_ip):
 
     except:
         fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_error() except")
-        return None
-
-
-# fsa Remove error
-# Parameters: including server IP
-def clear_error_code(server_ip):
-    data = {
-        "method": "SET",
-        "reqTarget": "/error_code",
-        "property": "clear"
-    }
-
-    json_str = json.dumps(data)
-
-    if fsa_debug is True:
-        fsa_logger.print_trace("Send JSON Obj:", json_str)
-
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
-    try:
-        data, address = s.recvfrom(1024)
-
-        if fsa_debug is True:
-            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        json_obj = json.loads(data.decode("utf-8"))
-
-        if json_obj.get("status") == "OK":
-            return FSAFunctionResult.SUCCESS
-        else:
-            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
-            return None
-
-    except socket.timeout:  # fail after 1 second of no activity
-        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        fsa_logger.print_trace_warning(server_ip + " fi_fsa.clear_error() except")
         return None
 
 

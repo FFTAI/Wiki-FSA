@@ -29,7 +29,7 @@ def main():
                 'actuator_direction': fi_fsa.FSAActuatorDirection.DIRECTION_NORMAL,
                 'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_120,
 
-                'motor_type': fi_fsa.FSAMotorType.FSA60V0,
+                'motor_type': fi_fsa.FSAMotorType.FSA60_08V0,
                 'motor_hardware_type': fi_fsa.FSAHardwareType.TYPE_H66V104,
                 'motor_vbus': fi_fsa.FSAMotorVBUS.VBUS_36V,
                 'motor_direction': fi_fsa.FSAMotorDirection.ACB,
