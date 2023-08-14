@@ -11,30 +11,37 @@ def main():
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            fi_fsa.get_config(server_ip_list[i])
+            fi_fsa.get_pid_param(server_ip_list[i])
 
         print('\n')
         time.sleep(1)
 
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            dict = {
-                'control_position_kp': 30.0,
+            dict = { #36
+                'control_position_kp': 0.5,
+                'control_velocity_kp': 0.002,
+                'control_velocity_ki': 0.00001,
+                'control_current_kp': 0.0,  # not work for now
+                'control_current_ki': 0.0,  # not work for now
+            }
+            dict = { #60
+                'control_position_kp': 0.08,
                 'control_velocity_kp': 0.04,
-                'control_velocity_ki': 0.0002,
-                'control_current_kp': 0.01,  # not work for now
-                'control_current_ki': 0.0001,  # not work for now
+                'control_velocity_ki': 0.0001,
+                'control_current_kp': 0.0,  # not work for now
+                'control_current_ki': 0.0,  # not work for now
             }
             fi_fsa.set_pid_param(server_ip_list[i], dict)
 
-        print('\n')
-        time.sleep(1)
+        # print('\n')
+        # time.sleep(1)
 
-        # get the communication configuration of all FAS
-        for i in range(len(server_ip_list)):
-            fi_fsa.get_config(server_ip_list[i])
+        # # get the communication configuration of all FAS
+        # for i in range(len(server_ip_list)):
+        #     fi_fsa.get_config(server_ip_list[i])
 
-        print('\n')
+        # print('\n')
 
         # reboot all FAS
         for i in range(len(server_ip_list)):

@@ -38,6 +38,7 @@ def main():
                 'motor_max_acceleration': fi_fsa.FSAMotorMaxAcceleration.MAX_ACCELERATION_60000,  # rpm/s
                 'motor_max_current': 10,  # A
 
+                'motor_max_current': 13.0,  # A
                 'encoder_direction': fi_fsa.FSAEncoderDirection.DIRECTION_CCW,
             }
             fi_fsa.set_config(server_ip_list[i], dict)

@@ -13,8 +13,21 @@ def main():
         for i in range(len(server_ip_list)):
             fi_fsa.set_calibrate_encoder(server_ip_list[i])
 
-        print('\n')
         time.sleep(1)
+        
+        state = []
+        for i in range(len(server_ip_list)):
+            state.append(0)
+        for count in range(5):
+            for i in range(len(server_ip_list)):
+                if state[i] != 4:
+                    state[i] = fi_fsa.get_state(server_ip_list[i])
+            for i in range(len(server_ip_list)):
+                if state[i] == 4:
+                    fi_fsa.set_disable(server_ip_list[i])
+            time.sleep(1)  # sleep 1 second
+        for i in range(len(server_ip_list)):
+            fi_fsa.set_disable(server_ip_list[i])
 
 
 if __name__ == '__main__':
