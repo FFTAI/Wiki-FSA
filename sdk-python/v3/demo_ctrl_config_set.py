@@ -27,9 +27,9 @@ def main():
 
                 'actuator_type': fi_fsa.FSAActuatorType.TYPE_DEFAULT,
                 'actuator_direction': fi_fsa.FSAActuatorDirection.DIRECTION_NORMAL,
-                'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_120,
+                'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_30,
 
-                'motor_type': fi_fsa.FSAMotorType.FSA60_08V0,
+                'motor_type': fi_fsa.FSAMotorType.FSA80_10V0,
                 'motor_hardware_type': fi_fsa.FSAHardwareType.TYPE_H66V104,
                 'motor_vbus': fi_fsa.FSAMotorVBUS.VBUS_36V,
                 'motor_direction': fi_fsa.FSAMotorDirection.ACB,
@@ -38,7 +38,6 @@ def main():
                 'motor_max_acceleration': fi_fsa.FSAMotorMaxAcceleration.MAX_ACCELERATION_60000,  # rpm/s
                 'motor_max_current': 10,  # A
 
-                'motor_max_current': 13.0,  # A
                 'encoder_direction': fi_fsa.FSAEncoderDirection.DIRECTION_CCW,
             }
             fi_fsa.set_config(server_ip_list[i], dict)

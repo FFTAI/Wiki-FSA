@@ -100,22 +100,22 @@ class FSAErrorCode(Enum):
     ERROR_CAN_COM_TIMEOUT = 0x02
     ERROR_OVER_CURRENT = 0x04
     ERROR_OVER_VBUS = 0x08
-    
+
     ERROR_UNDER_VBUS = 0x10
     ERROR_OVER_TEMP_TRIP = 0x20
     ERROR_OVER_TEMP_MOSFET = 0x40
     ERROR_OVER_PHASE_A_CURRENT = 0x80
-    
+
     ERROR_OVER_PHASE_B_CURRENT = 0x100
     ERROR_OVER_PHASE_C_CURRENT = 0x200
     ERROR_OVER_HARD_PHASE_CURRENT = 0x400
     ERROR_OPD_FAULT = 0x800
-    
+
     ERROR_ENCODER_NOT_CALIBRATED = 0x1000
     ERROR_ENCODER_LOSS = 0x2000
     ERROR_FLASH_ERROR = 0x4000
     ERROR_MOTOR_STALL = 0x8000
-    
+
     ERROR_POSITION_LIMIT_ERROR = 0x10000
     ERROR_ENCODER_REVERSAL = 0x20000
     ERROR_MOTOR_TYPE_NULL = 0x40000
@@ -139,7 +139,7 @@ class FSAMotorType:
     FSA80_10V0 = 4
     FSA60_08V0 = 5
     FSA36_08V0 = 6
-    FSA25_08V0 = 7    
+    FSA25_08V0 = 7
     FSA36_10V0 = 8
 
 
@@ -417,6 +417,7 @@ def set_calibrate_encoder(server_ip):
         fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_calibrate_motor() except")
         return None
 
+
 # fsa Clear Fault
 # Parameters: including device IP and motor number
 # Clear Fault
@@ -456,6 +457,7 @@ def clear_fault(server_ip):
     except:
         fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_clear_fault() except")
         return None
+
 
 # fsa Get current status
 # Parameters: including device IP
@@ -763,6 +765,49 @@ def clear_pid_param(server_ip):
         return None
 
 
+# fsa set Root Config properties
+# Parameter: The protection threshold of bus voltage overvoltage and undervoltage
+# Return success or failure
+def set_pid_param_imm(server_ip, dict):
+    data = {"method": "SET",
+            "reqTarget": "/pid_param",
+            "property": "",
+            "control_position_kp_imm": dict["control_position_kp_imm"],
+            "control_velocity_kp_imm": dict["control_velocity_kp_imm"],
+            "control_velocity_ki_imm": dict["control_velocity_ki_imm"],
+            "control_current_kp_imm": dict["control_current_kp_imm"],
+            "control_current_ki_imm": dict["control_current_ki_imm"],
+            }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
+        return None
+
+
 # fsa Get Root Config property
 # Parameters: including device IP
 # Get fsa bus voltage over-voltage and under-voltage protection threshold
@@ -800,6 +845,7 @@ def get_control_param(server_ip):
     except:
         fsa_logger.print_trace_warning(server_ip + " fi_fsa.get_control_param() except")
         return None
+
 
 # fsa set Control Config properties
 # Parameter: Set Motor Max Speed ,acceleration and current
@@ -840,6 +886,48 @@ def set_control_param(server_ip, dict):
     except:
         fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_control_param() except")
         return None
+
+
+# fsa set Control Config properties
+# Parameter: Set Motor Max Speed ,acceleration and current
+# Return success or failure
+def set_control_param_imm(server_ip, dict):
+    data = {"method": "SET",
+            "reqTarget": "/control_param",
+            "property": "",
+            "motor_max_speed_imm": dict["motor_max_speed_imm"],
+            "motor_max_acceleration_imm": dict["motor_max_acceleration_imm"],
+            "motor_max_current_imm": dict["motor_max_current_imm"],
+            }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            fsa_logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            fsa_logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_control_param() except")
+        return None
+
 
 def get_flag_of_operation(server_ip):
     data = {
@@ -1186,7 +1274,7 @@ def get_error_code(server_ip):
             for i in FSAErrorCode:
                 temp_error_code = (temp << 1 >> count) & 0x01
                 if temp_error_code == 1:
-                    fsa_logger.print_trace("Now Error Type = ",i.name)
+                    fsa_logger.print_trace("Now Error Type = ", i.name)
                 count = count + 1
             return json_obj.get("error_code")
         else:
@@ -1452,7 +1540,6 @@ def set_current_control(server_ip, current):
     except:
         fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_current() except")
         return None
-
 
 
 # fsa torque control
