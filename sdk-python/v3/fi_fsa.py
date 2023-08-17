@@ -1454,6 +1454,49 @@ def set_current_control(server_ip, current):
         return None
 
 
+
+# fsa torque control
+# parameter: server IP["xxx.xxx.xxx.xxx"], torque[Nm]
+# return position, velocity, torque
+def set_torque_control(server_ip, torque):
+    data = {
+        "method": "SET",
+        "reqTarget": "/torque_control",
+        "reply_enable": True,
+        "torque": torque,
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        fsa_logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+
+    try:
+        data, address = s.recvfrom(1024)
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if fsa_debug is True:
+            fsa_logger.print_trace(
+                server_ip + " : " + "Position = %.2f, Velocity = %.0f, Torque = %.4f \n"
+                % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("torque")))
+
+        if json_obj.get("status") == "OK":
+            return json_obj.get("position"), json_obj.get("velocity"), json_obj.get("torque")
+        else:
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        fsa_logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        fsa_logger.print_trace_warning(server_ip + " fi_fsa.set_torque_control() except")
+        return None
+
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Control Parameters of FSA Group
 
