@@ -770,7 +770,7 @@ def clear_pid_param(server_ip):
 # Return success or failure
 def set_pid_param_imm(server_ip, dict):
     data = {"method": "SET",
-            "reqTarget": "/pid_param",
+            "reqTarget": "/pid_param_imm",
             "property": "",
             "control_position_kp_imm": dict["control_position_kp_imm"],
             "control_velocity_kp_imm": dict["control_velocity_kp_imm"],
@@ -893,7 +893,7 @@ def set_control_param(server_ip, dict):
 # Return success or failure
 def set_control_param_imm(server_ip, dict):
     data = {"method": "SET",
-            "reqTarget": "/control_param",
+            "reqTarget": "/control_param_imm",
             "property": "",
             "motor_max_speed_imm": dict["motor_max_speed_imm"],
             "motor_max_acceleration_imm": dict["motor_max_acceleration_imm"],

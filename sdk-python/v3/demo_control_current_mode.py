@@ -57,11 +57,12 @@ def main():
 
             time.sleep(1)
 
-            for i in range(1000):  # last for 10 seconds
-                for j in range(len(server_ip_list)):
+            for t in range(100000):  # last for 10 seconds
+            # for t in range(1000):  # last for 10 seconds
+                for i in range(len(server_ip_list)):
                     # cmd_current for actuator 36 with 30 reduction ratio should larger than 0.30
                     # cmd_current for actuator 60 should larger than 0.30
-                    fi_fsa.set_current_control(server_ip_list[j], 0.2)
+                    fi_fsa.set_current_control(server_ip_list[i], 0.4)
                 time.sleep(0.01)
 
             for i in range(len(server_ip_list)):

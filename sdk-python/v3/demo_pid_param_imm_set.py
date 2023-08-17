@@ -2,7 +2,6 @@ import fi_fsa
 import time
 
 server_ip_list = []
-server_ip_list = ["192.168.137.164"]
 
 
 class SpeedParamList:
@@ -19,7 +18,7 @@ class SpeedParamList:
 
 
 def main():
-    # server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="Actuator")
+    server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
@@ -31,12 +30,11 @@ def main():
         time.sleep(1)
 
         # set the communication configuration of all FAS
-        FSA_Type = SpeedParamList.FSA3608V0
         for i in range(len(server_ip_list)):
             dict = {  # 36
-                'control_position_kp_imm': 0.5,
-                'control_velocity_kp_imm': FSA_Type[2],
-                'control_velocity_ki_imm': FSA_Type[3],
+                'control_position_kp_imm': 0.0,
+                'control_velocity_kp_imm': 0.1,
+                'control_velocity_ki_imm': 0.001,
                 'control_current_kp_imm': 0.0,  # not work for now
                 'control_current_ki_imm': 0.0,  # not work for now
             }
