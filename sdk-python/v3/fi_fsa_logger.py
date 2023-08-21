@@ -17,11 +17,12 @@ class Logger:
     LEVEL_WARNING = 0x03
     LEVEL_ERROR = 0x04
 
-    def __init__(self):
+    def __init__(self, enable_log_file=False):
         self.state = 0x01
         self.level = 0x00
 
-        self.__init_log()
+        if enable_log_file:
+            self.__init_log()
 
     # 初始化log文件
     def __init_log(self):
@@ -157,4 +158,4 @@ class Logger:
             print(*objects, sep=sep, end=end, file=file, flush=flush)
 
 
-fsa_logger = Logger()
+logger = Logger()
