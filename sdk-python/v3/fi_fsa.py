@@ -2592,10 +2592,8 @@ def broadcast_func_with_filter(filter_type=None):
             if "type" in json_obj:
                 if json_obj["type"] == filter_type:
                     address_list.append(address[0])
-                    logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
                     found_server = True
                 else:
-                    logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
                     found_server = False
 
         except socket.timeout:  # fail after 1 second of no activity
