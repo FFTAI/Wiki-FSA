@@ -1721,7 +1721,7 @@ def disable_group(server_ips):
                     response.get(recv_ip).update({"data": data})
                 else:
                     logger.print_trace_warning("fsa.disable_group() receive wrong ip address ",
-                                                   (recv_ip, recv_port))
+                                               (recv_ip, recv_port))
                     continue
 
             if fsa_debug is True:
@@ -2607,3 +2607,28 @@ def broadcast_func_with_filter(filter_type=None):
             else:
                 logger.print_trace_error("Do not have any server! [Timeout] \n")
                 return False
+
+
+def ota(server_ip):
+    data = {
+        "method": "SET",
+        "reqTarget": "/ota",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode('utf-8'))
+
+    except socket.timeout:  # fail after 1 second of no activity
+        print("Didn't receive anymore data! [Timeout]")
