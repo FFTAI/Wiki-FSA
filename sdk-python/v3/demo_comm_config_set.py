@@ -13,7 +13,6 @@ def main():
         for i in range(len(server_ip_list)):
             fi_fsa.get_comm_config(server_ip_list[i])
 
-        print('\n')
         time.sleep(1)
 
         # set the communication configuration of all FAS
@@ -32,12 +31,16 @@ def main():
             }
             fi_fsa.set_comm_config(server_ip_list[i], dict)
 
-        print('\n')
         time.sleep(1)
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             fi_fsa.get_comm_config(server_ip_list[i])
+
+        time.sleep(1)
+
+        for i in range(len(server_ip_list)):
+            fi_fsa.reboot(server_ip_list[i])
 
         print('\n')
 
