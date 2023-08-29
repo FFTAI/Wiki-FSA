@@ -21,9 +21,9 @@ def main():
             dict = {
                 'name': 'FSA-' + str(i),
                 'DHCP_enable': False,
-                'SSID': 'fftai-12',
+                'SSID': 'fftai-6',
                 'password': 'fftai2015',
-                'static_IP': [192, 168, 137, i + 100],
+                'static_IP': [192, 168, 137, i + 101],
                 'gateway': [192, 168, 137, 1],
                 'subnet_mask': [255, 255, 255, 0],
                 'dns_1': [114, 114, 114, 114],
