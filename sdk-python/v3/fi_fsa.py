@@ -2633,10 +2633,60 @@ def ota(server_ip):
         print("Didn't receive anymore data! [Timeout]")
 
 
+def ota_test(server_ip):
+    data = {
+        "method": "SET",
+        "reqTarget": "/ota_test",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode('utf-8'))
+
+    except socket.timeout:  # fail after 1 second of no activity
+        print("Didn't receive anymore data! [Timeout]")
+
+
 def ota_driver(server_ip):
     data = {
         "method": "SET",
         "reqTarget": "/ota_driver",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode('utf-8'))
+
+    except socket.timeout:  # fail after 1 second of no activity
+        print("Didn't receive anymore data! [Timeout]")
+
+
+def ota_driver_test(server_ip):
+    data = {
+        "method": "SET",
+        "reqTarget": "/ota_driver_test",
         "property": ""
     }
 
