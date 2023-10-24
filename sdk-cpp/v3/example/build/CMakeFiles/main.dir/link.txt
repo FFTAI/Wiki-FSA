@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/main.dir/demo_allinone.cpp.o  -o main   -L/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/../fsa-cpp-sdk/lib  -Wl,-rpath,/home/fugo/Documents/actuator-fsa-wiki/sdk-cpp/v3/example/../fsa-cpp-sdk/lib -lfsasdk 
