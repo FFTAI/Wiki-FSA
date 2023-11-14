@@ -57,8 +57,10 @@ class FSAActuatorDirection:
 class FSAActuatorReductionRatio:
     REDUCTION_RATIO_7 = 7
     REDUCTION_RATIO_30 = 30
+    REDUCTION_RATIO_36 = 36
     REDUCTION_RATIO_50 = 50
     REDUCTION_RATIO_70 = 70
+    REDUCTION_RATIO_80 = 80
     REDUCTION_RATIO_100 = 100
     REDUCTION_RATIO_120 = 120
 
@@ -141,6 +143,8 @@ class FSAMotorType:
     FSA36_08V0 = 6
     FSA25_08V0 = 7
     FSA36_10V0 = 8
+    
+    FSA36_10V1 = 15
 
 
 class FSAHardwareType:
@@ -150,6 +154,7 @@ class FSAHardwareType:
     TYPE_H66V104 = 3
     TYPE_H46V104 = 4
     TYPE_H30V303 = 5
+    TYPE_H46V304 = 6
 
 
 class FSAMotorDirection:
@@ -764,6 +769,43 @@ def clear_pid_param(server_ip):
         logger.print_trace_warning(server_ip + " fi_fsa.clear_pid_param() except")
         return None
 
+# fsa Get Root Config property
+# Parameters: including device IP
+# Get fsa bus voltage over-voltage and under-voltage protection threshold
+def get_pid_param_imm(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/pid_param_imm",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+        return None
 
 # fsa set Root Config properties
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
@@ -846,6 +888,43 @@ def get_control_param(server_ip):
         logger.print_trace_warning(server_ip + " fi_fsa.get_control_param() except")
         return None
 
+# fsa Get Root Config property
+# Parameters: including device IP
+# Get fsa bus voltage over-voltage and under-voltage protection threshold
+def get_control_param_imm(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/control_param_imm",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.get_control_param_imm() except")
+        return None
 
 # fsa set Control Config properties
 # Parameter: Set Motor Max Speed ,acceleration and current
