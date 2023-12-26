@@ -16,7 +16,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # add_executable(demo_ota_test demo_ota_test.cpp fse.cpp os.cpp logger.cpp)
 
 # add_executable(demo_ota_cloud demo_ota_cloud.cpp fse.cpp os.cpp logger.cpp)
-# add_executable(demo_lookup demo_lookup.cpp fse.cpp os.cpp logger.cpp)
+add_executable(demo_lookup demo_lookup.cpp fsa.cpp os.cpp logger.cpp)
 # add_executable(demo_lookup_AbsEncoder demo_lookup_AbsEncoder.cpp fse.cpp os.cpp logger.cpp)
 # add_executable(demo_home_position_set demo_home_position_set.cpp fse.cpp os.cpp logger.cpp)
 

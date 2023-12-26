@@ -8,7 +8,7 @@ FSA::FSA(/* args */) {}
 
 FSA::~FSA() {}
 
-void FSA::fi_init_network()
+int FSA::fi_init_network()
 {
     struct timeval tv;
     tv.tv_sec = 0;
@@ -20,6 +20,7 @@ void FSA::fi_init_network()
     if (set_sock_opt_flg == -1)
     {
         Logger::get_instance()->print_trace_error("Error: fi_init_network() setsockopt() failed\n");
+        return FunctionResult::FAILURE;
     }
     // COMM
     this->fsa_sockaddr_in_comm.sin_family = AF_INET;
@@ -29,29 +30,40 @@ void FSA::fi_init_network()
     this->fsa_sockaddr_in_ctrl.sin_family = AF_INET;
     this->fsa_sockaddr_in_ctrl.sin_port = htons(SERVER_PORT_CTRL);
     inet_pton(AF_INET, SERVER_IP, &this->fsa_sockaddr_in_ctrl.sin_addr.s_addr);
+    return FunctionResult::SUCCESS;
 }
 
-void FSA::fi_init_fse()
+int FSA::fi_init_fse()
 {
-    this->fi_init_network();
+    if (!(this->fi_init_network()))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
 }
 
-void FSA::fi_fsa_comm(std::string ip, int port, char *msg, char *client_recv_msg)
+int FSA::fi_fsa_comm(std::string ip, int port, char *msg, char *client_recv_msg)
 {
-    // this->fi_encode();
-    this->fi_send_msg(ip, port, msg);
-    usleep(400);
-    this->fi_recv_msg(client_recv_msg);
+    if (!(this->fi_send_msg(ip, port, msg)))
+    {
+        usleep(400);
+        if (!(this->fi_recv_msg(client_recv_msg)))
+        {
+            return FunctionResult::SUCCESS;
+        }
+        return FunctionResult::FAILURE;
+    }
+    return FunctionResult::FAILURE;
 }
 
-void FSA::fi_decode(char *msg)
+int FSA::fi_decode(char *msg)
 {
     Logger::get_instance()->print_trace("decode-> %s\n", msg);
     usleep(100);
     if (this->msg_json.Parse(msg).HasParseError())
     {
         Logger::get_instance()->print_trace_error("decode failed\n");
-        return;
+        return FunctionResult::FAILURE;
     }
     switch (this->work_mode)
     {
@@ -77,14 +89,16 @@ void FSA::fi_decode(char *msg)
     default:
         break;
     }
+    return FunctionResult::SUCCESS;
 }
 
-void FSA::fi_encode()
+int FSA::fi_encode()
 {
     Logger::get_instance()->print_trace("encode data\n");
+    return FunctionResult::SUCCESS;
 }
 
-void FSA::fi_send_msg(std::string ip, int port, char *msg)
+int FSA::fi_send_msg(std::string ip, int port, char *msg)
 {
     if (!this->is_init)
     {
@@ -111,16 +125,11 @@ void FSA::fi_send_msg(std::string ip, int port, char *msg)
     case WorkMode::BROADCASE_FILTER_MODE:
     case WorkMode::BROADCAST_MODE:
     {
-        while (1)
+        ret = sendto(this->fsa_socket, this->send_buff, BUFFER_SIZE, 0, (struct sockaddr *)&this->fsa_sockaddr_in_comm, sizeof(this->fsa_sockaddr_in_comm));
+        if (ret == -1)
         {
-            ret = sendto(this->fsa_socket, this->send_buff, BUFFER_SIZE, 0, (struct sockaddr *)&this->fsa_sockaddr_in_comm, sizeof(this->fsa_sockaddr_in_comm));
-            if (ret == -1)
-            {
-                Logger::get_instance()->print_trace_error("broadcast sendto() failed\n");
-                usleep(10);
-                continue;
-            }
-            break;
+            Logger::get_instance()->print_trace_error("broadcast sendto() failed\n");
+            return FunctionResult::FAILURE;
         }
         break;
     }
@@ -135,16 +144,17 @@ void FSA::fi_send_msg(std::string ip, int port, char *msg)
         if (ret == -1)
         {
             Logger::get_instance()->print_trace_error("sigle sendto() failed\n");
+            return FunctionResult::FAILURE;
         }
-
         break;
     }
     default:
         break;
     }
+    return FunctionResult::SUCCESS;
 }
 
-void FSA::fi_recv_msg(char *client_recv_msg)
+int FSA::fi_recv_msg(char *client_recv_msg)
 {
     int ret = -1;
     memset(this->recv_buff, 0, sizeof(this->recv_buff));
@@ -165,10 +175,12 @@ void FSA::fi_recv_msg(char *client_recv_msg)
                 if (this->server_ip_num == 0)
                 {
                     Logger::get_instance()->print_trace_error("broadcast recvfrom() failed\n");
+                    return FunctionResult::FAILURE;
                 }
                 else
                 {
                     Logger::get_instance()->print_trace_debug("broadcast recvfrom() successfully\n");
+                    return FunctionResult::SUCCESS;
                 }
                 break;
             }
@@ -177,7 +189,10 @@ void FSA::fi_recv_msg(char *client_recv_msg)
                 char *ip_sigle = inet_ntoa(this->fsa_sockaddr_in_recv.sin_addr);
                 this->server_ip[this->server_ip_num] = ip_sigle;
                 this->server_ip_num++;
-                this->fi_decode(this->recv_buff);
+                if (this->fi_decode(this->recv_buff) != FunctionResult::SUCCESS)
+                {
+                    Logger::get_instance()->print_trace_error("fi_decode(): failed");
+                }
             }
             memset(this->recv_buff, 0, sizeof(this->recv_buff));
         }
@@ -200,54 +215,79 @@ void FSA::fi_recv_msg(char *client_recv_msg)
     default:
         break;
     }
+    return FunctionResult::SUCCESS;
 }
 
-void FSA::demo_lookup()
+int FSA::demo_lookup()
 {
+    return FunctionResult::SUCCESS;
 }
 
-void FSA::demo_ota_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
+int FSA::demo_ota_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
     Logger::get_instance()->print_trace_debug("demo_ota\n");
     this->work_mode = WorkMode::SIGLE_MODE;
-    this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->ota_cloud, client_recv_msg);
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->ota_cloud, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
 }
 
-void FSA::demo_ota_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
+int FSA::demo_ota_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
     Logger::get_instance()->print_trace_debug("demo_ota_test\n");
     this->work_mode = WorkMode::SIGLE_MODE;
-    this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->ota_test, client_recv_msg);
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->ota_test, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
 }
 
-void FSA::demo_ota(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
+int FSA::demo_ota(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
     Logger::get_instance()->print_trace_debug("demo_ota\n");
     this->work_mode = WorkMode::SIGLE_MODE;
-    this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->ota, client_recv_msg);
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->ota, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
 }
 
-void FSA::demo_reboot(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
+int FSA::demo_reboot(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
     Logger::get_instance()->print_trace_debug("demo_reboot()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
-    this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->reboot_all, client_recv_msg);
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->reboot_all, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
 }
 
-void FSA::demo_broadcase()
+int FSA::demo_broadcase()
 {
     Logger::get_instance()->print_trace_debug("broadcase all\n");
     this->work_mode = WorkMode::BROADCAST_MODE;
-    this->fi_fsa_comm(SERVER_IP, SERVER_PORT_COMM, this->broadcast_msg, NULL);
-    Logger::get_instance()->print_trace_debug("broadcase finished\n");
+    if (!(this->fi_fsa_comm(SERVER_IP, SERVER_PORT_COMM, this->broadcast_msg, NULL)))
+    {
+        Logger::get_instance()->print_trace_debug("broadcase finished\n");
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
 }
 
-void FSA::demo_broadcase_filter(std::string filter_type)
+int FSA::demo_broadcase_filter(std::string filter_type)
 {
     Logger::get_instance()->print_trace_debug("broadcase all with filter\n");
     this->work_mode = WorkMode::BROADCASE_FILTER_MODE;
     this->server_filter_type = filter_type;
-    this->fi_fsa_comm(SERVER_IP, SERVER_PORT_COMM, this->broadcast_msg, NULL);
-    Logger::get_instance()->print_trace_debug("filter broadcase finished\n");
+    if (!(this->fi_fsa_comm(SERVER_IP, SERVER_PORT_COMM, this->broadcast_msg, NULL)))
+    {
+        Logger::get_instance()->print_trace_debug("filter broadcase finished\n");
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
 }
-

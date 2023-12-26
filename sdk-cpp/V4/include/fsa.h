@@ -70,24 +70,24 @@ namespace Sensor
         int server_ip_filter_num = 0;
 
     private:
-        void fi_init_network();
-        void fi_init_fse();
-        void fi_fsa_comm(std::string ip, int port, char *sendmsg, char *client_recv_msg);
-        void fi_decode(char *msg);
-        void fi_encode();
-        void fi_send_msg(std::string ip, int port, char *msg);
-        void fi_recv_msg(char *client_recv_msg);
+        int fi_init_network();
+        int fi_init_fse();
+        int fi_fsa_comm(std::string ip, int port, char *sendmsg, char *client_recv_msg);
+        int fi_decode(char *msg);
+        int fi_encode();
+        int fi_send_msg(std::string ip, int port, char *msg);
+        int fi_recv_msg(char *client_recv_msg);
 
     public:
         FSA(/* args */);
         ~FSA();
-        void demo_lookup();
-        void demo_ota_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        void demo_ota_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        void demo_ota(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        void demo_reboot(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        void demo_broadcase();
-        void demo_broadcase_filter(std::string filter_type);
+        int demo_lookup();
+        int demo_ota_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int demo_ota_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int demo_ota(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int demo_reboot(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int demo_broadcase();
+        int demo_broadcase_filter(std::string filter_type);
     };
 }
 

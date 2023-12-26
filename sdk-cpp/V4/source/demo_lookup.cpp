@@ -16,10 +16,14 @@ using namespace Predefine;
 FSA *fse = new FSA();
 int main()
 {
-    fse->demo_broadcase();
-    for (int i = 0; i < fse->server_ip_num; i++)
+    if (!(fse->demo_broadcase()))
     {
-        std::cout << fse->server_ip[i] << std::endl;
+        for (int i = 0; i < fse->server_ip_num; i++)
+        {
+            std::cout << fse->server_ip[i] << std::endl;
+        }
+        return FunctionResult::SUCCESS;
     }
+
     return 0;
 }

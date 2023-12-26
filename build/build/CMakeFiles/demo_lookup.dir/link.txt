@@ -1,0 +1,1 @@
+/usr/bin/g++  -g   CMakeFiles/demo_lookup.dir/demo_lookup.cpp.o CMakeFiles/demo_lookup.dir/fsa.cpp.o CMakeFiles/demo_lookup.dir/os.cpp.o CMakeFiles/demo_lookup.dir/logger.cpp.o  -o /home/afer/project_user/wiki-fsa/sdk-cpp/V4/bin/demo_lookup 
