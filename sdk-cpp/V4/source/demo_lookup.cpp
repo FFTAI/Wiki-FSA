@@ -20,10 +20,9 @@ int main()
     {
         for (int i = 0; i < fse->server_ip_num; i++)
         {
-            std::cout << fse->server_ip[i] << std::endl;
+            Logger::get_instance()->print_trace("%s\n", fse->server_ip[i]);
         }
         return FunctionResult::SUCCESS;
     }
-
     return 0;
 }

@@ -44,10 +44,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4
+CMAKE_SOURCE_DIR = /home/afer/project/V4
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build
+CMAKE_BINARY_DIR = /home/afer/project/V4/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -71,7 +71,31 @@ clean: build/clean
 # Directory level rules for directory build
 
 # Recursive "all" directory target.
+build/all: build/CMakeFiles/demo_reboot_actuator.dir/all
+build/all: build/CMakeFiles/demo_reboot.dir/all
+build/all: build/CMakeFiles/demo_ota_driver_cloud.dir/all
+build/all: build/CMakeFiles/demo_ota_driver_test.dir/all
+build/all: build/CMakeFiles/demo_ota_cloud.dir/all
+build/all: build/CMakeFiles/demo_ota_devel.dir/all
+build/all: build/CMakeFiles/demo_ota_test.dir/all
+build/all: build/CMakeFiles/demo_ota_driver_devel.dir/all
+build/all: build/CMakeFiles/demo_ota.dir/all
+build/all: build/CMakeFiles/demo_lookup_abs_encoder.dir/all
 build/all: build/CMakeFiles/demo_clear_fault.dir/all
+build/all: build/CMakeFiles/demo_comm_config_get.dir/all
+build/all: build/CMakeFiles/demo_set_encrypt.dir/all
+build/all: build/CMakeFiles/demo_ota_driver.dir/all
+build/all: build/CMakeFiles/demo_control_param_get.dir/all
+build/all: build/CMakeFiles/demo_get_pvcccc.dir/all
+build/all: build/CMakeFiles/demo_control_param_imm_get.dir/all
+build/all: build/CMakeFiles/demo_get_measured.dir/all
+build/all: build/CMakeFiles/demo_lookup_actuator.dir/all
+build/all: build/CMakeFiles/demo_get_pvcc.dir/all
+build/all: build/CMakeFiles/demo_get_pvc.dir/all
+build/all: build/CMakeFiles/demo_lookup_ctrlbox.dir/all
+build/all: build/CMakeFiles/demo_comm_config_set.dir/all
+build/all: build/CMakeFiles/demo_get_state.dir/all
+build/all: build/CMakeFiles/demo_lookup.dir/all
 
 .PHONY : build/all
 
@@ -81,9 +105,303 @@ build/preinstall:
 .PHONY : build/preinstall
 
 # Recursive "clean" directory target.
+build/clean: build/CMakeFiles/demo_reboot_actuator.dir/clean
+build/clean: build/CMakeFiles/demo_reboot.dir/clean
+build/clean: build/CMakeFiles/demo_ota_driver_cloud.dir/clean
+build/clean: build/CMakeFiles/demo_ota_driver_test.dir/clean
+build/clean: build/CMakeFiles/demo_ota_cloud.dir/clean
+build/clean: build/CMakeFiles/demo_ota_devel.dir/clean
+build/clean: build/CMakeFiles/demo_ota_test.dir/clean
+build/clean: build/CMakeFiles/demo_ota_driver_devel.dir/clean
+build/clean: build/CMakeFiles/demo_ota.dir/clean
+build/clean: build/CMakeFiles/demo_lookup_abs_encoder.dir/clean
 build/clean: build/CMakeFiles/demo_clear_fault.dir/clean
+build/clean: build/CMakeFiles/demo_comm_config_get.dir/clean
+build/clean: build/CMakeFiles/demo_set_encrypt.dir/clean
+build/clean: build/CMakeFiles/demo_ota_driver.dir/clean
+build/clean: build/CMakeFiles/demo_control_param_get.dir/clean
+build/clean: build/CMakeFiles/demo_get_pvcccc.dir/clean
+build/clean: build/CMakeFiles/demo_control_param_imm_get.dir/clean
+build/clean: build/CMakeFiles/demo_get_measured.dir/clean
+build/clean: build/CMakeFiles/demo_lookup_actuator.dir/clean
+build/clean: build/CMakeFiles/demo_get_pvcc.dir/clean
+build/clean: build/CMakeFiles/demo_get_pvc.dir/clean
+build/clean: build/CMakeFiles/demo_lookup_ctrlbox.dir/clean
+build/clean: build/CMakeFiles/demo_comm_config_set.dir/clean
+build/clean: build/CMakeFiles/demo_get_state.dir/clean
+build/clean: build/CMakeFiles/demo_lookup.dir/clean
 
 .PHONY : build/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_reboot_actuator.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_reboot_actuator.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_reboot_actuator.dir/build.make build/CMakeFiles/demo_reboot_actuator.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_reboot_actuator.dir/build.make build/CMakeFiles/demo_reboot_actuator.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=93,94,95,96 "Built target demo_reboot_actuator"
+.PHONY : build/CMakeFiles/demo_reboot_actuator.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_reboot_actuator.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_reboot_actuator.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_reboot_actuator.dir/rule
+
+# Convenience name for target.
+demo_reboot_actuator: build/CMakeFiles/demo_reboot_actuator.dir/rule
+
+.PHONY : demo_reboot_actuator
+
+# clean rule for target.
+build/CMakeFiles/demo_reboot_actuator.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_reboot_actuator.dir/build.make build/CMakeFiles/demo_reboot_actuator.dir/clean
+.PHONY : build/CMakeFiles/demo_reboot_actuator.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_reboot.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_reboot.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_reboot.dir/build.make build/CMakeFiles/demo_reboot.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_reboot.dir/build.make build/CMakeFiles/demo_reboot.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=89,90,91,92 "Built target demo_reboot"
+.PHONY : build/CMakeFiles/demo_reboot.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_reboot.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_reboot.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_reboot.dir/rule
+
+# Convenience name for target.
+demo_reboot: build/CMakeFiles/demo_reboot.dir/rule
+
+.PHONY : demo_reboot
+
+# clean rule for target.
+build/CMakeFiles/demo_reboot.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_reboot.dir/build.make build/CMakeFiles/demo_reboot.dir/clean
+.PHONY : build/CMakeFiles/demo_reboot.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_ota_driver_cloud.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_ota_driver_cloud.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_cloud.dir/build.make build/CMakeFiles/demo_ota_driver_cloud.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_cloud.dir/build.make build/CMakeFiles/demo_ota_driver_cloud.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=73,74,75,76 "Built target demo_ota_driver_cloud"
+.PHONY : build/CMakeFiles/demo_ota_driver_cloud.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_ota_driver_cloud.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_ota_driver_cloud.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_ota_driver_cloud.dir/rule
+
+# Convenience name for target.
+demo_ota_driver_cloud: build/CMakeFiles/demo_ota_driver_cloud.dir/rule
+
+.PHONY : demo_ota_driver_cloud
+
+# clean rule for target.
+build/CMakeFiles/demo_ota_driver_cloud.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_cloud.dir/build.make build/CMakeFiles/demo_ota_driver_cloud.dir/clean
+.PHONY : build/CMakeFiles/demo_ota_driver_cloud.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_ota_driver_test.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_ota_driver_test.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_test.dir/build.make build/CMakeFiles/demo_ota_driver_test.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_test.dir/build.make build/CMakeFiles/demo_ota_driver_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=81,82,83,84 "Built target demo_ota_driver_test"
+.PHONY : build/CMakeFiles/demo_ota_driver_test.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_ota_driver_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_ota_driver_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_ota_driver_test.dir/rule
+
+# Convenience name for target.
+demo_ota_driver_test: build/CMakeFiles/demo_ota_driver_test.dir/rule
+
+.PHONY : demo_ota_driver_test
+
+# clean rule for target.
+build/CMakeFiles/demo_ota_driver_test.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_test.dir/build.make build/CMakeFiles/demo_ota_driver_test.dir/clean
+.PHONY : build/CMakeFiles/demo_ota_driver_test.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_ota_cloud.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_ota_cloud.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_ota_cloud.dir/build.make build/CMakeFiles/demo_ota_cloud.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_ota_cloud.dir/build.make build/CMakeFiles/demo_ota_cloud.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=61,62,63,64 "Built target demo_ota_cloud"
+.PHONY : build/CMakeFiles/demo_ota_cloud.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_ota_cloud.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_ota_cloud.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_ota_cloud.dir/rule
+
+# Convenience name for target.
+demo_ota_cloud: build/CMakeFiles/demo_ota_cloud.dir/rule
+
+.PHONY : demo_ota_cloud
+
+# clean rule for target.
+build/CMakeFiles/demo_ota_cloud.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_ota_cloud.dir/build.make build/CMakeFiles/demo_ota_cloud.dir/clean
+.PHONY : build/CMakeFiles/demo_ota_cloud.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_ota_devel.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_ota_devel.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_ota_devel.dir/build.make build/CMakeFiles/demo_ota_devel.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_ota_devel.dir/build.make build/CMakeFiles/demo_ota_devel.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=65,66,67,68 "Built target demo_ota_devel"
+.PHONY : build/CMakeFiles/demo_ota_devel.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_ota_devel.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_ota_devel.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_ota_devel.dir/rule
+
+# Convenience name for target.
+demo_ota_devel: build/CMakeFiles/demo_ota_devel.dir/rule
+
+.PHONY : demo_ota_devel
+
+# clean rule for target.
+build/CMakeFiles/demo_ota_devel.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_ota_devel.dir/build.make build/CMakeFiles/demo_ota_devel.dir/clean
+.PHONY : build/CMakeFiles/demo_ota_devel.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_ota_test.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_ota_test.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_ota_test.dir/build.make build/CMakeFiles/demo_ota_test.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_ota_test.dir/build.make build/CMakeFiles/demo_ota_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=85,86,87,88 "Built target demo_ota_test"
+.PHONY : build/CMakeFiles/demo_ota_test.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_ota_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_ota_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_ota_test.dir/rule
+
+# Convenience name for target.
+demo_ota_test: build/CMakeFiles/demo_ota_test.dir/rule
+
+.PHONY : demo_ota_test
+
+# clean rule for target.
+build/CMakeFiles/demo_ota_test.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_ota_test.dir/build.make build/CMakeFiles/demo_ota_test.dir/clean
+.PHONY : build/CMakeFiles/demo_ota_test.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_ota_driver_devel.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_ota_driver_devel.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_devel.dir/build.make build/CMakeFiles/demo_ota_driver_devel.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_devel.dir/build.make build/CMakeFiles/demo_ota_driver_devel.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=77,78,79,80 "Built target demo_ota_driver_devel"
+.PHONY : build/CMakeFiles/demo_ota_driver_devel.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_ota_driver_devel.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_ota_driver_devel.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_ota_driver_devel.dir/rule
+
+# Convenience name for target.
+demo_ota_driver_devel: build/CMakeFiles/demo_ota_driver_devel.dir/rule
+
+.PHONY : demo_ota_driver_devel
+
+# clean rule for target.
+build/CMakeFiles/demo_ota_driver_devel.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_devel.dir/build.make build/CMakeFiles/demo_ota_driver_devel.dir/clean
+.PHONY : build/CMakeFiles/demo_ota_driver_devel.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_ota.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_ota.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_ota.dir/build.make build/CMakeFiles/demo_ota.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_ota.dir/build.make build/CMakeFiles/demo_ota.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=57,58,59,60 "Built target demo_ota"
+.PHONY : build/CMakeFiles/demo_ota.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_ota.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_ota.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_ota.dir/rule
+
+# Convenience name for target.
+demo_ota: build/CMakeFiles/demo_ota.dir/rule
+
+.PHONY : demo_ota
+
+# clean rule for target.
+build/CMakeFiles/demo_ota.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_ota.dir/build.make build/CMakeFiles/demo_ota.dir/clean
+.PHONY : build/CMakeFiles/demo_ota.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_lookup_abs_encoder.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_lookup_abs_encoder.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_lookup_abs_encoder.dir/build.make build/CMakeFiles/demo_lookup_abs_encoder.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_lookup_abs_encoder.dir/build.make build/CMakeFiles/demo_lookup_abs_encoder.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=45,46,47,48 "Built target demo_lookup_abs_encoder"
+.PHONY : build/CMakeFiles/demo_lookup_abs_encoder.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_lookup_abs_encoder.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_lookup_abs_encoder.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_lookup_abs_encoder.dir/rule
+
+# Convenience name for target.
+demo_lookup_abs_encoder: build/CMakeFiles/demo_lookup_abs_encoder.dir/rule
+
+.PHONY : demo_lookup_abs_encoder
+
+# clean rule for target.
+build/CMakeFiles/demo_lookup_abs_encoder.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_lookup_abs_encoder.dir/build.make build/CMakeFiles/demo_lookup_abs_encoder.dir/clean
+.PHONY : build/CMakeFiles/demo_lookup_abs_encoder.dir/clean
 
 #=============================================================================
 # Target rules for target build/CMakeFiles/demo_clear_fault.dir
@@ -92,14 +410,14 @@ build/clean: build/CMakeFiles/demo_clear_fault.dir/clean
 build/CMakeFiles/demo_clear_fault.dir/all:
 	$(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/depend
 	$(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target demo_clear_fault"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=1,2,3,4 "Built target demo_clear_fault"
 .PHONY : build/CMakeFiles/demo_clear_fault.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/demo_clear_fault.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_clear_fault.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/demo_clear_fault.dir/rule
 
 # Convenience name for target.
@@ -111,6 +429,384 @@ demo_clear_fault: build/CMakeFiles/demo_clear_fault.dir/rule
 build/CMakeFiles/demo_clear_fault.dir/clean:
 	$(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/clean
 .PHONY : build/CMakeFiles/demo_clear_fault.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_comm_config_get.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_comm_config_get.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_comm_config_get.dir/build.make build/CMakeFiles/demo_comm_config_get.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_comm_config_get.dir/build.make build/CMakeFiles/demo_comm_config_get.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=5,6,7,8 "Built target demo_comm_config_get"
+.PHONY : build/CMakeFiles/demo_comm_config_get.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_comm_config_get.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_comm_config_get.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_comm_config_get.dir/rule
+
+# Convenience name for target.
+demo_comm_config_get: build/CMakeFiles/demo_comm_config_get.dir/rule
+
+.PHONY : demo_comm_config_get
+
+# clean rule for target.
+build/CMakeFiles/demo_comm_config_get.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_comm_config_get.dir/build.make build/CMakeFiles/demo_comm_config_get.dir/clean
+.PHONY : build/CMakeFiles/demo_comm_config_get.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_set_encrypt.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_set_encrypt.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_set_encrypt.dir/build.make build/CMakeFiles/demo_set_encrypt.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_set_encrypt.dir/build.make build/CMakeFiles/demo_set_encrypt.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=97,98,99,100 "Built target demo_set_encrypt"
+.PHONY : build/CMakeFiles/demo_set_encrypt.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_set_encrypt.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_set_encrypt.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_set_encrypt.dir/rule
+
+# Convenience name for target.
+demo_set_encrypt: build/CMakeFiles/demo_set_encrypt.dir/rule
+
+.PHONY : demo_set_encrypt
+
+# clean rule for target.
+build/CMakeFiles/demo_set_encrypt.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_set_encrypt.dir/build.make build/CMakeFiles/demo_set_encrypt.dir/clean
+.PHONY : build/CMakeFiles/demo_set_encrypt.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_ota_driver.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_ota_driver.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver.dir/build.make build/CMakeFiles/demo_ota_driver.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver.dir/build.make build/CMakeFiles/demo_ota_driver.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=69,70,71,72 "Built target demo_ota_driver"
+.PHONY : build/CMakeFiles/demo_ota_driver.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_ota_driver.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_ota_driver.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_ota_driver.dir/rule
+
+# Convenience name for target.
+demo_ota_driver: build/CMakeFiles/demo_ota_driver.dir/rule
+
+.PHONY : demo_ota_driver
+
+# clean rule for target.
+build/CMakeFiles/demo_ota_driver.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver.dir/build.make build/CMakeFiles/demo_ota_driver.dir/clean
+.PHONY : build/CMakeFiles/demo_ota_driver.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_control_param_get.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_control_param_get.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_control_param_get.dir/build.make build/CMakeFiles/demo_control_param_get.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_control_param_get.dir/build.make build/CMakeFiles/demo_control_param_get.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=13,14,15,16 "Built target demo_control_param_get"
+.PHONY : build/CMakeFiles/demo_control_param_get.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_control_param_get.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_control_param_get.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_control_param_get.dir/rule
+
+# Convenience name for target.
+demo_control_param_get: build/CMakeFiles/demo_control_param_get.dir/rule
+
+.PHONY : demo_control_param_get
+
+# clean rule for target.
+build/CMakeFiles/demo_control_param_get.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_control_param_get.dir/build.make build/CMakeFiles/demo_control_param_get.dir/clean
+.PHONY : build/CMakeFiles/demo_control_param_get.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_get_pvcccc.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_get_pvcccc.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_get_pvcccc.dir/build.make build/CMakeFiles/demo_get_pvcccc.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_get_pvcccc.dir/build.make build/CMakeFiles/demo_get_pvcccc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=33,34,35,36 "Built target demo_get_pvcccc"
+.PHONY : build/CMakeFiles/demo_get_pvcccc.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_get_pvcccc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_get_pvcccc.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_get_pvcccc.dir/rule
+
+# Convenience name for target.
+demo_get_pvcccc: build/CMakeFiles/demo_get_pvcccc.dir/rule
+
+.PHONY : demo_get_pvcccc
+
+# clean rule for target.
+build/CMakeFiles/demo_get_pvcccc.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_get_pvcccc.dir/build.make build/CMakeFiles/demo_get_pvcccc.dir/clean
+.PHONY : build/CMakeFiles/demo_get_pvcccc.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_control_param_imm_get.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_control_param_imm_get.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_control_param_imm_get.dir/build.make build/CMakeFiles/demo_control_param_imm_get.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_control_param_imm_get.dir/build.make build/CMakeFiles/demo_control_param_imm_get.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=17,18,19,20 "Built target demo_control_param_imm_get"
+.PHONY : build/CMakeFiles/demo_control_param_imm_get.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_control_param_imm_get.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_control_param_imm_get.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_control_param_imm_get.dir/rule
+
+# Convenience name for target.
+demo_control_param_imm_get: build/CMakeFiles/demo_control_param_imm_get.dir/rule
+
+.PHONY : demo_control_param_imm_get
+
+# clean rule for target.
+build/CMakeFiles/demo_control_param_imm_get.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_control_param_imm_get.dir/build.make build/CMakeFiles/demo_control_param_imm_get.dir/clean
+.PHONY : build/CMakeFiles/demo_control_param_imm_get.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_get_measured.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_get_measured.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_get_measured.dir/build.make build/CMakeFiles/demo_get_measured.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_get_measured.dir/build.make build/CMakeFiles/demo_get_measured.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=21,22,23,24 "Built target demo_get_measured"
+.PHONY : build/CMakeFiles/demo_get_measured.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_get_measured.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_get_measured.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_get_measured.dir/rule
+
+# Convenience name for target.
+demo_get_measured: build/CMakeFiles/demo_get_measured.dir/rule
+
+.PHONY : demo_get_measured
+
+# clean rule for target.
+build/CMakeFiles/demo_get_measured.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_get_measured.dir/build.make build/CMakeFiles/demo_get_measured.dir/clean
+.PHONY : build/CMakeFiles/demo_get_measured.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_lookup_actuator.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_lookup_actuator.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_lookup_actuator.dir/build.make build/CMakeFiles/demo_lookup_actuator.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_lookup_actuator.dir/build.make build/CMakeFiles/demo_lookup_actuator.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=49,50,51,52 "Built target demo_lookup_actuator"
+.PHONY : build/CMakeFiles/demo_lookup_actuator.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_lookup_actuator.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_lookup_actuator.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_lookup_actuator.dir/rule
+
+# Convenience name for target.
+demo_lookup_actuator: build/CMakeFiles/demo_lookup_actuator.dir/rule
+
+.PHONY : demo_lookup_actuator
+
+# clean rule for target.
+build/CMakeFiles/demo_lookup_actuator.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_lookup_actuator.dir/build.make build/CMakeFiles/demo_lookup_actuator.dir/clean
+.PHONY : build/CMakeFiles/demo_lookup_actuator.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_get_pvcc.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_get_pvcc.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_get_pvcc.dir/build.make build/CMakeFiles/demo_get_pvcc.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_get_pvcc.dir/build.make build/CMakeFiles/demo_get_pvcc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=29,30,31,32 "Built target demo_get_pvcc"
+.PHONY : build/CMakeFiles/demo_get_pvcc.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_get_pvcc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_get_pvcc.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_get_pvcc.dir/rule
+
+# Convenience name for target.
+demo_get_pvcc: build/CMakeFiles/demo_get_pvcc.dir/rule
+
+.PHONY : demo_get_pvcc
+
+# clean rule for target.
+build/CMakeFiles/demo_get_pvcc.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_get_pvcc.dir/build.make build/CMakeFiles/demo_get_pvcc.dir/clean
+.PHONY : build/CMakeFiles/demo_get_pvcc.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_get_pvc.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_get_pvc.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_get_pvc.dir/build.make build/CMakeFiles/demo_get_pvc.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_get_pvc.dir/build.make build/CMakeFiles/demo_get_pvc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=25,26,27,28 "Built target demo_get_pvc"
+.PHONY : build/CMakeFiles/demo_get_pvc.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_get_pvc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_get_pvc.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_get_pvc.dir/rule
+
+# Convenience name for target.
+demo_get_pvc: build/CMakeFiles/demo_get_pvc.dir/rule
+
+.PHONY : demo_get_pvc
+
+# clean rule for target.
+build/CMakeFiles/demo_get_pvc.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_get_pvc.dir/build.make build/CMakeFiles/demo_get_pvc.dir/clean
+.PHONY : build/CMakeFiles/demo_get_pvc.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_lookup_ctrlbox.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_lookup_ctrlbox.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_lookup_ctrlbox.dir/build.make build/CMakeFiles/demo_lookup_ctrlbox.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_lookup_ctrlbox.dir/build.make build/CMakeFiles/demo_lookup_ctrlbox.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=53,54,55,56 "Built target demo_lookup_ctrlbox"
+.PHONY : build/CMakeFiles/demo_lookup_ctrlbox.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_lookup_ctrlbox.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_lookup_ctrlbox.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_lookup_ctrlbox.dir/rule
+
+# Convenience name for target.
+demo_lookup_ctrlbox: build/CMakeFiles/demo_lookup_ctrlbox.dir/rule
+
+.PHONY : demo_lookup_ctrlbox
+
+# clean rule for target.
+build/CMakeFiles/demo_lookup_ctrlbox.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_lookup_ctrlbox.dir/build.make build/CMakeFiles/demo_lookup_ctrlbox.dir/clean
+.PHONY : build/CMakeFiles/demo_lookup_ctrlbox.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_comm_config_set.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_comm_config_set.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_comm_config_set.dir/build.make build/CMakeFiles/demo_comm_config_set.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_comm_config_set.dir/build.make build/CMakeFiles/demo_comm_config_set.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=9,10,11,12 "Built target demo_comm_config_set"
+.PHONY : build/CMakeFiles/demo_comm_config_set.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_comm_config_set.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_comm_config_set.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_comm_config_set.dir/rule
+
+# Convenience name for target.
+demo_comm_config_set: build/CMakeFiles/demo_comm_config_set.dir/rule
+
+.PHONY : demo_comm_config_set
+
+# clean rule for target.
+build/CMakeFiles/demo_comm_config_set.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_comm_config_set.dir/build.make build/CMakeFiles/demo_comm_config_set.dir/clean
+.PHONY : build/CMakeFiles/demo_comm_config_set.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_get_state.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_get_state.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_get_state.dir/build.make build/CMakeFiles/demo_get_state.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_get_state.dir/build.make build/CMakeFiles/demo_get_state.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=37,38,39,40 "Built target demo_get_state"
+.PHONY : build/CMakeFiles/demo_get_state.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_get_state.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_get_state.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_get_state.dir/rule
+
+# Convenience name for target.
+demo_get_state: build/CMakeFiles/demo_get_state.dir/rule
+
+.PHONY : demo_get_state
+
+# clean rule for target.
+build/CMakeFiles/demo_get_state.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_get_state.dir/build.make build/CMakeFiles/demo_get_state.dir/clean
+.PHONY : build/CMakeFiles/demo_get_state.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/demo_lookup.dir
+
+# All Build rule for target.
+build/CMakeFiles/demo_lookup.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=41,42,43,44 "Built target demo_lookup"
+.PHONY : build/CMakeFiles/demo_lookup.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/demo_lookup.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_lookup.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_lookup.dir/rule
+
+# Convenience name for target.
+demo_lookup: build/CMakeFiles/demo_lookup.dir/rule
+
+.PHONY : demo_lookup
+
+# clean rule for target.
+build/CMakeFiles/demo_lookup.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/clean
+.PHONY : build/CMakeFiles/demo_lookup.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

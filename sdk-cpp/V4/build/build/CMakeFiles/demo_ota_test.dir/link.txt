@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/demo_ota_test.dir/demo_ota_test.cpp.o CMakeFiles/demo_ota_test.dir/fsa.cpp.o CMakeFiles/demo_ota_test.dir/os.cpp.o CMakeFiles/demo_ota_test.dir/logger.cpp.o  -o ../../bin/demo_ota_test 

@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4
+CMAKE_SOURCE_DIR = /home/afer/project/V4
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build
+CMAKE_BINARY_DIR = /home/afer/project/V4/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles /home/afer/project/V4/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project/V4/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,6 +111,136 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named demo_reboot_actuator
+
+# Build rule for target.
+demo_reboot_actuator: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_reboot_actuator
+.PHONY : demo_reboot_actuator
+
+# fast build rule for target.
+demo_reboot_actuator/fast:
+	$(MAKE) -f build/CMakeFiles/demo_reboot_actuator.dir/build.make build/CMakeFiles/demo_reboot_actuator.dir/build
+.PHONY : demo_reboot_actuator/fast
+
+#=============================================================================
+# Target rules for targets named demo_reboot
+
+# Build rule for target.
+demo_reboot: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_reboot
+.PHONY : demo_reboot
+
+# fast build rule for target.
+demo_reboot/fast:
+	$(MAKE) -f build/CMakeFiles/demo_reboot.dir/build.make build/CMakeFiles/demo_reboot.dir/build
+.PHONY : demo_reboot/fast
+
+#=============================================================================
+# Target rules for targets named demo_ota_driver_cloud
+
+# Build rule for target.
+demo_ota_driver_cloud: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_ota_driver_cloud
+.PHONY : demo_ota_driver_cloud
+
+# fast build rule for target.
+demo_ota_driver_cloud/fast:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_cloud.dir/build.make build/CMakeFiles/demo_ota_driver_cloud.dir/build
+.PHONY : demo_ota_driver_cloud/fast
+
+#=============================================================================
+# Target rules for targets named demo_ota_driver_test
+
+# Build rule for target.
+demo_ota_driver_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_ota_driver_test
+.PHONY : demo_ota_driver_test
+
+# fast build rule for target.
+demo_ota_driver_test/fast:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_test.dir/build.make build/CMakeFiles/demo_ota_driver_test.dir/build
+.PHONY : demo_ota_driver_test/fast
+
+#=============================================================================
+# Target rules for targets named demo_ota_cloud
+
+# Build rule for target.
+demo_ota_cloud: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_ota_cloud
+.PHONY : demo_ota_cloud
+
+# fast build rule for target.
+demo_ota_cloud/fast:
+	$(MAKE) -f build/CMakeFiles/demo_ota_cloud.dir/build.make build/CMakeFiles/demo_ota_cloud.dir/build
+.PHONY : demo_ota_cloud/fast
+
+#=============================================================================
+# Target rules for targets named demo_ota_devel
+
+# Build rule for target.
+demo_ota_devel: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_ota_devel
+.PHONY : demo_ota_devel
+
+# fast build rule for target.
+demo_ota_devel/fast:
+	$(MAKE) -f build/CMakeFiles/demo_ota_devel.dir/build.make build/CMakeFiles/demo_ota_devel.dir/build
+.PHONY : demo_ota_devel/fast
+
+#=============================================================================
+# Target rules for targets named demo_ota_test
+
+# Build rule for target.
+demo_ota_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_ota_test
+.PHONY : demo_ota_test
+
+# fast build rule for target.
+demo_ota_test/fast:
+	$(MAKE) -f build/CMakeFiles/demo_ota_test.dir/build.make build/CMakeFiles/demo_ota_test.dir/build
+.PHONY : demo_ota_test/fast
+
+#=============================================================================
+# Target rules for targets named demo_ota_driver_devel
+
+# Build rule for target.
+demo_ota_driver_devel: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_ota_driver_devel
+.PHONY : demo_ota_driver_devel
+
+# fast build rule for target.
+demo_ota_driver_devel/fast:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver_devel.dir/build.make build/CMakeFiles/demo_ota_driver_devel.dir/build
+.PHONY : demo_ota_driver_devel/fast
+
+#=============================================================================
+# Target rules for targets named demo_ota
+
+# Build rule for target.
+demo_ota: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_ota
+.PHONY : demo_ota
+
+# fast build rule for target.
+demo_ota/fast:
+	$(MAKE) -f build/CMakeFiles/demo_ota.dir/build.make build/CMakeFiles/demo_ota.dir/build
+.PHONY : demo_ota/fast
+
+#=============================================================================
+# Target rules for targets named demo_lookup_abs_encoder
+
+# Build rule for target.
+demo_lookup_abs_encoder: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_lookup_abs_encoder
+.PHONY : demo_lookup_abs_encoder
+
+# fast build rule for target.
+demo_lookup_abs_encoder/fast:
+	$(MAKE) -f build/CMakeFiles/demo_lookup_abs_encoder.dir/build.make build/CMakeFiles/demo_lookup_abs_encoder.dir/build
+.PHONY : demo_lookup_abs_encoder/fast
+
+#=============================================================================
 # Target rules for targets named demo_clear_fault
 
 # Build rule for target.
@@ -123,6 +253,188 @@ demo_clear_fault/fast:
 	$(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/build
 .PHONY : demo_clear_fault/fast
 
+#=============================================================================
+# Target rules for targets named demo_comm_config_get
+
+# Build rule for target.
+demo_comm_config_get: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_comm_config_get
+.PHONY : demo_comm_config_get
+
+# fast build rule for target.
+demo_comm_config_get/fast:
+	$(MAKE) -f build/CMakeFiles/demo_comm_config_get.dir/build.make build/CMakeFiles/demo_comm_config_get.dir/build
+.PHONY : demo_comm_config_get/fast
+
+#=============================================================================
+# Target rules for targets named demo_set_encrypt
+
+# Build rule for target.
+demo_set_encrypt: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_set_encrypt
+.PHONY : demo_set_encrypt
+
+# fast build rule for target.
+demo_set_encrypt/fast:
+	$(MAKE) -f build/CMakeFiles/demo_set_encrypt.dir/build.make build/CMakeFiles/demo_set_encrypt.dir/build
+.PHONY : demo_set_encrypt/fast
+
+#=============================================================================
+# Target rules for targets named demo_ota_driver
+
+# Build rule for target.
+demo_ota_driver: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_ota_driver
+.PHONY : demo_ota_driver
+
+# fast build rule for target.
+demo_ota_driver/fast:
+	$(MAKE) -f build/CMakeFiles/demo_ota_driver.dir/build.make build/CMakeFiles/demo_ota_driver.dir/build
+.PHONY : demo_ota_driver/fast
+
+#=============================================================================
+# Target rules for targets named demo_control_param_get
+
+# Build rule for target.
+demo_control_param_get: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_control_param_get
+.PHONY : demo_control_param_get
+
+# fast build rule for target.
+demo_control_param_get/fast:
+	$(MAKE) -f build/CMakeFiles/demo_control_param_get.dir/build.make build/CMakeFiles/demo_control_param_get.dir/build
+.PHONY : demo_control_param_get/fast
+
+#=============================================================================
+# Target rules for targets named demo_get_pvcccc
+
+# Build rule for target.
+demo_get_pvcccc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_get_pvcccc
+.PHONY : demo_get_pvcccc
+
+# fast build rule for target.
+demo_get_pvcccc/fast:
+	$(MAKE) -f build/CMakeFiles/demo_get_pvcccc.dir/build.make build/CMakeFiles/demo_get_pvcccc.dir/build
+.PHONY : demo_get_pvcccc/fast
+
+#=============================================================================
+# Target rules for targets named demo_control_param_imm_get
+
+# Build rule for target.
+demo_control_param_imm_get: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_control_param_imm_get
+.PHONY : demo_control_param_imm_get
+
+# fast build rule for target.
+demo_control_param_imm_get/fast:
+	$(MAKE) -f build/CMakeFiles/demo_control_param_imm_get.dir/build.make build/CMakeFiles/demo_control_param_imm_get.dir/build
+.PHONY : demo_control_param_imm_get/fast
+
+#=============================================================================
+# Target rules for targets named demo_get_measured
+
+# Build rule for target.
+demo_get_measured: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_get_measured
+.PHONY : demo_get_measured
+
+# fast build rule for target.
+demo_get_measured/fast:
+	$(MAKE) -f build/CMakeFiles/demo_get_measured.dir/build.make build/CMakeFiles/demo_get_measured.dir/build
+.PHONY : demo_get_measured/fast
+
+#=============================================================================
+# Target rules for targets named demo_lookup_actuator
+
+# Build rule for target.
+demo_lookup_actuator: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_lookup_actuator
+.PHONY : demo_lookup_actuator
+
+# fast build rule for target.
+demo_lookup_actuator/fast:
+	$(MAKE) -f build/CMakeFiles/demo_lookup_actuator.dir/build.make build/CMakeFiles/demo_lookup_actuator.dir/build
+.PHONY : demo_lookup_actuator/fast
+
+#=============================================================================
+# Target rules for targets named demo_get_pvcc
+
+# Build rule for target.
+demo_get_pvcc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_get_pvcc
+.PHONY : demo_get_pvcc
+
+# fast build rule for target.
+demo_get_pvcc/fast:
+	$(MAKE) -f build/CMakeFiles/demo_get_pvcc.dir/build.make build/CMakeFiles/demo_get_pvcc.dir/build
+.PHONY : demo_get_pvcc/fast
+
+#=============================================================================
+# Target rules for targets named demo_get_pvc
+
+# Build rule for target.
+demo_get_pvc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_get_pvc
+.PHONY : demo_get_pvc
+
+# fast build rule for target.
+demo_get_pvc/fast:
+	$(MAKE) -f build/CMakeFiles/demo_get_pvc.dir/build.make build/CMakeFiles/demo_get_pvc.dir/build
+.PHONY : demo_get_pvc/fast
+
+#=============================================================================
+# Target rules for targets named demo_lookup_ctrlbox
+
+# Build rule for target.
+demo_lookup_ctrlbox: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_lookup_ctrlbox
+.PHONY : demo_lookup_ctrlbox
+
+# fast build rule for target.
+demo_lookup_ctrlbox/fast:
+	$(MAKE) -f build/CMakeFiles/demo_lookup_ctrlbox.dir/build.make build/CMakeFiles/demo_lookup_ctrlbox.dir/build
+.PHONY : demo_lookup_ctrlbox/fast
+
+#=============================================================================
+# Target rules for targets named demo_comm_config_set
+
+# Build rule for target.
+demo_comm_config_set: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_comm_config_set
+.PHONY : demo_comm_config_set
+
+# fast build rule for target.
+demo_comm_config_set/fast:
+	$(MAKE) -f build/CMakeFiles/demo_comm_config_set.dir/build.make build/CMakeFiles/demo_comm_config_set.dir/build
+.PHONY : demo_comm_config_set/fast
+
+#=============================================================================
+# Target rules for targets named demo_get_state
+
+# Build rule for target.
+demo_get_state: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_get_state
+.PHONY : demo_get_state
+
+# fast build rule for target.
+demo_get_state/fast:
+	$(MAKE) -f build/CMakeFiles/demo_get_state.dir/build.make build/CMakeFiles/demo_get_state.dir/build
+.PHONY : demo_get_state/fast
+
+#=============================================================================
+# Target rules for targets named demo_lookup
+
+# Build rule for target.
+demo_lookup: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_lookup
+.PHONY : demo_lookup
+
+# fast build rule for target.
+demo_lookup/fast:
+	$(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/build
+.PHONY : demo_lookup/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -131,7 +443,31 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... demo_reboot_actuator"
+	@echo "... demo_reboot"
+	@echo "... demo_ota_driver_cloud"
+	@echo "... demo_ota_driver_test"
+	@echo "... demo_ota_cloud"
+	@echo "... demo_ota_devel"
+	@echo "... demo_ota_test"
+	@echo "... demo_ota_driver_devel"
+	@echo "... demo_ota"
+	@echo "... demo_lookup_abs_encoder"
 	@echo "... demo_clear_fault"
+	@echo "... demo_comm_config_get"
+	@echo "... demo_set_encrypt"
+	@echo "... demo_ota_driver"
+	@echo "... demo_control_param_get"
+	@echo "... demo_get_pvcccc"
+	@echo "... demo_control_param_imm_get"
+	@echo "... demo_get_measured"
+	@echo "... demo_lookup_actuator"
+	@echo "... demo_get_pvcc"
+	@echo "... demo_get_pvc"
+	@echo "... demo_lookup_ctrlbox"
+	@echo "... demo_comm_config_set"
+	@echo "... demo_get_state"
+	@echo "... demo_lookup"
 .PHONY : help
 
 

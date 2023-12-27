@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4
+CMAKE_SOURCE_DIR = /home/afer/project/V4
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build
+CMAKE_BINARY_DIR = /home/afer/project/V4/build
 
 # Include any dependencies generated for this target.
 include build/CMakeFiles/demo_lookup.dir/depend.make
@@ -59,55 +59,55 @@ include build/CMakeFiles/demo_lookup.dir/flags.make
 
 build/CMakeFiles/demo_lookup.dir/demo_lookup.cpp.o: build/CMakeFiles/demo_lookup.dir/flags.make
 build/CMakeFiles/demo_lookup.dir/demo_lookup.cpp.o: ../source/demo_lookup.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object build/CMakeFiles/demo_lookup.dir/demo_lookup.cpp.o"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo_lookup.dir/demo_lookup.cpp.o -c /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/demo_lookup.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object build/CMakeFiles/demo_lookup.dir/demo_lookup.cpp.o"
+	cd /home/afer/project/V4/build/build && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo_lookup.dir/demo_lookup.cpp.o -c /home/afer/project/V4/source/demo_lookup.cpp
 
 build/CMakeFiles/demo_lookup.dir/demo_lookup.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/demo_lookup.dir/demo_lookup.cpp.i"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/demo_lookup.cpp > CMakeFiles/demo_lookup.dir/demo_lookup.cpp.i
+	cd /home/afer/project/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/afer/project/V4/source/demo_lookup.cpp > CMakeFiles/demo_lookup.dir/demo_lookup.cpp.i
 
 build/CMakeFiles/demo_lookup.dir/demo_lookup.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/demo_lookup.dir/demo_lookup.cpp.s"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/demo_lookup.cpp -o CMakeFiles/demo_lookup.dir/demo_lookup.cpp.s
+	cd /home/afer/project/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/afer/project/V4/source/demo_lookup.cpp -o CMakeFiles/demo_lookup.dir/demo_lookup.cpp.s
 
 build/CMakeFiles/demo_lookup.dir/fsa.cpp.o: build/CMakeFiles/demo_lookup.dir/flags.make
 build/CMakeFiles/demo_lookup.dir/fsa.cpp.o: ../source/fsa.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object build/CMakeFiles/demo_lookup.dir/fsa.cpp.o"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo_lookup.dir/fsa.cpp.o -c /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/fsa.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object build/CMakeFiles/demo_lookup.dir/fsa.cpp.o"
+	cd /home/afer/project/V4/build/build && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo_lookup.dir/fsa.cpp.o -c /home/afer/project/V4/source/fsa.cpp
 
 build/CMakeFiles/demo_lookup.dir/fsa.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/demo_lookup.dir/fsa.cpp.i"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/fsa.cpp > CMakeFiles/demo_lookup.dir/fsa.cpp.i
+	cd /home/afer/project/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/afer/project/V4/source/fsa.cpp > CMakeFiles/demo_lookup.dir/fsa.cpp.i
 
 build/CMakeFiles/demo_lookup.dir/fsa.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/demo_lookup.dir/fsa.cpp.s"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/fsa.cpp -o CMakeFiles/demo_lookup.dir/fsa.cpp.s
+	cd /home/afer/project/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/afer/project/V4/source/fsa.cpp -o CMakeFiles/demo_lookup.dir/fsa.cpp.s
 
 build/CMakeFiles/demo_lookup.dir/os.cpp.o: build/CMakeFiles/demo_lookup.dir/flags.make
 build/CMakeFiles/demo_lookup.dir/os.cpp.o: ../source/os.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object build/CMakeFiles/demo_lookup.dir/os.cpp.o"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo_lookup.dir/os.cpp.o -c /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/os.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object build/CMakeFiles/demo_lookup.dir/os.cpp.o"
+	cd /home/afer/project/V4/build/build && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo_lookup.dir/os.cpp.o -c /home/afer/project/V4/source/os.cpp
 
 build/CMakeFiles/demo_lookup.dir/os.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/demo_lookup.dir/os.cpp.i"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/os.cpp > CMakeFiles/demo_lookup.dir/os.cpp.i
+	cd /home/afer/project/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/afer/project/V4/source/os.cpp > CMakeFiles/demo_lookup.dir/os.cpp.i
 
 build/CMakeFiles/demo_lookup.dir/os.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/demo_lookup.dir/os.cpp.s"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/os.cpp -o CMakeFiles/demo_lookup.dir/os.cpp.s
+	cd /home/afer/project/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/afer/project/V4/source/os.cpp -o CMakeFiles/demo_lookup.dir/os.cpp.s
 
 build/CMakeFiles/demo_lookup.dir/logger.cpp.o: build/CMakeFiles/demo_lookup.dir/flags.make
 build/CMakeFiles/demo_lookup.dir/logger.cpp.o: ../source/logger.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object build/CMakeFiles/demo_lookup.dir/logger.cpp.o"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo_lookup.dir/logger.cpp.o -c /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/logger.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object build/CMakeFiles/demo_lookup.dir/logger.cpp.o"
+	cd /home/afer/project/V4/build/build && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/demo_lookup.dir/logger.cpp.o -c /home/afer/project/V4/source/logger.cpp
 
 build/CMakeFiles/demo_lookup.dir/logger.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/demo_lookup.dir/logger.cpp.i"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/logger.cpp > CMakeFiles/demo_lookup.dir/logger.cpp.i
+	cd /home/afer/project/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/afer/project/V4/source/logger.cpp > CMakeFiles/demo_lookup.dir/logger.cpp.i
 
 build/CMakeFiles/demo_lookup.dir/logger.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/demo_lookup.dir/logger.cpp.s"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/logger.cpp -o CMakeFiles/demo_lookup.dir/logger.cpp.s
+	cd /home/afer/project/V4/build/build && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/afer/project/V4/source/logger.cpp -o CMakeFiles/demo_lookup.dir/logger.cpp.s
 
 # Object files for target demo_lookup
 demo_lookup_OBJECTS = \
@@ -125,8 +125,8 @@ demo_lookup_EXTERNAL_OBJECTS =
 ../bin/demo_lookup: build/CMakeFiles/demo_lookup.dir/logger.cpp.o
 ../bin/demo_lookup: build/CMakeFiles/demo_lookup.dir/build.make
 ../bin/demo_lookup: build/CMakeFiles/demo_lookup.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ../../bin/demo_lookup"
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/demo_lookup.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/afer/project/V4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ../../bin/demo_lookup"
+	cd /home/afer/project/V4/build/build && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/demo_lookup.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 build/CMakeFiles/demo_lookup.dir/build: ../bin/demo_lookup
@@ -134,10 +134,10 @@ build/CMakeFiles/demo_lookup.dir/build: ../bin/demo_lookup
 .PHONY : build/CMakeFiles/demo_lookup.dir/build
 
 build/CMakeFiles/demo_lookup.dir/clean:
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build && $(CMAKE_COMMAND) -P CMakeFiles/demo_lookup.dir/cmake_clean.cmake
+	cd /home/afer/project/V4/build/build && $(CMAKE_COMMAND) -P CMakeFiles/demo_lookup.dir/cmake_clean.cmake
 .PHONY : build/CMakeFiles/demo_lookup.dir/clean
 
 build/CMakeFiles/demo_lookup.dir/depend:
-	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4 /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/demo_lookup.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/afer/project/V4/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/afer/project/V4 /home/afer/project/V4/source /home/afer/project/V4/build /home/afer/project/V4/build/build /home/afer/project/V4/build/build/CMakeFiles/demo_lookup.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : build/CMakeFiles/demo_lookup.dir/depend
 

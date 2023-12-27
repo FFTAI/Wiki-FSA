@@ -1,4 +1,4 @@
-# Install script for directory: /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source
+# Install script for directory: /home/afer/project/V4/source
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

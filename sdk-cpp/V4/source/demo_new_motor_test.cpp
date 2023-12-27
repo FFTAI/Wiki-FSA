@@ -1,3 +1,15 @@
+/**
+ * @file demo_lookup.cpp
+ * @author Afer
+ * @brief
+ * @version 0.1
+ * @date 2023-12-21
+ * @note pass-test
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
+
 #include "main.h"
 using namespace Sensor;
 using namespace Utils;
@@ -18,16 +30,16 @@ int main()
     for (int i = 0; i < fse->server_ip_filter_num; i++)
     {
         std::printf("IP: %s sendto ota fse ---> ", fse->server_ip_filter[i].c_str());
-        fse->demo_ota(fse->server_ip_filter[i], NULL, ser_msg);
+        fse->demo_new_motor_test(fse->server_ip_filter[i], NULL, ser_msg);
         std::printf("%s\n", ser_msg);
 
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
-        {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
-        }
-        Logger::get_instance()->print_trace_debug("OTAstatus : %s\n", msg_json["OTAstatus"].GetString());
+        // rapidjson::Document msg_json;
+        // if (msg_json.Parse(ser_msg).HasParseError())
+        // {
+        //     Logger::get_instance()->print_trace_error("fi_decode() failed\n");
+        //     return 0;
+        // }
+        // Logger::get_instance()->print_trace_debug("OTAstatus : %s\n", msg_json["OTAstatus"].GetString());
     }
 
     return 0;

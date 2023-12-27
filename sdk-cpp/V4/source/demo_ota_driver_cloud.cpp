@@ -1,3 +1,14 @@
+/**
+ * @file demo_.cpp
+ * @author Afer
+ * @brief
+ * @version 0.1
+ * @date 2023-12-21
+ * @note pass-test
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "main.h"
 using namespace Sensor;
 using namespace Utils;

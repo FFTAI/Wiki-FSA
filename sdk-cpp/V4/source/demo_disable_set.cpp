@@ -17,8 +17,8 @@ int main()
 
     for (int i = 0; i < fse->server_ip_filter_num; i++)
     {
-        std::printf("IP: %s sendto ota fse ---> ", fse->server_ip_filter[i].c_str());
-        fse->demo_ota(fse->server_ip_filter[i], NULL, ser_msg);
+        std::printf("IP: %s sendto demo_disable_set fsa ---> ", fse->server_ip_filter[i].c_str());
+        fse->demo_disable_set(fse->server_ip_filter[i], NULL, ser_msg);
         std::printf("%s\n", ser_msg);
 
         rapidjson::Document msg_json;
@@ -27,7 +27,7 @@ int main()
             Logger::get_instance()->print_trace_error("fi_decode() failed\n");
             return 0;
         }
-        Logger::get_instance()->print_trace_debug("OTAstatus : %s\n", msg_json["OTAstatus"].GetString());
+        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
     }
 
     return 0;

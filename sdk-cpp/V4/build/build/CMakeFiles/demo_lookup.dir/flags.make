@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/include 
+CXX_INCLUDES = -I/home/afer/project/V4/include 
 

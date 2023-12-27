@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/demo_get_pvcc.dir/demo_get_pvcc.cpp.o CMakeFiles/demo_get_pvcc.dir/fsa.cpp.o CMakeFiles/demo_get_pvcc.dir/os.cpp.o CMakeFiles/demo_get_pvcc.dir/logger.cpp.o  -o ../../bin/demo_get_pvcc 

@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/demo_clear_fault.cpp" "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/demo_clear_fault.dir/demo_clear_fault.cpp.o"
-  "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/fsa.cpp" "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/demo_clear_fault.dir/fsa.cpp.o"
-  "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/logger.cpp" "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/demo_clear_fault.dir/logger.cpp.o"
-  "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/os.cpp" "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/demo_clear_fault.dir/os.cpp.o"
+  "/home/afer/project/V4/source/demo_clear_fault.cpp" "/home/afer/project/V4/build/build/CMakeFiles/demo_clear_fault.dir/demo_clear_fault.cpp.o"
+  "/home/afer/project/V4/source/fsa.cpp" "/home/afer/project/V4/build/build/CMakeFiles/demo_clear_fault.dir/fsa.cpp.o"
+  "/home/afer/project/V4/source/logger.cpp" "/home/afer/project/V4/build/build/CMakeFiles/demo_clear_fault.dir/logger.cpp.o"
+  "/home/afer/project/V4/source/os.cpp" "/home/afer/project/V4/build/build/CMakeFiles/demo_clear_fault.dir/os.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

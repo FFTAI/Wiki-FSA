@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/demo_comm_config_set.dir/demo_comm_config_set.cpp.o CMakeFiles/demo_comm_config_set.dir/fsa.cpp.o CMakeFiles/demo_comm_config_set.dir/os.cpp.o CMakeFiles/demo_comm_config_set.dir/logger.cpp.o  -o ../../bin/demo_comm_config_set 

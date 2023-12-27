@@ -105,7 +105,7 @@ int FSA::fi_send_msg(std::string ip, int port, char *msg)
     if (!this->is_init)
     {
         this->fi_init_fse();
-        Logger::get_instance()->print_trace_debug("init fse\n");
+        Logger::get_instance()->print_trace("init fse\n");
         this->is_init = 1;
         usleep(20);
     }
@@ -117,7 +117,7 @@ int FSA::fi_send_msg(std::string ip, int port, char *msg)
     memset(this->server_ip, 0, sizeof(this->server_ip));
     this->server_ip_filter_num = 0;
     this->server_ip_num = 0;
-    Logger::get_instance()->print_trace("send json-> %s\n", this->send_buff);
+    Logger::get_instance()->print_trace_warning("send json-> %s\n", this->send_buff);
 
     switch (this->work_mode)
     {
@@ -181,7 +181,7 @@ int FSA::fi_recv_msg(char *client_recv_msg)
                 }
                 else
                 {
-                    Logger::get_instance()->print_trace_debug("broadcast recvfrom() successfully\n");
+                    Logger::get_instance()->print_trace("broadcast recvfrom() successfully\n");
                     return FunctionResult::SUCCESS;
                 }
                 break;
@@ -325,11 +325,18 @@ int FSA::demo_clear_fault(std::string sigle_ip, char *define_msg_sendto, char *c
     // get error code
     if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_error_code, client_recv_msg)))
     {
-        Logger::get_instance()->print_trace("error code : %s", client_recv_msg);
+        Logger::get_instance()->print_trace("error code : %s\n", client_recv_msg);
+        if (this->msg_json.Parse(client_recv_msg).HasParseError())
+        {
+            Logger::get_instance()->print_trace_error("decode failed\n");
+            return FunctionResult::FAILURE;
+        }
+        Logger::get_instance()->print_trace_debug("error code : %d\n", msg_json["error_code"].GetInt());
         // clear error code
         if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_clear_fault, client_recv_msg)))
         {
             // clear error code successfully
+            Logger::get_instance()->print_trace("clear fault: %s\n", client_recv_msg);
             return FunctionResult::SUCCESS;
         }
         return FunctionResult::FAILURE;
@@ -337,15 +344,81 @@ int FSA::demo_clear_fault(std::string sigle_ip, char *define_msg_sendto, char *c
     return FunctionResult::FAILURE;
 }
 
-int FSA::demo_comm_config_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_comm_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_comm_config_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
+{
+    Logger::get_instance()->print_trace_debug("demo_comm_config_get\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_get_comm_config, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+int FSA::demo_comm_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
+{
+    Logger::get_instance()->print_trace_debug("demo_comm_config_set\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_get_comm_config, client_recv_msg)))
+    {
+        // getting current config now
+        Logger::get_instance()->print_trace("get_comm_config: %s\n", client_recv_msg);
+        memset(client_recv_msg, 0, BUFFER_SIZE);
+        sleep(1);
+        if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, define_msg_sendto, client_recv_msg)))
+        {
+            // setting config
+            Logger::get_instance()->print_trace("set_comm_config feedback: %s\n", client_recv_msg);
+            memset(client_recv_msg, 0, BUFFER_SIZE);
+            sleep(1);
+            if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_get_comm_config, client_recv_msg)))
+            {
+                // check current config after setting
+                Logger::get_instance()->print_trace("get_comm_config: %s\n", client_recv_msg);
+                memset(client_recv_msg, 0, BUFFER_SIZE);
+                sleep(1);
+                if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_reboot, client_recv_msg)))
+                {
+                    // reboot update
+                    Logger::get_instance()->print_trace("reboot feedback: %s\n", client_recv_msg);
+                    return FunctionResult::SUCCESS;
+                }
+                Logger::get_instance()->print_trace_error("reboot failed\n");
+                return FunctionResult::FAILURE;
+            }
+            Logger::get_instance()->print_trace_error("get_comm_config failed after setting it\n");
+            return FunctionResult::FAILURE;
+        }
+        Logger::get_instance()->print_trace_error("set_comm_config failed\n");
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace_error("get_comm_config failed \n");
+    return FunctionResult::FAILURE;
+}
 
 int FSA::demo_control_current_mode(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 
-int FSA::demo_control_param_imm_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_control_param_imm_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
+{
+    Logger::get_instance()->print_trace_debug("demo_control_param_imm_get\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_control_param_imm, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 int FSA::demo_control_param_imm_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 
-int FSA::demo_control_param_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_control_param_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
+{
+    Logger::get_instance()->print_trace_debug("demo_comm_config_get\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_control_param, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 int FSA::demo_control_param_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 
 int FSA::demo_control_position_ff_mode(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
@@ -356,8 +429,27 @@ int FSA::demo_ctrl_config_get(std::string sigle_ip, char *define_msg_sendto, cha
 int FSA::demo_ctrl_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 int FSA::demo_comm_config_save(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 
-int FSA::demo_disable_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_enable_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_disable_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_disable_set\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_set_disenable, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+int FSA::demo_enable_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_enable_set\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_set_enable, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 
 int FSA::demo_flag_of_operation_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 int FSA::demo_flag_of_operation_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
@@ -365,23 +457,107 @@ int FSA::demo_flag_of_operation_set(std::string sigle_ip, char *define_msg_sendt
 int FSA::demo_get_abs_encoder_value(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 int FSA::demo_get_measured(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 
-int FSA::demo_get_pvc(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_get_pvcc(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_get_pvcccc(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_get_pvc(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_get_pvc\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_pvc, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+int FSA::demo_get_pvcc(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_get_pvcc\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_pvcc, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+int FSA::demo_get_pvcccc(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_get_pvcccc\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_pvcccc, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 
-int FSA::demo_get_state(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_get_state(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_get_state\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_state, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 
 int FSA::demo_home_offset_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 int FSA::demo_home_offset_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 
 int FSA::demo_home_position_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 
-int FSA::demo_lookup_abs_encoder(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_lookup_actuator(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_lookup_ctrlbox(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_lookup(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_lookup_abs_encoder(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_lookup_actuator\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_get_root, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 
-int FSA::demo_new_motor_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_lookup_actuator(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_lookup_actuator\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_get_root, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+int FSA::demo_lookup_ctrlbox(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_lookup_ctrlbox\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_get_root, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+int FSA::demo_lookup(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_lookup\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_get_root, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+int FSA::demo_new_motor_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_new_motor_test\n");
+    // this->work_mode = WorkMode::SIGLE_MODE;
+    // if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_ota_cloud, client_recv_msg)))
+    // {
+    //     return FunctionResult::SUCCESS;
+    // }
+    return FunctionResult::FAILURE;
+}
 
 int FSA::demo_ota_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
@@ -413,14 +589,71 @@ int FSA::demo_ota(std::string sigle_ip, char *define_msg_sendto, char *client_re
     }
     return FunctionResult::FAILURE;
 }
-int FSA::demo_ota_devel(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_ota_devel(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_ota_devel()\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_ota_driver_devel, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 
-int FSA::demo_ota_driver_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_ota_driver_devel(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_ota_driver_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_ota_driver(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_ota_driver_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_ota_driver_cloud()\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_ota_driver_cloud, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+int FSA::demo_ota_driver_devel(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_ota_driver_devel()\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_ota_driver_devel, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 
-int FSA::demo_pid_param_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_ota_driver_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_ota_driver_devel()\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_ota_driver_test, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+int FSA::demo_ota_driver(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_ota_driver()\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, this->json_ota_driver, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+int FSA::demo_pid_param_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_pid_param_get()\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_pid_param, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
 int FSA::demo_pid_param_imm_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 int FSA::demo_pid_param_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
 
@@ -434,9 +667,29 @@ int FSA::demo_reboot(std::string sigle_ip, char *define_msg_sendto, char *client
     }
     return FunctionResult::FAILURE;
 }
-int FSA::demo_reboot_actuator(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+
+int FSA::demo_reboot_actuator(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_reboot()\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_reboot, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 
 int FSA::demo_set_calibrate_encoder(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
-int FSA::demo_set_encrypt(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+
+int FSA::demo_set_encrypt(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_set_encrypt()\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_COMM, define_msg_sendto, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
 
 // FSA INTERFACE END

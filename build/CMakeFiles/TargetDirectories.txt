@@ -1,5 +1,0 @@
-/home/afer/project_user/wiki-fsa/build/CMakeFiles/rebuild_cache.dir
-/home/afer/project_user/wiki-fsa/build/CMakeFiles/edit_cache.dir
-/home/afer/project_user/wiki-fsa/build/build/CMakeFiles/rebuild_cache.dir
-/home/afer/project_user/wiki-fsa/build/build/CMakeFiles/edit_cache.dir
-/home/afer/project_user/wiki-fsa/build/build/CMakeFiles/demo_lookup.dir

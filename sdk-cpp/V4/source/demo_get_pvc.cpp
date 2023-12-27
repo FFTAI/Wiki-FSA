@@ -1,3 +1,14 @@
+/**
+ * @file demo_.cpp
+ * @author Afer
+ * @brief
+ * @version 0.1
+ * @date 2023-12-21
+ * @note pass-test
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "main.h"
 using namespace Sensor;
 using namespace Utils;
@@ -14,20 +25,29 @@ int main()
         Logger::get_instance()->print_trace_error("Cannot find server\n");
         return 0;
     }
+    std::string ser_list[254] = {""};
+    memset(ser_list, 0, sizeof(ser_list));
+    memcpy(ser_list, fse->server_ip_filter, sizeof(ser_list));
+    int ser_num = fse->server_ip_filter_num;
 
-    for (int i = 0; i < fse->server_ip_filter_num; i++)
+    while (1)
     {
-        std::printf("IP: %s sendto ota fse ---> ", fse->server_ip_filter[i].c_str());
-        fse->demo_ota(fse->server_ip_filter[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        for (int i = 0; i < ser_num; i++)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
+            fse->demo_get_pvc(ser_list[i], NULL, ser_msg);
+            std::printf("%s\n", ser_msg);
+
+            rapidjson::Document msg_json;
+            if (msg_json.Parse(ser_msg).HasParseError())
+            {
+                Logger::get_instance()->print_trace_error("fi_decode() failed\n");
+                return 0;
+            }
+            Logger::get_instance()->print_trace_debug("position : %f, velocity : %f, current : %f\n", \
+                msg_json["position"].GetDouble(), msg_json["velocity"].GetDouble(), msg_json["current"].GetDouble());
         }
-        Logger::get_instance()->print_trace_debug("OTAstatus : %s\n", msg_json["OTAstatus"].GetString());
+        sleep(1);
     }
 
     return 0;
