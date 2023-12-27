@@ -48,23 +48,9 @@ logger_level.h
 
 ../include/logger_state.h
 
-../include/main.h
-iostream
--
-fsa.h
-../include/fsa.h
-logger.h
-../include/logger.h
-os.h
 ../include/os.h
 
-../include/os.h
-
-/home/afer/project_user/wiki-fsa/sdk-cpp/V4/source/demo_lookup.cpp
-main.h
-/home/afer/project_user/wiki-fsa/sdk-cpp/V4/source/main.h
-
-/home/afer/project_user/wiki-fsa/sdk-cpp/V4/source/fsa.cpp
+/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/fsa.cpp
 fsa.h
-/home/afer/project_user/wiki-fsa/sdk-cpp/V4/source/fsa.h
+/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/source/fsa.h
 

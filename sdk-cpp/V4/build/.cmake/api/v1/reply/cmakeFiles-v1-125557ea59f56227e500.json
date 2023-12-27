@@ -138,8 +138,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/home/afer/project_user/wiki-fsa/sdk-cpp/V4/build",
-		"source" : "/home/afer/project_user/wiki-fsa/sdk-cpp/V4"
+		"build" : "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build",
+		"source" : "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4"
 	},
 	"version" : 
 	{

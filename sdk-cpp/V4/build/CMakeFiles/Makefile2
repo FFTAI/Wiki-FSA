@@ -44,10 +44,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/afer/project_user/wiki-fsa/sdk-cpp/V4
+CMAKE_SOURCE_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build
+CMAKE_BINARY_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -71,7 +71,7 @@ clean: build/clean
 # Directory level rules for directory build
 
 # Recursive "all" directory target.
-build/all: build/CMakeFiles/demo_lookup.dir/all
+build/all: build/CMakeFiles/demo_clear_fault.dir/all
 
 .PHONY : build/all
 
@@ -81,36 +81,36 @@ build/preinstall:
 .PHONY : build/preinstall
 
 # Recursive "clean" directory target.
-build/clean: build/CMakeFiles/demo_lookup.dir/clean
+build/clean: build/CMakeFiles/demo_clear_fault.dir/clean
 
 .PHONY : build/clean
 
 #=============================================================================
-# Target rules for target build/CMakeFiles/demo_lookup.dir
+# Target rules for target build/CMakeFiles/demo_clear_fault.dir
 
 # All Build rule for target.
-build/CMakeFiles/demo_lookup.dir/all:
-	$(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/depend
-	$(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target demo_lookup"
-.PHONY : build/CMakeFiles/demo_lookup.dir/all
+build/CMakeFiles/demo_clear_fault.dir/all:
+	$(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/depend
+	$(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target demo_clear_fault"
+.PHONY : build/CMakeFiles/demo_clear_fault.dir/all
 
 # Build rule for subdir invocation for target.
-build/CMakeFiles/demo_lookup.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 5
-	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_lookup.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 0
-.PHONY : build/CMakeFiles/demo_lookup.dir/rule
+build/CMakeFiles/demo_clear_fault.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 5
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_clear_fault.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/demo_clear_fault.dir/rule
 
 # Convenience name for target.
-demo_lookup: build/CMakeFiles/demo_lookup.dir/rule
+demo_clear_fault: build/CMakeFiles/demo_clear_fault.dir/rule
 
-.PHONY : demo_lookup
+.PHONY : demo_clear_fault
 
 # clean rule for target.
-build/CMakeFiles/demo_lookup.dir/clean:
-	$(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/clean
-.PHONY : build/CMakeFiles/demo_lookup.dir/clean
+build/CMakeFiles/demo_clear_fault.dir/clean:
+	$(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/clean
+.PHONY : build/CMakeFiles/demo_clear_fault.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

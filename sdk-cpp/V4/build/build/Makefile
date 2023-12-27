@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/afer/project_user/wiki-fsa/sdk-cpp/V4
+CMAKE_SOURCE_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build
+CMAKE_BINARY_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/progress.marks
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 0
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/progress.marks
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/clean
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,60 +97,60 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/preinstall
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/preinstall
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
-build/CMakeFiles/demo_lookup.dir/rule:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_lookup.dir/rule
-.PHONY : build/CMakeFiles/demo_lookup.dir/rule
+build/CMakeFiles/demo_clear_fault.dir/rule:
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/demo_clear_fault.dir/rule
+.PHONY : build/CMakeFiles/demo_clear_fault.dir/rule
 
 # Convenience name for target.
-demo_lookup: build/CMakeFiles/demo_lookup.dir/rule
+demo_clear_fault: build/CMakeFiles/demo_clear_fault.dir/rule
 
-.PHONY : demo_lookup
+.PHONY : demo_clear_fault
 
 # fast build rule for target.
-demo_lookup/fast:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/build
-.PHONY : demo_lookup/fast
+demo_clear_fault/fast:
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/build
+.PHONY : demo_clear_fault/fast
 
-demo_lookup.o: demo_lookup.cpp.o
+demo_clear_fault.o: demo_clear_fault.cpp.o
 
-.PHONY : demo_lookup.o
+.PHONY : demo_clear_fault.o
 
 # target to build an object file
-demo_lookup.cpp.o:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/demo_lookup.cpp.o
-.PHONY : demo_lookup.cpp.o
+demo_clear_fault.cpp.o:
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/demo_clear_fault.cpp.o
+.PHONY : demo_clear_fault.cpp.o
 
-demo_lookup.i: demo_lookup.cpp.i
+demo_clear_fault.i: demo_clear_fault.cpp.i
 
-.PHONY : demo_lookup.i
+.PHONY : demo_clear_fault.i
 
 # target to preprocess a source file
-demo_lookup.cpp.i:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/demo_lookup.cpp.i
-.PHONY : demo_lookup.cpp.i
+demo_clear_fault.cpp.i:
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/demo_clear_fault.cpp.i
+.PHONY : demo_clear_fault.cpp.i
 
-demo_lookup.s: demo_lookup.cpp.s
+demo_clear_fault.s: demo_clear_fault.cpp.s
 
-.PHONY : demo_lookup.s
+.PHONY : demo_clear_fault.s
 
 # target to generate assembly for a file
-demo_lookup.cpp.s:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/demo_lookup.cpp.s
-.PHONY : demo_lookup.cpp.s
+demo_clear_fault.cpp.s:
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/demo_clear_fault.cpp.s
+.PHONY : demo_clear_fault.cpp.s
 
 fsa.o: fsa.cpp.o
 
@@ -158,7 +158,7 @@ fsa.o: fsa.cpp.o
 
 # target to build an object file
 fsa.cpp.o:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/fsa.cpp.o
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/fsa.cpp.o
 .PHONY : fsa.cpp.o
 
 fsa.i: fsa.cpp.i
@@ -167,7 +167,7 @@ fsa.i: fsa.cpp.i
 
 # target to preprocess a source file
 fsa.cpp.i:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/fsa.cpp.i
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/fsa.cpp.i
 .PHONY : fsa.cpp.i
 
 fsa.s: fsa.cpp.s
@@ -176,7 +176,7 @@ fsa.s: fsa.cpp.s
 
 # target to generate assembly for a file
 fsa.cpp.s:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/fsa.cpp.s
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/fsa.cpp.s
 .PHONY : fsa.cpp.s
 
 logger.o: logger.cpp.o
@@ -185,7 +185,7 @@ logger.o: logger.cpp.o
 
 # target to build an object file
 logger.cpp.o:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/logger.cpp.o
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/logger.cpp.o
 .PHONY : logger.cpp.o
 
 logger.i: logger.cpp.i
@@ -194,7 +194,7 @@ logger.i: logger.cpp.i
 
 # target to preprocess a source file
 logger.cpp.i:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/logger.cpp.i
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/logger.cpp.i
 .PHONY : logger.cpp.i
 
 logger.s: logger.cpp.s
@@ -203,7 +203,7 @@ logger.s: logger.cpp.s
 
 # target to generate assembly for a file
 logger.cpp.s:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/logger.cpp.s
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/logger.cpp.s
 .PHONY : logger.cpp.s
 
 os.o: os.cpp.o
@@ -212,7 +212,7 @@ os.o: os.cpp.o
 
 # target to build an object file
 os.cpp.o:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/os.cpp.o
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/os.cpp.o
 .PHONY : os.cpp.o
 
 os.i: os.cpp.i
@@ -221,7 +221,7 @@ os.i: os.cpp.i
 
 # target to preprocess a source file
 os.cpp.i:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/os.cpp.i
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/os.cpp.i
 .PHONY : os.cpp.i
 
 os.s: os.cpp.s
@@ -230,7 +230,7 @@ os.s: os.cpp.s
 
 # target to generate assembly for a file
 os.cpp.s:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/os.cpp.s
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/os.cpp.s
 .PHONY : os.cpp.s
 
 # Help Target
@@ -241,10 +241,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... demo_lookup"
-	@echo "... demo_lookup.o"
-	@echo "... demo_lookup.i"
-	@echo "... demo_lookup.s"
+	@echo "... demo_clear_fault"
+	@echo "... demo_clear_fault.o"
+	@echo "... demo_clear_fault.i"
+	@echo "... demo_clear_fault.s"
 	@echo "... fsa.o"
 	@echo "... fsa.i"
 	@echo "... fsa.s"
@@ -265,6 +265,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

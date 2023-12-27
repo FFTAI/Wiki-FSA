@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/afer/project_user/wiki-fsa/sdk-cpp/V4
+CMAKE_SOURCE_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build
+CMAKE_BINARY_DIR = /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named demo_lookup
+# Target rules for targets named demo_clear_fault
 
 # Build rule for target.
-demo_lookup: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 demo_lookup
-.PHONY : demo_lookup
+demo_clear_fault: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 demo_clear_fault
+.PHONY : demo_clear_fault
 
 # fast build rule for target.
-demo_lookup/fast:
-	$(MAKE) -f build/CMakeFiles/demo_lookup.dir/build.make build/CMakeFiles/demo_lookup.dir/build
-.PHONY : demo_lookup/fast
+demo_clear_fault/fast:
+	$(MAKE) -f build/CMakeFiles/demo_clear_fault.dir/build.make build/CMakeFiles/demo_clear_fault.dir/build
+.PHONY : demo_clear_fault/fast
 
 # Help Target
 help:
@@ -131,7 +131,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... demo_lookup"
+	@echo "... demo_clear_fault"
 .PHONY : help
 
 

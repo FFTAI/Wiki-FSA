@@ -10,13 +10,16 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 #     add_executable(${elfname} ${srcfile} fse.cpp os.cpp logger.cpp)
 # endforeach()
 
+add_executable(demo_clear_fault demo_clear_fault.cpp fsa.cpp os.cpp logger.cpp)
+
+
+
 # add_executable(demo_reboot demo_reboot.cpp fse.cpp os.cpp logger.cpp)
 # add_executable(demo_reboot_fse demo_reboot_fse.cpp fse.cpp os.cpp logger.cpp)
 # add_executable(demo_ota demo_ota.cpp fse.cpp os.cpp logger.cpp)
 # add_executable(demo_ota_test demo_ota_test.cpp fse.cpp os.cpp logger.cpp)
 
 # add_executable(demo_ota_cloud demo_ota_cloud.cpp fse.cpp os.cpp logger.cpp)
-add_executable(demo_lookup demo_lookup.cpp fsa.cpp os.cpp logger.cpp)
 # add_executable(demo_lookup_AbsEncoder demo_lookup_AbsEncoder.cpp fse.cpp os.cpp logger.cpp)
 # add_executable(demo_home_position_set demo_home_position_set.cpp fse.cpp os.cpp logger.cpp)
 

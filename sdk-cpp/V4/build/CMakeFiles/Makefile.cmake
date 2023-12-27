@@ -47,5 +47,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "build/CMakeFiles/demo_lookup.dir/DependInfo.cmake"
+  "build/CMakeFiles/demo_clear_fault.dir/DependInfo.cmake"
   )

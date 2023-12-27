@@ -20,7 +20,7 @@ FSA *fse = new FSA();
 int main()
 {
     char ser_msg[1024] = {0};
-    fse->demo_broadcase_filter(ABSCODER);
+    fse->demo_broadcase_filter(ACTUATOR);
     if (fse->server_ip_filter_num == 0)
     {
         Logger::get_instance()->print_trace_error("Cannot find server\n");

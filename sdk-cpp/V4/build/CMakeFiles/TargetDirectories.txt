@@ -1,5 +1,5 @@
-/home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles/rebuild_cache.dir
-/home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/CMakeFiles/edit_cache.dir
-/home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/rebuild_cache.dir
-/home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/edit_cache.dir
-/home/afer/project_user/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/demo_lookup.dir
+/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles/rebuild_cache.dir
+/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/CMakeFiles/edit_cache.dir
+/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/rebuild_cache.dir
+/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/edit_cache.dir
+/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build/build/CMakeFiles/demo_clear_fault.dir

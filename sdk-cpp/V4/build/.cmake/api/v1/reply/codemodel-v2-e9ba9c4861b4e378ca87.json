@@ -52,9 +52,9 @@
 			[
 				{
 					"directoryIndex" : 1,
-					"id" : "demo_lookup::@039278ea0a093c55e3e1",
-					"jsonFile" : "target-demo_lookup-cf6e2b113e9543a27a46.json",
-					"name" : "demo_lookup",
+					"id" : "demo_clear_fault::@039278ea0a093c55e3e1",
+					"jsonFile" : "target-demo_clear_fault-d621ae199fbf8ff1f8fe.json",
+					"name" : "demo_clear_fault",
 					"projectIndex" : 0
 				}
 			]
@@ -63,8 +63,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/afer/project_user/wiki-fsa/sdk-cpp/V4/build",
-		"source" : "/home/afer/project_user/wiki-fsa/sdk-cpp/V4"
+		"build" : "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4/build",
+		"source" : "/home/afer/shareUbuntu/wiki-fsa/sdk-cpp/V4"
 	},
 	"version" : 
 	{
