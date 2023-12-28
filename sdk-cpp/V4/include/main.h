@@ -3,6 +3,7 @@
 
 
 #include <iostream>
+#include <cmath>
 #include "fsa.h"
 #include "logger.h"
 #include "os.h"

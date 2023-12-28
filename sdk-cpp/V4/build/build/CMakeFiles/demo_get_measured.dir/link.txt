@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/demo_get_measured.dir/demo_get_measured.cpp.o CMakeFiles/demo_get_measured.dir/fsa.cpp.o CMakeFiles/demo_get_measured.dir/os.cpp.o CMakeFiles/demo_get_measured.dir/logger.cpp.o  -o ../../bin/demo_get_measured 

@@ -15,15 +15,15 @@ using namespace Sensor;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fse = new FSA();
+FSA *fsa = new FSA();
 
 int main()
 {
-    if (!(fse->demo_broadcase_filter(ACTUATOR)))
+    if (!(fsa->demo_broadcase_filter(ACTUATOR)))
     {
-        for (int i = 0; i < fse->server_ip_filter_num; i++)
+        for (int i = 0; i < fsa->server_ip_filter_num; i++)
         {
-            Logger::get_instance()->print_trace("%s\n", fse->server_ip_filter[i]);
+            Logger::get_instance()->print_trace("%s\n", fsa->server_ip_filter[i]);
         }
         return FunctionResult::SUCCESS;
     }

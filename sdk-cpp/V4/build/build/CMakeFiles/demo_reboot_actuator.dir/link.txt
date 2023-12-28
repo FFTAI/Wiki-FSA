@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/demo_reboot_actuator.dir/demo_reboot_actuator.cpp.o CMakeFiles/demo_reboot_actuator.dir/fsa.cpp.o CMakeFiles/demo_reboot_actuator.dir/os.cpp.o CMakeFiles/demo_reboot_actuator.dir/logger.cpp.o  -o ../../bin/demo_reboot_actuator 

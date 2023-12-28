@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/demo_reboot.dir/demo_reboot.cpp.o CMakeFiles/demo_reboot.dir/fsa.cpp.o CMakeFiles/demo_reboot.dir/os.cpp.o CMakeFiles/demo_reboot.dir/logger.cpp.o  -o ../../bin/demo_reboot 

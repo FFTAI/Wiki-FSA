@@ -15,28 +15,28 @@ using namespace Sensor;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fse = new FSA();
+FSA *fsa = new FSA();
 
 int main()
 {
     char ser_msg[1024] = {0};
-    fse->demo_broadcase_filter(ACTUATOR);
-    if (fse->server_ip_filter_num == 0)
+    fsa->demo_broadcase_filter(ACTUATOR);
+    if (fsa->server_ip_filter_num == 0)
     {
         Logger::get_instance()->print_trace_error("Cannot find server\n");
         return 0;
     }
     std::string ser_list[254] = {""};
     memset(ser_list, 0, sizeof(ser_list));
-    memcpy(ser_list, fse->server_ip_filter, sizeof(ser_list));
-    int ser_num = fse->server_ip_filter_num;
+    memcpy(ser_list, fsa->server_ip_filter, sizeof(ser_list));
+    int ser_num = fsa->server_ip_filter_num;
 
     while (1)
     {
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fse->demo_get_pvcc(ser_list[i], NULL, ser_msg);
+            fsa->demo_get_pvcc(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;

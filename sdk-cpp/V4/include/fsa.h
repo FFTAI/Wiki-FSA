@@ -210,7 +210,7 @@ namespace Sensor
 
         int demo_ctrl_config_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
         int demo_ctrl_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_comm_config_save(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int demo_ctrl_config_save(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
 
         int demo_disable_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
         int demo_enable_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
@@ -258,6 +258,139 @@ namespace Sensor
 
         int demo_set_calibrate_encoder(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
         int demo_set_encrypt(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+
+        int interface_set_current_control(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int interface_set_mode_operation(std::string sigle_ip, int mode, char *client_recv_msg);
+        int interface_set_position_control(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int interface_set_velocity_control(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+    };
+
+    class FSAActuatorType
+    {
+    public:
+        uint64_t TYPE_DEFAULT = 0x00000001;
+        uint64_t TYPE_25_10_C_1 = 0x01010301;
+        uint64_t TYPE_25_10_C_30 = 0x01010303;
+        uint64_t TYPE_25_10_D_1 = 0x01010401;
+        uint64_t TYPE_25_10_D_30 = 0x01010403;
+        uint64_t TYPE_36_10_C_1 = 0x02010301;
+        uint64_t TYPE_36_10_C_30 = 0x02010303;
+        uint64_t TYPE_36_10_D_1 = 0x02010401;
+        uint64_t TYPE_36_10_D_30 = 0x02010403;
+        uint64_t TYPE_60_10_D_1 = 0x03010401;
+        uint64_t TYPE_60_10_D_120 = 0x03010405;
+        uint64_t TYPE_80_21_C_1 = 0x04020301;
+        uint64_t TYPE_80_21_C_30 = 0x04020303;
+        uint64_t TYPE_100_21_A_1 = 0x05020101;
+        uint64_t TYPE_100_21_A_7 = 0x05020102;
+        uint64_t TYPE_130_21_A_1 = 0x06020101;
+        uint64_t TYPE_130_21_A_7 = 0x06020102;
+    };
+
+    class FSAActuatorDirection
+    {
+    public:
+        int DIRECTION_NORMAL = 1;
+        int DIRECTION_REVERSE = -1;
+    };
+
+    class FSAActuatorReductionRatio
+    {
+    public:
+        int REDUCTION_RATIO_7 = 7;
+        int REDUCTION_RATIO_30 = 30;
+        int REDUCTION_RATIO_50 = 50;
+        int REDUCTION_RATIO_70 = 70;
+        int REDUCTION_RATIO_100 = 100;
+        int REDUCTION_RATIO_120 = 120;
+    };
+
+    class FSAMotorType
+    {
+    public:
+        int TYPE_MOTOR_NULL = 0;
+        int TYPE_JIOALONG = 1;
+        int FSA130_20V0 = 2;
+        int FSA100_15V0 = 3;
+        int FSA80_10V0 = 4;
+        int FSA60_08V0 = 5;
+        int FSA36_08V0 = 6;
+        int FSA25_08V0 = 7;
+        int FSA36_10V0 = 8;
+    };
+
+    class FSAHardwareType
+    {
+    public:
+        int TYPE_HARDWARE_NULL = 0;
+        int TYPE_ODrive_V36 = 1;
+        int TYPE_H95V104 = 2;
+        int TYPE_H66V104 = 3;
+        int TYPE_H46V104 = 4;
+        int TYPE_H30V303 = 5;
+    };
+
+    class FSAMotorVBUS
+    {
+    public:
+        int VBUS_36V = 36;
+        int VBUS_48V = 48;
+    };
+
+    class FSAMotorDirection
+    {
+    public:
+        int ABC = 1;
+        int ACB = -1;
+    };
+
+    class FSAMotorPolePairs
+    {
+    public:
+        int POLE_PAIRS_7 = 7;
+        int POLE_PAIRS_10 = 10;
+        int POLE_PAIRS_21 = 21;
+    };
+
+    class FSAMotorMaxSpeed
+    {
+    public:
+        int MAX_SPEED_1000 = 1000; // rpm
+        int MAX_SPEED_2000 = 2000; // rpm
+        int MAX_SPEED_3000 = 3000; // rpm
+    };
+
+    class FSAMotorMaxAcceleration
+    {
+    public:
+        int MAX_ACCELERATION_6000 = 6000;   // rpm/s
+        int MAX_ACCELERATION_10000 = 10000; // rpm/s
+        int MAX_ACCELERATION_30000 = 30000; // rpm/s
+        int MAX_ACCELERATION_60000 = 60000; // rpm/s
+    };
+
+    class FSAEncoderDirection
+    {
+    public:
+        int DIRECTION_CW = -1;
+        int DIRECTION_CCW = 1;
+    };
+
+    class FSAFlagState
+    {
+    public:
+        int CLEAR = 0;
+        int SET = 1;
+    };
+
+    class FsaModeOfOperation
+    {
+    public:
+        int NONE = 0;
+        int CURRENT_CLOSE_LOOP_CONTROL = 4;
+        int VELOCITY_CONTROL = 3;
+        int POSITION_CONTROL = 1;
+        int TRAPEZOIDAL_CONTROL = 5;
     };
 }
 

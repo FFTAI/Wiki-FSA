@@ -14,22 +14,22 @@ using namespace Sensor;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fse = new FSA();
+FSA *fsa = new FSA();
 
 int main()
 {
     char ser_msg[1024] = {0};
-    fse->demo_broadcase();
-    if (fse->server_ip_num == 0)
+    fsa->demo_broadcase();
+    if (fsa->server_ip_num == 0)
     {
         Logger::get_instance()->print_trace_error("Cannot find server\n");
         return 0;
     }
 
-    for (int i = 0; i < fse->server_ip_num; i++)
+    for (int i = 0; i < fsa->server_ip_num; i++)
     {
-        std::printf("IP: %s sendto reboot fse ---> ", fse->server_ip[i].c_str());
-        fse->demo_reboot(fse->server_ip[i], NULL, ser_msg);
+        std::printf("IP: %s sendto reboot fsa ---> ", fsa->server_ip[i].c_str());
+        fsa->demo_reboot(fsa->server_ip[i], NULL, ser_msg);
         std::printf("%s\n", ser_msg);
 
         rapidjson::Document msg_json;
