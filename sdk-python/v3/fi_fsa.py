@@ -2,7 +2,7 @@ import socket
 import time
 import json
 
-# import numpy
+import numpy
 from enum import Enum
 from math import *
 import struct
@@ -31,22 +31,6 @@ class FSAFlagState:
 
 class FSAActuatorType:
     TYPE_DEFAULT = 0x00000001
-    TYPE_25_10_C_1 = 0x01010301
-    TYPE_25_10_C_30 = 0x01010303
-    TYPE_25_10_D_1 = 0x01010401
-    TYPE_25_10_D_30 = 0x01010403
-    TYPE_36_10_C_1 = 0x02010301
-    TYPE_36_10_C_30 = 0x02010303
-    TYPE_36_10_D_1 = 0x02010401
-    TYPE_36_10_D_30 = 0x02010403
-    TYPE_60_10_D_1 = 0x03010401
-    TYPE_60_10_D_120 = 0x03010405
-    TYPE_80_21_C_1 = 0x04020301
-    TYPE_80_21_C_30 = 0x04020303
-    TYPE_100_21_A_1 = 0x05020101
-    TYPE_100_21_A_7 = 0x05020102
-    TYPE_130_21_A_1 = 0x06020101
-    TYPE_130_21_A_7 = 0x06020102
 
 
 class FSAActuatorDirection:
@@ -57,8 +41,9 @@ class FSAActuatorDirection:
 class FSAActuatorReductionRatio:
     REDUCTION_RATIO_7 = 7
     REDUCTION_RATIO_30 = 30
+    REDUCTION_RATIO_36 = 36
     REDUCTION_RATIO_50 = 50
-    REDUCTION_RATIO_70 = 70
+    REDUCTION_RATIO_80 = 80
     REDUCTION_RATIO_100 = 100
     REDUCTION_RATIO_120 = 120
 
@@ -158,6 +143,7 @@ class FSAMotorDirection:
 
 
 class FSAMotorVBUS:
+    VBUS_DEFAULT = 48
     VBUS_36V = 36
     VBUS_48V = 48
 
