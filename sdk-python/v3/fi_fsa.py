@@ -65,10 +65,10 @@ class FSAControlWord:
 
 class FSAModeOfOperation:
     NONE = 0
-    CURRENT_CLOSE_LOOP_CONTROL = 4
-    VELOCITY_CONTROL = 3
     POSITION_CONTROL = 1
-    TRAPEZOIDAL_CONTROL = 5
+    VELOCITY_CONTROL = 3
+    CURRENT_CLOSE_LOOP_CONTROL = 4
+    POSITION_CONTROL_PD = 5
 
 
 class FSAState:
@@ -748,6 +748,45 @@ def clear_pid_param(server_ip):
 
     except:
         logger.print_trace_warning(server_ip + " fi_fsa.clear_pid_param() except")
+        return None
+
+
+# fsa Get Root Config property
+# Parameters: including device IP
+# Get fsa bus voltage over-voltage and under-voltage protection threshold
+def get_pid_param_imm(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/pid_param_imm",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSAFunctionResult.SUCCESS
+        else:
+            logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
         return None
 
 

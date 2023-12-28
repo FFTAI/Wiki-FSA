@@ -9,13 +9,6 @@ def main():
 
     if server_ip_list:
 
-        # get the communication configuration of all FAS
-        for i in range(len(server_ip_list)):
-            fi_fsa.get_config(server_ip_list[i])
-
-        print('\n')
-        time.sleep(1)
-
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
@@ -36,7 +29,7 @@ def main():
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            fi_fsa.get_config(server_ip_list[i])
+            fi_fsa.get_flag_of_operation(server_ip_list[i])
 
         print('\n')
 

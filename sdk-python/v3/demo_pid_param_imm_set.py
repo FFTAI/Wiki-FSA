@@ -22,13 +22,6 @@ def main():
 
     if server_ip_list:
 
-        # get the communication configuration of all FAS
-        for i in range(len(server_ip_list)):
-            fi_fsa.get_pid_param(server_ip_list[i])
-
-        print('\n')
-        time.sleep(1)
-
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {  # 36
@@ -38,12 +31,14 @@ def main():
                 'control_current_kp_imm': 0.0,  # not work for now
                 'control_current_ki_imm': 0.0,  # not work for now
             }
-            print(dict)
             fi_fsa.set_pid_param_imm(server_ip_list[i], dict)
+
+        print('\n')
+        time.sleep(1)
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            fi_fsa.get_pid_param(server_ip_list[i])
+            fi_fsa.get_pid_param_imm(server_ip_list[i])
 
 
 if __name__ == '__main__':
