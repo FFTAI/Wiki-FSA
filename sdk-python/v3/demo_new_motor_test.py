@@ -22,7 +22,7 @@
 
 #         for i in range(len(server_ip_list)):
 #             pvc = fi_fsa.get_pvc(server_ip_list[i])
-#             print("Position = %.2f, Velocity = %.0f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
+#             print("Position = %.2f, Velocity = %.3f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
 #             time.sleep(0.01)
 #             # fi_fsa.set_home_offset_group(server_ip_list[i])
 
@@ -79,7 +79,7 @@
 #         #     # set current control current to 0.0
 #         #     pvc = fi_fsa.get_pvc(server_ip_list[0])
 #         #     try:
-#         #         print("Position = %.2f, Velocity = %.0f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
+#         #         print("Position = %.2f, Velocity = %.3f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
 #         #     except:
 #         #         pass
 #         #     time.sleep(0.01)
@@ -103,7 +103,7 @@
 #         #     for i in range(500):
 #         #         pvc = fi_fsa.get_pvc(server_ip_list[0])
 #         #         try:
-#         #             print("Position = %.2f, Velocity = %.0f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
+#         #             print("Position = %.2f, Velocity = %.3f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
 #         #         except:
 #         #             pass
 #         #         time.sleep(0.01)
@@ -113,7 +113,7 @@
 #         #     for i in range(500):
 #         #         pvc = fi_fsa.get_pvc(server_ip_list[0])
 #         #         try:
-#         #             print("Position = %.2f, Velocity = %.0f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
+#         #             print("Position = %.2f, Velocity = %.3f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
 #         #         except:
 #         #             pass
 #         #         time.sleep(0.01)
@@ -124,7 +124,7 @@
 #         for i in range(20):
 #             pvc = fi_fsa.get_pvc(server_ip_list[0])
 #             try:
-#                 print("Position = %.2f, Velocity = %.0f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
+#                 print("Position = %.2f, Velocity = %.3f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
 #             except:
 #                 pass
 #             time.sleep(0.01)
@@ -210,7 +210,7 @@
 
 #             pvc = fi_fsa.get_pvc(server_ip_list[0])
 #             try:
-#                 print("\n>>------ Position = %.2f, Velocity = %.0f, Current = %.4f ------<<\n" % (pvc[0], pvc[1], pvc[2]))
+#                 print("\n>>------ Position = %.2f, Velocity = %.3f, Current = %.4f ------<<\n" % (pvc[0], pvc[1], pvc[2]))
 #             except:
 #                 pass
         

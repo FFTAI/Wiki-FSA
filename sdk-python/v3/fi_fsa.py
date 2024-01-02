@@ -1504,7 +1504,7 @@ def set_position_control(server_ip, position, velocity_ff=0.0, current_ff=0.0):
 
         if fsa_debug is True:
             logger.print_trace(
-                server_ip + " : " + "Position = %.2f, Velocity = %.0f, Current = %.4f \n"
+                server_ip + " : " + "Position = %.2f, Velocity = %.3f, Current = %.4f \n"
                 % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
 
         if json_obj.get("status") == "OK":
@@ -1547,7 +1547,7 @@ def set_velocity_control(server_ip, velocity, current_ff=0.0):
 
         if fsa_debug is True:
             logger.print_trace(
-                server_ip + " : " + "Position = %.2f, Velocity = %.0f, Current = %.4f \n"
+                server_ip + " : " + "Position = %.2f, Velocity = %.3f, Current = %.4f \n"
                 % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
 
         if json_obj.get("status") == "OK":
@@ -1589,7 +1589,7 @@ def set_current_control(server_ip, current):
 
         if fsa_debug is True:
             logger.print_trace(
-                server_ip + " : " + "Position = %.2f, Velocity = %.0f, Current = %.4f \n"
+                server_ip + " : " + "Position = %.2f, Velocity = %.3f, Current = %.4f \n"
                 % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
 
         if json_obj.get("status") == "OK":
@@ -1631,7 +1631,7 @@ def set_torque_control(server_ip, torque):
 
         if fsa_debug is True:
             logger.print_trace(
-                server_ip + " : " + "Position = %.2f, Velocity = %.0f, Torque = %.4f \n"
+                server_ip + " : " + "Position = %.2f, Velocity = %.3f, Torque = %.4f \n"
                 % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("torque")))
 
         if json_obj.get("status") == "OK":
