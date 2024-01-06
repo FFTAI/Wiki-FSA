@@ -82,7 +82,8 @@ class FSAControlWord:
 
 class FSAModeOfOperation:
     NONE = 0
-    CURRENT_CLOSE_LOOP_CONTROL = 4
+    TORQUE_CONTROL = 6
+    CURRENT_CONTROL = 4
     VELOCITY_CONTROL = 3
     POSITION_CONTROL = 1
     TRAPEZOIDAL_CONTROL = 5
@@ -2613,10 +2614,301 @@ def get_abs_encoder_angle(server_ip):
         return FSAFunctionResult.FAIL
 
 
-# AIOS get cvp through pt port
+# ---------------------------------------------------------------------------------------------------------------------
+# FAST 通信模式 （使用字节流进行数据传输）
+
+def fast_set_enable(server_ip):
+    tx_messages = struct.pack('>B', 0x01)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback = struct.unpack('>B', data[0:1])
+        return feedback
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_enable() except")
+        return None
+
+
+def fast_set_disable(server_ip):
+    tx_messages = struct.pack('>B', 0x02)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback = struct.unpack('>B', data[0:1])
+        return feedback
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_disable() except")
+        return None
+
+
+def fast_set_clear_fault(server_ip):
+    tx_messages = struct.pack('>B', 0x03)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback = struct.unpack('>B', data[0:1])
+        return feedback
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_clear_fault() except")
+        return None
+
+
+def fast_set_position_mode(server_ip):
+    tx_messages = struct.pack('>B', 0x04)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback = struct.unpack('>B', data[0:1])
+        return feedback
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_position_mode() except")
+        return None
+
+
+def fast_set_velocity_mode(server_ip):
+    tx_messages = struct.pack('>B', 0x05)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback = struct.unpack('>B', data[0:1])
+        return feedback
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_velocity_mode() except")
+        return None
+
+
+def fast_set_torque_mode(server_ip):
+    tx_messages = struct.pack('>B', 0x06)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback = struct.unpack('>B', data[0:1])
+        return feedback
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_torque_mode() except")
+        return None
+
+
+def fast_set_current_mode(server_ip):
+    tx_messages = struct.pack('>B', 0x07)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback = struct.unpack('>B', data[0:1])
+        return feedback
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_current_mode() except")
+        return None
+
+
+def fast_set_mode_of_operation(server_ip, mode):
+    if mode == FSAModeOfOperation.POSITION_CONTROL:
+        return fast_set_position_mode(server_ip)
+    elif mode == FSAModeOfOperation.VELOCITY_CONTROL:
+        return fast_set_velocity_mode(server_ip)
+    elif mode == FSAModeOfOperation.TORQUE_CONTROL:
+        return fast_set_torque_mode(server_ip)
+    elif mode == FSAModeOfOperation.CURRENT_CONTROL:
+        return fast_set_current_mode(server_ip)
+    else:
+        return None
+
+
+def fast_set_position_control(server_ip, position, velocity_ff=0, current_ff=0):
+    tx_messages = struct.pack('>Bfff', 0x0A, position, velocity_ff, current_ff)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
+        return position, velocity, current
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_position_control() except")
+        return None
+
+
+def fast_set_velocity_control(server_ip, velocity, current_ff=0):
+    tx_messages = struct.pack('>Bff', 0x0B, velocity, current_ff)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
+        return position, velocity, current
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_velocity_control() except")
+        return None
+
+
+def fast_set_torque_control(server_ip, torque):
+    tx_messages = struct.pack('>Bf', 0x0C, torque)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
+        return position, velocity, current
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_torque_control() except")
+        return None
+
+
+def fast_set_current_control(server_ip, current):
+    tx_messages = struct.pack('>Bf', 0x0D, current)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
+        return position, velocity, current
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_set_current_control() except")
+        return None
+
+
+# AIOS get pvc through pt port
 # 参数：包括设备IP 电机号
 # 无返回
-def fast_get_cvp(server_ip):
+def fast_get_pvc(server_ip):
     tx_messages = struct.pack('>B', 0x1a)
 
     if fsa_debug is True:
@@ -2629,15 +2921,40 @@ def fast_get_cvp(server_ip):
         if fsa_debug is True:
             logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
 
-        feedback = struct.unpack('>Bfff', data[0:13])
-        return feedback
+        feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
+        return position, velocity, current
 
     except socket.timeout:  # fail after 1 second of no activity
         logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.get_cvp_pt() except")
+        logger.print_trace_warning(server_ip + " fi_fsa.fast_get_pvc() except")
+        return None
+
+
+def fast_get_error(server_ip):
+    tx_messages = struct.pack('>B', 0x1b)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback, error = struct.unpack('>Bi', data[0:1 + 4])
+        return error
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.get_error_pt() except")
         return None
 
 
