@@ -61,7 +61,7 @@ def main():
         reduction_ratio = 1.0
         for t in range(count_max):
             for i in range(len(server_ip_list)):
-                set_velocity = 120.0 * math.sin(t / 1000.0)  # [deg/s]
+                set_velocity = 600.0 * math.sin(t / 1000.0)  # [deg/s]
                 fi_fsa.set_velocity_control(server_ip_list[i], set_velocity)
             time.sleep(0.01)
 

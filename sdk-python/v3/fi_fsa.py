@@ -143,7 +143,7 @@ class FSAMotorType:
     FSA36_08V0 = 6
     FSA25_08V0 = 7
     FSA36_10V0 = 8
-    
+
     FSA36_10V1 = 15
 
 
@@ -217,13 +217,14 @@ class FSAEncoderResolution:
 default_fsa_timeout = 0.2
 default_fsa_port_ctrl = 2333
 default_fsa_port_comm = 2334
-default_fsa_port_pt = 10000
+default_fsa_port_fast = 2335
 default_fsa_network = "192.168.137.255"
+# default_fsa_network = "10.10.10.255"
 
 fsa_timeout = 0
 fsa_port_ctrl = 0
 fsa_port_comm = 0
-fsa_port_pt = 0
+fsa_port_fast = 0
 fsa_network = ""
 fsa_debug = True
 
@@ -232,20 +233,20 @@ if gl_rcs_config.parameters != {}:  # 如果配置文件不为空
         fsa_timeout = gl_rcs_config.parameters["fsa"]["timeout"]
         fsa_port_ctrl = gl_rcs_config.parameters["fsa"]["port_ctrl"]
         fsa_port_comm = gl_rcs_config.parameters["fsa"]["port_comm"]
-        fsa_port_pt = gl_rcs_config.parameters["fsa"]["port_pt"]
+        fsa_port_fast = gl_rcs_config.parameters["fsa"]["port_fast"]
         fsa_network = gl_rcs_config.parameters["fsa"]["network"]
         fsa_debug = gl_rcs_config.parameters["fsa"]["debug"]
     else:
         fsa_timeout = default_fsa_timeout
         fsa_port_ctrl = default_fsa_port_ctrl
         fsa_port_comm = default_fsa_port_comm
-        fsa_port_pt = default_fsa_port_pt
+        fsa_port_fast = default_fsa_port_fast
         fsa_network = default_fsa_network
 else:
     fsa_timeout = default_fsa_timeout
     fsa_port_ctrl = default_fsa_port_ctrl
     fsa_port_comm = default_fsa_port_comm
-    fsa_port_pt = default_fsa_port_pt
+    fsa_port_fast = default_fsa_port_fast
     fsa_network = default_fsa_network
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -769,6 +770,7 @@ def clear_pid_param(server_ip):
         logger.print_trace_warning(server_ip + " fi_fsa.clear_pid_param() except")
         return None
 
+
 # fsa Get Root Config property
 # Parameters: including device IP
 # Get fsa bus voltage over-voltage and under-voltage protection threshold
@@ -806,6 +808,7 @@ def get_pid_param_imm(server_ip):
     except:
         logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
         return None
+
 
 # fsa set Root Config properties
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
@@ -888,6 +891,7 @@ def get_control_param(server_ip):
         logger.print_trace_warning(server_ip + " fi_fsa.get_control_param() except")
         return None
 
+
 # fsa Get Root Config property
 # Parameters: including device IP
 # Get fsa bus voltage over-voltage and under-voltage protection threshold
@@ -925,6 +929,7 @@ def get_control_param_imm(server_ip):
     except:
         logger.print_trace_warning(server_ip + " fi_fsa.get_control_param_imm() except")
         return None
+
 
 # fsa set Control Config properties
 # Parameter: Set Motor Max Speed ,acceleration and current
@@ -2606,6 +2611,34 @@ def get_abs_encoder_angle(server_ip):
     except:
         logger.print_trace_warning(server_ip + " fi_fsa.get_abs_encoder_angle() except")
         return FSAFunctionResult.FAIL
+
+
+# AIOS get cvp through pt port
+# 参数：包括设备IP 电机号
+# 无返回
+def fast_get_cvp(server_ip):
+    tx_messages = struct.pack('>B', 0x1a)
+
+    if fsa_debug is True:
+        logger.print_trace(server_ip + " : Send Data:", tx_messages)
+
+    s.sendto(tx_messages, (server_ip, fsa_port_fast))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
+
+        feedback = struct.unpack('>Bfff', data[0:13])
+        return feedback
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.get_cvp_pt() except")
+        return None
 
 
 # ---------------------------------------------------------------------------------------------------------------------
