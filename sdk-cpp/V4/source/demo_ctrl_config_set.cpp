@@ -23,16 +23,8 @@ int main()
     for (int i = 0; i < ser_num; i++)
     {
         std::printf("IP: %s sendto get ctrl config fsa ---> ", ser_list[i].c_str());
-        fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
+        fsa->demo_pid_param_imm_get(ser_list[i], NULL, ser_msg);
         std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
-        {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
-        }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
     }
 
     char set_ctrl_config[1024] = {0};

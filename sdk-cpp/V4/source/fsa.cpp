@@ -13,7 +13,7 @@ FSA::~FSA() {}
 int FSA::fi_init_network()
 {
     struct timeval tv;
-    tv.tv_sec = 0;
+    tv.tv_sec = 1;
     tv.tv_usec = 10;
 
     // left
@@ -48,7 +48,7 @@ int FSA::fi_fsa_comm(std::string ip, int port, char *msg, char *client_recv_msg)
 {
     if (!(this->fi_send_msg(ip, port, msg)))
     {
-        usleep(400);
+        usleep(100);
         if (!(this->fi_recv_msg(client_recv_msg)))
         {
             return FunctionResult::SUCCESS;
@@ -222,76 +222,6 @@ int FSA::fi_recv_msg(char *client_recv_msg)
 
 // =====================================================================================================
 
-// FSA BASIC FUNC START
-int FSA::get_root()
-{
-}
-int FSA::set_enable() {}
-int FSA::set_disenable() {}
-int FSA::set_calibrate_encoder() {}
-int FSA::clear_fault() {}
-int FSA::get_state() {}
-int FSA::set_mode_of_operation() {}
-int FSA::get_home_offset() {}
-int FSA::set_home_offset() {}
-int FSA::set_home_position() {}
-int FSA::get_pid_param() {}
-int FSA::set_pid_param() {}
-int FSA::clear_pid_param() {}
-int FSA::set_pid_param_imm() {}
-int FSA::get_control_param() {}
-int FSA::set_control_param() {}
-int FSA::get_control_param_imm() {}
-int FSA::set_control_param_imm() {}
-int FSA::get_flag_of_operation() {}
-int FSA::set_flag_of_operation() {}
-int FSA::clear_flag_of_operation() {}
-int FSA::get_config() {}
-int FSA::set_config() {}
-int FSA::save_config() {}
-int FSA::erase_config() {}
-int FSA::reboot() {}
-int FSA::get_error_code() {}
-int FSA::get_pvc() {}
-int FSA::get_pvcc() {}
-int FSA::get_pvcccc() {}
-int FSA::set_position_control() {}
-int FSA::set_velocity_control() {}
-int FSA::set_current_control() {}
-int FSA::set_torque_control() {}
-// GROUP START
-int FSA::enable_group() {}
-int FSA::disable_group() {}
-int FSA::get_state_group() {}
-int FSA::get_error_group() {}
-int FSA::clear_error_group() {}
-int FSA::get_pvc_group() {}
-int FSA::set_mode_of_operation_group() {}
-int FSA::reboot_comm_group() {}
-// GROUP END
-int FSA::get_comm_root() {}
-int FSA::get_comm_config() {}
-int FSA::set_comm_config() {}
-int FSA::save_comm_config() {}
-int FSA::reboot_comm() {}
-int FSA::get_abs_encoder_angle() {}
-int FSA::broadcast_func() {}
-int FSA::broadcast_func_with_filter() {}
-// OTA START
-int FSA::ota() {}
-int FSA::ota_test() {}
-int FSA::ota_devel() {}
-int FSA::ota_cloud() {}
-int FSA::ota_driver() {}
-int FSA::ota_driver_test() {}
-int FSA::ota_driver_devel() {}
-int FSA::ota_driver_cloud() {}
-// OTA END
-int FSA::encrypt() {}
-// FSA BASIC FUNC END
-
-// =====================================================================================================
-
 // FSA INTERFACE START
 int FSA::demo_broadcase()
 {
@@ -453,7 +383,17 @@ int FSA::demo_ctrl_config_get(std::string sigle_ip, char *define_msg_sendto, cha
     }
     return FunctionResult::FAILURE;
 }
-int FSA::demo_ctrl_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) {}
+int FSA::demo_ctrl_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
+{
+    Logger::get_instance()->print_trace_debug("demo_ctrl_config_set\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, define_msg_sendto, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
 int FSA::demo_ctrl_config_save(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg) 
 {
     Logger::get_instance()->print_trace_debug("demo_ctrl_config_get\n");
@@ -732,6 +672,17 @@ int FSA::demo_pid_param_get(std::string sigle_ip, char *define_msg_sendto, char 
     Logger::get_instance()->print_trace_debug("demo_pid_param_get()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_pid_param, client_recv_msg)))
+    {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+int FSA::demo_pid_param_imm_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
+{
+    Logger::get_instance()->print_trace_debug("demo_pid_param_imm_get()\n");
+    this->work_mode = WorkMode::SIGLE_MODE;
+    if (!(this->fi_fsa_comm(sigle_ip, SERVER_PORT_CTRL, this->json_get_pid_imm_param, client_recv_msg)))
     {
         return FunctionResult::SUCCESS;
     }

@@ -84,7 +84,22 @@ int main()
     }
     sleep(1);
 
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < ser_num; i++)
+    {
+        FsaModeOfOperation modeOfOper;
+        // interface_set_current_mode
+        std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
+        fsa->interface_set_mode_operation(ser_list[i], modeOfOper.CURRENT_CLOSE_LOOP_CONTROL, ser_msg);
+    }
+
+    for (int i = 0; i < ser_num; i++)
+    {
+        // demo_enable_set
+        std::printf("IP: %s sendto set enable fsa ---> ", ser_list[i].c_str());
+        fsa->demo_enable_set(ser_list[i], NULL, ser_msg);
+    }
+
+    for (int i = 0; i < 100; i++)
     {
         for (int i = 0; i < ser_num; i++)
         {
@@ -95,11 +110,11 @@ int main()
             char *json_set_current = "{\"method\":\"SET\", \
             \"reqTarget\":\"/current_control\", \
             \"reply_enable\":true, \
-            \"current\":0.4}";
+            \"current\":1.0}";
 
             fsa->interface_set_current_control(ser_list[i], json_set_current, ser_msg);
         }
-        usleep(10000);
+        usleep(1000);
     }
 
     for (int i = 0; i < ser_num; i++)

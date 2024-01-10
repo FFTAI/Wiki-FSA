@@ -24,9 +24,9 @@ int main()
         \"reqTarget\":\"/control_param\", \
         \"property\":\"\", \
         \"name\":\"FSA\", \
-        \"motor_max_speed_imm\":3000, \
-        \"motor_max_acceleration_imm\":60000, \
-        \"motor_max_current_imm\":8";
+        \"motor_max_speed\":3000, \
+        \"motor_max_acceleration\":60000, \
+        \"motor_max_current\":8";
 
     for (int i = 0; i < ser_num; i++)
     {

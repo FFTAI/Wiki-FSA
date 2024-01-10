@@ -42,37 +42,5 @@ int main()
         std::printf("%s\n", ser_msg);
     }
 
-    // set pid param
-    char *set_pid_imm_param = "{\"method\":\"SET\", \
-        \"reqTarget\":\"/pid_param_imm\", \
-        \"property\":\"\", \
-        \"control_position_kp_imm\":0.0, \
-        \"control_velocity_kp_imm\":0.1, \
-        \"control_velocity_ki_imm\":0.001, \
-        \"control_current_kp_imm\":0.0, \
-        \"control_current_ki_imm\":0.0}";
-
-    for (int i = 0; i < ser_num; i++)
-    {
-        std::printf("IP: %s demo_pid_param_set fsa ---> ", ser_list[i].c_str());
-        fsa->demo_pid_param_imm_set(ser_list[i], set_pid_imm_param, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
-        {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
-        }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
-    }
-
-    // get pid param
-    for (int i = 0; i < ser_num; i++)
-    {
-        std::printf("IP: %s demo_pid_param_get fsa ---> ", ser_list[i].c_str());
-        fsa->demo_pid_param_imm_get(ser_list[i], NULL, ser_msg);
-    }
-
     return 0;
 }

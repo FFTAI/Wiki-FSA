@@ -54,6 +54,7 @@ namespace Sensor
         char *json_get_home_offset = "{\"method\":\"GET\",\"reqTarget\":\"/home_offset\",\"property\":\"\"}";
         char *json_set_home_position = "{\"method\":\"SET\",\"reqTarget\":\"/home_position\",}";
         char *json_get_pid_param = "{\"method\":\"GET\",\"reqTarget\":\"/pid_param\",\"property\":\"\"}";
+        char *json_get_pid_imm_param = "{\"method\":\"GET\",\"reqTarget\":\"/pid_param_imm\",\"property\":\"\"}";
 
         char *json_clear_pid_param = "{\"method\":\"SET\",\"reqTarget\":\"/pid_param\",\"property\":\"clear\"}";
 
@@ -116,72 +117,6 @@ namespace Sensor
         int fi_encode();
         int fi_send_msg(std::string ip, int port, char *msg);
         int fi_recv_msg(char *client_recv_msg);
-
-        // FSA BASIC FUNC START
-        int get_root();
-        int set_enable();
-        int set_disenable();
-        int set_calibrate_encoder();
-        int clear_fault();
-        int get_state();
-        int set_mode_of_operation();
-        int get_home_offset();
-        int set_home_offset();
-        int set_home_position();
-        int get_pid_param();
-        int set_pid_param();
-        int clear_pid_param();
-        int set_pid_param_imm();
-        int get_control_param();
-        int set_control_param();
-        int get_control_param_imm();
-        int set_control_param_imm();
-        int get_flag_of_operation();
-        int set_flag_of_operation();
-        int clear_flag_of_operation();
-        int get_config();
-        int set_config();
-        int save_config();
-        int erase_config();
-        int reboot();
-        int get_error_code();
-        int get_pvc();
-        int get_pvcc();
-        int get_pvcccc();
-        int set_position_control();
-        int set_velocity_control();
-        int set_current_control();
-        int set_torque_control();
-        // GROUP START
-        int enable_group();
-        int disable_group();
-        int get_state_group();
-        int get_error_group();
-        int clear_error_group();
-        int get_pvc_group();
-        int set_mode_of_operation_group();
-        int reboot_comm_group();
-        // GROUP END
-        int get_comm_root();
-        int get_comm_config();
-        int set_comm_config();
-        int save_comm_config();
-        int reboot_comm();
-        int get_abs_encoder_angle();
-        int broadcast_func();
-        int broadcast_func_with_filter();
-        // OTA START
-        int ota();
-        int ota_test();
-        int ota_devel();
-        int ota_cloud();
-        int ota_driver();
-        int ota_driver_test();
-        int ota_driver_devel();
-        int ota_driver_cloud();
-        // OTA END
-        int encrypt();
-        // FSA BASIC FUNC END
 
     public:
         FSA(/* args */);
@@ -250,6 +185,7 @@ namespace Sensor
         int demo_ota_driver(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
 
         int demo_pid_param_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int demo_pid_param_imm_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
         int demo_pid_param_imm_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
         int demo_pid_param_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
 

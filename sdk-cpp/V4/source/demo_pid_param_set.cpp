@@ -45,7 +45,7 @@ int main()
 
     // set pid param
     char *set_pid_param = "{\"method\":\"SET\", \
-        \"reqTarget\":\"/pid_param_imm\", \
+        \"reqTarget\":\"/pid_param\", \
         \"property\":\"\", \
         \"control_position_kp_imm\":0.0, \
         \"control_velocity_kp_imm\":0.1, \

@@ -18,7 +18,7 @@ int main()
     for (int i = 0; i < fsa->server_ip_filter_num; i++)
     {
         std::printf("IP: %s sendto ota fsa ---> ", fsa->server_ip_filter[i].c_str());
-        fsa->demo_ota(fsa->server_ip_filter[i], NULL, ser_msg);
+        fsa->demo_enable_set(fsa->server_ip_filter[i], NULL, ser_msg);
         std::printf("%s\n", ser_msg);
 
         rapidjson::Document msg_json;

@@ -1,15 +1,15 @@
 {
     "Device": "FSA",
     "Command": {
-        "demo_clear_fault": true,
+        "demo_clear_fault": false,
         "demo_comm_config_get": false,
         "demo_comm_config_set": false,
         "demo_control_current_mode": false,
         "demo_control_param_get": false,
-        "demo_control_param_imm_get": true,
+        "demo_control_param_imm_get": false,
         "demo_control_param_imm_set": false,
         "demo_control_param_set": false,
-        "demo_control_position_ff_mode": false,
+        "demo_control_position_ff_mode": true,
         "demo_control_position_mode": false,
         "demo_ctrl_config_get": false,
         "demo_ctrl_config_save": false,
@@ -49,25 +49,92 @@
         "demo_set_encrypt": false
     },
     "Param": {
-        "comm_config_set_param": {
+        "demo_comm_config_set": {
             "DHCP_enable": false,
             "SSID": "fftai-12",
             "password": "fftai2015",
-            "static_IP":[
-                [192,168,137,203],
-                [192,168,137,203],
-                [192,168,137,204]
+            "static_IP": [
+                [
+                    192,
+                    168,
+                    137,
+                    203
+                ],
+                [
+                    192,
+                    168,
+                    137,
+                    203
+                ],
+                [
+                    192,
+                    168,
+                    137,
+                    204
                 ]
+            ]
         },
-        "ctrl_config_set_param": {
-            "home_offset": 1
+        "demo_control_current_mode": {
+            "current_val": 1.0
         },
-        "get_measure_num": {
-            "get_angel_num": 1
+        "demo_control_param_imm_set": {
+            "motor_max_speed_imm": 3000,
+            "motor_max_acceleration_imm": 60000,
+            "motor_max_current_imm": 8
         },
-        "home_offset_set_param": {
-            "home_offset": 4993.615724
+        "demo_control_param_set": {
+            "motor_max_speed": 3000,
+            "motor_max_acceleration": 60000,
+            "motor_max_current": 8
+        },
+        "demo_control_position_ff_mode": {
+            "set_pid_imm_param": {
+                "control_position_kp_imm": 0.0,
+                "control_velocity_kp_imm": 0.0,
+                "control_velocity_ki_imm": 0.0,
+                "control_current_kp_imm": 7.25,
+                "control_current_ki_imm": 0.08
+            },
+            "set_position_control": {
+                "position": 360.0,
+                "velocity_ff": 0.0,
+                "current_ff": 1.0
+            }
+        },
+        "demo_control_position_mode": {
+            "position": 360.0,
+            "velocity_ff": 0.0,
+            "current_ff": 1.0
+        },
+        "demo_ctrl_config_set": {
+            "xxx": 360.0
+        },
+        "demo_flag_of_operation_set":{
+            "flag_do_use_store_actuator_param":0,
+            "flag_do_use_store_motor_param":0,
+            "flag_do_use_store_encoder_param":0,
+            "flag_do_use_store_pid_param":0
+        },
+        "demo_home_offset_set": {
+            "home_offset": 0.0
+        },
+        "set_pid_imm_param": {
+            "control_position_kp_imm": 0.0,
+            "control_velocity_kp_imm": 0.1,
+            "control_velocity_ki_imm": 0.001,
+            "control_current_kp_imm": 0.0,
+            "control_current_ki_imm": 0.0
+        },
+        "set_pid_param": {
+            "control_position_kp": 0.0,
+            "control_velocity_kp": 0.1,
+            "control_velocity_ki": 0.001,
+            "control_current_kp": 0.0,
+            "control_current_ki": 0.0
+        },
+        "demo_set_encrypt": {
+            "username": "fftai",
+            "password": "fftai"
         }
     }
-
 }
