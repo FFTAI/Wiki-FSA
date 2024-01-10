@@ -1,0 +1,73 @@
+{
+    "Device": "FSA",
+    "Command": {
+        "demo_clear_fault": true,
+        "demo_comm_config_get": false,
+        "demo_comm_config_set": false,
+        "demo_control_current_mode": false,
+        "demo_control_param_get": false,
+        "demo_control_param_imm_get": true,
+        "demo_control_param_imm_set": false,
+        "demo_control_param_set": false,
+        "demo_control_position_ff_mode": false,
+        "demo_control_position_mode": false,
+        "demo_ctrl_config_get": false,
+        "demo_ctrl_config_save": false,
+        "demo_ctrl_config_set": false,
+        "demo_disable_set": false,
+        "demo_enable_set": false,
+        "demo_flag_of_operation_get": false,
+        "demo_flag_of_operation_set": false,
+        "demo_get_abs_encoder_value": false,
+        "demo_get_measured": false,
+        "demo_get_pvc": false,
+        "demo_get_pvcc": false,
+        "demo_get_pvcccc": false,
+        "demo_get_state": false,
+        "demo_home_offset_get": false,
+        "demo_home_offset_set": false,
+        "demo_home_position_set": false,
+        "demo_lookup_abs_encoder": false,
+        "demo_lookup_actuator": false,
+        "demo_lookup_ctrlbox": false,
+        "demo_lookup": false,
+        "demo_new_motor_test": false,
+        "demo_ota_cloud": false,
+        "demo_ota_devel": false,
+        "demo_ota": false,
+        "demo_ota_test": false,
+        "demo_ota_driver_cloud": false,
+        "demo_ota_driver_devel": false,
+        "demo_ota_driver_test": false,
+        "demo_ota_driver": false,
+        "demo_pid_param_get": false,
+        "demo_pid_param_imm_set": false,
+        "demo_pid_param_set": false,
+        "demo_reboot_actuator": false,
+        "demo_reboot": false,
+        "demo_set_calibrate_encoder": false,
+        "demo_set_encrypt": false
+    },
+    "Param": {
+        "comm_config_set_param": {
+            "DHCP_enable": false,
+            "SSID": "fftai-12",
+            "password": "fftai2015",
+            "static_IP":[
+                [192,168,137,203],
+                [192,168,137,203],
+                [192,168,137,204]
+                ]
+        },
+        "ctrl_config_set_param": {
+            "home_offset": 1
+        },
+        "get_measure_num": {
+            "get_angel_num": 1
+        },
+        "home_offset_set_param": {
+            "home_offset": 4993.615724
+        }
+    }
+
+}

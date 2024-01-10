@@ -97,6 +97,11 @@ add_executable(demo_set_calibrate_encoder demo_set_calibrate_encoder.cpp fsa.cpp
 add_executable(demo_set_encrypt demo_set_encrypt.cpp fsa.cpp os.cpp logger.cpp)
 ####  USER LOG IN END
 
+# ===================================================================================
+####  FSA LIST START
+add_executable(fsa_list fsa_list.cpp fsa.cpp os.cpp logger.cpp)
+####  FSA LIST END
+
 
 
 set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
