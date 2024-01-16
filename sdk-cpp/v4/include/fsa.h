@@ -16,15 +16,18 @@
 #include "os.h"
 #include "logger.h"
 #include "function_result.h"
+#include "actuator.h"
 
 #define SERVER_IP "192.168.137.255"
 #define SERVER_PORT_COMM 2334
 #define SERVER_PORT_CTRL 2333
 #define BUFFER_SIZE 1024
 
+using namespace Interface;
+
 namespace Actuator
 {
-    class FSA
+    class FSA : public Actuator
     {
     private:
         int fsa_socket;
@@ -102,7 +105,7 @@ namespace Actuator
             NONE = 0,
             BROADCAST_MODE,
             BROADCASE_FILTER_MODE,
-            SIGLE_MODE,
+            SERVER_IP_MODE,
         };
         std::string server_ip[254];
         std::string server_ip_filter[254];
@@ -110,95 +113,91 @@ namespace Actuator
         int server_ip_filter_num = 0;
 
     private:
-        int fi_init_network();
-        int fi_init_fse();
-        int fi_fsa_comm(std::string ip, int port, char *sendmsg, char *client_recv_msg);
-        int fi_decode(char *msg);
-        int fi_encode();
-        int fi_send_msg(std::string ip, int port, char *msg);
-        int fi_recv_msg(char *client_recv_msg);
+        int init_network();
+        int communicate(std::string ip, int port, char *sendmsg, char *client_recv_msg);
+        int decode(char *msg);
+        int encode();
+        int send_msg(std::string ip, int port, char *msg);
+        int recv_msg(char *client_recv_msg);
 
     public:
         FSA(/* args */);
         ~FSA();
-        int demo_broadcase();
 
-        int demo_broadcase_filter(std::string filter_type);
+        int init();
 
-        int demo_clear_fault(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int broadcast();
 
-        int demo_comm_config_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int broadcast_filter(std::string filter_type);
 
-        int demo_comm_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int clear_fault(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_control_current_mode(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int comm_config_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_control_param_imm_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_control_param_imm_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int comm_config_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_control_param_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_control_param_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_current_mode(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_control_position_ff_mode(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_control_position_mode(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_control_velocity_mode(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_param_imm_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_param_imm_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_ctrl_config_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_ctrl_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_ctrl_config_save(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_param_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_param_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_disable_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_enable_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ctrl_config_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ctrl_config_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ctrl_config_save(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_flag_of_operation_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_flag_of_operation_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int disable_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int enable_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_get_abs_encoder_value(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_get_measured(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int flag_of_operation_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int flag_of_operation_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_get_pvc(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_get_pvcc(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_get_pvcccc(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_abs_encoder_value(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_get_state(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_measured(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_pvc(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_pvcc(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_pvcccc(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_home_offset_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_home_offset_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_state(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_home_position_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int home_offset_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int home_offset_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_lookup_abs_encoder(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_lookup_actuator(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_lookup_ctrlbox(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_lookup(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int home_position_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_new_motor_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int lookup_abs_encoder(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int lookup_actuator(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int lookup_ctrlbox(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int lookup(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_ota_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_ota_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_ota(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_ota_devel(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_cloud(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_test(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_devel(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_ota_driver_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_ota_driver_devel(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_ota_driver_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_ota_driver(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_driver_cloud(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_driver_devel(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_driver_test(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_driver(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_pid_param_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_pid_param_imm_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_pid_param_imm_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_pid_param_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int pid_param_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int pid_param_imm_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int pid_param_imm_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int pid_param_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_reboot(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_reboot_actuator(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int reboot(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int reboot_actuator(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int demo_set_calibrate_encoder(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int demo_set_encrypt(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_calibrate_encoder(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_encrypt(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int interface_set_current_control(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int interface_set_mode_operation(std::string sigle_ip, int mode, char *client_recv_msg);
-        int interface_set_position_control(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
-        int interface_set_velocity_control(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_mode_of_operation(std::string server_ip, int mode, char *client_recv_msg);
+        int set_position_control(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_velocity_control(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_current_control(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
     };
 
     class FSAActuatorType
