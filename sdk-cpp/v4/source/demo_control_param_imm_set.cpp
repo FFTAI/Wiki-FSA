@@ -3,61 +3,45 @@ using namespace Actuator;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fsa = new FSA();
-
 int main()
 {
-    char ser_msg[1024] = {0};
-    fsa->demo_broadcase_filter(ACTUATOR);
-    if (fsa->server_ip_filter_num == 0)
+    std::string ser_list[254] = {""};
+    int ip_num = 0;
+    if (broadcast((char *)ser_list, ip_num, ACTUATOR) == FunctionResult::FAILURE)
     {
-        Logger::get_instance()->print_trace_error("Cannot find server\n");
+        Logger::get_instance()->print_trace_error("broadcast failed\n");
         return 0;
     }
 
-    std::string ser_list[254] = {""};
-    memset(ser_list, 0, sizeof(ser_list));
-    memcpy(ser_list, fsa->server_ip_filter, sizeof(ser_list));
-    int ser_num = fsa->server_ip_filter_num;
+    float motor_max_speed = 2500, motor_max_acc = 5714, max_cur = 10;
 
-    char *set_control_imm_param = "{\"method\":\"SET\", \
-        \"reqTarget\":\"/control_param_imm\", \
-        \"property\":\"\", \
-        \"name\":\"FSA\", \
-        \"motor_max_speed_imm\":3000, \
-        \"motor_max_acceleration_imm\":60000, \
-        \"motor_max_current_imm\":8";
-
-    for (int i = 0; i < ser_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        std::printf("IP: %s sendto control param imm set fsa ---> ", ser_list[i].c_str());
-        fsa->demo_control_param_imm_set(ser_list[i], set_control_imm_param, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (control_param_set(ip, motor_max_speed, motor_max_acc, max_cur) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("%s set control param failed\n", ser_list[i].c_str());
+            return FunctionResult::FAILURE;
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
-    }
-    sleep(1);
-
-    for (int i = 0; i < ser_num; i++)
-    {
-        std::printf("IP: %s sendto control param imm get fsa ---> ", ser_list[i].c_str());
-        fsa->demo_control_param_imm_get(ser_list[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
-        {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
-        }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
     }
 
-    return 0;
+    for (int i = 0; i < ip_num; i++)
+    {
+        char *ip = (char *)ser_list[i].c_str();
+        if (control_param_get(ip, motor_max_speed, motor_max_acc, max_cur) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s set control param failed\n", ser_list[i].c_str());
+            return FunctionResult::FAILURE;
+        }
+    }
+
+    for (int i = 0; i < ip_num; i++)
+    {
+        char *ip = (char *)ser_list[i].c_str();
+        if (reboot_actuator(ip) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s reboot actuator failed\n", ser_list[i].c_str());
+            return FunctionResult::FAILURE;
+        }
+    }
 }

@@ -3,146 +3,116 @@ using namespace Actuator;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fsa = new FSA();
-
 int main()
 {
-    char ser_msg[1024] = {0};
-    fsa->demo_broadcase_filter(ACTUATOR);
-    if (fsa->server_ip_filter_num == 0)
+    std::string ser_list[254] = {""};
+    int ip_num = 0;
+    if (broadcast((char *)ser_list, ip_num, ACTUATOR) == FunctionResult::FAILURE)
     {
-        Logger::get_instance()->print_trace_error("Cannot find server\n");
+        Logger::get_instance()->print_trace_error("broadcast failed\n");
         return 0;
     }
 
-    std::string ser_list[254] = {""};
-    memset(ser_list, 0, sizeof(ser_list));
-    memcpy(ser_list, fsa->server_ip_filter, sizeof(ser_list));
-    int ser_num = fsa->server_ip_filter_num;
-
-    for (int i = 0; i < ser_num; i++)
+    int state_obj = -1;
+    for (int i = 0; i < ip_num; i++)
     {
-        // demo_get_state
-        std::printf("IP: %s sendto get state fsa ---> ", ser_list[i].c_str());
-        fsa->demo_get_state(ser_list[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (get_state(ip, state_obj) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("%s get state failed\n", ser_list[i]);
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
+        Logger::get_instance()->print_trace_debug("%s, state: %d\n", ip, state_obj);
     }
-    sleep(1);
 
-    for (int i = 0; i < ser_num; i++)
+    rapidjson::Document ctrl_doc;
+    for (int i = 0; i < ip_num; i++)
     {
-        // demo_ctrl_config_get
-        std::printf("IP: %s sendto get ctrl config fsa ---> ", ser_list[i].c_str());
-        fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (comm_config_get(ip, &ctrl_doc) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("%s get communication configure failed\n", ser_list[i]);
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
     }
-    sleep(1);
 
-    for (int i = 0; i < ser_num; i++)
+    double pos = 0, vel = 0, cur = 0;
+    for (int i = 0; i < ip_num; i++)
     {
-        // demo_get_pvc
-        std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-        fsa->demo_get_pvc(ser_list[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (get_pvc(ip, pos, vel, cur) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("%s get position velocity current failed\n", ser_list[i].c_str());
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
     }
-    sleep(1);
+    
+    Logger::get_instance()->print_trace("pos: %lf, vel: %lf, current: %lf\n", pos, vel, cur);
 
-    for (int i = 0; i < ser_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        // interface_set_current_mode
-        std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-        char *json_set_current = "{\"method\":\"SET\", \
-            \"reqTarget\":\"/current_control\", \
-            \"reply_enable\":true, \
-            \"current\":0.0}";
-        fsa->interface_set_current_control(ser_list[i], json_set_current, ser_msg);
-        std::printf("%s\n", ser_msg);
-    }
-    sleep(1);
-
-    for (int i = 0; i < ser_num; i++)
-    {
-        FsaModeOfOperation modeOfOper;
-        // interface_set_current_mode
-        std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-        fsa->interface_set_mode_operation(ser_list[i], modeOfOper.CURRENT_CLOSE_LOOP_CONTROL, ser_msg);
+        char *ip = (char *)ser_list[i].c_str();
+        if (set_current_control(ip, 0.0) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s set current value failed\n", ser_list[i].c_str());
+        }
     }
 
-    for (int i = 0; i < ser_num; i++)
+    FsaModeOfOperation modeOfOper;
+    for (int i = 0; i < ip_num; i++)
     {
-        // demo_enable_set
-        std::printf("IP: %s sendto set enable fsa ---> ", ser_list[i].c_str());
-        fsa->demo_enable_set(ser_list[i], NULL, ser_msg);
+        char *ip = (char *)ser_list[i].c_str();
+        if (set_mode_of_operation(ip, modeOfOper.CURRENT_CLOSE_LOOP_CONTROL) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s set current close loop mode failed\n", ser_list[i].c_str());
+        }
+    }
+
+    for (int i = 0; i < ip_num; i++)
+    {
+        char *ip = (char *)ser_list[i].c_str();
+        if (enable_set(ip) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s enable failed\n", ser_list[i].c_str());
+        }
     }
 
     for (int i = 0; i < 100; i++)
     {
-        for (int i = 0; i < ser_num; i++)
+        for (int i = 0; i < ip_num; i++)
         {
-            // interface_set_current_mode
-            std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-
-            // you need to modify 0.4 -> value expected
-            char *json_set_current = "{\"method\":\"SET\", \
-            \"reqTarget\":\"/current_control\", \
-            \"reply_enable\":true, \
-            \"current\":1.0}";
-
-            fsa->interface_set_current_control(ser_list[i], json_set_current, ser_msg);
+            char *ip = (char *)ser_list[i].c_str();
+            if (set_current_control(ip, 1.0) == FunctionResult::FAILURE)
+            {
+                Logger::get_instance()->print_trace_error("%s set current value failed\n", ser_list[i].c_str());
+            }
         }
+
         usleep(1000);
     }
 
-    for (int i = 0; i < ser_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        // interface_set_current_mode
-        std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-        char *json_set_current = "{\"method\":\"SET\", \
-            \"reqTarget\":\"/current_control\", \
-            \"reply_enable\":true, \
-            \"current\":0.0}";
-        fsa->interface_set_current_control(ser_list[i], json_set_current, ser_msg);
-    }
-    sleep(1);
-
-    for (int i = 0; i < ser_num; i++)
-    {
-        // interface_set_current_mode
-        std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-        fsa->demo_disable_set(ser_list[i], NULL, ser_msg);
-    }
-    sleep(1);
-    FsaModeOfOperation modeOfOper;
-    for (int i = 0; i < ser_num; i++)
-    {
-        // interface_set_current_mode
-        std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-        fsa->interface_set_mode_operation(ser_list[i], modeOfOper.CURRENT_CLOSE_LOOP_CONTROL, ser_msg);
+        char *ip = (char *)ser_list[i].c_str();
+        if (set_current_control(ip, 0.0) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s set current value failed\n", ser_list[i].c_str());
+        }
     }
 
+    for (int i = 0; i < ip_num; i++)
+    {
+        char *ip = (char *)ser_list[i].c_str();
+        if (disable_set(ip) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s disable failed\n", ser_list[i].c_str());
+        }
+    }
+
+    for (int i = 0; i < ip_num; i++)
+    {
+        char *ip = (char *)ser_list[i].c_str();
+        if (set_mode_of_operation(ip, modeOfOper.CURRENT_CLOSE_LOOP_CONTROL) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s set current close loop mode failed\n", ser_list[i].c_str());
+        }
+    }
     return 0;
 }

@@ -6,6 +6,8 @@
 #include <ctime>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <sstream>
+#include <vector>
 
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
@@ -16,24 +18,31 @@
 #include "os.h"
 #include "logger.h"
 #include "function_result.h"
-#include "actuator.h"
-
-#define SERVER_IP "192.168.137.255"
+// #include "actuator.h"
+#define BUFFER_SIZE 1024
 #define SERVER_PORT_COMM 2334
 #define SERVER_PORT_CTRL 2333
-#define BUFFER_SIZE 1024
 
-using namespace Interface;
+#define ABSCODER  "AbsEncoder"
+#define ACTUATOR  "Actuator"
+#define CTRLBOX   "CtrlBox"
+
+// using namespace Interface;
 
 namespace Actuator
 {
-    class FSA : public Actuator
+    // class FSA : public Actuator
+    class FSA
     {
     private:
+        const char *broadcast_ip = "192.168.137.255";
+        int server_port_comm = 2334;
+        int server_port_ctrl = 2333;
+
         int fsa_socket;
+        int broadcast_socket;
         struct sockaddr_in fsa_sockaddr_in_comm, fsa_sockaddr_in_ctrl, fsa_sockaddr_in_work, fsa_sockaddr_in_recv;
         socklen_t sockaddr_len = sizeof(struct sockaddr_in);
-        std::string server_filter_type = " ";
         char *work_ip;
         int is_init = 0;
         rapidjson::Document msg_json;
@@ -78,16 +87,13 @@ namespace Actuator
         char *json_get_pvcccc = "{\"method\":\"GET\",\"reqTarget\":\"/measured\",\"position\":True,\"velocity\":True,\"current\":True,\"current_id\":True,\"phase_current_ib\":True,\"phase_current_ic\":True}";
 
         // GROUP START
-
+        char *json_get_abs_encoder_angle = "{\"method\":\"GET\",\"reqTarget\":\"/measured\",\"property\":\"\"}";
         // GROUP END
 
         char *json_get_comm_root = "{\"method\":\"GET\",\"reqTarget\":\"/\",\"property\":\"\"}";
         char *json_get_comm_config = "{\"method\":\"GET\",\"reqTarget\":\"/config\",\"property\":\"\"}";
         char *json_save_comm_config = "{\"method\":\"SET\",\"reqTarget\":\"/config\",\"property\":\"save\"}";
-        char *json_reboot_comm = "{\"method\":\"SET\",\"reqTarget\":\"/reboot\",\"property\":\"\"}";
-
-        char *json_get_abs_encoder_angle = "{\"method\":\"GET\",\"reqTarget\":\"/measured\",\"property\":\"\"}";
-
+        // cha
         // OTA START
         char *json_ota = "{\"method\":\"SET\",\"reqTarget\":\"/ota\",\"property\":\"\"}";
         char *json_ota_test = "{\"method\":\"SET\",\"reqTarget\":\"/ota_test\",\"property\":\"\"}";
@@ -100,6 +106,7 @@ namespace Actuator
         // OTA END
 
     public:
+        char *server_filter_type = " ";
         enum WorkMode
         {
             NONE = 0,
@@ -107,17 +114,17 @@ namespace Actuator
             BROADCASE_FILTER_MODE,
             SERVER_IP_MODE,
         };
-        std::string server_ip[254];
+        char *server_ip[254];
         std::string server_ip_filter[254];
         int server_ip_num = 0;
         int server_ip_filter_num = 0;
 
     private:
         int init_network();
-        int communicate(std::string ip, int port, char *sendmsg, char *client_recv_msg);
+        int communicate(char *ip, int port, char *sendmsg, char *client_recv_msg);
         int decode(char *msg);
         int encode();
-        int send_msg(std::string ip, int port, char *msg);
+        int send_msg(char *ip, int port, char *msg);
         int recv_msg(char *client_recv_msg);
 
     public:
@@ -128,76 +135,76 @@ namespace Actuator
 
         int broadcast();
 
-        int broadcast_filter(std::string filter_type);
+        int broadcast_filter();
 
-        int clear_fault(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int clear_fault(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int comm_config_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int comm_config_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int comm_config_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int comm_config_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int control_current_mode(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_current_mode(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int control_param_imm_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int control_param_imm_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_param_imm_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_param_imm_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int control_param_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int control_param_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_param_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int control_param_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int ctrl_config_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int ctrl_config_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int ctrl_config_save(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ctrl_config_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ctrl_config_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ctrl_config_save(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int disable_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int enable_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int disable_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int enable_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int flag_of_operation_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int flag_of_operation_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int flag_of_operation_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int flag_of_operation_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int get_abs_encoder_value(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_abs_encoder_value(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int get_measured(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int get_pvc(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int get_pvcc(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int get_pvcccc(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_measured(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_pvc(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_pvcc(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_pvcccc(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int get_state(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int get_state(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int home_offset_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int home_offset_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int home_offset_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int home_offset_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int home_position_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int home_position_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int lookup_abs_encoder(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int lookup_actuator(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int lookup_ctrlbox(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int lookup(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int lookup_abs_encoder(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int lookup_actuator(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int lookup_ctrlbox(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int lookup(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int ota_cloud(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int ota_test(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int ota(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int ota_devel(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_cloud(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_test(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_devel(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int ota_driver_cloud(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int ota_driver_devel(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int ota_driver_test(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int ota_driver(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_driver_cloud(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_driver_devel(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_driver_test(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int ota_driver(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int pid_param_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int pid_param_imm_get(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int pid_param_imm_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int pid_param_set(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int pid_param_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int pid_param_imm_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int pid_param_imm_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int pid_param_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int reboot(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int reboot_actuator(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int reboot(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int reboot_actuator(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int set_calibrate_encoder(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int set_encrypt(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_calibrate_encoder(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_encrypt(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
-        int set_mode_of_operation(std::string server_ip, int mode, char *client_recv_msg);
-        int set_position_control(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int set_velocity_control(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
-        int set_current_control(std::string server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_mode_of_operation(char *server_ip, int mode, char *client_recv_msg);
+        int set_position_control(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_velocity_control(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
+        int set_current_control(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
     };
 
     class FSAActuatorType
@@ -207,11 +214,7 @@ namespace Actuator
         uint64_t TYPE_25_10_C_1 = 0x01010301;
         uint64_t TYPE_25_10_C_30 = 0x01010303;
         uint64_t TYPE_25_10_D_1 = 0x01010401;
-        uint64_t TYPE_25_10_D_30 = 0x01010403;
-        uint64_t TYPE_36_10_C_1 = 0x02010301;
-        uint64_t TYPE_36_10_C_30 = 0x02010303;
-        uint64_t TYPE_36_10_D_1 = 0x02010401;
-        uint64_t TYPE_36_10_D_30 = 0x02010403;
+        uint64_t TYPE_25_10_D_FSA = 0x02010403;
         uint64_t TYPE_60_10_D_1 = 0x03010401;
         uint64_t TYPE_60_10_D_120 = 0x03010405;
         uint64_t TYPE_80_21_C_1 = 0x04020301;
@@ -327,6 +330,75 @@ namespace Actuator
         int POSITION_CONTROL = 1;
         int TRAPEZOIDAL_CONTROL = 5;
     };
+
+    /****************************user interface***********************************/
+    std::string int_array_to_ip(const std::vector<int> &int_array); //
+
+    int broadcast(char *ip_ser, int &ser_num);
+    int broadcast(char *ip_ser, int &ser_num, char *type);
+
+    int clear_fault(char *ip);
+    int comm_config_get(char *ip, rapidjson::Document *config_buffer);
+    int comm_config_set(char *ip, std::string name, bool dhcp_enable, std::string ssid, std::string password, uint8_t static_ip);
+    
+    int control_param_set(char *ip, float vel, float acc, float cur);
+    int control_param_get(char *ip, float &vel, float &acc, float &cur);
+    int control_param_imm_get(char *ip, float &vel, float &acc, float &cur);
+    int control_param_imm_set(char *ip, float vel, float acc, float cur);
+
+    int set_current_control(char *ip, double current_val);
+    int set_position_control(char *ip, double pos, double vel, double acc);
+    int set_velocity_control(char *ip, double vel, double cur_ff);
+    int set_mode_of_operation(char *ip, uint8_t mode);
+
+    int ctrl_config_get(char *ip, rapidjson::Document *config_buffer);
+    int ctrl_config_set(char *ip, uint64_t act_type, int dir, int redTat, int motor_type, int hardware_type, int vbus, int motor_dir, int pole_pairs, int max_speed, int max_acc, int encoder_dir);
+    int ctrl_config_save(char *ip);
+
+    int enable_set(char *ip);
+    int disable_set(char *ip);
+
+    int flag_of_operation_set(char *ip, int act_val, int motor_val, int encoder_val, int pid_val);
+    int flag_of_operation_get(char *ip, bool &act_val, bool &motor_val, bool &encoder_val, bool &pid_val);
+
+    int get_abs_encoder_value(char *ip, double &angle);
+    int get_measured(char *ip, double &pos, double &vel, double &cur);
+
+    int get_pvc(char *ip, double &pos, double &vel, double &cur);
+    int get_pvcc(char *ip, double &pos, double &vel, double &cur);
+    int get_pvcccc(char *ip, double &pos, double &vel, double &cur);
+    int get_state(char *ip, int &state_val);
+
+    int home_offset_get(char *ip, double &angle);
+    int home_offset_set(char *ip, double angle);
+    int home_position_set(char *ip);
+
+    int lookup(char *ip_ser, int &ser_num);
+    int lookup_abs_encoder(char *ip_ser, int &ser_num);
+    int lookup_ctrlbox(char *ip_ser, int &ser_num);
+    int lookup_actuator(char *ip_ser, int &ser_num);
+
+    int ota(char *ip);
+    int ota_test(char *ip);
+    int ota_devel(char *ip);
+    int ota_cloud(char *ip);
+
+    int ota_driver(char *ip);
+    int ota_driver_test(char *ip);
+    int ota_driver_devel(char *ip);
+    int ota_driver_cloud(char *ip);
+    
+    int pid_param_get(char *ip, rapidjson::Document *config_buffer);
+    int pid_param_set(char *ip, double pos_kp, double vel_kp, double vel_ki, double cur_kp, double cur_ki);
+    int pid_param_imm_get(char *ip, rapidjson::Document *config_buffer);
+    int pid_param_imm_set(char *ip, double pos_imm_kp, double vel_imm_kp, double vel_imm_ki, double cur_imm_kp, double cur_imm_ki);
+
+    int reboot(char *ip);
+    int reboot_actuator(char *ip);
+
+    int set_calibrate_encoder(char *ip);
+    int set_encrypt(char *ip, char *username, char *passwold);
+
 }
 
 #endif // !__IF_FSA_H__

@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/reboot.dir/demo_reboot.cpp.o CMakeFiles/reboot.dir/fsa.cpp.o CMakeFiles/reboot.dir/os.cpp.o CMakeFiles/reboot.dir/logger.cpp.o  -o ../../bin/reboot  -lpthread 

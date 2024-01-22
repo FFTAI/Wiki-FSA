@@ -19,7 +19,9 @@ using namespace Actuator;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fsa = new FSA();
+ 
+
+ 
 
 std::string int_array_to_ip(const std::vector<int> &int_array)
 {
@@ -64,7 +66,7 @@ int main()
 
     // boradcast
     char ser_msg[1024] = {0};
-    if (fsa->demo_broadcase_filter(ACTUATOR) != FunctionResult::SUCCESS)
+    if (fsa->broadcast_filter(ACTUATOR) != FunctionResult::SUCCESS)
     {
         Logger::get_instance()->print_trace_error("fsa_list(): broadcast failed\n");
         return FunctionResult::FAILURE;
@@ -207,7 +209,7 @@ int main()
             // step4: reboot fsa
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto reboot fsa ---> \n", ser_list[i].c_str());
-            fsa->demo_reboot_actuator(ser_list[i], NULL, ser_msg);
+            fsa->reboot_actuator(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
             Logger::get_instance()->print_trace_warning("restarting ...\n");
             for (uint8_t i = 0; i < 7; i++)
@@ -256,27 +258,27 @@ int main()
         // enable
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_get_state
+            // get_state
             std::printf("IP: %s sendto get state fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_state(ser_list[i], NULL, ser_msg);
+            fsa->get_state(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_ctrl_config_get
+            // ctrl_config_get
             std::printf("IP: %s sendto get ctrl config fsa ---> ", ser_list[i].c_str());
-            fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
+            fsa->ctrl_config_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_get_pvc
+            // get_pvc
             std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_pvc(ser_list[i], NULL, ser_msg);
+            fsa->get_pvc(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
@@ -289,7 +291,7 @@ int main()
             \"reqTarget\":\"/current_control\", \
             \"reply_enable\":true, \
             \"current\":0.0}";
-            fsa->interface_set_current_control(ser_list[i], json_set_current, ser_msg);
+            fsa->set_current_control(ser_list[i], json_set_current, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
@@ -299,14 +301,14 @@ int main()
             FsaModeOfOperation modeOfOper;
             // interface_set_current_mode
             std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-            fsa->interface_set_mode_operation(ser_list[i], modeOfOper.CURRENT_CLOSE_LOOP_CONTROL, ser_msg);
+            fsa->set_mode_of_operation(ser_list[i], modeOfOper.CURRENT_CLOSE_LOOP_CONTROL, ser_msg);
         }
 
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_enable_set
+            // enable_set
             std::printf("IP: %s sendto set enable fsa ---> ", ser_list[i].c_str());
-            fsa->demo_enable_set(ser_list[i], NULL, ser_msg);
+            fsa->enable_set(ser_list[i], NULL, ser_msg);
         }
 
         // step2: make json msg
@@ -340,7 +342,7 @@ int main()
             {
                 // interface_set_current_mode
                 std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-                fsa->interface_set_current_control(ser_list[i], send_set_config, ser_msg);
+                fsa->set_current_control(ser_list[i], send_set_config, ser_msg);
             }
             usleep(10000);
         }
@@ -353,7 +355,7 @@ int main()
             \"reqTarget\":\"/current_control\", \
             \"reply_enable\":true, \
             \"current\":0.0}";
-            fsa->interface_set_current_control(ser_list[i], json_set_current, ser_msg);
+            fsa->set_current_control(ser_list[i], json_set_current, ser_msg);
         }
         sleep(1);
 
@@ -361,7 +363,7 @@ int main()
         {
             // interface_set_current_mode
             std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_disable_set(ser_list[i], NULL, ser_msg);
+            fsa->disable_set(ser_list[i], NULL, ser_msg);
         }
         sleep(1);
         FsaModeOfOperation modeOfOper;
@@ -369,12 +371,12 @@ int main()
         {
             // interface_set_current_mode
             std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-            fsa->interface_set_mode_operation(ser_list[i], modeOfOper.CURRENT_CLOSE_LOOP_CONTROL, ser_msg);
+            fsa->set_mode_of_operation(ser_list[i], modeOfOper.CURRENT_CLOSE_LOOP_CONTROL, ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_control_param_get"].GetBool())
+    if (commandType["control_param_get"].GetBool())
     {
         // enable
         for (int i = 0; i < ser_num; i++)
@@ -382,13 +384,13 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto  ---> \n", ser_list[i].c_str());
 
-            fsa->demo_control_param_get(ser_list[i], NULL, ser_msg);
+            fsa->control_param_get(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_control_param_imm_get"].GetBool())
+    if (commandType["control_param_imm_get"].GetBool())
     {
         // enable
         for (int i = 0; i < ser_num; i++)
@@ -396,17 +398,17 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto  ---> \n", ser_list[i].c_str());
 
-            fsa->demo_control_param_imm_get(ser_list[i], NULL, ser_msg);
+            fsa->control_param_imm_get(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_control_param_imm_set"].GetBool())
+    if (commandType["control_param_imm_set"].GetBool())
     {
         // enable
         // step2: make json msg
-        const rapidjson::Value &control_param_imm_set = param["demo_control_param_imm_set"];
+        const rapidjson::Value &control_param_imm_set = param["control_param_imm_set"];
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 
@@ -444,7 +446,7 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto set imm param ---> \n", ser_list[i].c_str());
 
-            fsa->demo_control_param_imm_set(ser_list[i], send_set_config, ser_msg);
+            fsa->control_param_imm_set(ser_list[i], send_set_config, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
         sleep(1);
@@ -454,17 +456,17 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto get imm param ---> \n", ser_list[i].c_str());
 
-            fsa->demo_control_param_imm_get(ser_list[i], NULL, ser_msg);
+            fsa->control_param_imm_get(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
 
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_control_param_set"].GetBool())
+    if (commandType["control_param_set"].GetBool())
     {
         // step2: make json msg
-        const rapidjson::Value &control_param_imm_set = param["demo_control_param_set"];
+        const rapidjson::Value &control_param_imm_set = param["control_param_set"];
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 
@@ -502,7 +504,7 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto set control param ---> \n", ser_list[i].c_str());
 
-            fsa->demo_control_param_set(ser_list[i], send_set_config, ser_msg);
+            fsa->control_param_set(ser_list[i], send_set_config, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
         sleep(1);
@@ -512,7 +514,7 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto  ---> \n", ser_list[i].c_str());
 
-            fsa->demo_control_param_get(ser_list[i], NULL, ser_msg);
+            fsa->control_param_get(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
 
@@ -524,34 +526,34 @@ int main()
         // enable
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_get_state
+            // get_state
             std::printf("IP: %s sendto get state fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_state(ser_list[i], NULL, ser_msg);
+            fsa->get_state(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_ctrl_config_get
+            // ctrl_config_get
             std::printf("IP: %s sendto get ctrl config fsa ---> ", ser_list[i].c_str());
-            fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
+            fsa->ctrl_config_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_get_pvc
+            // get_pvc
             std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_pvc(ser_list[i], NULL, ser_msg);
+            fsa->get_pvc(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // interface_set_position_control
+            // set_position_control
             std::printf("IP: %s sendto set position control fsa ---> ", ser_list[i].c_str());
             char *json_set_position = "{\"method\":\"SET\", \
             \"reqTarget\":\"/current_control\", \
@@ -559,16 +561,16 @@ int main()
             \"position\":0.0, \
             \"velocity_ff\":0.0, \
             \"current_ff\":0.0}";
-            fsa->interface_set_position_control(ser_list[i], json_set_position, ser_msg);
+            fsa->set_position_control(ser_list[i], json_set_position, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_enable_set
+            // enable_set
             std::printf("IP: %s sendto set enable fsa ---> ", ser_list[i].c_str());
-            fsa->demo_enable_set(ser_list[i], NULL, ser_msg);
+            fsa->enable_set(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
@@ -578,14 +580,14 @@ int main()
             FsaModeOfOperation modeOfOper;
             // interface_set_current_mode
             std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-            fsa->interface_set_mode_operation(ser_list[i], modeOfOper.POSITION_CONTROL, ser_msg);
+            fsa->set_mode_of_operation(ser_list[i], modeOfOper.POSITION_CONTROL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // interface_set_position_control
+            // set_position_control
             std::printf("IP: %s sendto set position control fsa ---> ", ser_list[i].c_str());
             char *json_set_position = "{\"method\":\"SET\", \
             \"reqTarget\":\"/current_control\", \
@@ -593,7 +595,7 @@ int main()
             \"position\":0.0, \
             \"velocity_ff\":0.0, \
             \"current_ff\":0.0}";
-            fsa->interface_set_position_control(ser_list[i], json_set_position, ser_msg);
+            fsa->set_position_control(ser_list[i], json_set_position, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
@@ -643,7 +645,7 @@ int main()
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s demo_pid_param_set fsa ---> ", ser_list[i].c_str());
-            fsa->demo_pid_param_imm_set(ser_list[i], send_set_config, ser_msg);
+            fsa->pid_param_imm_set(ser_list[i], send_set_config, ser_msg);
             std::printf("%s\n", ser_msg);
         }
 
@@ -676,8 +678,8 @@ int main()
 
                 buffer.Clear();
 
-                // interface_set_position_control
-                fsa->interface_set_position_control(ser_list[j], send_set_config, ser_msg);
+                // set_position_control
+                fsa->set_position_control(ser_list[j], send_set_config, ser_msg);
             }
             usleep(10000);
         }
@@ -685,14 +687,14 @@ int main()
 
         for (int i = 0; i < ser_num; i++)
         {
-            fsa->demo_disable_set(ser_list[i], NULL, ser_msg);
+            fsa->disable_set(ser_list[i], NULL, ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
             FsaModeOfOperation modeOfOper;
-            fsa->interface_set_mode_operation(ser_list[i], modeOfOper.POSITION_CONTROL, ser_msg);
+            fsa->set_mode_of_operation(ser_list[i], modeOfOper.POSITION_CONTROL, ser_msg);
         }
 
         usleep(1000); // The necessary delay for running multiple scripts
@@ -703,34 +705,34 @@ int main()
         // enable
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_get_state
+            // get_state
             std::printf("IP: %s sendto get state fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_state(ser_list[i], NULL, ser_msg);
+            fsa->get_state(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_ctrl_config_get
+            // ctrl_config_get
             std::printf("IP: %s sendto get ctrl config fsa ---> ", ser_list[i].c_str());
-            fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
+            fsa->ctrl_config_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_get_pvc
+            // get_pvc
             std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_pvc(ser_list[i], NULL, ser_msg);
+            fsa->get_pvc(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // interface_set_position_control
+            // set_position_control
             std::printf("IP: %s sendto set position control fsa ---> ", ser_list[i].c_str());
             char *json_set_position = "{\"method\":\"SET\", \
             \"reqTarget\":\"/current_control\", \
@@ -738,16 +740,16 @@ int main()
             \"position\":0.0, \
             \"velocity_ff\":0.0, \
             \"current_ff\":0.0}";
-            fsa->interface_set_position_control(ser_list[i], json_set_position, ser_msg);
+            fsa->set_position_control(ser_list[i], json_set_position, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // demo_enable_set
+            // enable_set
             std::printf("IP: %s sendto set enable fsa ---> ", ser_list[i].c_str());
-            fsa->demo_enable_set(ser_list[i], NULL, ser_msg);
+            fsa->enable_set(ser_list[i], NULL, ser_msg);
         }
         sleep(1);
         FsaModeOfOperation modeOfOper;
@@ -755,13 +757,13 @@ int main()
         {
             // interface_set_current_mode
             std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-            fsa->interface_set_mode_operation(ser_list[i], modeOfOper.POSITION_CONTROL, ser_msg);
+            fsa->set_mode_of_operation(ser_list[i], modeOfOper.POSITION_CONTROL, ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            // interface_set_position_control
+            // set_position_control
             std::printf("IP: %s sendto set position control fsa ---> ", ser_list[i].c_str());
             char *json_set_position = "{\"method\":\"SET\", \
             \"reqTarget\":\"/current_control\", \
@@ -769,7 +771,7 @@ int main()
             \"position\":0.0, \
             \"velocity_ff\":0.0, \
             \"current_ff\":0.0}";
-            fsa->interface_set_position_control(ser_list[i], json_set_position, ser_msg);
+            fsa->set_position_control(ser_list[i], json_set_position, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
@@ -806,8 +808,8 @@ int main()
                 send_set_config[sizeof(send_set_config) - 1] = '\0';
 
                 buffer.Clear();
-                // interface_set_position_control
-                fsa->interface_set_position_control(ser_list[j], send_set_config, ser_msg);
+                // set_position_control
+                fsa->set_position_control(ser_list[j], send_set_config, ser_msg);
             }
             usleep(10000);
         }
@@ -815,18 +817,18 @@ int main()
 
         for (int i = 0; i < ser_num; i++)
         {
-            fsa->demo_disable_set(ser_list[i], NULL, ser_msg);
+            fsa->disable_set(ser_list[i], NULL, ser_msg);
         }
         sleep(1);
 
         for (int i = 0; i < ser_num; i++)
         {
-            fsa->interface_set_mode_operation(ser_list[i], modeOfOper.POSITION_CONTROL, ser_msg);
+            fsa->set_mode_of_operation(ser_list[i], modeOfOper.POSITION_CONTROL, ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_ctrl_config_get"].GetBool())
+    if (commandType["ctrl_config_get"].GetBool())
     {
         // enable
         for (int i = 0; i < ser_num; i++)
@@ -834,13 +836,13 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto  ---> \n", ser_list[i].c_str());
 
-            fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
+            fsa->ctrl_config_get(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_ctrl_config_save"].GetBool())
+    if (commandType["ctrl_config_save"].GetBool())
     {
         // enable
         for (int i = 0; i < ser_num; i++)
@@ -848,19 +850,19 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto  ---> \n", ser_list[i].c_str());
 
-            fsa->demo_ctrl_config_save(ser_list[i], NULL, ser_msg);
+            fsa->ctrl_config_save(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_ctrl_config_set"].GetBool())
+    if (commandType["ctrl_config_set"].GetBool())
     {
         // enable
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s sendto get ctrl config fsa ---> ", ser_list[i].c_str());
-            fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
+            fsa->ctrl_config_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         sleep(1);
@@ -936,14 +938,14 @@ int main()
 
             memcpy(set_ctrl_config, &buffer, sizeof(buffer));
 
-            fsa->demo_ctrl_config_set(ser_list[i], set_ctrl_config, ser_msg);
+            fsa->ctrl_config_set(ser_list[i], set_ctrl_config, ser_msg);
             std::printf("%s\n", ser_msg);
 
             usleep(1000); // The necessary delay for running multiple scripts
         }
     }
 
-    if (commandType["demo_disable_set"].GetBool())
+    if (commandType["disable_set"].GetBool())
     {
         // enable
         for (int i = 0; i < ser_num; i++)
@@ -951,13 +953,13 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto  ---> \n", ser_list[i].c_str());
 
-            fsa->demo_disable_set(ser_list[i], NULL, ser_msg);
+            fsa->disable_set(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_enable_set"].GetBool())
+    if (commandType["enable_set"].GetBool())
     {
         // enable
         for (int i = 0; i < ser_num; i++)
@@ -965,13 +967,13 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto  ---> \n", ser_list[i].c_str());
 
-            fsa->demo_enable_set(ser_list[i], NULL, ser_msg);
+            fsa->enable_set(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_flag_of_operation_get"].GetBool())
+    if (commandType["flag_of_operation_get"].GetBool())
     {
         // enable
         for (int i = 0; i < ser_num; i++)
@@ -979,18 +981,18 @@ int main()
             memset(ser_msg, 0, sizeof(ser_msg));
             Logger::get_instance()->print_trace_warning("IP: %s sendto  ---> \n", ser_list[i].c_str());
 
-            fsa->demo_flag_of_operation_get(ser_list[i], NULL, ser_msg);
+            fsa->flag_of_operation_get(ser_list[i], NULL, ser_msg);
             Logger::get_instance()->print_trace_debug("recv msg:%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_flag_of_operation_set"].GetBool())
+    if (commandType["flag_of_operation_set"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s sendto get ctrl config fsa ---> ", ser_list[i].c_str());
-            fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
+            fsa->ctrl_config_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
 
@@ -998,7 +1000,7 @@ int main()
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
         FSAFlagState flagState;
-        const rapidjson::Value &flag_of_operation_set = param["demo_flag_of_operation_set"];
+        const rapidjson::Value &flag_of_operation_set = param["flag_of_operation_set"];
 
         writer.StartObject();
 
@@ -1042,31 +1044,31 @@ int main()
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s sendto set ctrl config fsa ---> ", ser_list[i].c_str());
-            fsa->demo_flag_of_operation_set(ser_list[i], set_ctrl_config, ser_msg);
+            fsa->flag_of_operation_set(ser_list[i], set_ctrl_config, ser_msg);
             std::printf("%s\n", ser_msg);
         }
 
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s sendto get ctrl config fsa ---> ", ser_list[i].c_str());
-            fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
+            fsa->ctrl_config_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
 
         for (int i = 0; i < fsa->server_ip_num; i++)
         {
             std::printf("IP: %s sendto reboot fsa ---> ", fsa->server_ip[i].c_str());
-            fsa->demo_reboot(fsa->server_ip[i], NULL, ser_msg);
+            fsa->reboot(fsa->server_ip[i], NULL, ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_get_abs_encoder_value"].GetBool())
+    if (commandType["get_abs_encoder_value"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_abs_encoder_value(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->get_abs_encoder_value(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1084,8 +1086,8 @@ int main()
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_pvc(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->get_pvc(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1100,12 +1102,12 @@ int main()
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_get_pvc"].GetBool())
+    if (commandType["get_pvc"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_pvc(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->get_pvc(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1120,12 +1122,12 @@ int main()
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_get_pvcc"].GetBool())
+    if (commandType["get_pvcc"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_pvcc(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->get_pvcc(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1140,12 +1142,12 @@ int main()
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_get_pvcccc"].GetBool())
+    if (commandType["get_pvcccc"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvcccc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_pvcccc(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvcccc fsa ---> ", ser_list[i].c_str());
+            fsa->get_pvcccc(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1160,12 +1162,12 @@ int main()
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_get_state"].GetBool())
+    if (commandType["get_state"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s sendto ota fsa ---> ", ser_list[i].c_str());
-            fsa->demo_get_state(ser_list[i], NULL, ser_msg);
+            fsa->get_state(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1179,12 +1181,12 @@ int main()
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_home_offset_get"].GetBool())
+    if (commandType["home_offset_get"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_home_offset_get(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->home_offset_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1198,18 +1200,18 @@ int main()
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_home_offset_set"].GetBool())
+    if (commandType["home_offset_set"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_home_offset_get(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->home_offset_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
 
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-        const rapidjson::Value &demo_home_offset_set = param["demo_home_offset_set"];
+        const rapidjson::Value &home_offset_set = param["home_offset_set"];
 
         writer.StartObject();
         writer.Key("method");
@@ -1217,7 +1219,7 @@ int main()
         writer.Key("reqTarget");
         writer.String("/home_offset");
         writer.Key("home_offset");
-        writer.Double(demo_home_offset_set["home_offset"].GetDouble());
+        writer.Double(home_offset_set["home_offset"].GetDouble());
         writer.EndObject();
 
         std::string comm_set_config_msg = buffer.GetString();
@@ -1229,19 +1231,19 @@ int main()
         buffer.Clear();
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_home_offset_set(ser_list[i], send_set_config, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->home_offset_set(ser_list[i], send_set_config, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_home_position_set"].GetBool())
+    if (commandType["home_position_set"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_home_position_set(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->home_position_set(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
@@ -1249,7 +1251,7 @@ int main()
 
     if (commandType["demo_lookup_abs_encoder"].GetBool())
     {
-        if (!(fsa->demo_broadcase_filter(ABSCODER)))
+        if (!(fsa->broadcast_filter(ABSCODER)))
         {
             for (int i = 0; i < fsa->server_ip_filter_num; i++)
             {
@@ -1262,7 +1264,7 @@ int main()
 
     if (commandType["demo_lookup_actuator"].GetBool())
     {
-        if (!(fsa->demo_broadcase_filter(ACTUATOR)))
+        if (!(fsa->broadcast_filter(ACTUATOR)))
         {
             for (int i = 0; i < fsa->server_ip_filter_num; i++)
             {
@@ -1275,7 +1277,7 @@ int main()
 
     if (commandType["demo_lookup_ctrlbox"].GetBool())
     {
-        if (!(fsa->demo_broadcase_filter(CTRLBOX)))
+        if (!(fsa->broadcast_filter(CTRLBOX)))
         {
             for (int i = 0; i < fsa->server_ip_filter_num; i++)
             {
@@ -1299,31 +1301,13 @@ int main()
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_new_motor_test"].GetBool())
-    {
-        for (int i = 0; i < fsa->server_ip_filter_num; i++)
-        {
-            std::printf("IP: %s sendto ota fsa ---> ", fsa->server_ip_filter[i].c_str());
-            fsa->demo_new_motor_test(fsa->server_ip_filter[i], NULL, ser_msg);
-            std::printf("%s\n", ser_msg);
 
-            // rapidjson::Document msg_json;
-            // if (msg_json.Parse(ser_msg).HasParseError())
-            // {
-            //     Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            //     return 0;
-            // }
-            // Logger::get_instance()->print_trace_debug("OTAstatus : %s\n", msg_json["OTAstatus"].GetString());
-        }
-        usleep(1000); // The necessary delay for running multiple scripts
-    }
-
-    if (commandType["demo_ota_cloud"].GetBool())
+    if (commandType["ota_cloud"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_ota_cloud(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->ota_cloud(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
@@ -1333,30 +1317,30 @@ int main()
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
             fsa->demo_ota_devel(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_ota"].GetBool())
+    if (commandType["ota"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_ota(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->ota(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_ota_test"].GetBool())
+    if (commandType["ota_test"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_ota_test(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->ota_test(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
@@ -1366,7 +1350,7 @@ int main()
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
             fsa->demo_ota_driver_cloud(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
@@ -1377,7 +1361,7 @@ int main()
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
             fsa->demo_ota_driver_devel(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
@@ -1388,7 +1372,7 @@ int main()
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
             fsa->demo_ota_driver_test(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
@@ -1399,33 +1383,33 @@ int main()
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
             fsa->demo_ota_driver(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_pid_param_get"].GetBool())
+    if (commandType["pid_param_get"].GetBool())
     {
         // enable
         for (int i = 0; i < ser_num; i++)
         {
             memset(ser_msg, 0, sizeof(ser_msg));
-            std::printf("IP: %s demo_pid_param_get fsa ---> ", fsa->server_ip_filter[i].c_str());
-            fsa->demo_pid_param_get(fsa->server_ip_filter[i], NULL, ser_msg);
+            std::printf("IP: %s pid_param_get fsa ---> ", fsa->server_ip_filter[i].c_str());
+            fsa->pid_param_get(fsa->server_ip_filter[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_pid_param_imm_set"].GetBool())
+    if (commandType["pid_param_imm_set"].GetBool())
     {
         // get pid param
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s demo_pid_param_get fsa ---> ", ser_list[i].c_str());
-            fsa->demo_pid_param_imm_get(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s pid_param_get fsa ---> ", ser_list[i].c_str());
+            fsa->pid_param_imm_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
 
@@ -1461,15 +1445,15 @@ int main()
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s demo_pid_param_set fsa ---> ", ser_list[i].c_str());
-            fsa->demo_pid_param_imm_set(ser_list[i], send_set_config, ser_msg);
+            fsa->pid_param_imm_set(ser_list[i], send_set_config, ser_msg);
             std::printf("%s\n", ser_msg);
         }
 
         // get pid param
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s demo_pid_param_get fsa ---> ", ser_list[i].c_str());
-            fsa->demo_pid_param_imm_get(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s pid_param_get fsa ---> ", ser_list[i].c_str());
+            fsa->pid_param_imm_get(ser_list[i], NULL, ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
@@ -1479,7 +1463,7 @@ int main()
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s demo_pid_param_set fsa ---> ", ser_list[i].c_str());
-            fsa->demo_pid_param_get(ser_list[i], NULL, ser_msg);
+            fsa->pid_param_get(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
         }
 
@@ -1515,25 +1499,25 @@ int main()
         for (int i = 0; i < ser_num; i++)
         {
             std::printf("IP: %s demo_pid_param_set fsa ---> ", ser_list[i].c_str());
-            fsa->demo_pid_param_imm_set(ser_list[i], send_set_config, ser_msg);
+            fsa->pid_param_imm_set(ser_list[i], send_set_config, ser_msg);
             std::printf("%s\n", ser_msg);
         }
 
         // get pid param
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s demo_pid_param_get fsa ---> ", ser_list[i].c_str());
-            fsa->demo_reboot(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s pid_param_get fsa ---> ", ser_list[i].c_str());
+            fsa->reboot(ser_list[i], NULL, ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_reboot_actuator"].GetBool())
+    if (commandType["reboot_actuator"].GetBool())
     {
         for (int i = 0; i < fsa->server_ip_filter_num; i++)
         {
             std::printf("IP: %s sendtodemo_set_encrypt fsa ---> ", fsa->server_ip_filter[i].c_str());
-            fsa->demo_reboot_actuator(fsa->server_ip_filter[i], NULL, ser_msg);
+            fsa->reboot_actuator(fsa->server_ip_filter[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1547,12 +1531,12 @@ int main()
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_reboot"].GetBool())
+    if (commandType["reboot"].GetBool())
     {
         for (int i = 0; i < fsa->server_ip_num; i++)
         {
             std::printf("IP: %s sendto reboot fsa ---> ", fsa->server_ip[i].c_str());
-            fsa->demo_reboot(fsa->server_ip[i], NULL, ser_msg);
+            fsa->reboot(fsa->server_ip[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1566,12 +1550,12 @@ int main()
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_set_calibrate_encoder"].GetBool())
+    if (commandType["set_calibrate_encoder"].GetBool())
     {
         for (int i = 0; i < ser_num; i++)
         {
-            std::printf("IP: %s sendto demo_get_pvc fsa ---> ", ser_list[i].c_str());
-            fsa->demo_set_calibrate_encoder(ser_list[i], NULL, ser_msg);
+            std::printf("IP: %s sendto get_pvc fsa ---> ", ser_list[i].c_str());
+            fsa->set_calibrate_encoder(ser_list[i], NULL, ser_msg);
             std::printf("%s\n", ser_msg);
 
             if (msg_json.Parse(ser_msg).HasParseError())
@@ -1590,7 +1574,7 @@ int main()
                 if (state_motor[j] != 4)
                 {
                     memset(ser_msg, 0, sizeof(ser_msg));
-                    fsa->demo_get_state(ser_list[i], NULL, ser_msg);
+                    fsa->get_state(ser_list[i], NULL, ser_msg);
                     if (msg_json.Parse(ser_msg).HasParseError())
                     {
                         Logger::get_instance()->print_trace_error("fi_decode() failed\n");
@@ -1605,23 +1589,23 @@ int main()
                 if (state_motor[k] == 4)
                 {
                     memset(ser_msg, 0, sizeof(ser_msg));
-                    fsa->demo_disable_set(ser_list[i], NULL, ser_msg);
+                    fsa->disable_set(ser_list[i], NULL, ser_msg);
                 }
             }
         }
 
         for (int i = 0; i < ser_num; i++)
         {
-            fsa->demo_disable_set(ser_list[i], NULL, ser_msg);
+            fsa->disable_set(ser_list[i], NULL, ser_msg);
         }
         usleep(1000); // The necessary delay for running multiple scripts
     }
 
-    if (commandType["demo_set_encrypt"].GetBool())
+    if (commandType["set_encrypt"].GetBool())
     {
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-        const rapidjson::Value &demo_set_encrypt = param["demo_set_encrypt"];
+        const rapidjson::Value &set_encrypt = param["set_encrypt"];
 
         writer.StartObject();
         writer.Key("method");
@@ -1631,9 +1615,9 @@ int main()
         writer.Key("property");
         writer.String("");
         writer.Key("username");
-        writer.String(demo_set_encrypt["username"].GetString());
+        writer.String(set_encrypt["username"].GetString());
         writer.Key("password");
-        writer.String(demo_set_encrypt["password"].GetString());
+        writer.String(set_encrypt["password"].GetString());
         writer.EndObject();
 
         std::string comm_set_config_msg = buffer.GetString();
@@ -1645,7 +1629,7 @@ int main()
         for (int i = 0; i < fsa->server_ip_filter_num; i++)
         {
             std::printf("IP: %s sendtodemo_set_encrypt fsa ---> ", fsa->server_ip_filter[i].c_str());
-            fsa->demo_set_encrypt(fsa->server_ip_filter[i], send_set_config, ser_msg);
+            fsa->set_encrypt(fsa->server_ip_filter[i], send_set_config, ser_msg);
             std::printf("%s\n", ser_msg);
 
             rapidjson::Document msg_json;
@@ -1656,7 +1640,7 @@ int main()
             }
             Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
 
-            fsa->demo_reboot(fsa->server_ip[i], NULL, ser_msg);
+            fsa->reboot(fsa->server_ip[i], NULL, ser_msg);
             if (msg_json.Parse(ser_msg).HasParseError())
             {
                 Logger::get_instance()->print_trace_error("fi_decode() failed\n");

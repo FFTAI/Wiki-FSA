@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/ota_driver_test.dir/demo_ota_driver_test.cpp.o CMakeFiles/ota_driver_test.dir/fsa.cpp.o CMakeFiles/ota_driver_test.dir/os.cpp.o CMakeFiles/ota_driver_test.dir/logger.cpp.o  -o ../../bin/ota_driver_test  -lpthread 

@@ -3,32 +3,23 @@ using namespace Actuator;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fsa = new FSA();
-
 int main()
 {
-    char ser_msg[1024] = {0};
-    fsa->demo_broadcase_filter(ACTUATOR);
-    if (fsa->server_ip_filter_num == 0)
+    std::string ser_list[254] = {""};
+    int ip_num = 0;
+    if (broadcast((char *)ser_list, ip_num, ACTUATOR) == FunctionResult::FAILURE)
     {
-        Logger::get_instance()->print_trace_error("Cannot find server\n");
+        Logger::get_instance()->print_trace_error("broadcast failed\n");
         return 0;
     }
 
-    for (int i = 0; i < fsa->server_ip_filter_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        std::printf("IP: %s sendto demo_disable_set fsa ---> ", fsa->server_ip_filter[i].c_str());
-        fsa->demo_disable_set(fsa->server_ip_filter[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (disable_set(ip) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("%s disable failed\n", ser_list[i].c_str());
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
     }
-
     return 0;
 }

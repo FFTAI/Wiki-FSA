@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/flag_of_operation_set.dir/demo_flag_of_operation_set.cpp.o CMakeFiles/flag_of_operation_set.dir/fsa.cpp.o CMakeFiles/flag_of_operation_set.dir/os.cpp.o CMakeFiles/flag_of_operation_set.dir/logger.cpp.o  -o ../../bin/flag_of_operation_set  -lpthread 

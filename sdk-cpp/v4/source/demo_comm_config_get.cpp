@@ -1,45 +1,27 @@
-/**
- * @file demo_comm_config_get.cpp
- * @author Afer
- * @brief
- * @version 0.1
- * @date 2023-12-21
- * @note pass-test
- *
- * @copyright Copyright (c) 2023
- *
- */
 #include "main.h"
 using namespace Actuator;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fsa = new FSA();
-
 int main()
 {
-    char ser_msg[1024] = {0};
-    fsa->demo_broadcase_filter(ACTUATOR);
-    if (fsa->server_ip_filter_num == 0)
+    std::string ser_list[254] = {""};
+    int ip_num = 0;
+    if (broadcast((char *)ser_list, ip_num, ACTUATOR) == FunctionResult::FAILURE)
     {
-        Logger::get_instance()->print_trace_error("Cannot find server\n");
+        Logger::get_instance()->print_trace_error("broadcast failed\n");
         return 0;
     }
-
-    for (int i = 0; i < fsa->server_ip_filter_num; i++)
+    rapidjson::Document msg_json;
+    for (int i = 0; i < ip_num; i++)
     {
-        std::printf("IP: %s sendto get comm config fsa ---> ", fsa->server_ip_filter[i].c_str());
-        fsa->demo_comm_config_get(fsa->server_ip_filter[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (comm_config_get(ip, &msg_json) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("%s get communication configure failed\n", ser_list[i]);
+            return FunctionResult::FAILURE;
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
+        Logger::get_instance()->print_trace_debug("status: %s, name: %s\n", msg_json["status"].GetString(), msg_json["name"].GetString());
     }
-
     return 0;
 }

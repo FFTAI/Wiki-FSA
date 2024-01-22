@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/comm_config_get.dir/demo_comm_config_get.cpp.o CMakeFiles/comm_config_get.dir/fsa.cpp.o CMakeFiles/comm_config_get.dir/os.cpp.o CMakeFiles/comm_config_get.dir/logger.cpp.o  -o ../../bin/comm_config_get  -lpthread 

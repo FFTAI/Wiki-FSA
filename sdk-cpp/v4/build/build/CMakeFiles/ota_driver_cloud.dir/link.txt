@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/ota_driver_cloud.dir/demo_ota_driver_cloud.cpp.o CMakeFiles/ota_driver_cloud.dir/fsa.cpp.o CMakeFiles/ota_driver_cloud.dir/os.cpp.o CMakeFiles/ota_driver_cloud.dir/logger.cpp.o  -o ../../bin/ota_driver_cloud  -lpthread 

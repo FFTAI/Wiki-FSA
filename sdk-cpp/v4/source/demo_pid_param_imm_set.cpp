@@ -3,8 +3,6 @@ using namespace Actuator;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fsa = new FSA();
-
 class SpeedParamList
 {
 public:
@@ -21,57 +19,42 @@ public:
 
 int main()
 {
-    char ser_msg[1024] = {0};
-    fsa->demo_broadcase_filter(ACTUATOR);
-    if (fsa->server_ip_filter_num == 0)
+    std::string ser_list[254] = {""};
+    int ip_num = 0;
+    if (broadcast((char *)ser_list, ip_num, ACTUATOR) == FunctionResult::FAILURE)
     {
-        Logger::get_instance()->print_trace_error("Cannot find server\n");
+        Logger::get_instance()->print_trace_error("broadcast failed\n");
         return 0;
     }
 
-    std::string ser_list[254] = {""};
-    memset(ser_list, 0, sizeof(ser_list));
-    memcpy(ser_list, fsa->server_ip_filter, sizeof(ser_list));
-    int ser_num = fsa->server_ip_filter_num;
-
-    // get pid param
-    for (int i = 0; i < ser_num; i++)
+    rapidjson::Document pid_json;
+    for (int i = 0; i < ip_num; i++)
     {
-        std::printf("IP: %s demo_pid_param_get fsa ---> ", ser_list[i].c_str());
-        fsa->demo_pid_param_imm_get(ser_list[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-    }
-
-    // set pid param
-    char *set_pid_imm_param = "{\"method\":\"SET\", \
-        \"reqTarget\":\"/pid_param_imm\", \
-        \"property\":\"\", \
-        \"control_position_kp_imm\":0.0, \
-        \"control_velocity_kp_imm\":0.1, \
-        \"control_velocity_ki_imm\":0.001, \
-        \"control_current_kp_imm\":0.0, \
-        \"control_current_ki_imm\":0.0}";
-
-    for (int i = 0; i < ser_num; i++)
-    {
-        std::printf("IP: %s demo_pid_param_set fsa ---> ", ser_list[i].c_str());
-        fsa->demo_pid_param_imm_set(ser_list[i], set_pid_imm_param, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (pid_param_imm_get(ip, &pid_json) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("get pid param failed\n");
+            return FunctionResult::FAILURE;
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
     }
 
-    // get pid param
-    for (int i = 0; i < ser_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        std::printf("IP: %s demo_pid_param_get fsa ---> ", ser_list[i].c_str());
-        fsa->demo_pid_param_imm_get(ser_list[i], NULL, ser_msg);
+        char *ip = (char *)ser_list[i].c_str();
+        if (pid_param_imm_set(ip, 0.005714, 0.02, 0.5, 0.01, 0.0001) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("set pid param failed\n");
+            return FunctionResult::FAILURE;
+        }
+    }
+    for (int i = 0; i < ip_num; i++)
+    {
+        char *ip = (char *)ser_list[i].c_str();
+        if (pid_param_imm_get(ip, &pid_json) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("get pid param failed\n");
+            return FunctionResult::FAILURE;
+        }
     }
 
     return 0;

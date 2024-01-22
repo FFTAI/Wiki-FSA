@@ -5,48 +5,47 @@
         "demo_comm_config_get": false,
         "demo_comm_config_set": false,
         "demo_control_current_mode": false,
-        "demo_control_param_get": false,
-        "demo_control_param_imm_get": false,
-        "demo_control_param_imm_set": false,
-        "demo_control_param_set": false,
+        "control_param_get": false,
+        "control_param_imm_get": false,
+        "control_param_imm_set": false,
+        "control_param_set": false,
         "demo_control_position_ff_mode": true,
         "demo_control_position_mode": false,
-        "demo_ctrl_config_get": false,
-        "demo_ctrl_config_save": false,
-        "demo_ctrl_config_set": false,
-        "demo_disable_set": false,
-        "demo_enable_set": false,
-        "demo_flag_of_operation_get": false,
-        "demo_flag_of_operation_set": false,
-        "demo_get_abs_encoder_value": false,
+        "ctrl_config_get": false,
+        "ctrl_config_save": false,
+        "ctrl_config_set": false,
+        "disable_set": false,
+        "enable_set": false,
+        "flag_of_operation_get": false,
+        "flag_of_operation_set": false,
+        "get_abs_encoder_value": false,
         "demo_get_measured": false,
-        "demo_get_pvc": false,
-        "demo_get_pvcc": false,
-        "demo_get_pvcccc": false,
-        "demo_get_state": false,
-        "demo_home_offset_get": false,
-        "demo_home_offset_set": false,
-        "demo_home_position_set": false,
+        "get_pvc": false,
+        "get_pvcc": false,
+        "get_pvcccc": false,
+        "get_state": false,
+        "home_offset_get": false,
+        "home_offset_set": false,
+        "home_position_set": false,
         "demo_lookup_abs_encoder": false,
         "demo_lookup_actuator": false,
         "demo_lookup_ctrlbox": false,
         "demo_lookup": false,
-        "demo_new_motor_test": false,
-        "demo_ota_cloud": false,
+        "ota_cloud": false,
         "demo_ota_devel": false,
-        "demo_ota": false,
-        "demo_ota_test": false,
+        "ota": false,
+        "ota_test": false,
         "demo_ota_driver_cloud": false,
         "demo_ota_driver_devel": false,
         "demo_ota_driver_test": false,
         "demo_ota_driver": false,
-        "demo_pid_param_get": false,
-        "demo_pid_param_imm_set": false,
+        "pid_param_get": false,
+        "pid_param_imm_set": false,
         "demo_pid_param_set": false,
-        "demo_reboot_actuator": false,
-        "demo_reboot": false,
-        "demo_set_calibrate_encoder": false,
-        "demo_set_encrypt": false
+        "reboot_actuator": false,
+        "reboot": false,
+        "set_calibrate_encoder": false,
+        "set_encrypt": false
     },
     "Param": {
         "demo_comm_config_set": {
@@ -77,12 +76,12 @@
         "demo_control_current_mode": {
             "current_val": 1.0
         },
-        "demo_control_param_imm_set": {
+        "control_param_imm_set": {
             "motor_max_speed_imm": 3000,
             "motor_max_acceleration_imm": 60000,
             "motor_max_current_imm": 8
         },
-        "demo_control_param_set": {
+        "control_param_set": {
             "motor_max_speed": 3000,
             "motor_max_acceleration": 60000,
             "motor_max_current": 8
@@ -106,16 +105,16 @@
             "velocity_ff": 0.0,
             "current_ff": 1.0
         },
-        "demo_ctrl_config_set": {
+        "ctrl_config_set": {
             "xxx": 360.0
         },
-        "demo_flag_of_operation_set":{
+        "flag_of_operation_set":{
             "flag_do_use_store_actuator_param":0,
             "flag_do_use_store_motor_param":0,
             "flag_do_use_store_encoder_param":0,
             "flag_do_use_store_pid_param":0
         },
-        "demo_home_offset_set": {
+        "home_offset_set": {
             "home_offset": 0.0
         },
         "set_pid_imm_param": {
@@ -132,7 +131,7 @@
             "control_current_kp": 0.0,
             "control_current_ki": 0.0
         },
-        "demo_set_encrypt": {
+        "set_encrypt": {
             "username": "fftai",
             "password": "fftai"
         }

@@ -1,32 +1,20 @@
-/**
- * @file demo_.cpp
- * @author Afer
- * @brief
- * @version 0.1
- * @date 2023-12-21
- * @note pass-test
- *
- * @copyright Copyright (c) 2023
- *
- */
-
 #include "main.h"
 using namespace Actuator;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fsa = new FSA();
-
 int main()
 {
-    if (!(fsa->demo_broadcase_filter(ACTUATOR)))
+    std::string ser_list[254] = {""};
+    int ip_num = 0;
+    if (lookup_actuator((char *)ser_list, ip_num) == FunctionResult::FAILURE)
     {
-        for (int i = 0; i < fsa->server_ip_filter_num; i++)
-        {
-            Logger::get_instance()->print_trace("%s\n", fsa->server_ip_filter[i]);
-        }
-        return FunctionResult::SUCCESS;
+        Logger::get_instance()->print_trace_error("lookup actuator failed\n");
+        return 0;
+    }
+    for (int i = 0; i < ip_num; i++)
+    {
+        Logger::get_instance()->print_trace_debug("ip%d: %s\n", i, ser_list[i].c_str());
     }
     return 0;
 }
-

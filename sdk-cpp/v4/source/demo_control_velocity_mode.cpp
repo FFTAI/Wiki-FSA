@@ -3,161 +3,115 @@ using namespace Actuator;
 using namespace Utils;
 using namespace Predefine;
 
-FSA *fsa = new FSA();
-
 int main()
 {
-    char ser_msg[1024] = {0};
-    fsa->demo_broadcase_filter(ACTUATOR);
-    if (fsa->server_ip_filter_num == 0)
+    std::string ser_list[254] = {""};
+    int ip_num = 0;
+    if (broadcast((char *)ser_list, ip_num, ACTUATOR) == FunctionResult::FAILURE)
     {
-        Logger::get_instance()->print_trace_error("Cannot find server\n");
+        Logger::get_instance()->print_trace_error("broadcast failed\n");
         return 0;
     }
 
-    std::string ser_list[254] = {""};
-    memset(ser_list, 0, sizeof(ser_list));
-    memcpy(ser_list, fsa->server_ip_filter, sizeof(ser_list));
-    int ser_num = fsa->server_ip_filter_num;
-
-    for (int i = 0; i < ser_num; i++)
+    int state_obj = -1;
+    for (int i = 0; i < ip_num; i++)
     {
-        // demo_get_state
-        std::printf("IP: %s sendto get state fsa ---> ", ser_list[i].c_str());
-        fsa->demo_get_state(ser_list[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (get_state(ip, state_obj) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("%s get state failed\n", ser_list[i]);
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
+        Logger::get_instance()->print_trace_debug("state: %d\n", state_obj);
     }
-    sleep(1);
 
-    for (int i = 0; i < ser_num; i++)
+    rapidjson::Document ctrl_config_json;
+    for (int i = 0; i < ip_num; i++)
     {
-        // demo_ctrl_config_get
-        std::printf("IP: %s sendto get ctrl config fsa ---> ", ser_list[i].c_str());
-        fsa->demo_ctrl_config_get(ser_list[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (ctrl_config_get(ip, &ctrl_config_json) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("%s clear fault failed\n", ser_list[i]);
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
+        Logger::get_instance()->print_trace_debug("status: %s\n", ctrl_config_json["status"].GetString());
     }
-    sleep(1);
 
-    for (int i = 0; i < ser_num; i++)
+    double pos = 0, vel = 0, cur = 0;
+    for (int i = 0; i < ip_num; i++)
     {
-        // demo_get_pvc
-        std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-        fsa->demo_get_pvc(ser_list[i], NULL, ser_msg);
-        std::printf("%s\n", ser_msg);
-
-        rapidjson::Document msg_json;
-        if (msg_json.Parse(ser_msg).HasParseError())
+        char *ip = (char *)ser_list[i].c_str();
+        if (get_pvc(ip, pos, vel, cur) == FunctionResult::FAILURE)
         {
-            Logger::get_instance()->print_trace_error("fi_decode() failed\n");
-            return 0;
+            Logger::get_instance()->print_trace_error("%s enable failed\n", ser_list[i].c_str());
         }
-        Logger::get_instance()->print_trace_debug("status : %s\n", msg_json["status"].GetString());
     }
-    sleep(1);
+    Logger::get_instance()->print_trace("pos: %lf, vel: %lf, current: %lf\n", pos, vel, cur);
 
-    for (int i = 0; i < ser_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        // interface_set_position_control
-        std::printf("IP: %s sendto set position control fsa ---> ", ser_list[i].c_str());
-        char *json_set_velocity = "{\"method\":\"SET\", \
-            \"reqTarget\":\"/velocity_control\", \
-            \"reply_enable\":true, \
-            \"position\":0.0, \
-            \"velocity_ff\":0.0, \
-            \"current_ff\":0.0}";
-        fsa->interface_set_velocity_control(ser_list[i], json_set_velocity, ser_msg);
-        std::printf("%s\n", ser_msg);
+        char *ip = (char *)ser_list[i].c_str();
+        if (set_velocity_control(ip, 0.0, 0.0) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s enable failed\n", ser_list[i].c_str());
+        }
     }
-    sleep(1);
 
-    for (int i = 0; i < ser_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        // demo_enable_set
-        std::printf("IP: %s sendto set enable fsa ---> ", ser_list[i].c_str());
-        fsa->demo_enable_set(ser_list[i], NULL, ser_msg);
+        char *ip = (char *)ser_list[i].c_str();
+        if (enable_set(ip) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s enable failed\n", ser_list[i].c_str());
+        }
     }
-    sleep(1);
 
     FsaModeOfOperation modeOfOper;
-    for (int i = 0; i < ser_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        // interface_set_current_mode
-        std::printf("IP: %s sendto get pvc fsa ---> ", ser_list[i].c_str());
-        fsa->interface_set_mode_operation(ser_list[i], modeOfOper.VELOCITY_CONTROL, ser_msg);
-    }
-    sleep(1);
-
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    char send_postion_msg[1024] = {0};
-
-    for (uint32_t i = 0; i < 10000000; i++)
-    {
-        for (int j = 0; j < ser_num; j++)
+        char *ip = (char *)ser_list[i].c_str();
+        if (set_mode_of_operation(ip, modeOfOper.VELOCITY_CONTROL) == FunctionResult::FAILURE)
         {
-            writer.StartObject();
-            writer.Key("method");
-            writer.String("SET");
-            writer.Key("reqTarget");
-            writer.String("/position_control");
-            writer.Key("reply_enable");
-            writer.Bool(true);
-            writer.Key("position");
-            writer.Double(360 * sin(i / 1000.0));
-            writer.Key("velocity_ff");
-            writer.Double(0.0);
-            writer.Key("current_ff");
-            writer.Double(0.0);
-            writer.EndObject();
-            memset(send_postion_msg, 0, sizeof(send_postion_msg));
-            memcpy(send_postion_msg, &buffer, sizeof(buffer));
-            // interface_set_position_control
-            fsa->interface_set_velocity_control(ser_list[j], send_postion_msg, ser_msg);
+            Logger::get_instance()->print_trace_error("%s set velocity mode failed\n", ser_list[i].c_str());
         }
-        usleep(10000);
     }
-    sleep(1);
 
-    for (int i = 0; i < ser_num; i++)
+    for (uint32_t j = 0; j < 1000; j++)
     {
-        // interface_set_position_control
-        std::printf("IP: %s sendto set position control fsa ---> ", ser_list[i].c_str());
-        char *json_set_position = "{\"method\":\"SET\", \
-            \"reqTarget\":\"/current_control\", \
-            \"reply_enable\":true, \
-            \"position\":0.0, \
-            \"velocity_ff\":0.0, \
-            \"current_ff\":0.0}";
-        fsa->interface_set_velocity_control(ser_list[i], json_set_position, ser_msg);
-        std::printf("%s\n", ser_msg);
+        for (int i = 0; i < ip_num; i++)
+        {
+            char *ip = (char *)ser_list[i].c_str();
+            if (set_velocity_control(ip, 360 * sin(j / 100000.0), 0.0) == FunctionResult::FAILURE)
+            {
+                Logger::get_instance()->print_trace_error("%s set velocity mode failed\n", ser_list[i].c_str());
+            }
+        }
+        usleep(1000);
     }
-    sleep(1);
 
-    for (int i = 0; i < ser_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        fsa->demo_disable_set(ser_list[i], NULL, ser_msg);
+        char *ip = (char *)ser_list[i].c_str();
+        if (set_velocity_control(ip, 0.0, 0.0) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s enable failed\n", ser_list[i].c_str());
+        }
     }
-    sleep(1);
 
-    for (int i = 0; i < ser_num; i++)
+    for (int i = 0; i < ip_num; i++)
     {
-        fsa->interface_set_mode_operation(ser_list[i], modeOfOper.VELOCITY_CONTROL, ser_msg);
+        char *ip = (char *)ser_list[i].c_str();
+        if (disable_set(ip) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s enable failed\n", ser_list[i].c_str());
+        }
+    }
+
+    for (int i = 0; i < ip_num; i++)
+    {
+        char *ip = (char *)ser_list[i].c_str();
+        if (set_mode_of_operation(ip, modeOfOper.VELOCITY_CONTROL) == FunctionResult::FAILURE)
+        {
+            Logger::get_instance()->print_trace_error("%s set velocity mode failed\n", ser_list[i].c_str());
+        }
     }
 
     return 0;
