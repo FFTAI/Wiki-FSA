@@ -9,12 +9,6 @@ def main():
 
     if server_ip_list:
 
-        # get the communication configuration of all FAS
-        for i in range(len(server_ip_list)):
-            fi_fsa.get_comm_config(server_ip_list[i])
-
-        time.sleep(1)
-
         # set the communication configuration of all FAS
         # Notice : set static_IP should config DHCP_enable to be False! Otherwise, it will not work!
         for i in range(len(server_ip_list)):
@@ -31,18 +25,17 @@ def main():
             }
             fi_fsa.set_comm_config(server_ip_list[i], dict)
 
+        print('\n')
         time.sleep(1)
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             fi_fsa.get_comm_config(server_ip_list[i])
 
-        time.sleep(1)
+        print('\n')
 
         for i in range(len(server_ip_list)):
             fi_fsa.reboot(server_ip_list[i])
-
-        print('\n')
 
 
 if __name__ == '__main__':

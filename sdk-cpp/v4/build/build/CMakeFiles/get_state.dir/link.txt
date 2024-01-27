@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/get_state.dir/demo_get_state.cpp.o CMakeFiles/get_state.dir/fsa.cpp.o CMakeFiles/get_state.dir/os.cpp.o CMakeFiles/get_state.dir/logger.cpp.o  -o ../../bin/get_state  -lpthread 

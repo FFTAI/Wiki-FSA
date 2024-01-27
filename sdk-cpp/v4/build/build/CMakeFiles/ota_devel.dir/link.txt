@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/ota_devel.dir/demo_ota_devel.cpp.o CMakeFiles/ota_devel.dir/fsa.cpp.o CMakeFiles/ota_devel.dir/os.cpp.o CMakeFiles/ota_devel.dir/logger.cpp.o  -o ../../bin/ota_devel  -lpthread 

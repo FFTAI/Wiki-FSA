@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/control_velocity_mode.dir/demo_control_velocity_mode.cpp.o CMakeFiles/control_velocity_mode.dir/fsa.cpp.o CMakeFiles/control_velocity_mode.dir/os.cpp.o CMakeFiles/control_velocity_mode.dir/logger.cpp.o  -o ../../bin/control_velocity_mode  -lpthread 

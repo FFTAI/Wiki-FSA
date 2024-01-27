@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/clear_fault.dir/demo_clear_fault.cpp.o CMakeFiles/clear_fault.dir/fsa.cpp.o CMakeFiles/clear_fault.dir/os.cpp.o CMakeFiles/clear_fault.dir/logger.cpp.o  -o ../../bin/clear_fault  -lpthread 

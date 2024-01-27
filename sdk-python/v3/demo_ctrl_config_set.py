@@ -9,36 +9,16 @@ def main():
 
     if server_ip_list:
 
-        # get the communication configuration of all FAS
-        for i in range(len(server_ip_list)):
-            fi_fsa.get_config(server_ip_list[i])
-
-        print('\n')
-        time.sleep(1)
-
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
-                # Notice:
-                # if use TYPE_DEFAULT, the following parameters will be used,
-                # otherwise, the parameters will be used according to the type.
-
-                # 'actuator_type': fi_fsa.FSAActuatorType.TYPE_130_21_A_7,
-
                 'actuator_type': fi_fsa.FSAActuatorType.TYPE_DEFAULT,
                 'actuator_direction': fi_fsa.FSAActuatorDirection.DIRECTION_NORMAL,
-                'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_30,
-
-                'motor_type': fi_fsa.FSAMotorType.FSA80_10V0,
-                'motor_hardware_type': fi_fsa.FSAHardwareType.TYPE_H66V104,
-                'motor_vbus': fi_fsa.FSAMotorVBUS.VBUS_36V,
-                'motor_direction': fi_fsa.FSAMotorDirection.ACB,
-                'motor_pole_pairs': fi_fsa.FSAMotorPolePairs.POLE_PAIRS_10,
-                'motor_max_speed': fi_fsa.FSAMotorMaxSpeed.MAX_SPEED_3000,  # rpm
-                'motor_max_acceleration': fi_fsa.FSAMotorMaxAcceleration.MAX_ACCELERATION_60000,  # rpm/s
-                'motor_max_current': 10,  # A
-
-                'encoder_direction': fi_fsa.FSAEncoderDirection.DIRECTION_CCW,
+                'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_36,
+                'motor_type': fi_fsa.FSAMotorType.FSA36_10V0,
+                'motor_hardware_type': fi_fsa.FSAHardwareType.TYPE_H46V104,
+                'motor_direction': fi_fsa.FSAMotorDirection.ABC,
+                'motor_max_current': 100
             }
             fi_fsa.set_config(server_ip_list[i], dict)
 

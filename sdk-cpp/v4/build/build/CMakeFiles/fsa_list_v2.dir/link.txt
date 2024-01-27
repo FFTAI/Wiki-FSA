@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/fsa_list_v2.dir/fsa_list_v2.cpp.o CMakeFiles/fsa_list_v2.dir/fsa.cpp.o CMakeFiles/fsa_list_v2.dir/os.cpp.o CMakeFiles/fsa_list_v2.dir/logger.cpp.o  -o ../../bin/fsa_list_v2  -lpthread 

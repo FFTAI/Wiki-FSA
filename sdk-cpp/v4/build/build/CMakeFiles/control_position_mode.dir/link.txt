@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/control_position_mode.dir/demo_control_position_mode.cpp.o CMakeFiles/control_position_mode.dir/fsa.cpp.o CMakeFiles/control_position_mode.dir/os.cpp.o CMakeFiles/control_position_mode.dir/logger.cpp.o  -o ../../bin/control_position_mode  -lpthread 

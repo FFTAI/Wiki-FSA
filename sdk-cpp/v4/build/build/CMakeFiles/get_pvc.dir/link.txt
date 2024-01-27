@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/get_pvc.dir/demo_get_pvc.cpp.o CMakeFiles/get_pvc.dir/fsa.cpp.o CMakeFiles/get_pvc.dir/os.cpp.o CMakeFiles/get_pvc.dir/logger.cpp.o  -o ../../bin/get_pvc  -lpthread 
