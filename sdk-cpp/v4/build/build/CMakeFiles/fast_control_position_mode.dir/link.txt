@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/fast_control_position_mode.dir/demo_fast_control_position_mode.cpp.o CMakeFiles/fast_control_position_mode.dir/fsa.cpp.o CMakeFiles/fast_control_position_mode.dir/os.cpp.o CMakeFiles/fast_control_position_mode.dir/logger.cpp.o  -o ../../bin/fast_control_position_mode  -lpthread 

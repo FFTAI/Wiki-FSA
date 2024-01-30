@@ -183,9 +183,30 @@ add_executable(fsa_list_v2 fsa_list_v2.cpp fsa.cpp os.cpp logger.cpp)
 target_link_libraries(fsa_list_v2 pthread)
 # ####  FSA LIST END
 
-# target_link_libraries(demo_lookup pthread)
+# #####################添加fast接口#########################
 
+add_executable(fast_disable_set demo_fast_disable_set.cpp fsa.cpp os.cpp logger.cpp)
+target_link_libraries(fast_disable_set pthread)
 
+add_executable(fast_enable_set demo_fast_enable_set.cpp fsa.cpp os.cpp logger.cpp)
+target_link_libraries(fast_enable_set pthread)
 
+add_executable(fast_get_pvc demo_fast_get_pvc.cpp fsa.cpp os.cpp logger.cpp)
+target_link_libraries(fast_get_pvc pthread)
+
+add_executable(fast_get_error demo_fast_get_error.cpp fsa.cpp os.cpp logger.cpp)
+target_link_libraries(fast_get_error pthread)
+
+add_executable(fast_set_clear_fault demo_fast_set_clear_fault.cpp fsa.cpp os.cpp logger.cpp)
+target_link_libraries(fast_set_clear_fault pthread)
+
+add_executable(fast_control_position_mode demo_fast_control_position_mode.cpp fsa.cpp os.cpp logger.cpp)
+target_link_libraries(fast_control_position_mode pthread)
+
+add_executable(fast_control_velocity_mode demo_fast_control_velocity_mode.cpp fsa.cpp os.cpp logger.cpp)
+target_link_libraries(fast_control_velocity_mode pthread)
+
+add_executable(fast_control_current_mode demo_fast_control_current_mode.cpp fsa.cpp os.cpp logger.cpp)
+target_link_libraries(fast_control_current_mode pthread)
 
 set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

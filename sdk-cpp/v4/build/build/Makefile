@@ -111,6 +111,36 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+build/CMakeFiles/fast_control_current_mode.dir/rule:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_control_current_mode.dir/rule
+.PHONY : build/CMakeFiles/fast_control_current_mode.dir/rule
+
+# Convenience name for target.
+fast_control_current_mode: build/CMakeFiles/fast_control_current_mode.dir/rule
+
+.PHONY : fast_control_current_mode
+
+# fast build rule for target.
+fast_control_current_mode/fast:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/build
+.PHONY : fast_control_current_mode/fast
+
+# Convenience name for target.
+build/CMakeFiles/fast_get_pvc.dir/rule:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_get_pvc.dir/rule
+.PHONY : build/CMakeFiles/fast_get_pvc.dir/rule
+
+# Convenience name for target.
+fast_get_pvc: build/CMakeFiles/fast_get_pvc.dir/rule
+
+.PHONY : fast_get_pvc
+
+# fast build rule for target.
+fast_get_pvc/fast:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/build
+.PHONY : fast_get_pvc/fast
+
+# Convenience name for target.
 build/CMakeFiles/set_calibrate_encoder.dir/rule:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/set_calibrate_encoder.dir/rule
 .PHONY : build/CMakeFiles/set_calibrate_encoder.dir/rule
@@ -124,6 +154,36 @@ set_calibrate_encoder: build/CMakeFiles/set_calibrate_encoder.dir/rule
 set_calibrate_encoder/fast:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/build
 .PHONY : set_calibrate_encoder/fast
+
+# Convenience name for target.
+build/CMakeFiles/fast_control_velocity_mode.dir/rule:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_control_velocity_mode.dir/rule
+.PHONY : build/CMakeFiles/fast_control_velocity_mode.dir/rule
+
+# Convenience name for target.
+fast_control_velocity_mode: build/CMakeFiles/fast_control_velocity_mode.dir/rule
+
+.PHONY : fast_control_velocity_mode
+
+# fast build rule for target.
+fast_control_velocity_mode/fast:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/build
+.PHONY : fast_control_velocity_mode/fast
+
+# Convenience name for target.
+build/CMakeFiles/fast_get_error.dir/rule:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_get_error.dir/rule
+.PHONY : build/CMakeFiles/fast_get_error.dir/rule
+
+# Convenience name for target.
+fast_get_error: build/CMakeFiles/fast_get_error.dir/rule
+
+.PHONY : fast_get_error
+
+# fast build rule for target.
+fast_get_error/fast:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/build
+.PHONY : fast_get_error/fast
 
 # Convenience name for target.
 build/CMakeFiles/reboot.dir/rule:
@@ -199,6 +259,21 @@ ota_driver: build/CMakeFiles/ota_driver.dir/rule
 ota_driver/fast:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/build
 .PHONY : ota_driver/fast
+
+# Convenience name for target.
+build/CMakeFiles/fast_control_position_mode.dir/rule:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_control_position_mode.dir/rule
+.PHONY : build/CMakeFiles/fast_control_position_mode.dir/rule
+
+# Convenience name for target.
+fast_control_position_mode: build/CMakeFiles/fast_control_position_mode.dir/rule
+
+.PHONY : fast_control_position_mode
+
+# fast build rule for target.
+fast_control_position_mode/fast:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/build
+.PHONY : fast_control_position_mode/fast
 
 # Convenience name for target.
 build/CMakeFiles/ota_devel.dir/rule:
@@ -381,6 +456,21 @@ control_position_mode/fast:
 .PHONY : control_position_mode/fast
 
 # Convenience name for target.
+build/CMakeFiles/fast_set_clear_fault.dir/rule:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_set_clear_fault.dir/rule
+.PHONY : build/CMakeFiles/fast_set_clear_fault.dir/rule
+
+# Convenience name for target.
+fast_set_clear_fault: build/CMakeFiles/fast_set_clear_fault.dir/rule
+
+.PHONY : fast_set_clear_fault
+
+# fast build rule for target.
+fast_set_clear_fault/fast:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/build
+.PHONY : fast_set_clear_fault/fast
+
+# Convenience name for target.
 build/CMakeFiles/control_position_ff_mode.dir/rule:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/control_position_ff_mode.dir/rule
 .PHONY : build/CMakeFiles/control_position_ff_mode.dir/rule
@@ -396,6 +486,21 @@ control_position_ff_mode/fast:
 .PHONY : control_position_ff_mode/fast
 
 # Convenience name for target.
+build/CMakeFiles/fast_disable_set.dir/rule:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_disable_set.dir/rule
+.PHONY : build/CMakeFiles/fast_disable_set.dir/rule
+
+# Convenience name for target.
+fast_disable_set: build/CMakeFiles/fast_disable_set.dir/rule
+
+.PHONY : fast_disable_set
+
+# fast build rule for target.
+fast_disable_set/fast:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/build
+.PHONY : fast_disable_set/fast
+
+# Convenience name for target.
 build/CMakeFiles/control_param_imm_get.dir/rule:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/control_param_imm_get.dir/rule
 .PHONY : build/CMakeFiles/control_param_imm_get.dir/rule
@@ -409,6 +514,21 @@ control_param_imm_get: build/CMakeFiles/control_param_imm_get.dir/rule
 control_param_imm_get/fast:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/build
 .PHONY : control_param_imm_get/fast
+
+# Convenience name for target.
+build/CMakeFiles/fast_enable_set.dir/rule:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_enable_set.dir/rule
+.PHONY : build/CMakeFiles/fast_enable_set.dir/rule
+
+# Convenience name for target.
+fast_enable_set: build/CMakeFiles/fast_enable_set.dir/rule
+
+.PHONY : fast_enable_set
+
+# fast build rule for target.
+fast_enable_set/fast:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/build
+.PHONY : fast_enable_set/fast
 
 # Convenience name for target.
 build/CMakeFiles/ctrl_config_get.dir/rule:
@@ -1262,6 +1382,222 @@ demo_enable_set.cpp.s:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/enable_set.dir/build.make build/CMakeFiles/enable_set.dir/demo_enable_set.cpp.s
 .PHONY : demo_enable_set.cpp.s
 
+demo_fast_control_current_mode.o: demo_fast_control_current_mode.cpp.o
+
+.PHONY : demo_fast_control_current_mode.o
+
+# target to build an object file
+demo_fast_control_current_mode.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/demo_fast_control_current_mode.cpp.o
+.PHONY : demo_fast_control_current_mode.cpp.o
+
+demo_fast_control_current_mode.i: demo_fast_control_current_mode.cpp.i
+
+.PHONY : demo_fast_control_current_mode.i
+
+# target to preprocess a source file
+demo_fast_control_current_mode.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/demo_fast_control_current_mode.cpp.i
+.PHONY : demo_fast_control_current_mode.cpp.i
+
+demo_fast_control_current_mode.s: demo_fast_control_current_mode.cpp.s
+
+.PHONY : demo_fast_control_current_mode.s
+
+# target to generate assembly for a file
+demo_fast_control_current_mode.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/demo_fast_control_current_mode.cpp.s
+.PHONY : demo_fast_control_current_mode.cpp.s
+
+demo_fast_control_position_mode.o: demo_fast_control_position_mode.cpp.o
+
+.PHONY : demo_fast_control_position_mode.o
+
+# target to build an object file
+demo_fast_control_position_mode.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/demo_fast_control_position_mode.cpp.o
+.PHONY : demo_fast_control_position_mode.cpp.o
+
+demo_fast_control_position_mode.i: demo_fast_control_position_mode.cpp.i
+
+.PHONY : demo_fast_control_position_mode.i
+
+# target to preprocess a source file
+demo_fast_control_position_mode.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/demo_fast_control_position_mode.cpp.i
+.PHONY : demo_fast_control_position_mode.cpp.i
+
+demo_fast_control_position_mode.s: demo_fast_control_position_mode.cpp.s
+
+.PHONY : demo_fast_control_position_mode.s
+
+# target to generate assembly for a file
+demo_fast_control_position_mode.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/demo_fast_control_position_mode.cpp.s
+.PHONY : demo_fast_control_position_mode.cpp.s
+
+demo_fast_control_velocity_mode.o: demo_fast_control_velocity_mode.cpp.o
+
+.PHONY : demo_fast_control_velocity_mode.o
+
+# target to build an object file
+demo_fast_control_velocity_mode.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/demo_fast_control_velocity_mode.cpp.o
+.PHONY : demo_fast_control_velocity_mode.cpp.o
+
+demo_fast_control_velocity_mode.i: demo_fast_control_velocity_mode.cpp.i
+
+.PHONY : demo_fast_control_velocity_mode.i
+
+# target to preprocess a source file
+demo_fast_control_velocity_mode.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/demo_fast_control_velocity_mode.cpp.i
+.PHONY : demo_fast_control_velocity_mode.cpp.i
+
+demo_fast_control_velocity_mode.s: demo_fast_control_velocity_mode.cpp.s
+
+.PHONY : demo_fast_control_velocity_mode.s
+
+# target to generate assembly for a file
+demo_fast_control_velocity_mode.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/demo_fast_control_velocity_mode.cpp.s
+.PHONY : demo_fast_control_velocity_mode.cpp.s
+
+demo_fast_disable_set.o: demo_fast_disable_set.cpp.o
+
+.PHONY : demo_fast_disable_set.o
+
+# target to build an object file
+demo_fast_disable_set.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/demo_fast_disable_set.cpp.o
+.PHONY : demo_fast_disable_set.cpp.o
+
+demo_fast_disable_set.i: demo_fast_disable_set.cpp.i
+
+.PHONY : demo_fast_disable_set.i
+
+# target to preprocess a source file
+demo_fast_disable_set.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/demo_fast_disable_set.cpp.i
+.PHONY : demo_fast_disable_set.cpp.i
+
+demo_fast_disable_set.s: demo_fast_disable_set.cpp.s
+
+.PHONY : demo_fast_disable_set.s
+
+# target to generate assembly for a file
+demo_fast_disable_set.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/demo_fast_disable_set.cpp.s
+.PHONY : demo_fast_disable_set.cpp.s
+
+demo_fast_enable_set.o: demo_fast_enable_set.cpp.o
+
+.PHONY : demo_fast_enable_set.o
+
+# target to build an object file
+demo_fast_enable_set.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/demo_fast_enable_set.cpp.o
+.PHONY : demo_fast_enable_set.cpp.o
+
+demo_fast_enable_set.i: demo_fast_enable_set.cpp.i
+
+.PHONY : demo_fast_enable_set.i
+
+# target to preprocess a source file
+demo_fast_enable_set.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/demo_fast_enable_set.cpp.i
+.PHONY : demo_fast_enable_set.cpp.i
+
+demo_fast_enable_set.s: demo_fast_enable_set.cpp.s
+
+.PHONY : demo_fast_enable_set.s
+
+# target to generate assembly for a file
+demo_fast_enable_set.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/demo_fast_enable_set.cpp.s
+.PHONY : demo_fast_enable_set.cpp.s
+
+demo_fast_get_error.o: demo_fast_get_error.cpp.o
+
+.PHONY : demo_fast_get_error.o
+
+# target to build an object file
+demo_fast_get_error.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/demo_fast_get_error.cpp.o
+.PHONY : demo_fast_get_error.cpp.o
+
+demo_fast_get_error.i: demo_fast_get_error.cpp.i
+
+.PHONY : demo_fast_get_error.i
+
+# target to preprocess a source file
+demo_fast_get_error.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/demo_fast_get_error.cpp.i
+.PHONY : demo_fast_get_error.cpp.i
+
+demo_fast_get_error.s: demo_fast_get_error.cpp.s
+
+.PHONY : demo_fast_get_error.s
+
+# target to generate assembly for a file
+demo_fast_get_error.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/demo_fast_get_error.cpp.s
+.PHONY : demo_fast_get_error.cpp.s
+
+demo_fast_get_pvc.o: demo_fast_get_pvc.cpp.o
+
+.PHONY : demo_fast_get_pvc.o
+
+# target to build an object file
+demo_fast_get_pvc.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/demo_fast_get_pvc.cpp.o
+.PHONY : demo_fast_get_pvc.cpp.o
+
+demo_fast_get_pvc.i: demo_fast_get_pvc.cpp.i
+
+.PHONY : demo_fast_get_pvc.i
+
+# target to preprocess a source file
+demo_fast_get_pvc.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/demo_fast_get_pvc.cpp.i
+.PHONY : demo_fast_get_pvc.cpp.i
+
+demo_fast_get_pvc.s: demo_fast_get_pvc.cpp.s
+
+.PHONY : demo_fast_get_pvc.s
+
+# target to generate assembly for a file
+demo_fast_get_pvc.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/demo_fast_get_pvc.cpp.s
+.PHONY : demo_fast_get_pvc.cpp.s
+
+demo_fast_set_clear_fault.o: demo_fast_set_clear_fault.cpp.o
+
+.PHONY : demo_fast_set_clear_fault.o
+
+# target to build an object file
+demo_fast_set_clear_fault.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/demo_fast_set_clear_fault.cpp.o
+.PHONY : demo_fast_set_clear_fault.cpp.o
+
+demo_fast_set_clear_fault.i: demo_fast_set_clear_fault.cpp.i
+
+.PHONY : demo_fast_set_clear_fault.i
+
+# target to preprocess a source file
+demo_fast_set_clear_fault.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/demo_fast_set_clear_fault.cpp.i
+.PHONY : demo_fast_set_clear_fault.cpp.i
+
+demo_fast_set_clear_fault.s: demo_fast_set_clear_fault.cpp.s
+
+.PHONY : demo_fast_set_clear_fault.s
+
+# target to generate assembly for a file
+demo_fast_set_clear_fault.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/demo_fast_set_clear_fault.cpp.s
+.PHONY : demo_fast_set_clear_fault.cpp.s
+
 demo_flag_of_operation_get.o: demo_flag_of_operation_get.cpp.o
 
 .PHONY : demo_flag_of_operation_get.o
@@ -2105,12 +2441,17 @@ fsa.o: fsa.cpp.o
 
 # target to build an object file
 fsa.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/fsa.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/fsa.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/fsa.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/fsa.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/fsa.cpp.o
@@ -2123,8 +2464,11 @@ fsa.cpp.o:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/fsa.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/fsa.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/fsa.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/fsa.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/fsa.cpp.o
@@ -2161,12 +2505,17 @@ fsa.i: fsa.cpp.i
 
 # target to preprocess a source file
 fsa.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/fsa.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/fsa.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/fsa.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/fsa.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/fsa.cpp.i
@@ -2179,8 +2528,11 @@ fsa.cpp.i:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/fsa.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/fsa.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/fsa.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/fsa.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/fsa.cpp.i
@@ -2217,12 +2569,17 @@ fsa.s: fsa.cpp.s
 
 # target to generate assembly for a file
 fsa.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/fsa.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/fsa.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/fsa.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/fsa.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/fsa.cpp.s
@@ -2235,8 +2592,11 @@ fsa.cpp.s:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/fsa.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/fsa.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/fsa.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/fsa.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/fsa.cpp.s
@@ -2300,12 +2660,17 @@ logger.o: logger.cpp.o
 
 # target to build an object file
 logger.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/logger.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/logger.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/logger.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/logger.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/logger.cpp.o
@@ -2318,8 +2683,11 @@ logger.cpp.o:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/logger.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/logger.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/logger.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/logger.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/logger.cpp.o
@@ -2356,12 +2724,17 @@ logger.i: logger.cpp.i
 
 # target to preprocess a source file
 logger.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/logger.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/logger.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/logger.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/logger.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/logger.cpp.i
@@ -2374,8 +2747,11 @@ logger.cpp.i:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/logger.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/logger.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/logger.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/logger.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/logger.cpp.i
@@ -2412,12 +2788,17 @@ logger.s: logger.cpp.s
 
 # target to generate assembly for a file
 logger.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/logger.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/logger.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/logger.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/logger.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/logger.cpp.s
@@ -2430,8 +2811,11 @@ logger.cpp.s:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/logger.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/logger.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/logger.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/logger.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/logger.cpp.s
@@ -2468,12 +2852,17 @@ os.o: os.cpp.o
 
 # target to build an object file
 os.cpp.o:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/os.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/os.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/os.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/os.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/os.cpp.o
@@ -2486,8 +2875,11 @@ os.cpp.o:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/os.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/os.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/os.cpp.o
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/os.cpp.o
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/os.cpp.o
@@ -2524,12 +2916,17 @@ os.i: os.cpp.i
 
 # target to preprocess a source file
 os.cpp.i:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/os.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/os.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/os.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/os.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/os.cpp.i
@@ -2542,8 +2939,11 @@ os.cpp.i:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/os.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/os.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/os.cpp.i
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/os.cpp.i
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/os.cpp.i
@@ -2580,12 +2980,17 @@ os.s: os.cpp.s
 
 # target to generate assembly for a file
 os.cpp.s:
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/os.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/os.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/os.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/os.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/os.cpp.s
@@ -2598,8 +3003,11 @@ os.cpp.s:
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/os.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/os.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/os.cpp.s
+	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/os.cpp.s
 	cd /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build && $(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/os.cpp.s
@@ -2638,12 +3046,17 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... fast_control_current_mode"
+	@echo "... fast_get_pvc"
 	@echo "... set_calibrate_encoder"
+	@echo "... fast_control_velocity_mode"
+	@echo "... fast_get_error"
 	@echo "... reboot"
 	@echo "... pid_param_get"
 	@echo "... pid_param_set"
 	@echo "... ota_driver_devel"
 	@echo "... ota_driver"
+	@echo "... fast_control_position_mode"
 	@echo "... ota_devel"
 	@echo "... pid_param_imm_set"
 	@echo "... lookup_abs_encoder"
@@ -2656,8 +3069,11 @@ help:
 	@echo "... reboot_actuator"
 	@echo "... flag_of_operation_set"
 	@echo "... control_position_mode"
+	@echo "... fast_set_clear_fault"
 	@echo "... control_position_ff_mode"
+	@echo "... fast_disable_set"
 	@echo "... control_param_imm_get"
+	@echo "... fast_enable_set"
 	@echo "... ctrl_config_get"
 	@echo "... control_param_get"
 	@echo "... ota_driver_cloud"
@@ -2734,6 +3150,30 @@ help:
 	@echo "... demo_enable_set.o"
 	@echo "... demo_enable_set.i"
 	@echo "... demo_enable_set.s"
+	@echo "... demo_fast_control_current_mode.o"
+	@echo "... demo_fast_control_current_mode.i"
+	@echo "... demo_fast_control_current_mode.s"
+	@echo "... demo_fast_control_position_mode.o"
+	@echo "... demo_fast_control_position_mode.i"
+	@echo "... demo_fast_control_position_mode.s"
+	@echo "... demo_fast_control_velocity_mode.o"
+	@echo "... demo_fast_control_velocity_mode.i"
+	@echo "... demo_fast_control_velocity_mode.s"
+	@echo "... demo_fast_disable_set.o"
+	@echo "... demo_fast_disable_set.i"
+	@echo "... demo_fast_disable_set.s"
+	@echo "... demo_fast_enable_set.o"
+	@echo "... demo_fast_enable_set.i"
+	@echo "... demo_fast_enable_set.s"
+	@echo "... demo_fast_get_error.o"
+	@echo "... demo_fast_get_error.i"
+	@echo "... demo_fast_get_error.s"
+	@echo "... demo_fast_get_pvc.o"
+	@echo "... demo_fast_get_pvc.i"
+	@echo "... demo_fast_get_pvc.s"
+	@echo "... demo_fast_set_clear_fault.o"
+	@echo "... demo_fast_set_clear_fault.i"
+	@echo "... demo_fast_set_clear_fault.s"
 	@echo "... demo_flag_of_operation_get.o"
 	@echo "... demo_flag_of_operation_get.i"
 	@echo "... demo_flag_of_operation_get.s"

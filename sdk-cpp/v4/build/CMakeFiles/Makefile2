@@ -71,12 +71,17 @@ clean: build/clean
 # Directory level rules for directory build
 
 # Recursive "all" directory target.
+build/all: build/CMakeFiles/fast_control_current_mode.dir/all
+build/all: build/CMakeFiles/fast_get_pvc.dir/all
 build/all: build/CMakeFiles/set_calibrate_encoder.dir/all
+build/all: build/CMakeFiles/fast_control_velocity_mode.dir/all
+build/all: build/CMakeFiles/fast_get_error.dir/all
 build/all: build/CMakeFiles/reboot.dir/all
 build/all: build/CMakeFiles/pid_param_get.dir/all
 build/all: build/CMakeFiles/pid_param_set.dir/all
 build/all: build/CMakeFiles/ota_driver_devel.dir/all
 build/all: build/CMakeFiles/ota_driver.dir/all
+build/all: build/CMakeFiles/fast_control_position_mode.dir/all
 build/all: build/CMakeFiles/ota_devel.dir/all
 build/all: build/CMakeFiles/pid_param_imm_set.dir/all
 build/all: build/CMakeFiles/lookup_abs_encoder.dir/all
@@ -89,8 +94,11 @@ build/all: build/CMakeFiles/set_encrypt.dir/all
 build/all: build/CMakeFiles/reboot_actuator.dir/all
 build/all: build/CMakeFiles/flag_of_operation_set.dir/all
 build/all: build/CMakeFiles/control_position_mode.dir/all
+build/all: build/CMakeFiles/fast_set_clear_fault.dir/all
 build/all: build/CMakeFiles/control_position_ff_mode.dir/all
+build/all: build/CMakeFiles/fast_disable_set.dir/all
 build/all: build/CMakeFiles/control_param_imm_get.dir/all
+build/all: build/CMakeFiles/fast_enable_set.dir/all
 build/all: build/CMakeFiles/ctrl_config_get.dir/all
 build/all: build/CMakeFiles/control_param_get.dir/all
 build/all: build/CMakeFiles/ota_driver_cloud.dir/all
@@ -128,12 +136,17 @@ build/preinstall:
 .PHONY : build/preinstall
 
 # Recursive "clean" directory target.
+build/clean: build/CMakeFiles/fast_control_current_mode.dir/clean
+build/clean: build/CMakeFiles/fast_get_pvc.dir/clean
 build/clean: build/CMakeFiles/set_calibrate_encoder.dir/clean
+build/clean: build/CMakeFiles/fast_control_velocity_mode.dir/clean
+build/clean: build/CMakeFiles/fast_get_error.dir/clean
 build/clean: build/CMakeFiles/reboot.dir/clean
 build/clean: build/CMakeFiles/pid_param_get.dir/clean
 build/clean: build/CMakeFiles/pid_param_set.dir/clean
 build/clean: build/CMakeFiles/ota_driver_devel.dir/clean
 build/clean: build/CMakeFiles/ota_driver.dir/clean
+build/clean: build/CMakeFiles/fast_control_position_mode.dir/clean
 build/clean: build/CMakeFiles/ota_devel.dir/clean
 build/clean: build/CMakeFiles/pid_param_imm_set.dir/clean
 build/clean: build/CMakeFiles/lookup_abs_encoder.dir/clean
@@ -146,8 +159,11 @@ build/clean: build/CMakeFiles/set_encrypt.dir/clean
 build/clean: build/CMakeFiles/reboot_actuator.dir/clean
 build/clean: build/CMakeFiles/flag_of_operation_set.dir/clean
 build/clean: build/CMakeFiles/control_position_mode.dir/clean
+build/clean: build/CMakeFiles/fast_set_clear_fault.dir/clean
 build/clean: build/CMakeFiles/control_position_ff_mode.dir/clean
+build/clean: build/CMakeFiles/fast_disable_set.dir/clean
 build/clean: build/CMakeFiles/control_param_imm_get.dir/clean
+build/clean: build/CMakeFiles/fast_enable_set.dir/clean
 build/clean: build/CMakeFiles/ctrl_config_get.dir/clean
 build/clean: build/CMakeFiles/control_param_get.dir/clean
 build/clean: build/CMakeFiles/ota_driver_cloud.dir/clean
@@ -180,13 +196,67 @@ build/clean: build/CMakeFiles/lookup_ctrlbox.dir/clean
 .PHONY : build/clean
 
 #=============================================================================
+# Target rules for target build/CMakeFiles/fast_control_current_mode.dir
+
+# All Build rule for target.
+build/CMakeFiles/fast_control_current_mode.dir/all:
+	$(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/depend
+	$(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=29,30 "Built target fast_control_current_mode"
+.PHONY : build/CMakeFiles/fast_control_current_mode.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/fast_control_current_mode.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_control_current_mode.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/fast_control_current_mode.dir/rule
+
+# Convenience name for target.
+fast_control_current_mode: build/CMakeFiles/fast_control_current_mode.dir/rule
+
+.PHONY : fast_control_current_mode
+
+# clean rule for target.
+build/CMakeFiles/fast_control_current_mode.dir/clean:
+	$(MAKE) -f build/CMakeFiles/fast_control_current_mode.dir/build.make build/CMakeFiles/fast_control_current_mode.dir/clean
+.PHONY : build/CMakeFiles/fast_control_current_mode.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/fast_get_pvc.dir
+
+# All Build rule for target.
+build/CMakeFiles/fast_get_pvc.dir/all:
+	$(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/depend
+	$(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=40,41 "Built target fast_get_pvc"
+.PHONY : build/CMakeFiles/fast_get_pvc.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/fast_get_pvc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_get_pvc.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/fast_get_pvc.dir/rule
+
+# Convenience name for target.
+fast_get_pvc: build/CMakeFiles/fast_get_pvc.dir/rule
+
+.PHONY : fast_get_pvc
+
+# clean rule for target.
+build/CMakeFiles/fast_get_pvc.dir/clean:
+	$(MAKE) -f build/CMakeFiles/fast_get_pvc.dir/build.make build/CMakeFiles/fast_get_pvc.dir/clean
+.PHONY : build/CMakeFiles/fast_get_pvc.dir/clean
+
+#=============================================================================
 # Target rules for target build/CMakeFiles/set_calibrate_encoder.dir
 
 # All Build rule for target.
 build/CMakeFiles/set_calibrate_encoder.dir/all:
 	$(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/depend
 	$(MAKE) -f build/CMakeFiles/set_calibrate_encoder.dir/build.make build/CMakeFiles/set_calibrate_encoder.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=96,97 "Built target set_calibrate_encoder"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=97,98 "Built target set_calibrate_encoder"
 .PHONY : build/CMakeFiles/set_calibrate_encoder.dir/all
 
 # Build rule for subdir invocation for target.
@@ -207,13 +277,67 @@ build/CMakeFiles/set_calibrate_encoder.dir/clean:
 .PHONY : build/CMakeFiles/set_calibrate_encoder.dir/clean
 
 #=============================================================================
+# Target rules for target build/CMakeFiles/fast_control_velocity_mode.dir
+
+# All Build rule for target.
+build/CMakeFiles/fast_control_velocity_mode.dir/all:
+	$(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/depend
+	$(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=33 "Built target fast_control_velocity_mode"
+.PHONY : build/CMakeFiles/fast_control_velocity_mode.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/fast_control_velocity_mode.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_control_velocity_mode.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/fast_control_velocity_mode.dir/rule
+
+# Convenience name for target.
+fast_control_velocity_mode: build/CMakeFiles/fast_control_velocity_mode.dir/rule
+
+.PHONY : fast_control_velocity_mode
+
+# clean rule for target.
+build/CMakeFiles/fast_control_velocity_mode.dir/clean:
+	$(MAKE) -f build/CMakeFiles/fast_control_velocity_mode.dir/build.make build/CMakeFiles/fast_control_velocity_mode.dir/clean
+.PHONY : build/CMakeFiles/fast_control_velocity_mode.dir/clean
+
+#=============================================================================
+# Target rules for target build/CMakeFiles/fast_get_error.dir
+
+# All Build rule for target.
+build/CMakeFiles/fast_get_error.dir/all:
+	$(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/depend
+	$(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=38,39 "Built target fast_get_error"
+.PHONY : build/CMakeFiles/fast_get_error.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/fast_get_error.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_get_error.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/fast_get_error.dir/rule
+
+# Convenience name for target.
+fast_get_error: build/CMakeFiles/fast_get_error.dir/rule
+
+.PHONY : fast_get_error
+
+# clean rule for target.
+build/CMakeFiles/fast_get_error.dir/clean:
+	$(MAKE) -f build/CMakeFiles/fast_get_error.dir/build.make build/CMakeFiles/fast_get_error.dir/clean
+.PHONY : build/CMakeFiles/fast_get_error.dir/clean
+
+#=============================================================================
 # Target rules for target build/CMakeFiles/reboot.dir
 
 # All Build rule for target.
 build/CMakeFiles/reboot.dir/all:
 	$(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/depend
 	$(MAKE) -f build/CMakeFiles/reboot.dir/build.make build/CMakeFiles/reboot.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=92,93 "Built target reboot"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=93,94 "Built target reboot"
 .PHONY : build/CMakeFiles/reboot.dir/all
 
 # Build rule for subdir invocation for target.
@@ -240,7 +364,7 @@ build/CMakeFiles/reboot.dir/clean:
 build/CMakeFiles/pid_param_get.dir/all:
 	$(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/depend
 	$(MAKE) -f build/CMakeFiles/pid_param_get.dir/build.make build/CMakeFiles/pid_param_get.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=84,85 "Built target pid_param_get"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=86,87 "Built target pid_param_get"
 .PHONY : build/CMakeFiles/pid_param_get.dir/all
 
 # Build rule for subdir invocation for target.
@@ -267,12 +391,12 @@ build/CMakeFiles/pid_param_get.dir/clean:
 build/CMakeFiles/pid_param_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/pid_param_set.dir/build.make build/CMakeFiles/pid_param_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=90,91 "Built target pid_param_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=92 "Built target pid_param_set"
 .PHONY : build/CMakeFiles/pid_param_set.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/pid_param_set.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/pid_param_set.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/pid_param_set.dir/rule
@@ -294,7 +418,7 @@ build/CMakeFiles/pid_param_set.dir/clean:
 build/CMakeFiles/ota_driver_devel.dir/all:
 	$(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/depend
 	$(MAKE) -f build/CMakeFiles/ota_driver_devel.dir/build.make build/CMakeFiles/ota_driver_devel.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=78,79 "Built target ota_driver_devel"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=81,82 "Built target ota_driver_devel"
 .PHONY : build/CMakeFiles/ota_driver_devel.dir/all
 
 # Build rule for subdir invocation for target.
@@ -321,12 +445,12 @@ build/CMakeFiles/ota_driver_devel.dir/clean:
 build/CMakeFiles/ota_driver.dir/all:
 	$(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/depend
 	$(MAKE) -f build/CMakeFiles/ota_driver.dir/build.make build/CMakeFiles/ota_driver.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=73,74,75 "Built target ota_driver"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=77,78 "Built target ota_driver"
 .PHONY : build/CMakeFiles/ota_driver.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/ota_driver.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/ota_driver.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/ota_driver.dir/rule
@@ -342,18 +466,45 @@ build/CMakeFiles/ota_driver.dir/clean:
 .PHONY : build/CMakeFiles/ota_driver.dir/clean
 
 #=============================================================================
+# Target rules for target build/CMakeFiles/fast_control_position_mode.dir
+
+# All Build rule for target.
+build/CMakeFiles/fast_control_position_mode.dir/all:
+	$(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/depend
+	$(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=31,32 "Built target fast_control_position_mode"
+.PHONY : build/CMakeFiles/fast_control_position_mode.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/fast_control_position_mode.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_control_position_mode.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/fast_control_position_mode.dir/rule
+
+# Convenience name for target.
+fast_control_position_mode: build/CMakeFiles/fast_control_position_mode.dir/rule
+
+.PHONY : fast_control_position_mode
+
+# clean rule for target.
+build/CMakeFiles/fast_control_position_mode.dir/clean:
+	$(MAKE) -f build/CMakeFiles/fast_control_position_mode.dir/build.make build/CMakeFiles/fast_control_position_mode.dir/clean
+.PHONY : build/CMakeFiles/fast_control_position_mode.dir/clean
+
+#=============================================================================
 # Target rules for target build/CMakeFiles/ota_devel.dir
 
 # All Build rule for target.
 build/CMakeFiles/ota_devel.dir/all:
 	$(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/depend
 	$(MAKE) -f build/CMakeFiles/ota_devel.dir/build.make build/CMakeFiles/ota_devel.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=71,72 "Built target ota_devel"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=76 "Built target ota_devel"
 .PHONY : build/CMakeFiles/ota_devel.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/ota_devel.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/ota_devel.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/ota_devel.dir/rule
@@ -375,7 +526,7 @@ build/CMakeFiles/ota_devel.dir/clean:
 build/CMakeFiles/pid_param_imm_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/pid_param_imm_set.dir/build.make build/CMakeFiles/pid_param_imm_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=88,89 "Built target pid_param_imm_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=90,91 "Built target pid_param_imm_set"
 .PHONY : build/CMakeFiles/pid_param_imm_set.dir/all
 
 # Build rule for subdir invocation for target.
@@ -402,12 +553,12 @@ build/CMakeFiles/pid_param_imm_set.dir/clean:
 build/CMakeFiles/lookup_abs_encoder.dir/all:
 	$(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/depend
 	$(MAKE) -f build/CMakeFiles/lookup_abs_encoder.dir/build.make build/CMakeFiles/lookup_abs_encoder.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=61,62 "Built target lookup_abs_encoder"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=67 "Built target lookup_abs_encoder"
 .PHONY : build/CMakeFiles/lookup_abs_encoder.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/lookup_abs_encoder.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/lookup_abs_encoder.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/lookup_abs_encoder.dir/rule
@@ -429,7 +580,7 @@ build/CMakeFiles/lookup_abs_encoder.dir/clean:
 build/CMakeFiles/pid_param_imm_get.dir/all:
 	$(MAKE) -f build/CMakeFiles/pid_param_imm_get.dir/build.make build/CMakeFiles/pid_param_imm_get.dir/depend
 	$(MAKE) -f build/CMakeFiles/pid_param_imm_get.dir/build.make build/CMakeFiles/pid_param_imm_get.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=86,87 "Built target pid_param_imm_get"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=88,89 "Built target pid_param_imm_get"
 .PHONY : build/CMakeFiles/pid_param_imm_get.dir/all
 
 # Build rule for subdir invocation for target.
@@ -456,7 +607,7 @@ build/CMakeFiles/pid_param_imm_get.dir/clean:
 build/CMakeFiles/ota_test.dir/all:
 	$(MAKE) -f build/CMakeFiles/ota_test.dir/build.make build/CMakeFiles/ota_test.dir/depend
 	$(MAKE) -f build/CMakeFiles/ota_test.dir/build.make build/CMakeFiles/ota_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=82,83 "Built target ota_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=84,85 "Built target ota_test"
 .PHONY : build/CMakeFiles/ota_test.dir/all
 
 # Build rule for subdir invocation for target.
@@ -483,7 +634,7 @@ build/CMakeFiles/ota_test.dir/clean:
 build/CMakeFiles/lookup_actuator.dir/all:
 	$(MAKE) -f build/CMakeFiles/lookup_actuator.dir/build.make build/CMakeFiles/lookup_actuator.dir/depend
 	$(MAKE) -f build/CMakeFiles/lookup_actuator.dir/build.make build/CMakeFiles/lookup_actuator.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=63,64 "Built target lookup_actuator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=68,69 "Built target lookup_actuator"
 .PHONY : build/CMakeFiles/lookup_actuator.dir/all
 
 # Build rule for subdir invocation for target.
@@ -510,7 +661,7 @@ build/CMakeFiles/lookup_actuator.dir/clean:
 build/CMakeFiles/ota.dir/all:
 	$(MAKE) -f build/CMakeFiles/ota.dir/build.make build/CMakeFiles/ota.dir/depend
 	$(MAKE) -f build/CMakeFiles/ota.dir/build.make build/CMakeFiles/ota.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=67,68 "Built target ota"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=72,73 "Built target ota"
 .PHONY : build/CMakeFiles/ota.dir/all
 
 # Build rule for subdir invocation for target.
@@ -537,7 +688,7 @@ build/CMakeFiles/ota.dir/clean:
 build/CMakeFiles/control_velocity_mode.dir/all:
 	$(MAKE) -f build/CMakeFiles/control_velocity_mode.dir/build.make build/CMakeFiles/control_velocity_mode.dir/depend
 	$(MAKE) -f build/CMakeFiles/control_velocity_mode.dir/build.make build/CMakeFiles/control_velocity_mode.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=21,22 "Built target control_velocity_mode"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=18,19 "Built target control_velocity_mode"
 .PHONY : build/CMakeFiles/control_velocity_mode.dir/all
 
 # Build rule for subdir invocation for target.
@@ -564,12 +715,12 @@ build/CMakeFiles/control_velocity_mode.dir/clean:
 build/CMakeFiles/set_encrypt.dir/all:
 	$(MAKE) -f build/CMakeFiles/set_encrypt.dir/build.make build/CMakeFiles/set_encrypt.dir/depend
 	$(MAKE) -f build/CMakeFiles/set_encrypt.dir/build.make build/CMakeFiles/set_encrypt.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=98,99,100 "Built target set_encrypt"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=99,100 "Built target set_encrypt"
 .PHONY : build/CMakeFiles/set_encrypt.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/set_encrypt.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/set_encrypt.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/set_encrypt.dir/rule
@@ -591,7 +742,7 @@ build/CMakeFiles/set_encrypt.dir/clean:
 build/CMakeFiles/reboot_actuator.dir/all:
 	$(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/depend
 	$(MAKE) -f build/CMakeFiles/reboot_actuator.dir/build.make build/CMakeFiles/reboot_actuator.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=94,95 "Built target reboot_actuator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=95,96 "Built target reboot_actuator"
 .PHONY : build/CMakeFiles/reboot_actuator.dir/all
 
 # Build rule for subdir invocation for target.
@@ -618,7 +769,7 @@ build/CMakeFiles/reboot_actuator.dir/clean:
 build/CMakeFiles/flag_of_operation_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/flag_of_operation_set.dir/build.make build/CMakeFiles/flag_of_operation_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=36,37 "Built target flag_of_operation_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=45,46 "Built target flag_of_operation_set"
 .PHONY : build/CMakeFiles/flag_of_operation_set.dir/all
 
 # Build rule for subdir invocation for target.
@@ -645,12 +796,12 @@ build/CMakeFiles/flag_of_operation_set.dir/clean:
 build/CMakeFiles/control_position_mode.dir/all:
 	$(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/depend
 	$(MAKE) -f build/CMakeFiles/control_position_mode.dir/build.make build/CMakeFiles/control_position_mode.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=19,20 "Built target control_position_mode"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=17 "Built target control_position_mode"
 .PHONY : build/CMakeFiles/control_position_mode.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/control_position_mode.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/control_position_mode.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/control_position_mode.dir/rule
@@ -666,13 +817,40 @@ build/CMakeFiles/control_position_mode.dir/clean:
 .PHONY : build/CMakeFiles/control_position_mode.dir/clean
 
 #=============================================================================
+# Target rules for target build/CMakeFiles/fast_set_clear_fault.dir
+
+# All Build rule for target.
+build/CMakeFiles/fast_set_clear_fault.dir/all:
+	$(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/depend
+	$(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=42 "Built target fast_set_clear_fault"
+.PHONY : build/CMakeFiles/fast_set_clear_fault.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/fast_set_clear_fault.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_set_clear_fault.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/fast_set_clear_fault.dir/rule
+
+# Convenience name for target.
+fast_set_clear_fault: build/CMakeFiles/fast_set_clear_fault.dir/rule
+
+.PHONY : fast_set_clear_fault
+
+# clean rule for target.
+build/CMakeFiles/fast_set_clear_fault.dir/clean:
+	$(MAKE) -f build/CMakeFiles/fast_set_clear_fault.dir/build.make build/CMakeFiles/fast_set_clear_fault.dir/clean
+.PHONY : build/CMakeFiles/fast_set_clear_fault.dir/clean
+
+#=============================================================================
 # Target rules for target build/CMakeFiles/control_position_ff_mode.dir
 
 # All Build rule for target.
 build/CMakeFiles/control_position_ff_mode.dir/all:
 	$(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/depend
 	$(MAKE) -f build/CMakeFiles/control_position_ff_mode.dir/build.make build/CMakeFiles/control_position_ff_mode.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=17,18 "Built target control_position_ff_mode"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=15,16 "Built target control_position_ff_mode"
 .PHONY : build/CMakeFiles/control_position_ff_mode.dir/all
 
 # Build rule for subdir invocation for target.
@@ -693,13 +871,40 @@ build/CMakeFiles/control_position_ff_mode.dir/clean:
 .PHONY : build/CMakeFiles/control_position_ff_mode.dir/clean
 
 #=============================================================================
+# Target rules for target build/CMakeFiles/fast_disable_set.dir
+
+# All Build rule for target.
+build/CMakeFiles/fast_disable_set.dir/all:
+	$(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/depend
+	$(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=34,35 "Built target fast_disable_set"
+.PHONY : build/CMakeFiles/fast_disable_set.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/fast_disable_set.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_disable_set.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/fast_disable_set.dir/rule
+
+# Convenience name for target.
+fast_disable_set: build/CMakeFiles/fast_disable_set.dir/rule
+
+.PHONY : fast_disable_set
+
+# clean rule for target.
+build/CMakeFiles/fast_disable_set.dir/clean:
+	$(MAKE) -f build/CMakeFiles/fast_disable_set.dir/build.make build/CMakeFiles/fast_disable_set.dir/clean
+.PHONY : build/CMakeFiles/fast_disable_set.dir/clean
+
+#=============================================================================
 # Target rules for target build/CMakeFiles/control_param_imm_get.dir
 
 # All Build rule for target.
 build/CMakeFiles/control_param_imm_get.dir/all:
 	$(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/depend
 	$(MAKE) -f build/CMakeFiles/control_param_imm_get.dir/build.make build/CMakeFiles/control_param_imm_get.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=11,12 "Built target control_param_imm_get"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=9,10 "Built target control_param_imm_get"
 .PHONY : build/CMakeFiles/control_param_imm_get.dir/all
 
 # Build rule for subdir invocation for target.
@@ -720,18 +925,45 @@ build/CMakeFiles/control_param_imm_get.dir/clean:
 .PHONY : build/CMakeFiles/control_param_imm_get.dir/clean
 
 #=============================================================================
+# Target rules for target build/CMakeFiles/fast_enable_set.dir
+
+# All Build rule for target.
+build/CMakeFiles/fast_enable_set.dir/all:
+	$(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/depend
+	$(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=36,37 "Built target fast_enable_set"
+.PHONY : build/CMakeFiles/fast_enable_set.dir/all
+
+# Build rule for subdir invocation for target.
+build/CMakeFiles/fast_enable_set.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/fast_enable_set.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
+.PHONY : build/CMakeFiles/fast_enable_set.dir/rule
+
+# Convenience name for target.
+fast_enable_set: build/CMakeFiles/fast_enable_set.dir/rule
+
+.PHONY : fast_enable_set
+
+# clean rule for target.
+build/CMakeFiles/fast_enable_set.dir/clean:
+	$(MAKE) -f build/CMakeFiles/fast_enable_set.dir/build.make build/CMakeFiles/fast_enable_set.dir/clean
+.PHONY : build/CMakeFiles/fast_enable_set.dir/clean
+
+#=============================================================================
 # Target rules for target build/CMakeFiles/ctrl_config_get.dir
 
 # All Build rule for target.
 build/CMakeFiles/ctrl_config_get.dir/all:
 	$(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/depend
 	$(MAKE) -f build/CMakeFiles/ctrl_config_get.dir/build.make build/CMakeFiles/ctrl_config_get.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=23,24,25 "Built target ctrl_config_get"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=20,21 "Built target ctrl_config_get"
 .PHONY : build/CMakeFiles/ctrl_config_get.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/ctrl_config_get.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/ctrl_config_get.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/ctrl_config_get.dir/rule
@@ -753,12 +985,12 @@ build/CMakeFiles/ctrl_config_get.dir/clean:
 build/CMakeFiles/control_param_get.dir/all:
 	$(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/depend
 	$(MAKE) -f build/CMakeFiles/control_param_get.dir/build.make build/CMakeFiles/control_param_get.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=9,10 "Built target control_param_get"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=8 "Built target control_param_get"
 .PHONY : build/CMakeFiles/control_param_get.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/control_param_get.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/control_param_get.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/control_param_get.dir/rule
@@ -780,7 +1012,7 @@ build/CMakeFiles/control_param_get.dir/clean:
 build/CMakeFiles/ota_driver_cloud.dir/all:
 	$(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/depend
 	$(MAKE) -f build/CMakeFiles/ota_driver_cloud.dir/build.make build/CMakeFiles/ota_driver_cloud.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=76,77 "Built target ota_driver_cloud"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=79,80 "Built target ota_driver_cloud"
 .PHONY : build/CMakeFiles/ota_driver_cloud.dir/all
 
 # Build rule for subdir invocation for target.
@@ -807,7 +1039,7 @@ build/CMakeFiles/ota_driver_cloud.dir/clean:
 build/CMakeFiles/ota_cloud.dir/all:
 	$(MAKE) -f build/CMakeFiles/ota_cloud.dir/build.make build/CMakeFiles/ota_cloud.dir/depend
 	$(MAKE) -f build/CMakeFiles/ota_cloud.dir/build.make build/CMakeFiles/ota_cloud.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=69,70 "Built target ota_cloud"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=74,75 "Built target ota_cloud"
 .PHONY : build/CMakeFiles/ota_cloud.dir/all
 
 # Build rule for subdir invocation for target.
@@ -834,7 +1066,7 @@ build/CMakeFiles/ota_cloud.dir/clean:
 build/CMakeFiles/control_param_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/control_param_set.dir/build.make build/CMakeFiles/control_param_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/control_param_set.dir/build.make build/CMakeFiles/control_param_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=15,16 "Built target control_param_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=13,14 "Built target control_param_set"
 .PHONY : build/CMakeFiles/control_param_set.dir/all
 
 # Build rule for subdir invocation for target.
@@ -861,7 +1093,7 @@ build/CMakeFiles/control_param_set.dir/clean:
 build/CMakeFiles/comm_config_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/comm_config_set.dir/build.make build/CMakeFiles/comm_config_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/comm_config_set.dir/build.make build/CMakeFiles/comm_config_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=5,6 "Built target comm_config_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=4,5 "Built target comm_config_set"
 .PHONY : build/CMakeFiles/comm_config_set.dir/all
 
 # Build rule for subdir invocation for target.
@@ -888,7 +1120,7 @@ build/CMakeFiles/comm_config_set.dir/clean:
 build/CMakeFiles/comm_config_get.dir/all:
 	$(MAKE) -f build/CMakeFiles/comm_config_get.dir/build.make build/CMakeFiles/comm_config_get.dir/depend
 	$(MAKE) -f build/CMakeFiles/comm_config_get.dir/build.make build/CMakeFiles/comm_config_get.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=3,4 "Built target comm_config_get"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=2,3 "Built target comm_config_get"
 .PHONY : build/CMakeFiles/comm_config_get.dir/all
 
 # Build rule for subdir invocation for target.
@@ -915,12 +1147,12 @@ build/CMakeFiles/comm_config_get.dir/clean:
 build/CMakeFiles/get_measured.dir/all:
 	$(MAKE) -f build/CMakeFiles/get_measured.dir/build.make build/CMakeFiles/get_measured.dir/depend
 	$(MAKE) -f build/CMakeFiles/get_measured.dir/build.make build/CMakeFiles/get_measured.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=42,43 "Built target get_measured"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=51 "Built target get_measured"
 .PHONY : build/CMakeFiles/get_measured.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/get_measured.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/get_measured.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/get_measured.dir/rule
@@ -942,7 +1174,7 @@ build/CMakeFiles/get_measured.dir/clean:
 build/CMakeFiles/ctrl_config_save.dir/all:
 	$(MAKE) -f build/CMakeFiles/ctrl_config_save.dir/build.make build/CMakeFiles/ctrl_config_save.dir/depend
 	$(MAKE) -f build/CMakeFiles/ctrl_config_save.dir/build.make build/CMakeFiles/ctrl_config_save.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=26,27 "Built target ctrl_config_save"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=22,23 "Built target ctrl_config_save"
 .PHONY : build/CMakeFiles/ctrl_config_save.dir/all
 
 # Build rule for subdir invocation for target.
@@ -969,7 +1201,7 @@ build/CMakeFiles/ctrl_config_save.dir/clean:
 build/CMakeFiles/control_param_imm_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/control_param_imm_set.dir/build.make build/CMakeFiles/control_param_imm_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/control_param_imm_set.dir/build.make build/CMakeFiles/control_param_imm_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=13,14 "Built target control_param_imm_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=11,12 "Built target control_param_imm_set"
 .PHONY : build/CMakeFiles/control_param_imm_set.dir/all
 
 # Build rule for subdir invocation for target.
@@ -996,7 +1228,7 @@ build/CMakeFiles/control_param_imm_set.dir/clean:
 build/CMakeFiles/get_pvc.dir/all:
 	$(MAKE) -f build/CMakeFiles/get_pvc.dir/build.make build/CMakeFiles/get_pvc.dir/depend
 	$(MAKE) -f build/CMakeFiles/get_pvc.dir/build.make build/CMakeFiles/get_pvc.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=44,45 "Built target get_pvc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=52,53 "Built target get_pvc"
 .PHONY : build/CMakeFiles/get_pvc.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1023,12 +1255,12 @@ build/CMakeFiles/get_pvc.dir/clean:
 build/CMakeFiles/clear_fault.dir/all:
 	$(MAKE) -f build/CMakeFiles/clear_fault.dir/build.make build/CMakeFiles/clear_fault.dir/depend
 	$(MAKE) -f build/CMakeFiles/clear_fault.dir/build.make build/CMakeFiles/clear_fault.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=1,2 "Built target clear_fault"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=1 "Built target clear_fault"
 .PHONY : build/CMakeFiles/clear_fault.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/clear_fault.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/clear_fault.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/clear_fault.dir/rule
@@ -1050,7 +1282,7 @@ build/CMakeFiles/clear_fault.dir/clean:
 build/CMakeFiles/ctrl_config_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/ctrl_config_set.dir/build.make build/CMakeFiles/ctrl_config_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/ctrl_config_set.dir/build.make build/CMakeFiles/ctrl_config_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=28,29 "Built target ctrl_config_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=24,25 "Built target ctrl_config_set"
 .PHONY : build/CMakeFiles/ctrl_config_set.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1077,7 +1309,7 @@ build/CMakeFiles/ctrl_config_set.dir/clean:
 build/CMakeFiles/enable_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/enable_set.dir/build.make build/CMakeFiles/enable_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/enable_set.dir/build.make build/CMakeFiles/enable_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=32,33 "Built target enable_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=27,28 "Built target enable_set"
 .PHONY : build/CMakeFiles/enable_set.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1104,7 +1336,7 @@ build/CMakeFiles/enable_set.dir/clean:
 build/CMakeFiles/home_position_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/home_position_set.dir/build.make build/CMakeFiles/home_position_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/home_position_set.dir/build.make build/CMakeFiles/home_position_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=57,58 "Built target home_position_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=63,64 "Built target home_position_set"
 .PHONY : build/CMakeFiles/home_position_set.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1131,7 +1363,7 @@ build/CMakeFiles/home_position_set.dir/clean:
 build/CMakeFiles/get_pvcc.dir/all:
 	$(MAKE) -f build/CMakeFiles/get_pvcc.dir/build.make build/CMakeFiles/get_pvcc.dir/depend
 	$(MAKE) -f build/CMakeFiles/get_pvcc.dir/build.make build/CMakeFiles/get_pvcc.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=46,47 "Built target get_pvcc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=54,55 "Built target get_pvcc"
 .PHONY : build/CMakeFiles/get_pvcc.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1158,7 +1390,7 @@ build/CMakeFiles/get_pvcc.dir/clean:
 build/CMakeFiles/fsa_list_v2.dir/all:
 	$(MAKE) -f build/CMakeFiles/fsa_list_v2.dir/build.make build/CMakeFiles/fsa_list_v2.dir/depend
 	$(MAKE) -f build/CMakeFiles/fsa_list_v2.dir/build.make build/CMakeFiles/fsa_list_v2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=38,39 "Built target fsa_list_v2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=47,48 "Built target fsa_list_v2"
 .PHONY : build/CMakeFiles/fsa_list_v2.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1185,7 +1417,7 @@ build/CMakeFiles/fsa_list_v2.dir/clean:
 build/CMakeFiles/home_offset_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/home_offset_set.dir/build.make build/CMakeFiles/home_offset_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/home_offset_set.dir/build.make build/CMakeFiles/home_offset_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=55,56 "Built target home_offset_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=61,62 "Built target home_offset_set"
 .PHONY : build/CMakeFiles/home_offset_set.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1212,7 +1444,7 @@ build/CMakeFiles/home_offset_set.dir/clean:
 build/CMakeFiles/flag_of_operation_get.dir/all:
 	$(MAKE) -f build/CMakeFiles/flag_of_operation_get.dir/build.make build/CMakeFiles/flag_of_operation_get.dir/depend
 	$(MAKE) -f build/CMakeFiles/flag_of_operation_get.dir/build.make build/CMakeFiles/flag_of_operation_get.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=34,35 "Built target flag_of_operation_get"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=43,44 "Built target flag_of_operation_get"
 .PHONY : build/CMakeFiles/flag_of_operation_get.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1239,12 +1471,12 @@ build/CMakeFiles/flag_of_operation_get.dir/clean:
 build/CMakeFiles/get_pvcccc.dir/all:
 	$(MAKE) -f build/CMakeFiles/get_pvcccc.dir/build.make build/CMakeFiles/get_pvcccc.dir/depend
 	$(MAKE) -f build/CMakeFiles/get_pvcccc.dir/build.make build/CMakeFiles/get_pvcccc.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=48,49,50 "Built target get_pvcccc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=56,57 "Built target get_pvcccc"
 .PHONY : build/CMakeFiles/get_pvcccc.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/get_pvcccc.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/get_pvcccc.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/get_pvcccc.dir/rule
@@ -1266,7 +1498,7 @@ build/CMakeFiles/get_pvcccc.dir/clean:
 build/CMakeFiles/home_offset_get.dir/all:
 	$(MAKE) -f build/CMakeFiles/home_offset_get.dir/build.make build/CMakeFiles/home_offset_get.dir/depend
 	$(MAKE) -f build/CMakeFiles/home_offset_get.dir/build.make build/CMakeFiles/home_offset_get.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=53,54 "Built target home_offset_get"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=59,60 "Built target home_offset_get"
 .PHONY : build/CMakeFiles/home_offset_get.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1293,7 +1525,7 @@ build/CMakeFiles/home_offset_get.dir/clean:
 build/CMakeFiles/get_abs_encoder_value.dir/all:
 	$(MAKE) -f build/CMakeFiles/get_abs_encoder_value.dir/build.make build/CMakeFiles/get_abs_encoder_value.dir/depend
 	$(MAKE) -f build/CMakeFiles/get_abs_encoder_value.dir/build.make build/CMakeFiles/get_abs_encoder_value.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=40,41 "Built target get_abs_encoder_value"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=49,50 "Built target get_abs_encoder_value"
 .PHONY : build/CMakeFiles/get_abs_encoder_value.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1320,7 +1552,7 @@ build/CMakeFiles/get_abs_encoder_value.dir/clean:
 build/CMakeFiles/control_current_mode.dir/all:
 	$(MAKE) -f build/CMakeFiles/control_current_mode.dir/build.make build/CMakeFiles/control_current_mode.dir/depend
 	$(MAKE) -f build/CMakeFiles/control_current_mode.dir/build.make build/CMakeFiles/control_current_mode.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=7,8 "Built target control_current_mode"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=6,7 "Built target control_current_mode"
 .PHONY : build/CMakeFiles/control_current_mode.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1347,12 +1579,12 @@ build/CMakeFiles/control_current_mode.dir/clean:
 build/CMakeFiles/disable_set.dir/all:
 	$(MAKE) -f build/CMakeFiles/disable_set.dir/build.make build/CMakeFiles/disable_set.dir/depend
 	$(MAKE) -f build/CMakeFiles/disable_set.dir/build.make build/CMakeFiles/disable_set.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=30,31 "Built target disable_set"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=26 "Built target disable_set"
 .PHONY : build/CMakeFiles/disable_set.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/disable_set.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/disable_set.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/disable_set.dir/rule
@@ -1374,12 +1606,12 @@ build/CMakeFiles/disable_set.dir/clean:
 build/CMakeFiles/get_state.dir/all:
 	$(MAKE) -f build/CMakeFiles/get_state.dir/build.make build/CMakeFiles/get_state.dir/depend
 	$(MAKE) -f build/CMakeFiles/get_state.dir/build.make build/CMakeFiles/get_state.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=51,52 "Built target get_state"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=58 "Built target get_state"
 .PHONY : build/CMakeFiles/get_state.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/get_state.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/get_state.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/get_state.dir/rule
@@ -1401,7 +1633,7 @@ build/CMakeFiles/get_state.dir/clean:
 build/CMakeFiles/lookup.dir/all:
 	$(MAKE) -f build/CMakeFiles/lookup.dir/build.make build/CMakeFiles/lookup.dir/depend
 	$(MAKE) -f build/CMakeFiles/lookup.dir/build.make build/CMakeFiles/lookup.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=59,60 "Built target lookup"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=65,66 "Built target lookup"
 .PHONY : build/CMakeFiles/lookup.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1428,12 +1660,12 @@ build/CMakeFiles/lookup.dir/clean:
 build/CMakeFiles/ota_driver_test.dir/all:
 	$(MAKE) -f build/CMakeFiles/ota_driver_test.dir/build.make build/CMakeFiles/ota_driver_test.dir/depend
 	$(MAKE) -f build/CMakeFiles/ota_driver_test.dir/build.make build/CMakeFiles/ota_driver_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=80,81 "Built target ota_driver_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=83 "Built target ota_driver_test"
 .PHONY : build/CMakeFiles/ota_driver_test.dir/all
 
 # Build rule for subdir invocation for target.
 build/CMakeFiles/ota_driver_test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 build/CMakeFiles/ota_driver_test.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles 0
 .PHONY : build/CMakeFiles/ota_driver_test.dir/rule
@@ -1455,7 +1687,7 @@ build/CMakeFiles/ota_driver_test.dir/clean:
 build/CMakeFiles/lookup_ctrlbox.dir/all:
 	$(MAKE) -f build/CMakeFiles/lookup_ctrlbox.dir/build.make build/CMakeFiles/lookup_ctrlbox.dir/depend
 	$(MAKE) -f build/CMakeFiles/lookup_ctrlbox.dir/build.make build/CMakeFiles/lookup_ctrlbox.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=65,66 "Built target lookup_ctrlbox"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/afer/project_user/wiki-fsa/sdk-cpp/v4/build/CMakeFiles --progress-num=70,71 "Built target lookup_ctrlbox"
 .PHONY : build/CMakeFiles/lookup_ctrlbox.dir/all
 
 # Build rule for subdir invocation for target.

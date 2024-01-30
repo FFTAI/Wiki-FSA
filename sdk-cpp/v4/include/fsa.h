@@ -22,6 +22,7 @@
 #define BUFFER_SIZE 1024
 #define SERVER_PORT_COMM 2334
 #define SERVER_PORT_CTRL 2333
+#define SERVER_PORT_FAST 2335
 
 #define ABSCODER  "AbsEncoder"
 #define ACTUATOR  "Actuator"
@@ -38,6 +39,7 @@ namespace Actuator
         const char *broadcast_ip = "192.168.137.255";
         int server_port_comm = 2334;
         int server_port_ctrl = 2333;
+        int server_port_fast = 2335;
 
         int fsa_socket;
         int broadcast_socket;
@@ -131,6 +133,8 @@ namespace Actuator
         FSA(/* args */);
         ~FSA();
 
+        int fast_communicate(char *ip, int port, uint8_t *sendmsg, uint16_t send_size, uint8_t *client_recv_msg, uint16_t recv_size);
+
         int init();
 
         int broadcast();
@@ -142,8 +146,6 @@ namespace Actuator
         int comm_config_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
         int comm_config_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
-
-        int control_current_mode(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
 
         int control_param_imm_get(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
         int control_param_imm_set(char *server_ip, char *define_msg_sendto, char *client_recv_msg);
@@ -398,6 +400,17 @@ namespace Actuator
 
     int set_calibrate_encoder(char *ip);
     int set_encrypt(char *ip, char *username, char *passwold);
+
+    // ===================================新增fast接口==================================
+    int fast_disable_set(char *ip);
+    int fast_enable_set(char *ip);
+    int fast_get_pvc(char *ip, double &position, double &velocity, double &current);
+    int fast_get_error(char *ip, int &error_code);
+    int fast_set_clear_fault(char *ip);
+    int fast_set_current_control(char *ip, float current, double &fdb_position, double &fdb_velocity, double &fdb_current);
+    int fast_set_position_control(char *ip, float position, float velocity_ff, float current_ff, double &fdb_position, double &fdb_velocity, double &fdb_current);
+    int fast_set_velocity_control(char *ip, float velocity, float current_ff, double &fdb_position, double &fdb_velocity, double &fdb_current);
+    int fast_set_mode_of_operation(char *ip, int mode);
 
 }
 

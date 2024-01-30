@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/fast_set_clear_fault.dir/demo_fast_set_clear_fault.cpp.o CMakeFiles/fast_set_clear_fault.dir/fsa.cpp.o CMakeFiles/fast_set_clear_fault.dir/os.cpp.o CMakeFiles/fast_set_clear_fault.dir/logger.cpp.o  -o ../../bin/fast_set_clear_fault  -lpthread 

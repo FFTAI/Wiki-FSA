@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/fast_get_error.dir/demo_fast_get_error.cpp.o CMakeFiles/fast_get_error.dir/fsa.cpp.o CMakeFiles/fast_get_error.dir/os.cpp.o CMakeFiles/fast_get_error.dir/logger.cpp.o  -o ../../bin/fast_get_error  -lpthread 
