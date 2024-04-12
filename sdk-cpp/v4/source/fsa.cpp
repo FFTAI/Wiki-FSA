@@ -2702,7 +2702,7 @@ int Actuator::fast_set_velocity_control(char *ip, float velocity, float current_
     unsigned int val_measured_velocity_uint = *(unsigned int *)&velocity;
     unsigned int val_measured_current_ff_uint = *(unsigned int *)&current_ff;
 
-    send_pkg[0] = 0x0A;
+    send_pkg[0] = 0x0B;
     send_pkg[1] = (val_measured_velocity_uint >> 24) & 0xFF;
     send_pkg[2] = (val_measured_velocity_uint >> 16) & 0xFF;
     send_pkg[3] = (val_measured_velocity_uint >> 8) & 0xFF;
