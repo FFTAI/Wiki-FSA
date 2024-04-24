@@ -13,7 +13,7 @@ def main():
             # start_time = time.time()
 
             for i in range(len(server_ip_list)):
-                _, position, velocity, current = fi_fsa.fast_get_cvp(server_ip_list[i])
+                position, velocity, current = fi_fsa.fast_get_pvc(server_ip_list[i])
                 print("Position = %f, Velocity = %f, Current = %.4f" % (position, velocity, current))
 
             # end_time = time.time()

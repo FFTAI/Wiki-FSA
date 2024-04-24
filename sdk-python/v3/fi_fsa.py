@@ -1592,6 +1592,42 @@ def set_fsa_abs_offset(server_ip,offset):
         logger.print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
         return FSAFunctionResult.FAIL
 
+
+def get_ntc_temperature(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/get_ntc_temperature",
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return json_obj.get("mos_temperature"), json_obj.get("armature_temperature")
+        else:
+            logger.print_trace_error(server_ip, " receive status is not OK!")
+            return FSAFunctionResult.FAIL
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return FSAFunctionResult.TIMEOUT
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
+        return FSAFunctionResult.FAIL
+
+
 # fsa position control
 # parameter: server IP["xxx.xxx.xxx.xxx"], position[deg], velocity feedforward[deg/s], current feedforward[A]
 # return position, velocity, current
