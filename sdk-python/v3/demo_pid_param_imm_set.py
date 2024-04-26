@@ -30,6 +30,8 @@ def main():
                 'control_velocity_ki_imm': 0.001,
                 'control_current_kp_imm': 0.0,  # not work for now
                 'control_current_ki_imm': 0.0,  # not work for now
+                'control_PD_kp_imm': 1.0,
+                'control_PD_kd_imm': 1.0
             }
             fi_fsa.set_pid_param_imm(server_ip_list[i], dict)
 

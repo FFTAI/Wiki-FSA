@@ -29,6 +29,10 @@ def main():
                 'control_velocity_ki': SpeedParamList.FSA3608V0[3],
                 'control_current_kp': 0.0,  # not work for now
                 'control_current_ki': 0.0,  # not work for now
+                'control_PD_kp': 1.0,
+                'control_PD_kd': 1.0,
+
+
             }
             # dict = { #36
             #     'control_position_kp': 0.5,

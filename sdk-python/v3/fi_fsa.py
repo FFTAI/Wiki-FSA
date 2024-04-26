@@ -39,14 +39,29 @@ class FSAActuatorDirection:
 
 
 class FSAActuatorReductionRatio:
+    REDUCTION_RATIO_DEFAULT = 1
+    REDUCTION_RATIO_1 = 1
     REDUCTION_RATIO_7 = 7
+    REDUCTION_RATIO_9_75 = 9.75
+    REDUCTION_RATIO_13_7 = 13.7
+    REDUCTION_RATIO_28_8 = 28.8
     REDUCTION_RATIO_30 = 30
+    REDUCTION_RATIO_31 = 31
     REDUCTION_RATIO_36 = 36
     REDUCTION_RATIO_50 = 50
-    REDUCTION_RATIO_70 = 70
+    REDUCTION_RATIO_51 = 51
     REDUCTION_RATIO_80 = 80
+    REDUCTION_RATIO_81 = 81
     REDUCTION_RATIO_100 = 100
+    REDUCTION_RATIO_101 = 101
     REDUCTION_RATIO_120 = 120
+    REDUCTION_RATIO_121 = 121
+
+
+class FSAActuatorCommHardwareType:
+    TYPE_NULL = 0
+    TYPE_V1 = 1
+    TYPE_V2 = 2
 
 
 class FSAControlWord:
@@ -129,8 +144,11 @@ class FSAMotorType:
     FSA36_08V0 = 6
     FSA25_08V0 = 7
     FSA36_10V0 = 8
-
-    FSA36_10V1 = 15
+    FSA130_20V1 = 9
+    FSA100_15V1 = 10
+    FSA80_10V1 = 11
+    FSA60_08V1 = 12
+    FSA45_15V1 = 13
 
 
 class FSAHardwareType:
@@ -141,6 +159,12 @@ class FSAHardwareType:
     TYPE_H46V104 = 4
     TYPE_H30V303 = 5
     TYPE_H46V304 = 6
+    TYPE_H49V100 = 7
+    TYPE_H66V106 = 8
+    TYPE_H88V100 = 9
+    TYPE_H106V100 = 10
+    TYPE_H142V100 = 11
+    Hardware_ALL = 12
 
 
 class FSAMotorDirection:
@@ -162,8 +186,12 @@ class FSAMotorPolePairs:
 
 class FSAMotorMaxSpeed:
     MAX_SPEED_1000 = 1000  # rpm
+    MAX_SPEED_1600 = 1600  # rpm
     MAX_SPEED_2000 = 2000  # rpm
     MAX_SPEED_3000 = 3000  # rpm
+    MAX_SPEED_3400 = 3400  # rpm
+    MAX_SPEED_4800 = 4800  # rpm
+    MAX_SPEED_7000 = 7000  # rpm
 
 
 class FSAMotorMaxAcceleration:
@@ -692,6 +720,10 @@ def set_pid_param(server_ip, dict):
             "control_velocity_ki": dict["control_velocity_ki"],
             "control_current_kp": dict["control_current_kp"],
             "control_current_ki": dict["control_current_ki"],
+            "control_PD_kp": dict["control_PD_kp"],
+            "control_PD_kd": dict["control_PD_kd"],
+
+
             }
 
     json_str = json.dumps(data)
@@ -809,6 +841,8 @@ def set_pid_param_imm(server_ip, dict):
             "control_velocity_ki_imm": dict["control_velocity_ki_imm"],
             "control_current_kp_imm": dict["control_current_kp_imm"],
             "control_current_ki_imm": dict["control_current_ki_imm"],
+            "control_PD_kp_imm": dict["control_PD_kp_imm"],
+            "control_PD_kd_imm": dict["control_PD_kd_imm"],
             }
 
     json_str = json.dumps(data)
@@ -1204,12 +1238,12 @@ def set_config(server_ip, dict):
             "motor_hardware_type": dict["motor_hardware_type"],
             "motor_vbus": dict["motor_vbus"],
             "motor_direction": dict["motor_direction"],
-            "motor_pole_pairs": dict["motor_pole_pairs"],
             "motor_max_speed": dict["motor_max_speed"],
             "motor_max_acceleration": dict["motor_max_acceleration"],
             "motor_max_current": dict["motor_max_current"],
 
-            "encoder_direction": dict["encoder_direction"],
+            "actuator_comm_hardware_type": dict["actuator_comm_hardware_type"],
+
             }
 
     json_str = json.dumps(data)
@@ -1440,6 +1474,40 @@ def get_pvc(server_ip):
         logger.print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
         return FSAFunctionResult.FAIL
 
+
+def get_pvct(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/PVCT",
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fsa_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current"), json_obj.get("torque")
+        else:
+            logger.print_trace_error(server_ip, " receive status is not OK!")
+            return FSAFunctionResult.FAIL
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return FSAFunctionResult.TIMEOUT
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
+        return FSAFunctionResult.FAIL
 
 def get_pvcc(server_ip):
     data = {
