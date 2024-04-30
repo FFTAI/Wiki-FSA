@@ -1,20 +1,26 @@
 import socket
 import time
 import json
+import threading
 
 import numpy
 from enum import Enum
 from math import *
 import struct
 
-from fi_logger import Logger
-
-# if add to Robot-RCS project, uncomment this line!!!
 from fi_fsa_predefine import (FSAFunctionResult,
                               FSAControlWord,
                               FSAErrorCode,
                               FSAModeOfOperation,
                               FSAFlagState)
+
+# if add to Robot-RCS project, use following line!!!
+# from robot_rcs.logger.fi_logger import Logger
+# from robot_rcs.config.fi_config import gl_rcs_config
+
+
+# if add to wiki-fsa project, use following line!!!
+from fi_logger import Logger
 from fi_config import gl_rcs_config
 
 
@@ -85,7 +91,7 @@ fsa_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 fsa_socket.settimeout(fsa_timeout_time)
 fsa_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
-Logger().print_trace("fi_fsa start listening for broadcast...")
+Logger().print_trace("FSA start listening for broadcast...")
 
 # ---------------------------------------------------------------------------------------------------------------------
 
@@ -94,7 +100,7 @@ fsa_flag_receive_thread_handle_inited = False
 
 
 def handle_send():
-    Logger().print_trace("fi_fsa handle_send() start...")
+    Logger().print_trace("FSA handle_send() start...")
     global fsa_socket, fsa_map
 
     for ip in fsa_map.keys():
@@ -123,13 +129,14 @@ def handle_send():
                     Logger().print_trace_warning("fsa.handle_send() timeout")
 
                 except Exception as e:
-                    Logger().print_trace_warning("fsa.handle_send() sendto except: \n", e)
+                    Logger().print_trace_warning("fsa.handle_send() except")
+                    Logger().print_trace_warning(e)
 
-    Logger().print_trace("fi_fsa handle_send() end...")
+    Logger().print_trace("FSA handle_send() end...")
 
 
 def handle_receive():
-    Logger().print_trace("fi_fsa handle_receive() start...")
+    Logger().print_trace("FSA handle_receive() start...")
     global fsa_socket, fsa_map
 
     for ip in fsa_map.keys():
@@ -176,15 +183,16 @@ def handle_receive():
             pass
 
         except Exception as e:
-            Logger().print_trace_warning("fi_fsa handle_receive() except: \n", e)
+            Logger().print_trace_warning("FSA handle_receive() except")
+            Logger().print_trace_warning(e)
 
-    Logger().print_trace("fi_fsa handle_receive() end...")
+    Logger().print_trace("FSA handle_receive() end...")
 
 
 # ---------------------------------------------------------------------------------------------------------------------
 
 def init(server_ip):
-    Logger().print_trace("fi_fsa ", server_ip, " init()")
+    Logger().print_trace("FSA ", server_ip, " init()")
 
     global fsa_map
     fsa_map[server_ip] = FSA(server_ip)
@@ -240,22 +248,26 @@ def get_root(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
 
     except socket.timeout:  # fail after 1 second of no activity
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_root() except")
+        return None
+
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root() except")
+        Logger().print_trace_warning(e)
+        return None
 
 
 # fsa enable
@@ -271,7 +283,7 @@ def set_enable(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -279,7 +291,7 @@ def set_enable(server_ip):
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -294,8 +306,9 @@ def set_enable(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.enable() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " enable() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -312,7 +325,7 @@ def set_disable(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -320,7 +333,7 @@ def set_disable(server_ip):
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -335,14 +348,15 @@ def set_disable(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.disable() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " disable() except")
+        Logger().print_trace_warning(e)
         return None
 
 
 # CALIBRATE_ENCODER = 0xA3
 
-# fsa Calibrate Encoder 
+# fsa Calibrate Encoder
 # Parameters: including device IP and motor number
 # Auto rotate clockwise once ,then change direction turn around
 def set_calibrate_encoder(server_ip):
@@ -355,7 +369,7 @@ def set_calibrate_encoder(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -363,7 +377,7 @@ def set_calibrate_encoder(server_ip):
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -378,8 +392,9 @@ def set_calibrate_encoder(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_calibrate_motor() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_calibrate_motor() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -396,7 +411,7 @@ def clear_fault(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -404,7 +419,7 @@ def clear_fault(server_ip):
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -419,8 +434,9 @@ def clear_fault(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_clear_fault() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_clear_fault() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -436,7 +452,7 @@ def get_state(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -444,7 +460,7 @@ def get_state(server_ip):
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -460,8 +476,9 @@ def get_state(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_state() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_state() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -477,7 +494,7 @@ def set_mode_of_operation(server_ip, mode_of_operation):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -485,7 +502,7 @@ def set_mode_of_operation(server_ip, mode_of_operation):
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -500,8 +517,9 @@ def set_mode_of_operation(server_ip, mode_of_operation):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.control_mode() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " control_mode() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -514,14 +532,14 @@ def get_home_offset(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -536,8 +554,9 @@ def get_home_offset(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root_config() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -553,14 +572,14 @@ def set_home_offset(server_ip, home_offset):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -574,8 +593,9 @@ def set_home_offset(server_ip, home_offset):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_linear_count() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_linear_count() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -587,14 +607,14 @@ def set_home_position(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -608,8 +628,9 @@ def set_home_position(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_linear_count() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_linear_count() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -625,14 +646,14 @@ def get_pid_param(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -647,38 +668,42 @@ def get_pid_param(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root_config() except")
+        Logger().print_trace_warning(e)
         return None
 
 
 # fsa set Root Config properties
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
 # Return success or failure
-def set_pid_param(server_ip, dict):
-    data = {"method": "SET",
-            "reqTarget": "/pid_param",
-            "property": "",
-            "control_position_kp": dict["control_position_kp"],
-            "control_velocity_kp": dict["control_velocity_kp"],
-            "control_velocity_ki": dict["control_velocity_ki"],
-            "control_current_kp": dict["control_current_kp"],
-            "control_current_ki": dict["control_current_ki"],
-            "control_PD_kp": dict["control_PD_kp"],
-            "control_PD_kd": dict["control_PD_kd"],
-
-            }
+def set_pid_param(server_ip,
+                  control_position_kp,
+                  control_velocity_kp,
+                  control_velocity_ki,
+                  control_pd_kp,
+                  control_pd_kd):
+    data = {
+        "method": "SET",
+        "reqTarget": "/pid_param",
+        "property": "",
+        "control_position_kp": control_position_kp,
+        "control_velocity_kp": control_velocity_kp,
+        "control_velocity_ki": control_velocity_ki,
+        "control_PD_kp": control_pd_kp,
+        "control_PD_kd": control_pd_kd,
+    }
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -693,8 +718,9 @@ def set_pid_param(server_ip, dict):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_pid_param() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_pid_param() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -706,14 +732,14 @@ def clear_pid_param(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -728,8 +754,9 @@ def clear_pid_param(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.clear_pid_param() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " clear_pid_param() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -745,14 +772,14 @@ def get_pid_param_imm(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -767,37 +794,42 @@ def get_pid_param_imm(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root_config() except")
+        Logger().print_trace_warning(e)
         return None
 
 
 # fsa set Root Config properties
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
 # Return success or failure
-def set_pid_param_imm(server_ip, dict):
-    data = {"method": "SET",
-            "reqTarget": "/pid_param_imm",
-            "property": "",
-            "control_position_kp_imm": dict["control_position_kp_imm"],
-            "control_velocity_kp_imm": dict["control_velocity_kp_imm"],
-            "control_velocity_ki_imm": dict["control_velocity_ki_imm"],
-            "control_current_kp_imm": dict["control_current_kp_imm"],
-            "control_current_ki_imm": dict["control_current_ki_imm"],
-            "control_PD_kp_imm": dict["control_PD_kp_imm"],
-            "control_PD_kd_imm": dict["control_PD_kd_imm"],
-            }
+def set_pid_param_imm(server_ip,
+                      control_position_kp,
+                      control_velocity_kp,
+                      control_velocity_ki,
+                      control_pd_kp,
+                      control_pd_kd):
+    data = {
+        "method": "SET",
+        "reqTarget": "/pid_param_imm",
+        "property": "",
+        "control_position_kp_imm": control_position_kp,
+        "control_velocity_kp_imm": control_velocity_kp,
+        "control_velocity_ki_imm": control_velocity_ki,
+        "control_PD_kp_imm": control_pd_kp,
+        "control_PD_kd_imm": control_pd_kd,
+    }
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -812,8 +844,9 @@ def set_pid_param_imm(server_ip, dict):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_pid_param_imm() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_pid_param_imm() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -829,14 +862,14 @@ def get_control_param(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -851,8 +884,9 @@ def get_control_param(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_control_param() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_control_param() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -868,14 +902,14 @@ def get_control_param_imm(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -890,33 +924,38 @@ def get_control_param_imm(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_control_param_imm() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_control_param_imm() except")
+        Logger().print_trace_warning(e)
         return None
 
 
 # fsa set Control Config properties
 # Parameter: Set Motor Max Speed ,acceleration and current
 # Return success or failure
-def set_control_param(server_ip, dict):
-    data = {"method": "SET",
-            "reqTarget": "/control_param",
-            "property": "",
-            "motor_max_speed": dict["motor_max_speed"],
-            "motor_max_acceleration": dict["motor_max_acceleration"],
-            "motor_max_current": dict["motor_max_current"],
-            }
+def set_control_param(server_ip,
+                      motor_max_speed,
+                      motor_max_acceleration,
+                      motor_max_current):
+    data = {
+        "method": "SET",
+        "reqTarget": "/control_param",
+        "property": "",
+        "motor_max_speed": motor_max_speed,
+        "motor_max_acceleration": motor_max_acceleration,
+        "motor_max_current": motor_max_current,
+    }
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -931,8 +970,9 @@ def set_control_param(server_ip, dict):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_control_param() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_control_param() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -948,14 +988,14 @@ def get_control_param_imm(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -970,33 +1010,38 @@ def get_control_param_imm(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root_config() except")
+        Logger().print_trace_warning(e)
         return None
 
 
 # fsa set Control Config properties
 # Parameter: Set Motor Max Speed ,acceleration and current
 # Return success or failure
-def set_control_param_imm(server_ip, dict):
-    data = {"method": "SET",
-            "reqTarget": "/control_param_imm",
-            "property": "",
-            "motor_max_speed_imm": dict["motor_max_speed_imm"],
-            "motor_max_acceleration_imm": dict["motor_max_acceleration_imm"],
-            "motor_max_current_imm": dict["motor_max_current_imm"],
-            }
+def set_control_param_imm(server_ip,
+                          motor_max_speed,
+                          motor_max_acceleration,
+                          motor_max_current):
+    data = {
+        "method": "SET",
+        "reqTarget": "/control_param_imm",
+        "property": "",
+        "motor_max_speed_imm": motor_max_speed,
+        "motor_max_acceleration_imm": motor_max_acceleration,
+        "motor_max_current_imm": motor_max_current,
+    }
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1011,8 +1056,9 @@ def set_control_param_imm(server_ip, dict):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_control_param() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_control_param() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1025,14 +1071,14 @@ def get_flag_of_operation(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1047,31 +1093,37 @@ def get_flag_of_operation(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root_config() except")
+        Logger().print_trace_warning(e)
         return None
 
 
-def set_flag_of_operation(server_ip, dict):
-    data = {"method": "SET",
-            "reqTarget": "/flag_of_operation",
-            "property": "",
-            "flag_do_use_store_actuator_param": dict["flag_do_use_store_actuator_param"],
-            "flag_do_use_store_motor_param": dict["flag_do_use_store_motor_param"],
-            "flag_do_use_store_encoder_param": dict["flag_do_use_store_encoder_param"],
-            "flag_do_use_store_pid_param": dict["flag_do_use_store_pid_param"],
-            }
+def set_flag_of_operation(server_ip,
+                          flag_do_use_store_actuator_param,
+                          flag_do_use_store_motor_param,
+                          flag_do_use_store_encoder_param,
+                          flag_do_use_store_pid_param):
+    data = {
+        "method": "SET",
+        "reqTarget": "/flag_of_operation",
+        "property": "",
+        "flag_do_use_store_actuator_param": flag_do_use_store_actuator_param,
+        "flag_do_use_store_motor_param": flag_do_use_store_motor_param,
+        "flag_do_use_store_encoder_param": flag_do_use_store_encoder_param,
+        "flag_do_use_store_pid_param": flag_do_use_store_pid_param,
+    }
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1086,27 +1138,29 @@ def set_flag_of_operation(server_ip, dict):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_flag_of_operation() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_flag_of_operation() except")
+        Logger().print_trace_warning(e)
         return None
 
 
 def clear_flag_of_operation(server_ip):
-    data = {"method": "SET",
-            "reqTarget": "/flag_of_operation",
-            "property": "clear",
-            }
+    data = {
+        "method": "SET",
+        "reqTarget": "/flag_of_operation",
+        "property": "clear",
+    }
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1121,8 +1175,9 @@ def clear_flag_of_operation(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.clear_flag_of_operation() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " clear_flag_of_operation() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1138,14 +1193,14 @@ def get_config(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1160,8 +1215,9 @@ def get_config(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root_config() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1169,36 +1225,37 @@ def get_config(server_ip):
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
 # Return success or failure
 def set_config(server_ip, dict):
-    data = {"method": "SET",
-            "reqTarget": "/config",
-            "property": "",
+    data = {
+        "method": "SET",
+        "reqTarget": "/config",
+        "property": "",
 
-            "actuator_type": dict["actuator_type"],
-            "actuator_direction": dict["actuator_direction"],
-            "actuator_reduction_ratio": dict["actuator_reduction_ratio"],
+        "actuator_type": dict["actuator_type"],
+        "actuator_direction": dict["actuator_direction"],
+        "actuator_reduction_ratio": dict["actuator_reduction_ratio"],
 
-            "motor_type": dict["motor_type"],
-            "motor_hardware_type": dict["motor_hardware_type"],
-            "motor_vbus": dict["motor_vbus"],
-            "motor_direction": dict["motor_direction"],
-            "motor_max_speed": dict["motor_max_speed"],
-            "motor_max_acceleration": dict["motor_max_acceleration"],
-            "motor_max_current": dict["motor_max_current"],
+        "motor_type": dict["motor_type"],
+        "motor_hardware_type": dict["motor_hardware_type"],
+        "motor_vbus": dict["motor_vbus"],
+        "motor_direction": dict["motor_direction"],
+        "motor_max_speed": dict["motor_max_speed"],
+        "motor_max_acceleration": dict["motor_max_acceleration"],
+        "motor_max_current": dict["motor_max_current"],
 
-            "actuator_comm_hardware_type": dict["actuator_comm_hardware_type"],
+        "actuator_comm_hardware_type": dict["actuator_comm_hardware_type"],
 
-            }
+    }
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1213,8 +1270,9 @@ def set_config(server_ip, dict):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_config() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1229,14 +1287,14 @@ def save_config(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1251,8 +1309,9 @@ def save_config(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.save_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " save_config() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1267,14 +1326,14 @@ def erase_config(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1289,8 +1348,9 @@ def erase_config(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.erase_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " erase_config() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1305,14 +1365,14 @@ def reboot(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1327,8 +1387,9 @@ def reboot(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.reboot_motor_drive() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " reboot_motor_drive() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1343,14 +1404,14 @@ def get_error_code(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1372,8 +1433,9 @@ def get_error_code(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_error() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_error() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1391,14 +1453,14 @@ def get_pvc(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1413,11 +1475,15 @@ def get_pvc(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return FSAFunctionResult.TIMEOUT
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_pvc() except")
+        Logger().print_trace_warning(e)
         return FSAFunctionResult.FAIL
 
 
+# fsa Get actuator position, velocity, current, torque
+# Parameters: including server ip，motor number
+# Return position, speed, current in tuple
 def get_pvct(server_ip):
     data = {
         "method": "GET",
@@ -1426,14 +1492,14 @@ def get_pvct(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1449,89 +1515,7 @@ def get_pvct(server_ip):
         return FSAFunctionResult.TIMEOUT
 
     except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
-        return FSAFunctionResult.FAIL
-
-
-def get_pvcc(server_ip):
-    data = {
-        "method": "GET",
-        "reqTarget": "/measured",
-        "position": True,
-        "velocity": True,
-        "current": True,
-        "current_id": True,
-    }
-
-    json_str = json.dumps(data)
-
-    if fsa_debug is True:
-        Logger().print_trace("Send JSON Obj:", json_str)
-
-    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
-    try:
-        data, address = fsa_socket.recvfrom(1024)
-
-        if fsa_debug is True:
-            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        json_obj = json.loads(data.decode("utf-8"))
-
-        if json_obj.get("status") == "OK":
-            return json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current"), json_obj.get(
-                "current_id")
-        else:
-            Logger().print_trace_error(server_ip, " receive status is not OK!")
-            return FSAFunctionResult.FAIL
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return FSAFunctionResult.TIMEOUT
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
-        return FSAFunctionResult.FAIL
-
-
-def get_pvcccc(server_ip):
-    data = {
-        "method": "GET",
-        "reqTarget": "/measured",
-        "position": True,
-        "velocity": True,
-        "current": True,
-        "current_id": True,
-        "phase_current_ib": True,
-        "phase_current_ic": True,
-    }
-
-    json_str = json.dumps(data)
-
-    if fsa_debug is True:
-        Logger().print_trace("Send JSON Obj:", json_str)
-
-    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
-    try:
-        data, address = fsa_socket.recvfrom(1024)
-
-        if fsa_debug is True:
-            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        json_obj = json.loads(data.decode("utf-8"))
-
-        if json_obj.get("status") == "OK":
-            return json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current"), \
-                json_obj.get("current_id"), json_obj.get("phase_current_ib"), json_obj.get("phase_current_ic")
-        else:
-            Logger().print_trace_error(server_ip, " receive status is not OK!")
-            return FSAFunctionResult.FAIL
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return FSAFunctionResult.TIMEOUT
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
+        Logger().print_trace_warning(server_ip + " fi_fsa.get_pvct() except")
         return FSAFunctionResult.FAIL
 
 
@@ -1543,14 +1527,14 @@ def get_fsa_abs_position(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1579,14 +1563,14 @@ def set_fsa_abs_offset(server_ip, offset):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1614,14 +1598,14 @@ def get_ntc_temperature(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -1656,7 +1640,7 @@ def set_position_control(server_ip, position, velocity_ff=0.0, current_ff=0.0):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -1666,7 +1650,7 @@ def set_position_control(server_ip, position, velocity_ff=0.0, current_ff=0.0):
 
         json_obj = json.loads(data.decode("utf-8"))
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace(
                 server_ip + " : " + "Position = %.2f, Velocity = %.3f, Current = %.4f \n"
                 % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
@@ -1680,8 +1664,9 @@ def set_position_control(server_ip, position, velocity_ff=0.0, current_ff=0.0):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_position() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_position() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1699,7 +1684,7 @@ def set_velocity_control(server_ip, velocity, current_ff=0.0):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -1709,7 +1694,7 @@ def set_velocity_control(server_ip, velocity, current_ff=0.0):
 
         json_obj = json.loads(data.decode("utf-8"))
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace(
                 server_ip + " : " + "Position = %.2f, Velocity = %.3f, Current = %.4f \n"
                 % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
@@ -1723,8 +1708,9 @@ def set_velocity_control(server_ip, velocity, current_ff=0.0):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_velocity() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_velocity() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1741,7 +1727,7 @@ def set_current_control(server_ip, current):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -1751,7 +1737,7 @@ def set_current_control(server_ip, current):
 
         json_obj = json.loads(data.decode("utf-8"))
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace(
                 server_ip + " : " + "Position = %.2f, Velocity = %.3f, Current = %.4f \n"
                 % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
@@ -1765,8 +1751,9 @@ def set_current_control(server_ip, current):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_current() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_current() except")
+        Logger().print_trace_warning(e)
         return None
 
 
@@ -1783,7 +1770,7 @@ def set_torque_control(server_ip, torque):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
@@ -1793,7 +1780,7 @@ def set_torque_control(server_ip, torque):
 
         json_obj = json.loads(data.decode("utf-8"))
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace(
                 server_ip + " : " + "Position = %.2f, Velocity = %.3f, Torque = %.4f \n"
                 % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("torque")))
@@ -1818,41 +1805,57 @@ def set_torque_control(server_ip, torque):
 def enable_group(server_ips):
     time.sleep(1)
 
+    # send request
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
 
         data = {
             "method": "SET",
             "reqTarget": "/control_word",
-            "property": FSAControlWord.SERVO_ON[0],
+            "property": "",
+            "control_word": FSAControlWord.SERVO_ON,
         }
 
         json_str = json.dumps(data)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Send JSON Obj:", json_str)
 
-        fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
 
-    response = {}
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        response.update({server_ip: {}})
+    # receive response
+    if fsa_flag_enable_receive_thread is True:
+        func_result = [FSAFunctionResult.SUCCESS] * len(server_ips)
+    else:
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
 
-    if fsa_debug is True:
-        Logger().print_trace(response)
+            if fsa_map[server_ip].comm_enable is False:
+                continue
 
-    for i in range(len(server_ips)):
-        try:
-            data, address = fsa_socket.recvfrom(1024)
-            recv_ip, recv_port = address
+            response.update({server_ip: {}})
 
-            if response.get(recv_ip) is not None:
-                response.get(recv_ip).update({"data": data})
-            else:
-                Logger().print_trace_warning("fsa.enable_group() receive wrong ip address ", (recv_ip, recv_port))
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
 
-                # 接收到错误的 ip，就再接收一次；如果仍然接收错误，则放弃处理，执行下一次的接收
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            try:
                 data, address = fsa_socket.recvfrom(1024)
                 recv_ip, recv_port = address
 
@@ -1860,157 +1863,212 @@ def enable_group(server_ips):
                     response.get(recv_ip).update({"data": data})
                 else:
                     Logger().print_trace_warning("fsa.enable_group() receive wrong ip address ", (recv_ip, recv_port))
-                    continue
 
-            if fsa_debug is True:
-                Logger().print_trace("Received from {}:{}".format(recv_ip, data.decode("utf-8")))
+                    # 接收到错误的 ip，就再接收一次；如果仍然接收错误，则放弃处理，执行下一次的接收
+                    data, address = fsa_socket.recvfrom(1024)
+                    recv_ip, recv_port = address
 
-        except socket.timeout:  # fail after 1 second of no activity
-            Logger().print_trace_error("fsa.enable_group() Didn't receive enough data! [Timeout]")
-            continue
+                    if response.get(recv_ip) is not None:
+                        response.get(recv_ip).update({"data": data})
+                    else:
+                        Logger().print_trace_warning("fsa.enable_group() receive wrong ip address ", (recv_ip, recv_port))
+                        continue
 
-        except e:
-            Logger().print_trace_warning("fsa.enable_group() except")
-            continue
+                if fsa_flag_debug is True:
+                    Logger().print_trace("Received from {}:{}".format(recv_ip, data.decode("utf-8")))
 
-    if fsa_debug is True:
-        Logger().print_trace("response = ", response)
-
-    for i in range(len((server_ips))):
-        server_ip = server_ips[i]
-        data = response.get(server_ip).get("data")
-
-        try:
-            json_obj = json.loads(data.decode("utf-8"))
-
-            if json_obj.get("status") == "OK":
-                response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
-
-            else:
-                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-                Logger().print_trace_error(server_ip, " receive status is not OK!")
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error("fsa.enable_group() Timeout")
                 continue
 
-        except:
-            response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            Logger().print_trace_warning("fsa.enable_group() except")
-            continue
+            except Exception as e:
+                Logger().print_trace_warning("fsa.enable_group() except")
+                continue
 
-    func_result = []
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        func_result.append(response.get(server_ip).get("return"))
+        if fsa_flag_debug is True:
+            Logger().print_trace("response = ", response)
 
-    if fsa_debug is True:
-        Logger().print_trace("func_result = ", func_result)
+        for i in range(len((server_ips))):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            try:
+                json_obj = json.loads(data.decode("utf-8"))
+
+                if json_obj.get("status") == "OK":
+                    response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
+
+                else:
+                    response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                    Logger().print_trace_error(server_ip, " receive status is not OK!")
+                    continue
+
+            except Exception as e:
+                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                Logger().print_trace_warning("fsa.enable_group() except")
+                continue
+
+        func_result = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            func_result.append(response.get(server_ip).get("return"))
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("func_result = ", func_result)
 
     return func_result
 
 
 def disable_group(server_ips):
+    # send request
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
 
         data = {
             "method": "SET",
             "reqTarget": "/control_word",
-            "property": FSAControlWord.SERVO_OFF,
+            "property": "",
+            "control_word": FSAControlWord.SERVO_OFF,
         }
+
         json_str = json.dumps(data)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Send JSON Obj:", json_str)
 
-        fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
 
-    response = {}
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        response.update({server_ip: {}})
+    # receive response
+    if fsa_flag_enable_receive_thread is True:
+        func_result = [FSAFunctionResult.SUCCESS] * len(server_ips)
+    else:
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
 
-    if fsa_debug is True:
-        Logger().print_trace(response)
+            if fsa_map[server_ip].comm_enable is False:
+                continue
 
-    for i in range(len(server_ips)):
-        try:
-            data, address = fsa_socket.recvfrom(1024)
-            recv_ip, recv_port = address
+            response.update({server_ip: {}})
 
-            if response.get(recv_ip) is not None:
-                response.get(recv_ip).update({"data": data})
-            else:
-                Logger().print_trace_warning("fsa.disable_group() receive wrong ip address ", (recv_ip, recv_port))
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
 
-                # 接收到错误的 ip，就再接收一次；如果仍然接收错误，则放弃处理，执行下一次的接收
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            try:
                 data, address = fsa_socket.recvfrom(1024)
                 recv_ip, recv_port = address
 
                 if response.get(recv_ip) is not None:
                     response.get(recv_ip).update({"data": data})
                 else:
-                    Logger().print_trace_warning("fsa.disable_group() receive wrong ip address ",
-                                                 (recv_ip, recv_port))
+                    Logger().print_trace_warning("fsa.disable_group() receive wrong ip address ", (recv_ip, recv_port))
+
+                    # 接收到错误的 ip，就再接收一次；如果仍然接收错误，则放弃处理，执行下一次的接收
+                    data, address = fsa_socket.recvfrom(1024)
+                    recv_ip, recv_port = address
+
+                    if response.get(recv_ip) is not None:
+                        response.get(recv_ip).update({"data": data})
+                    else:
+                        Logger().print_trace_warning("fsa.disable_group() receive wrong ip address ",
+                                                     (recv_ip, recv_port))
+                        continue
+
+                if fsa_flag_debug is True:
+                    try:
+                        Logger().print_trace("Received from {}:{}".format(recv_ip, data.decode("utf-8")))
+                    except Exception as e:
+                        Logger().print_trace("Received from {} data none".format(recv_ip))
+                        pass
+
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error("fsa.disable_group() Timeout")
+                continue
+
+            except Exception as e:
+                Logger().print_trace_warning("fsa.disable_group() except", e)
+                continue
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("response = ", response)
+
+        for i in range(len((server_ips))):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            try:
+                if data is None:
+                    Logger().print_trace_error(server_ip, " receive value is None!")
+                    response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
                     continue
 
-            if fsa_debug is True:
-                try:
-                    Logger().print_trace("Received from {}:{}".format(recv_ip, data.decode("utf-8")))
-                except:
-                    Logger().print_trace("Received from {} data none".format(recv_ip))
-                    pass
+                json_obj = json.loads(data.decode("utf-8"))
 
-        except socket.timeout:  # fail after 1 second of no activity
-            Logger().print_trace_error("fsa.disable_group() Didn't receive enough data! [Timeout]")
-            continue
+                if json_obj.get("status") == "OK":
+                    response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
 
-        except e:
-            Logger().print_trace_warning("fsa.disable_group() except", e)
-            continue
+                else:
+                    response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                    Logger().print_trace_error(server_ip, " receive status is not OK!")
+                    continue
 
-    if fsa_debug is True:
-        Logger().print_trace("response = ", response)
-
-    for i in range(len((server_ips))):
-        server_ip = server_ips[i]
-        data = response.get(server_ip).get("data")
-
-        try:
-            if data is None:
-                Logger().print_trace_error(server_ip, " receive value is None!")
+            # except Exception as e:
+            except Exception as e:
                 response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                # Logger().print_trace_warning("fsa.disable_group() except", e)
+                Logger().print_trace_warning("fsa.disable_group() except")
                 continue
 
-            json_obj = json.loads(data.decode("utf-8"))
+        func_result = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
 
-            if json_obj.get("status") == "OK":
-                response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
-
-            else:
-                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-                Logger().print_trace_error(server_ip, " receive status is not OK!")
+            if fsa_map[server_ip].comm_enable is False:
                 continue
 
-        # except e:
-        except:
-            response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            # Logger().print_trace_warning("fsa.disable_group() except", e)
-            Logger().print_trace_warning("fsa.disable_group() except")
-            continue
+            func_result.append(response.get(server_ip).get("return"))
 
-    func_result = []
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        func_result.append(response.get(server_ip).get("return"))
-
-    if fsa_debug is True:
-        Logger().print_trace("func_result = ", func_result)
+        if fsa_flag_debug is True:
+            Logger().print_trace("func_result = ", func_result)
 
     return func_result
 
 
 def get_state_group(server_ips):
+    # send request
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
 
         data = {
             "method": "GET",
@@ -2019,41 +2077,55 @@ def get_state_group(server_ips):
 
         json_str = json.dumps(data)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Send JSON Obj:", json_str)
 
         fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
 
+    # receive response
     response = {}
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
         response.update({server_ip: {}})
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(response)
 
     for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
         try:
             data, address = fsa_socket.recvfrom(1024)
             recv_ip, recv_port = address
             response.get(recv_ip).update({"data": data})
 
-            if fsa_debug is True:
+            if fsa_flag_debug is True:
                 Logger().print_trace("Received from {}:{}".format(recv_ip, data.decode("utf-8")))
 
         except socket.timeout:  # fail after 1 second of no activity
-            Logger().print_trace_error("fsa.get_state_group() Didn't receive enough data! [Timeout]")
+            Logger().print_trace_error("fsa.get_state_group() Timeout")
             continue
 
-        except:
+        except Exception as e:
             Logger().print_trace_warning("fsa.get_state_group() except")
             continue
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(response)
 
     for i in range(len((server_ips))):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
         data = response.get(server_ip).get("data")
 
         try:
@@ -2067,304 +2139,472 @@ def get_state_group(server_ips):
                 Logger().print_trace_error(server_ip, " receive status is not OK!")
                 continue
 
-        except:
+        except Exception as e:
             Logger().print_trace_warning("fsa.get_state_group() except")
             continue
 
     func_result = []
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
         func_result.append(response.get(server_ip).get("return"))
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(func_result)
 
     return func_result
 
 
-def get_error_group(server_ips, motor_numbers=None):
-    if motor_numbers is None:
-        motor_numbers = numpy.ones_like(server_ips).astype(int).tolist()
-
+def get_error_group(server_ips):
+    # send request
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
-        motor_number = motor_numbers[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
 
         data = {
             "method": "GET",
-            "reqTarget": "/m0/error",
+            "reqTarget": "/error_code",
+            "property": ""
         }
-        if motor_number == 0:
-            data["reqTarget"] = "/m0/error"
-        elif motor_number == 1:
-            data["reqTarget"] = "/m1/error"
+
         json_str = json.dumps(data)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Send JSON Obj:", json_str)
 
-        fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
 
-    response = {}
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        response.update({server_ip: {}})
+    # receive response
+    error_codes = [0] * len(server_ips)
 
-    if fsa_debug is True:
-        Logger().print_trace(response)
+    if fsa_flag_enable_receive_thread is True:
+        for i in range(len(server_ips)):
+            fsa: FSA = fsa_map.get(server_ips[i])
+            error_codes[i] = fsa.error_code
+    else:
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
 
-    for i in range(len(server_ips)):
-        try:
-            data, address = fsa_socket.recvfrom(1024)
-            recv_ip, recv_port = address
-            response.get(recv_ip).update({"data": data})
-
-            if fsa_debug is True:
-                Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        except socket.timeout:  # fail after 1 second of no activity
-            Logger().print_trace_error("fsa.get_error_group() Didn't receive enough data! [Timeout]")
-            continue
-
-        except:
-            Logger().print_trace_warning("fsa.get_error_group() except")
-            continue
-
-    if fsa_debug is True:
-        Logger().print_trace(response)
-
-    for i in range(len((server_ips))):
-        server_ip = server_ips[i]
-        data = response.get(server_ip).get("data")
-
-        try:
-            json_obj = json.loads(data.decode("utf-8"))
-
-            if json_obj.get("status") == "OK":
-                response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
-                response.get(server_ip).update({"axis": json_obj.get("axis")})
-                response.get(server_ip).update({"motor": json_obj.get("motor")})
-                response.get(server_ip).update({"encoder": json_obj.get("encoder")})
-            else:
-                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-                Logger().print_trace_error(server_ip, " receive status is not OK!")
+            if fsa_map[server_ip].comm_enable is False:
                 continue
 
-        except:
-            response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            Logger().print_trace_warning(server_ip + " fi_fsa.get_error_group() except")
+            response.update({server_ip: {}})
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
+
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            try:
+                data, address = fsa_socket.recvfrom(1024)
+                recv_ip, recv_port = address
+                response.get(recv_ip).update({"data": data})
+
+                if fsa_flag_debug is True:
+                    Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error("fsa.get_error_group() Timeout")
+                continue
+
+            except Exception as e:
+                Logger().print_trace_warning("fsa.get_error_group() except")
+                continue
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
+
+        for i in range(len((server_ips))):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            try:
+                json_obj = json.loads(data.decode("utf-8"))
+
+                if json_obj.get("status") == "OK":
+                    response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
+                    response.get(server_ip).update({"error_code": json_obj.get("error_code")})
+                else:
+                    response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                    Logger().print_trace_error(server_ip, " receive status is not OK!")
+                    continue
+
+            except Exception as e:
+                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                Logger().print_trace_warning(server_ip + " get_error_group() except")
+                continue
+
+        error_codes = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            error_codes.append(response.get(server_ip).get("error_code"))
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(error_codes)
+        Logger().print_trace("error_code=", error_codes)
+
+    return error_codes
+
+
+def clear_error_group(server_ips):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
             continue
-
-    axis = []
-    motors = []
-    encoders = []
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        axis.append(response.get(server_ip).get("axis"))
-        motors.append(response.get(server_ip).get("motor"))
-        encoders.append(response.get(server_ip).get("encoder"))
-
-    if fsa_debug is True:
-        Logger().print_trace(axis)
-        Logger().print_trace(motors)
-        Logger().print_trace(encoders)
-    Logger().print_trace("axis=", axis)
-    Logger().print_trace("motor=", motors)
-    Logger().print_trace("encoder=", encoders)
-
-    return axis, motors, encoders
-
-
-def clear_error_group(server_ips, motor_numbers=None):
-    if motor_numbers is None:
-        motor_numbers = numpy.ones_like(server_ips).astype(int).tolist()
-
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        motor_number = motor_numbers[i]
 
         data = {
             "method": "SET",
-            "reqTarget": "/m0/error",
-            "clear_error": True
+            "reqTarget": "/control_word",
+            "property": "",
+            "control_word": FSAControlWord.CLEAR_FAULT,
         }
-        if motor_number == 0:
-            data["reqTarget"] = "/m0/error"
-        elif motor_number == 1:
-            data["reqTarget"] = "/m1/error"
+
         json_str = json.dumps(data)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Send JSON Obj:", json_str)
 
-        fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
 
-    response = {}
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        response.update({server_ip: {}})
+    # receive response
+    if fsa_flag_enable_receive_thread is True:
+        func_result = [FSAFunctionResult.SUCCESS] * len(server_ips)
+    else:
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+            response.update({server_ip: {}})
 
-    if fsa_debug is True:
-        Logger().print_trace(response)
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
 
-    for i in range(len(server_ips)):
-        try:
-            data, address = fsa_socket.recvfrom(1024)
-            recv_ip, recv_port = address
-            response.get(recv_ip).update({"data": data})
+        for i in range(len(server_ips)):
+            try:
+                data, address = fsa_socket.recvfrom(1024)
+                recv_ip, recv_port = address
+                response.get(recv_ip).update({"data": data})
 
-            if fsa_debug is True:
-                Logger().print_trace("Received from {}:{}".format(recv_ip, data.decode("utf-8")))
+                if fsa_flag_debug is True:
+                    Logger().print_trace("Received from {}:{}".format(recv_ip, data.decode("utf-8")))
 
-        except socket.timeout:  # fail after 1 second of no activity
-            Logger().print_trace_error("fsa.clear_error_group() Didn't receive enough data! [Timeout]")
-            continue
-
-        except:
-            Logger().print_trace_warning("fsa.clear_error_group() except")
-            continue
-
-    if fsa_debug is True:
-        Logger().print_trace(response)
-
-    for i in range(len((server_ips))):
-        server_ip = server_ips[i]
-        data = response.get(server_ip).get("data")
-
-        try:
-            json_obj = json.loads(data.decode("utf-8"))
-
-            if json_obj.get("status") == "OK":
-                response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
-            else:
-                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-                Logger().print_trace_error(server_ip, " receive status is not OK!")
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error("fsa.clear_error_group() Timeout")
                 continue
 
-        except:
-            response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            Logger().print_trace_warning(server_ip + " fi_fsa.clear_error_group() except")
-            continue
+            except Exception as e:
+                Logger().print_trace_warning("fsa.clear_error_group() except")
+                continue
 
-    func_result = []
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        func_result.append(response.get(server_ip).get("return"))
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
 
-    if fsa_debug is True:
-        Logger().print_trace(func_result)
+        for i in range(len((server_ips))):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            try:
+                json_obj = json.loads(data.decode("utf-8"))
+
+                if json_obj.get("status") == "OK":
+                    response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
+                else:
+                    response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                    Logger().print_trace_error(server_ip, " receive status is not OK!")
+                    continue
+
+            except Exception as e:
+                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                Logger().print_trace_warning(server_ip + " clear_error_group() except")
+                continue
+
+        func_result = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            func_result.append(response.get(server_ip).get("return"))
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(func_result)
 
     return func_result
 
 
-def get_pvc_group(server_ips, motor_numbers=None):
-    if motor_numbers is None:
-        motor_numbers = numpy.ones_like(server_ips).astype(int).tolist()
-
+def get_pvc_group(server_ips):
+    # send request
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
-        motor_number = motor_numbers[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
 
         data = {
             "method": "GET",
-            "reqTarget": "/m0/CVP",
+            "reqTarget": "/measured",
+            "position": True,
+            "velocity": True,
+            "current": True,
         }
-        if motor_number == 0:
-            data["reqTarget"] = "/m0/CVP"
-        elif motor_number == 1:
-            data["reqTarget"] = "/m1/CVP"
+
         json_str = json.dumps(data)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Send JSON Obj:", json_str)
 
-        fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
 
-    response = {}
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        response.update({server_ip: {}})
+    # receive response
+    positions = [0] * len(server_ips)
+    velocitys = [0] * len(server_ips)
+    currents = [0] * len(server_ips)
+    timeouts = [0] * len(server_ips)
 
-    if fsa_debug is True:
-        Logger().print_trace(response)
+    if fsa_flag_enable_receive_thread is True:
+        for i in range(len(server_ips)):
+            fsa: FSA = fsa_map.get(server_ips[i])
+            positions[i] = fsa.measured_position
+            velocitys[i] = fsa.measured_velocity
+            currents[i] = fsa.measured_current
+    else:
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
 
-    for i in range(len(server_ips)):
-        try:
-            data, address = fsa_socket.recvfrom(1024)
-            recv_ip, recv_port = address
-            response.get(recv_ip).update({"data": data})
-
-            if fsa_debug is True:
-                Logger().print_trace("Received from {}:{}".format(recv_ip, data.decode("utf-8")))
-
-        except socket.timeout:  # fail after 1 second of no activity
-            Logger().print_trace_error(response)
-            Logger().print_trace_error("fsa.get_pvc_group() Didn't receive enough data! [Timeout]")
-            continue
-
-        except:
-            Logger().print_trace_warning("fsa.get_pvc_group() except")
-            continue
-
-    if fsa_debug is True:
-        Logger().print_trace(response)
-
-    for i in range(len((server_ips))):
-        server_ip = server_ips[i]
-        data = response.get(server_ip).get("data")
-
-        try:
-            json_obj = json.loads(data.decode("utf-8"))
-
-            if json_obj.get("status") == "OK":
-                response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
-                response.get(server_ip).update({"position": json_obj.get("position")})
-                response.get(server_ip).update({"velocity": json_obj.get("velocity")})
-                response.get(server_ip).update({"current": json_obj.get("current")})
-            else:
-                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-                Logger().print_trace_error(server_ip, " receive status is not OK!")
+            if fsa_map[server_ip].comm_enable is False:
                 continue
 
-        except:
-            response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            Logger().print_trace_warning(server_ip + " fi_fsa.get_pvc_group() except")
+            response.update({server_ip: {}})
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
+
+        for i in range(len(server_ips)):
+            try:
+                data, address = fsa_socket.recvfrom(1024)
+                recv_ip, recv_port = address
+                response.get(recv_ip).update({"data": data})
+
+                if fsa_flag_debug is True:
+                    Logger().print_trace("Received from {}:{}".format(recv_ip, data.decode("utf-8")))
+
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error("fsa.get_pvc_group() Timeout")
+                continue
+
+            except Exception as e:
+                Logger().print_trace_warning("fsa.get_pvc_group() except")
+                continue
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
+
+        for i in range(len((server_ips))):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            try:
+                json_obj = json.loads(data.decode("utf-8"))
+
+                if json_obj.get("status") == "OK":
+                    response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
+                    response.get(server_ip).update({"position": json_obj.get("position")})
+                    response.get(server_ip).update({"velocity": json_obj.get("velocity")})
+                    response.get(server_ip).update({"current": json_obj.get("current")})
+                else:
+                    response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                    Logger().print_trace_error(server_ip, " receive status is not OK!")
+                    continue
+
+            except Exception as e:
+                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                Logger().print_trace_warning("fsa.get_pvc_group() except")
+                continue
+
+        for index in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            if response.get(server_ips[index]).get("data") is None:
+                timeouts[index] = 1
+
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            positions[i] = response.get(server_ip).get("position")
+            velocitys[i] = response.get(server_ip).get("velocity")
+            currents[i] = response.get(server_ip).get("current")
+
+    return positions, velocitys, currents, timeouts
+
+
+def set_mode_of_operation_group(server_ips, mode_of_operations):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
             continue
 
-    positions = []
-    velocitys = []
-    currents = []
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        positions.append(response.get(server_ip).get("position"))
-        velocitys.append(response.get(server_ip).get("velocity"))
-        currents.append(response.get(server_ip).get("current"))
+        mode_of_operation = mode_of_operations[i]
 
-    if fsa_debug is True:
-        Logger().print_trace(positions)
-        Logger().print_trace(velocitys)
-        Logger().print_trace(currents)
+        data = {
+            "method": "SET",
+            "reqTarget": "/mode_of_operation",
+            "mode_of_operation": mode_of_operation,
+        }
 
-    return positions, velocitys, currents
+        json_str = json.dumps(data)
 
+        if fsa_flag_debug is True:
+            Logger().print_trace("Send JSON Obj:", json_str)
 
-def set_mode_of_operation_group(input_modes, server_ips):
-    for i in range(len(server_ips)):
-        input_modeaa = input_modes[i]
-        server_ip = server_ips[i]
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
 
-        set_mode_of_operation(input_modeaa, server_ip)
+    # receive response
+    if fsa_flag_enable_receive_thread is True:
+        func_result = [FSAFunctionResult.SUCCESS] * len(server_ips)
+    else:
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            response.update({server_ip: {}})
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
+
+        for i in range(len(server_ips)):
+            try:
+                data, address = fsa_socket.recvfrom(1024)
+                recv_ip, recv_port = address
+                response.get(recv_ip).update({"data": data})
+
+                if fsa_flag_debug is True:
+                    Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error("fsa.set_linear_count_group() Timeout")
+                continue
+
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_linear_count_group() except")
+                continue
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
+
+        for i in range(len((server_ips))):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            try:
+                json_obj = json.loads(data.decode("utf-8"))
+
+                if json_obj.get("status") == "OK":
+                    response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
+                else:
+                    response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                    Logger().print_trace_error(server_ip, " receive status is not OK!")
+                    continue
+
+            except Exception as e:
+                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                Logger().print_trace_error(server_ip, " receive data decode error!")
+                continue
+
+        func_result = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            func_result.append(response.get(server_ip).get("return"))
+
+    return func_result
 
 
 # fsa reset linear count
 # Parameters: including server ip，motor number
 # no return code
-def set_home_offset_group(server_ips, home_offsets=None):
-    if home_offsets is None:
-        set_linear_counts = numpy.zeros_like(server_ips).tolist()
-
+def set_home_offset_group(server_ips, home_offsets=list):
+    # send request
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
         home_offset = home_offsets[i]
 
         data = {
@@ -2375,67 +2615,625 @@ def set_home_offset_group(server_ips, home_offsets=None):
 
         json_str = json.dumps(data)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Send JSON Obj:", json_str)
 
-        fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
 
-    response = {}
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        response.update({server_ip: {}})
+    # receive response
+    if fsa_flag_enable_receive_thread is True:
+        func_result = [FSAFunctionResult.SUCCESS] * len(server_ips)
+    else:
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
 
-    if fsa_debug is True:
-        Logger().print_trace(response)
-
-    for i in range(len(server_ips)):
-        try:
-            data, address = fsa_socket.recvfrom(1024)
-            recv_ip, recv_port = address
-            response.get(recv_ip).update({"data": data})
-
-            if fsa_debug is True:
-                Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        except socket.timeout:  # fail after 1 second of no activity
-            Logger().print_trace_error("fsa.set_linear_count_group() Didn't receive enough data! [Timeout]")
-            continue
-
-        except:
-            Logger().print_trace_warning("fsa.set_linear_count_group() except")
-            continue
-
-    if fsa_debug is True:
-        Logger().print_trace(response)
-
-    for i in range(len((server_ips))):
-        server_ip = server_ips[i]
-        data = response.get(server_ip).get("data")
-
-        try:
-            json_obj = json.loads(data.decode("utf-8"))
-
-            if json_obj.get("status") == "OK":
-                response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
-            else:
-                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-                Logger().print_trace_error(server_ip, " receive status is not OK!")
+            if fsa_map[server_ip].comm_enable is False:
                 continue
 
-        except:
-            response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            Logger().print_trace_error(server_ip, " receive data decode error!")
-            continue
+            response.update({server_ip: {}})
 
-    func_result = []
-    for i in range(len(server_ips)):
-        server_ip = server_ips[i]
-        func_result.append(response.get(server_ip).get("return"))
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
 
-    if fsa_debug is True:
-        Logger().print_trace(func_result)
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            try:
+                data, address = fsa_socket.recvfrom(1024)
+                recv_ip, recv_port = address
+                response.get(recv_ip).update({"data": data})
+
+                if fsa_flag_debug is True:
+                    Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error("fsa.set_linear_count_group() Timeout")
+                continue
+
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_linear_count_group() except")
+                continue
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(response)
+
+        for i in range(len((server_ips))):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            try:
+                json_obj = json.loads(data.decode("utf-8"))
+
+                if json_obj.get("status") == "OK":
+                    response.get(server_ip).update({"return": FSAFunctionResult.SUCCESS})
+                else:
+                    response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                    Logger().print_trace_error(server_ip, " receive status is not OK!")
+                    continue
+
+            except Exception as e:
+                response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
+                Logger().print_trace_error(server_ip, " receive data decode error!")
+                continue
+
+        func_result = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            func_result.append(response.get(server_ip).get("return"))
 
     return func_result
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+
+# fsa position control
+# parameter: server IP["xxx.xxx.xxx.xxx"], position[deg], velocity feedforward[deg/s], current feedforward[A]
+# return position, velocity, current
+def set_position_control_group(server_ips, positions, velocity_ffs, current_ffs):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        position = positions[i]
+        velocity_ff = velocity_ffs[i]
+        current_ff = current_ffs[i]
+
+        data = {
+            "method": "SET",
+            "reqTarget": "/position_control",
+            "reply_enable": True,
+            "position": position,
+            "velocity_ff": velocity_ff,
+            "current_ff": current_ff,
+        }
+
+        json_str = json.dumps(data)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("Send JSON Obj:", json_str)
+
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
+
+    # reiceve response
+    positions = [0] * len(server_ips)
+    velocitys = [0] * len(server_ips)
+    currents = [0] * len(server_ips)
+
+    if fsa_flag_enable_receive_thread is True:
+        for i in range(len(server_ips)):
+            fsa: FSA = fsa_map.get(server_ips[i])
+            positions[i] = fsa.measured_position
+            velocitys[i] = fsa.measured_velocity
+            currents[i] = fsa.measured_current
+    else:
+        # get response
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            response.update({server_ip: {}})
+
+        receive_ips = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            try:
+                data, address = fsa_socket.recvfrom(1024)
+                recv_ip, recv_port = address
+
+                json_obj = json.loads(data.decode("utf-8"))
+                if json_obj.get("status") == "OK":
+                    response.get(recv_ip).update({"data": json_obj})
+                    receive_ips.append(recv_ip)
+                else:
+                    continue
+                if recv_ip not in server_ips or fsa_map[server_ip].comm_enable is False:
+                    continue
+
+                if fsa_flag_debug is True:
+                    Logger().print_trace(
+                        str(i) + " : " + "Position = %.2f, Velocity = %.0f, Current = %.4f \n"
+                        % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
+
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error(
+                    str(i) + " : set_position_control_group() Didn't receive anymore data! [Timeout]")
+                Logger().print_trace_warning(str(receive_ips) + " is all received ip address")
+                continue
+                # return None
+            except Exception as e:
+                Logger().print_trace_warning(str(i) + " set_position_control_group() except")
+                Logger().print_trace_warning(str(receive_ips) + " is all received ip address")
+                continue
+                # return None
+
+        # data parse
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            if data:
+                feedback = [data.get("position"), data.get("velocity"), data.get("current")]
+            else:
+                feedback = None
+
+            response.get(server_ip).update({"feedback": feedback})
+
+        # feedback
+        positions = []
+        velocitys = []
+        currents = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            feedback = response.get(server_ip).get("feedback")
+
+            if feedback is not None:
+                positions.append(feedback[0])
+                velocitys.append(feedback[1])
+                currents.append(feedback[2])
+            else:
+                positions.append(None)
+                velocitys.append(None)
+                currents.append(None)
+
+    return positions, velocitys, currents
+
+
+def set_velocity_control_group(server_ips, velocities, current_ffs):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        velocity = velocities[i]
+        current_ff = current_ffs[i]
+
+        data = {
+            "method": "SET",
+            "reqTarget": "/velocity_control",
+            "reply_enable": True,
+            "velocity": velocity,
+            "current_ff": current_ff,
+        }
+
+        json_str = json.dumps(data)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("Send JSON Obj:", json_str)
+
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
+
+    # receive response
+    positions = [0] * len(server_ips)
+    velocitys = [0] * len(server_ips)
+    currents = [0] * len(server_ips)
+
+    if fsa_flag_enable_receive_thread is True:
+        for i in range(len(server_ips)):
+            fsa: FSA = fsa_map.get(server_ips[i])
+            positions[i] = fsa.measured_position
+            velocitys[i] = fsa.measured_velocity
+            currents[i] = fsa.measured_current
+    else:
+        # get response
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            response.update({server_ip: {}})
+
+        receive_ips = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            try:
+                data, address = fsa_socket.recvfrom(1024)
+                recv_ip, recv_port = address
+
+                json_obj = json.loads(data.decode("utf-8"))
+                if json_obj.get("status") == "OK":
+                    response.get(recv_ip).update({"data": json_obj})
+                    receive_ips.append(recv_ip)
+                else:
+                    continue
+                if recv_ip not in server_ips or fsa_map[server_ip].comm_enable is False:
+                    continue
+
+                if fsa_flag_debug is True:
+                    Logger().print_trace(
+                        str(i) + " : " + "Position = %.2f, Velocity = %.0f, Current = %.4f \n"
+                        % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
+
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error(
+                    str(i) + " : set_velocity_control_group() Didn't receive anymore data! [Timeout]")
+                Logger().print_trace_warning(str(receive_ips) + " is all received ip address")
+                continue
+                # return None
+            except Exception as e:
+                Logger().print_trace_warning(str(i) + " set_velocity_control_group() except")
+                Logger().print_trace_warning(str(receive_ips) + " is all received ip address")
+                continue
+                # return None
+
+        # data parse
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            if data:
+                feedback = [data.get("position"), data.get("velocity"), data.get("current")]
+            else:
+                feedback = None
+
+            response.get(server_ip).update({"feedback": feedback})
+
+        # feedback
+        positions = []
+        velocitys = []
+        currents = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            feedback = response.get(server_ip).get("feedback")
+
+            if feedback is not None:
+                positions.append(feedback[0])
+                velocitys.append(feedback[1])
+                currents.append(feedback[2])
+            else:
+                positions.append(None)
+                velocitys.append(None)
+                currents.append(None)
+
+    return positions, velocitys, currents
+
+
+def set_current_control_group(server_ips, currents):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        current = currents[i]
+
+        data = {
+            "method": "SET",
+            "reqTarget": "/current_control",
+            "reply_enable": True,
+            "current": current,
+        }
+
+        json_str = json.dumps(data)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("Send JSON Obj:", json_str)
+
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
+
+    # receive response
+    positions = [0] * len(server_ips)
+    velocitys = [0] * len(server_ips)
+    currents = [0] * len(server_ips)
+
+    # receive response
+    if fsa_flag_enable_receive_thread is True:
+        for i in range(len(server_ips)):
+            fsa: FSA = fsa_map.get(server_ips[i])
+            positions[i] = fsa.measured_position
+            velocitys[i] = fsa.measured_velocity
+            currents[i] = fsa.measured_current
+    else:
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            response.update({server_ip: {}})
+
+        receive_ips = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            try:
+                data, address = fsa_socket.recvfrom(1024)
+                recv_ip, recv_port = address
+
+                json_obj = json.loads(data.decode("utf-8"))
+                if json_obj.get("status") == "OK":
+                    response.get(recv_ip).update({"data": json_obj})
+                    receive_ips.append(recv_ip)
+                else:
+                    continue
+
+                if recv_ip not in server_ips or fsa_map[server_ip].comm_enable is False:
+                    continue
+
+                if fsa_flag_debug is True:
+                    Logger().print_trace(
+                        str(i) + " : " + "Position = %.2f, Velocity = %.0f, Current = %.4f \n"
+                        % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
+
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error(
+                    str(i) + " : set_current_control_group() Didn't receive anymore data! [Timeout]")
+                Logger().print_trace_warning(str(receive_ips) + " is all received ip address")
+                continue
+                # return None
+            except Exception as e:
+                Logger().print_trace_warning(str(i) + " set_current_control_group() except")
+                Logger().print_trace_warning(str(receive_ips) + " is all received ip address")
+                continue
+                # return None
+
+        # data parse
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            if data:
+                feedback = [data.get("position"), data.get("velocity"), data.get("current")]
+            else:
+                feedback = None
+
+            response.get(server_ip).update({"feedback": feedback})
+
+        # feedback
+        positions = []
+        velocitys = []
+        currents = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            feedback = response.get(server_ip).get("feedback")
+
+            if feedback is not None:
+                positions.append(feedback[0])
+                velocitys.append(feedback[1])
+                currents.append(feedback[2])
+            else:
+                positions.append(None)
+                velocitys.append(None)
+                currents.append(None)
+
+    return positions, velocitys, currents
+
+
+def set_torque_control_group(server_ips, torques):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        torque = torques[i]
+
+        data = {
+            "method": "SET",
+            "reqTarget": "/torque_control",
+            "reply_enable": True,
+            "torque": torque,
+        }
+
+        json_str = json.dumps(data)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("Send JSON Obj:", json_str)
+
+        if fsa_flag_enable_send_thread is True:
+            fsa: FSA = fsa_map[server_ip]
+            fsa.add_send_frame(fsa_port_ctrl, data)
+        else:
+            try:
+                fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+            except Exception as e:
+                Logger().print_trace_warning("fsa.set_position_control_group() sendto except")
+
+    # receive response
+    positions = [0] * len(server_ips)
+    velocitys = [0] * len(server_ips)
+    torques = [0] * len(server_ips)
+
+    # receive response
+    if fsa_flag_enable_receive_thread is True:
+        for i in range(len(server_ips)):
+            fsa: FSA = fsa_map.get(server_ips[i])
+            positions[i] = fsa.measured_position
+            velocitys[i] = fsa.measured_velocity
+            torques[i] = fsa.measured_current
+    else:
+        response = {}
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            response.update({server_ip: {}})
+
+        receive_ips = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            try:
+                data, address = fsa_socket.recvfrom(1024)
+                recv_ip, recv_port = address
+
+                json_obj = json.loads(data.decode("utf-8"))
+                if json_obj.get("status") == "OK":
+                    response.get(recv_ip).update({"data": json_obj})
+                    receive_ips.append(recv_ip)
+                else:
+                    continue
+
+                if recv_ip not in server_ips or fsa_map[server_ip].comm_enable is False:
+                    continue
+
+                if fsa_flag_debug is True:
+                    Logger().print_trace(
+                        str(i) + " : " + "Position = %.2f, Velocity = %.0f, Current = %.4f \n"
+                        % (json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current")))
+
+            except socket.timeout:  # fail after 1 second of no activity
+                Logger().print_trace_error(
+                    str(i) + " : set_torque_control_group() Didn't receive anymore data! [Timeout]")
+                Logger().print_trace_warning(str(receive_ips) + " is all received ip address")
+                continue
+                # return None
+            except Exception as e:
+                Logger().print_trace_warning(str(i) + " set_torque_control_group() except")
+                Logger().print_trace_warning(str(receive_ips) + " is all received ip address")
+                continue
+                # return None
+
+        # data parse
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            data = response.get(server_ip).get("data")
+
+            if data:
+                feedback = [data.get("position"), data.get("velocity"), data.get("current")]
+            else:
+                feedback = None
+
+            response.get(server_ip).update({"feedback": feedback})
+
+        # feedback
+        positions = []
+        velocitys = []
+        currents = []
+        for i in range(len(server_ips)):
+            server_ip = server_ips[i]
+
+            if fsa_map[server_ip].comm_enable is False:
+                continue
+
+            feedback = response.get(server_ip).get("feedback")
+
+            if feedback is not None:
+                positions.append(feedback[0])
+                velocitys.append(feedback[1])
+                currents.append(feedback[2])
+            else:
+                positions.append(None)
+                velocitys.append(None)
+                currents.append(None)
+
+    return positions, velocitys, currents
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -2453,23 +3251,27 @@ def get_comm_root(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
 
         return json_obj
+
     except socket.timeout:  # fail after 1 second of no activity
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_root() except")
+        return None
+
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root() except")
+        return None
 
 
 # fsa Get Root Config property
@@ -2484,14 +3286,14 @@ def get_comm_config(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -2506,8 +3308,8 @@ def get_comm_config(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root_config() except")
         return None
 
 
@@ -2532,14 +3334,14 @@ def set_comm_config(server_ip, dict):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -2554,8 +3356,8 @@ def set_comm_config(server_ip, dict):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.set_comm_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " set_comm_config() except")
         return None
 
 
@@ -2570,14 +3372,14 @@ def save_comm_config(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -2592,8 +3394,8 @@ def save_comm_config(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.save_config() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " save_config() except")
         return None
 
 
@@ -2608,14 +3410,14 @@ def reboot_comm(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode("utf-8"))
@@ -2630,8 +3432,8 @@ def reboot_comm(server_ip):
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.reboot() except")
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " reboot() except")
         return None
 
 
@@ -2652,7 +3454,7 @@ def reboot_comm_group(server_ips):
 
         json_str = json.dumps(data)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Send JSON Obj:", json_str)
 
         fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
@@ -2660,33 +3462,46 @@ def reboot_comm_group(server_ips):
     response = {}
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
         response.update({server_ip: {}})
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(response)
 
     for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
         try:
             data, address = fsa_socket.recvfrom(1024)
             recv_ip, recv_port = address
             response.get(recv_ip).update({"data": data})
 
-            if fsa_debug is True:
+            if fsa_flag_debug is True:
                 Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         except socket.timeout:  # fail after 1 second of no activity
-            Logger().print_trace_error("fsa.reboot_group() Didn't receive enough data! [Timeout]")
+            Logger().print_trace_error("fsa.reboot_group() Timeout")
             continue
 
-        except:
+        except Exception as e:
             Logger().print_trace_warning("fsa.reboot_group() except")
             continue
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(response)
 
     for i in range(len((server_ips))):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
         data = response.get(server_ip).get("data")
 
         try:
@@ -2699,62 +3514,24 @@ def reboot_comm_group(server_ips):
                 Logger().print_trace_error(server_ip, " receive status is not OK!")
                 continue
 
-        except:
+        except Exception as e:
             response.get(server_ip).update({"return": FSAFunctionResult.FAIL})
-            Logger().print_trace_warning(server_ip + " fi_fsa.reboot_group() except")
+            Logger().print_trace_warning(server_ip + " reboot_group() except")
             continue
 
     func_result = []
     for i in range(len(server_ips)):
         server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
         func_result.append(response.get(server_ip).get("return"))
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(func_result)
 
     return func_result
-
-
-# ---------------------------------------------------------------------------------------------------------------------
-# Communication Parameters of FSE
-
-# get abs encoder position
-# Parameters: including server ip
-# Return position in tuple
-def get_abs_encoder_angle(server_ip):
-    data = {
-        "method": "GET",
-        "reqTarget": "/measured",
-        "property": ""
-    }
-
-    json_str = json.dumps(data)
-
-    if fsa_debug is True:
-        Logger().print_trace("Send JSON Obj:", json_str)
-
-    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
-    try:
-        data, address = fsa_socket.recvfrom(1024)
-
-        if fsa_debug is True:
-            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        json_obj = json.loads(data.decode("utf-8"))
-
-        if json_obj.get("status") == "OK":
-            return json_obj.get("angle")
-        else:
-            Logger().print_trace_error(server_ip, " receive status is not OK!")
-            return FSAFunctionResult.FAIL
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return FSAFunctionResult.TIMEOUT
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_abs_encoder_angle() except")
-        return FSAFunctionResult.FAIL
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -2763,186 +3540,109 @@ def get_abs_encoder_angle(server_ip):
 def fast_set_enable(server_ip):
     tx_messages = struct.pack('>B', 0x01)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
-        data, address = fsa_socket.recvfrom(1024)
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_enable() except: \n", e)
 
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback = struct.unpack('>B', data[0:1])
-        return feedback
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_enable() except")
-        return None
+    return FSAFunctionResult.SUCCESS
 
 
 def fast_set_disable(server_ip):
     tx_messages = struct.pack('>B', 0x02)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
-        data, address = fsa_socket.recvfrom(1024)
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_disable() except: \n", e)
 
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback = struct.unpack('>B', data[0:1])
-        return feedback
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_disable() except")
-        return None
+    return FSAFunctionResult.SUCCESS
 
 
 def fast_set_clear_fault(server_ip):
     tx_messages = struct.pack('>B', 0x03)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
-        data, address = fsa_socket.recvfrom(1024)
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_clear_fault() except: \n", e)
 
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback = struct.unpack('>B', data[0:1])
-        return feedback
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_clear_fault() except")
-        return None
+    return FSAFunctionResult.SUCCESS
 
 
 def fast_set_position_mode(server_ip):
     tx_messages = struct.pack('>B', 0x04)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
-        data, address = fsa_socket.recvfrom(1024)
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_position_mode() except: \n", e)
 
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback = struct.unpack('>B', data[0:1])
-        return feedback
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_position_mode() except")
-        return None
+    return FSAFunctionResult.SUCCESS
 
 
 def fast_set_velocity_mode(server_ip):
     tx_messages = struct.pack('>B', 0x05)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
-        data, address = fsa_socket.recvfrom(1024)
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_velocity_mode() except: \n", e)
 
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback = struct.unpack('>B', data[0:1])
-        return feedback
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_velocity_mode() except")
-        return None
+    return FSAFunctionResult.SUCCESS
 
 
 def fast_set_torque_mode(server_ip):
     tx_messages = struct.pack('>B', 0x06)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
-        data, address = fsa_socket.recvfrom(1024)
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_torque_mode() except: \n", e)
 
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback = struct.unpack('>B', data[0:1])
-        return feedback
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_torque_mode() except")
-        return None
+    return FSAFunctionResult.SUCCESS
 
 
 def fast_set_current_mode(server_ip):
     tx_messages = struct.pack('>B', 0x07)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
-        data, address = fsa_socket.recvfrom(1024)
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_current_mode() except: \n", e)
 
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback = struct.unpack('>B', data[0:1])
-        return feedback
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_current_mode() except")
-        return None
+    return FSAFunctionResult.SUCCESS
 
 
-def fast_set_mode_of_operation(server_ip, mode):
-    if mode == FSAModeOfOperation.POSITION_CONTROL:
+def fast_set_mode_of_operation(server_ip, mode_of_operation):
+    if mode_of_operation == FSAModeOfOperation.POSITION_CONTROL:
         return fast_set_position_mode(server_ip)
-    elif mode == FSAModeOfOperation.VELOCITY_CONTROL:
+    elif mode_of_operation == FSAModeOfOperation.VELOCITY_CONTROL:
         return fast_set_velocity_mode(server_ip)
-    elif mode == FSAModeOfOperation.TORQUE_CONTROL:
+    elif mode_of_operation == FSAModeOfOperation.TORQUE_CONTROL:
         return fast_set_torque_mode(server_ip)
-    elif mode == FSAModeOfOperation.CURRENT_CONTROL:
+    elif mode_of_operation == FSAModeOfOperation.CURRENT_CONTROL:
         return fast_set_current_mode(server_ip)
     else:
         return None
@@ -2951,89 +3651,59 @@ def fast_set_mode_of_operation(server_ip, mode):
 def fast_set_position_control(server_ip, position, velocity_ff=0, current_ff=0):
     tx_messages = struct.pack('>Bfff', 0x0A, position, velocity_ff, current_ff)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
-        data, address = fsa_socket.recvfrom(1024)
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_position_control() except: \n", e)
 
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
-        return position, velocity, current
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_position_control() except")
-        return None
+    return FSAFunctionResult.SUCCESS
 
 
 def fast_set_velocity_control(server_ip, velocity, current_ff=0):
     tx_messages = struct.pack('>Bff', 0x0B, velocity, current_ff)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
-        data, address = fsa_socket.recvfrom(1024)
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_velocity_control() except: \n", e)
 
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
-        return position, velocity, current
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_velocity_control() except")
-        return None
-
-
-def fast_set_torque_control(server_ip, torque):
-    tx_messages = struct.pack('>Bf', 0x0C, torque)
-
-    if fsa_debug is True:
-        Logger().print_trace(server_ip + " : Send Data:", tx_messages)
-
-    fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
-    try:
-        data, address = fsa_socket.recvfrom(1024)
-
-        if fsa_debug is True:
-            Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
-
-        feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
-        return position, velocity, current
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_torque_control() except")
-        return None
+    return FSAFunctionResult.SUCCESS
 
 
 def fast_set_current_control(server_ip, current):
     tx_messages = struct.pack('>Bf', 0x0D, current)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
+        Logger().print_trace(server_ip + " : Send Data:", tx_messages)
+
+    try:
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_current_control() except: \n", e)
+
+    return FSAFunctionResult.SUCCESS
+
+
+# AIOS get pvc through pt port
+# 参数：包括设备IP
+# 无返回
+def fast_get_pvc(server_ip):
+    tx_messages = struct.pack('>B', 0x1A)
+
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
     fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
 
         feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
@@ -3044,24 +3714,24 @@ def fast_set_current_control(server_ip, current):
         return None
 
     except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_set_current_control() except")
+        Logger().print_trace_warning(server_ip + " fast_get_pvc() except")
         return None
 
 
 # AIOS get pvc through pt port
-# 参数：包括设备IP 电机号
+# 参数：包括设备IP
 # 无返回
-def fast_get_pvc(server_ip):
-    tx_messages = struct.pack('>B', 0x1a)
+def fast_get_pvct(server_ip):
+    tx_messages = struct.pack('>B', 0x1A)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
     fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
 
         feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
@@ -3072,21 +3742,21 @@ def fast_get_pvc(server_ip):
         return None
 
     except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.fast_get_pvc() except")
+        Logger().print_trace_warning(server_ip + " fast_get_pvc() except")
         return None
 
 
 def fast_get_error(server_ip):
-    tx_messages = struct.pack('>B', 0x1b)
+    tx_messages = struct.pack('>B', 0x1B)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
 
     fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
 
         feedback, error = struct.unpack('>Bi', data[0:1 + 4])
@@ -3097,8 +3767,275 @@ def fast_get_error(server_ip):
         return None
 
     except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_error_pt() except")
+        Logger().print_trace_warning(server_ip + " get_error_fast() except")
         return None
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# FSA FAST Group
+
+def fast_set_enable_group(server_ips):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        tx_messages = struct.pack('>B', 0x01)
+
+        try:
+            fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+        except Exception as e:
+            Logger().print_trace(" fast_set_enable_group() except: \n", e)
+
+    return FSAFunctionResult.SUCCESS
+
+
+def fast_set_disable_group(server_ips):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        tx_messages = struct.pack('>B', 0x02)
+
+        try:
+            fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+        except Exception as e:
+            Logger().print_trace(" fast_set_disable_group() except: \n", e)
+
+    return FSAFunctionResult.SUCCESS
+
+
+def fast_set_clear_fault_group(server_ips):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        tx_messages = struct.pack('>B', 0x03)
+
+        try:
+            fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+        except Exception as e:
+            Logger().print_trace(" fast_set_clear_fault_group() except: \n", e)
+
+    return FSAFunctionResult.SUCCESS
+
+
+def fast_set_mode_of_operation_group(server_ips, mode_of_operations):
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        mode_of_operation = mode_of_operations[i]
+
+        fast_set_mode_of_operation(server_ip=server_ip,
+                                   mode_of_operation=mode_of_operation)
+
+    return FSAFunctionResult.SUCCESS
+
+
+def fast_set_position_control_group(server_ips, positions, velocity_ffs, current_ffs):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        position = positions[i]
+        velocity_ff = velocity_ffs[i]
+        current_ff = current_ffs[i]
+
+        tx_messages = struct.pack('>Bfff', 0x0A, position, velocity_ff, current_ff)
+
+        try:
+            fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+        except Exception as e:
+            Logger().print_trace(" fast_set_position_control_group() except: \n", e)
+
+    return FSAFunctionResult.SUCCESS
+
+
+def fast_set_velocity_control_group(server_ips, velocitys, current_ffs):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        velocity = velocitys[i]
+        torque = current_ffs[i]
+
+        tx_messages = struct.pack('>Bff', 0x0B, velocity, torque)
+
+        try:
+            fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+        except Exception as e:
+            Logger().print_trace(" fast_set_velocity_control_group() except: \n", e)
+
+    return FSAFunctionResult.SUCCESS
+
+
+# Jason 2024-01-27:
+# Time Cost: 0.5 ~ 0.8ms
+def fast_get_pvc_group(server_ips):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        tx_messages = struct.pack('>B', 0x1A)
+
+        try:
+            fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+        except Exception as e:
+            Logger().print_trace(" fast_get_pvc_group() except: \n", e)
+
+    # get response
+    response = {}
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        response.update({server_ip: {}})
+
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        try:
+            data, address = fsa_socket.recvfrom(1024)
+
+            recv_ip, recv_port = address
+
+            if recv_ip not in server_ips or fsa_map[server_ip].comm_enable is False:
+                continue
+
+            # print(recv_ip)
+
+            response.get(recv_ip).update({"data": data})
+
+        except socket.timeout:  # fail after 1 second of no activity
+            Logger().print_trace_error(" fast_get_pvc_group() Timeout")
+            continue
+
+    # data parse
+    feedbacks = []
+    positions = []
+    velocitys = []
+    currents = []
+
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            feedbacks.append(0)
+            positions.append(0)
+            velocitys.append(0)
+            currents.append(0)
+            continue
+
+        data = response.get(server_ip).get("data")
+
+        if data is None:
+            feedback, position, velocity, current = None, None, None, None
+        else:
+            feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
+
+        feedbacks.append(feedback)
+        positions.append(position)
+        velocitys.append(velocity)
+        currents.append(current)
+
+    return positions, velocitys, currents
+
+
+# Jason 2024-01-27:
+# Time Cost: 0.5 ~ 0.8ms
+def fast_get_error_group(server_ips):
+    # send request
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        tx_messages = struct.pack('>B', 0x1B)
+
+        try:
+            fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+        except Exception as e:
+            Logger().print_trace(" fast_get_error_group() except: \n", e)
+
+    # get response
+    response = {}
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        response.update({server_ip: {}})
+
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            continue
+
+        try:
+            data, address = fsa_socket.recvfrom(1024)
+
+            recv_ip, recv_port = address
+
+            if recv_ip not in server_ips or fsa_map[server_ip].comm_enable is False:
+                continue
+
+            response.get(recv_ip).update({"data": data})
+
+        except socket.timeout:  # fail after 1 second of no activity
+            Logger().print_trace_error(" fast_get_error_group() Timeout")
+            continue
+
+    # data parse
+    feedbacks = []
+    errors = []
+
+    for i in range(len(server_ips)):
+        server_ip = server_ips[i]
+
+        if fsa_map[server_ip].comm_enable is False:
+            feedbacks.append(0)
+            errors.append(0)
+            continue
+
+        data = response.get(server_ip).get("data")
+
+        if data is None:
+            feedback, error = None, None
+        else:
+            feedback, error = struct.unpack('>Bi', data[0:1 + 4])
+
+        feedbacks.append(feedback)
+        errors.append(error)
+
+    return errors
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -3189,14 +4126,14 @@ def ota(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -3214,14 +4151,14 @@ def ota_test(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -3239,14 +4176,14 @@ def ota_devel(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -3264,14 +4201,14 @@ def ota_cloud(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -3289,14 +4226,14 @@ def ota_custom(server_ip, version_str):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -3314,14 +4251,14 @@ def ota_driver(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -3339,14 +4276,14 @@ def ota_driver_test(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -3364,14 +4301,14 @@ def ota_driver_devel(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -3389,14 +4326,14 @@ def ota_driver_cloud(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -3414,41 +4351,14 @@ def ota_driver_custom(server_ip, version_str):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
 
     fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
     try:
         data, address = fsa_socket.recvfrom(1024)
 
-        if fsa_debug is True:
-            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        json_obj = json.loads(data.decode('utf-8'))
-
-    except socket.timeout:  # fail after 1 second of no activity
-        print("Didn't receive anymore data! [Timeout]")
-
-
-def encrypt(server_ip, dict):
-    data = {
-        "method": "SET",
-        "reqTarget": "/encrypt",
-        "property": "",
-        "username": dict["username"],
-        "password": dict["password"]
-    }
-
-    json_str = json.dumps(data)
-
-    if fsa_debug is True:
-        Logger().print_trace("Send JSON Obj:", json_str)
-
-    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
-    try:
-        data, address = fsa_socket.recvfrom(1024)
-
-        if fsa_debug is True:
+        if fsa_flag_debug is True:
             Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
