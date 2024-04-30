@@ -7,7 +7,7 @@ GTAGS
 # sdk-python
 /sdk-python/v1/log/
 /sdk-python/v2/log/
-/sdk-python/v3/log/
+/sdk-python/v1/log/
 
 # sdk-cpp
 /sdk-cpp/v3/
