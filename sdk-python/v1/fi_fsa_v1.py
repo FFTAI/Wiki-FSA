@@ -62,7 +62,7 @@ class FSA:
 
 
 fsa_map = {}
-fsa_timeout_time = 0.01  # unit: s
+fsa_timeout_time = 1  # unit: s
 fsa_port_ctrl = 2333
 fsa_port_comm = 2334
 fsa_port_fast = 2335
@@ -1199,6 +1199,46 @@ def get_config(server_ip):
 
         if json_obj.get("status") == "OK":
             return FSAFunctionResult.SUCCESS
+        else:
+            Logger().print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except Exception as e:
+        Logger().print_trace_warning(server_ip + " get_root_config() except")
+        Logger().print_trace_warning(e)
+        return None
+
+
+# fsa Get Root Config property
+# Parameters: including device IP
+# Get fsa bus voltage over-voltage and under-voltage protection threshold
+def get_config_data(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/config",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_flag_debug is True:
+        Logger().print_trace("Send JSON Obj:", json_str)
+
+    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = fsa_socket.recvfrom(1024)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return data
         else:
             Logger().print_trace_error(server_ip, " receive status is not OK!")
             return None

@@ -1,4 +1,4 @@
-import fi_fsa_v2
+import fi_fsa_v2 as fi_fsa
 
 
 def main():

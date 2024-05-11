@@ -243,7 +243,7 @@
 
 
 
-import fi_fsa_v1
+import fi_fsa_v1 as fi_fsa
 import time
 
 
