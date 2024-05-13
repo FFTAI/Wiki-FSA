@@ -10,11 +10,12 @@ def main():
     if server_ip_list:
 
         for j in range(10000):
-            # start_time = time.time()']']
+            # start_time = time.time()
 
             for i in range(len(server_ip_list)):
-                pvct = fi_fsa.get_pvct(server_ip_list[i])
-                print("Position = %f, Velocity = %f, Current = %.4f, Torque = %4.f" % (pvct[0], pvct[1], pvct[2], pvct[3]))
+                position, velocity, current, torque = fi_fsa.fast_get_pvct(server_ip_list[i])
+                print("Position = %f, Velocity = %f, Current = %f, Torque = %f"
+                      % (position, velocity, current, torque))
 
             # end_time = time.time()
             #

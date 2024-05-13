@@ -677,19 +677,17 @@ def get_pid_param(server_ip):
 # fsa set Root Config properties
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
 # Return success or failure
-def set_pid_param(server_ip,
-                  control_position_kp,
-                  control_velocity_kp,
-                  control_velocity_ki):
+def set_pid_param(server_ip, dict):
     data = {
         "method": "SET",
-        "reqTarget": "/pid_param",
+        "reqTarget": "/pid_param_imm",
         "property": "",
-        "control_position_kp": control_position_kp,
-        "control_velocity_kp": control_velocity_kp,
-        "control_velocity_ki": control_velocity_ki,
+        "control_position_kp": dict['control_position_kp'],
+        "control_velocity_kp": dict['control_velocity_kp'],
+        "control_velocity_ki": dict['control_velocity_ki'],
+        "control_PD_kp": dict['control_PD_kp'],
+        "control_PD_kd": dict['control_PD_kd'],
     }
-
     json_str = json.dumps(data)
 
     if fsa_flag_debug is True:
@@ -799,17 +797,16 @@ def get_pid_param_imm(server_ip):
 # fsa set Root Config properties
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
 # Return success or failure
-def set_pid_param_imm(server_ip,
-                      control_position_kp,
-                      control_velocity_kp,
-                      control_velocity_ki):
+def set_pid_param_imm(server_ip, dict):
     data = {
         "method": "SET",
         "reqTarget": "/pid_param_imm",
         "property": "",
-        "control_position_kp_imm": control_position_kp,
-        "control_velocity_kp_imm": control_velocity_kp,
-        "control_velocity_ki_imm": control_velocity_ki,
+        "control_position_kp_imm": dict['control_position_kp_imm'],
+        "control_velocity_kp_imm": dict['control_velocity_kp_imm'],
+        "control_velocity_ki_imm": dict['control_velocity_ki_imm'],
+        "control_PD_kp_imm": dict['control_PD_kp_imm'],
+        "control_PD_kd_imm": dict['control_PD_kd_imm'],
     }
 
     json_str = json.dumps(data)
@@ -1510,6 +1507,41 @@ def get_pvc(server_ip):
     except Exception as e:
         Logger().print_trace_warning(server_ip + " get_pvc() except")
         Logger().print_trace_warning(e)
+        return FSAFunctionResult.FAIL
+
+
+def get_pvct(server_ip):
+    data = {
+        "method": "GET",
+        "reqTarget": "/PVCT",
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_flag_debug is True:
+        Logger().print_trace("Send JSON Obj:", json_str)
+
+    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = fsa_socket.recvfrom(1024)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return json_obj.get("position"), json_obj.get("velocity"), json_obj.get("current"), json_obj.get("torque")
+        else:
+            Logger().print_trace_error(server_ip, " receive status is not OK!")
+            return FSAFunctionResult.FAIL
+
+    except socket.timeout:  # fail after 1 second of no activity
+        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return FSAFunctionResult.TIMEOUT
+
+    except:
+        Logger().print_trace_warning(server_ip + " fi_fsa.get_pvct() except")
         return FSAFunctionResult.FAIL
 
 

@@ -62,7 +62,7 @@ class FSA:
 
 
 fsa_map = {}
-fsa_timeout_time = 0.01  # unit: s
+fsa_timeout_time = 1  # unit: s
 fsa_port_ctrl = 2333
 fsa_port_comm = 2334
 fsa_port_fast = 2335
@@ -677,21 +677,16 @@ def get_pid_param(server_ip):
 # fsa set Root Config properties
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
 # Return success or failure
-def set_pid_param(server_ip,
-                  control_position_kp,
-                  control_velocity_kp,
-                  control_velocity_ki,
-                  control_pd_kp,
-                  control_pd_kd):
+def set_pid_param(server_ip, dict):
     data = {
         "method": "SET",
-        "reqTarget": "/pid_param",
+        "reqTarget": "/pid_param_imm",
         "property": "",
-        "control_position_kp": control_position_kp,
-        "control_velocity_kp": control_velocity_kp,
-        "control_velocity_ki": control_velocity_ki,
-        "control_PD_kp": control_pd_kp,
-        "control_PD_kd": control_pd_kd,
+        "control_position_kp": dict['control_position_kp'],
+        "control_velocity_kp": dict['control_velocity_kp'],
+        "control_velocity_ki": dict['control_velocity_ki'],
+        "control_PD_kp": dict['control_PD_kp'],
+        "control_PD_kd": dict['control_PD_kd'],
     }
 
     json_str = json.dumps(data)
@@ -803,21 +798,16 @@ def get_pid_param_imm(server_ip):
 # fsa set Root Config properties
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
 # Return success or failure
-def set_pid_param_imm(server_ip,
-                      control_position_kp,
-                      control_velocity_kp,
-                      control_velocity_ki,
-                      control_pd_kp,
-                      control_pd_kd):
+def set_pid_param_imm(server_ip, dict):
     data = {
         "method": "SET",
         "reqTarget": "/pid_param_imm",
         "property": "",
-        "control_position_kp_imm": control_position_kp,
-        "control_velocity_kp_imm": control_velocity_kp,
-        "control_velocity_ki_imm": control_velocity_ki,
-        "control_PD_kp_imm": control_pd_kp,
-        "control_PD_kd_imm": control_pd_kd,
+        "control_position_kp_imm": dict['control_position_kp_imm'],
+        "control_velocity_kp_imm": dict['control_velocity_kp_imm'],
+        "control_velocity_ki_imm": dict['control_velocity_ki_imm'],
+        "control_PD_kp_imm": dict['control_PD_kp_imm'],
+        "control_PD_kd_imm": dict['control_PD_kd_imm'],
     }
 
     json_str = json.dumps(data)
@@ -1481,9 +1471,6 @@ def get_pvc(server_ip):
         return FSAFunctionResult.FAIL
 
 
-# fsa Get actuator position, velocity, current, torque
-# Parameters: including server ip，motor number
-# Return position, speed, current in tuple
 def get_pvct(server_ip):
     data = {
         "method": "GET",
@@ -3635,6 +3622,20 @@ def fast_set_current_mode(server_ip):
     return FSAFunctionResult.SUCCESS
 
 
+def fast_set_pd_mode(server_ip):
+    tx_messages = struct.pack('>B', 0x09)
+
+    if fsa_flag_debug is True:
+        Logger().print_trace(server_ip + " : Send Data:", tx_messages)
+
+    try:
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_current_mode() except: \n", e)
+
+    return FSAFunctionResult.SUCCESS
+
+
 def fast_set_mode_of_operation(server_ip, mode_of_operation):
     if mode_of_operation == FSAModeOfOperation.POSITION_CONTROL:
         return fast_set_position_mode(server_ip)
@@ -3644,6 +3645,8 @@ def fast_set_mode_of_operation(server_ip, mode_of_operation):
         return fast_set_torque_mode(server_ip)
     elif mode_of_operation == FSAModeOfOperation.CURRENT_CONTROL:
         return fast_set_current_mode(server_ip)
+    elif mode_of_operation == FSAModeOfOperation.POSITION_CONTROL_PD:
+        return fast_set_pd_mode(server_ip)
     else:
         return None
 
@@ -3690,6 +3693,20 @@ def fast_set_current_control(server_ip, current):
     return FSAFunctionResult.SUCCESS
 
 
+def fast_set_pd_control(server_ip, position):
+    tx_messages = struct.pack('>Bf', 0x0E, position)
+
+    if fsa_flag_debug is True:
+        Logger().print_trace(server_ip + " : Send Data:", tx_messages)
+
+    try:
+        fsa_socket.sendto(tx_messages, (server_ip, fsa_port_fast))
+    except Exception as e:
+        Logger().print_trace(" fast_set_current_control() except: \n", e)
+
+    return FSAFunctionResult.SUCCESS
+
+
 # AIOS get pvc through pt port
 # 参数：包括设备IP
 # 无返回
@@ -3718,11 +3735,8 @@ def fast_get_pvc(server_ip):
         return None
 
 
-# AIOS get pvc through pt port
-# 参数：包括设备IP
-# 无返回
 def fast_get_pvct(server_ip):
-    tx_messages = struct.pack('>B', 0x1A)
+    tx_messages = struct.pack('>B', 0x1D)
 
     if fsa_flag_debug is True:
         Logger().print_trace(server_ip + " : Send Data:", tx_messages)
@@ -3734,15 +3748,15 @@ def fast_get_pvct(server_ip):
         if fsa_flag_debug is True:
             Logger().print_trace(server_ip + ': Server received from {}:{}'.format(address, data))
 
-        feedback, position, velocity, current = struct.unpack('>Bfff', data[0:1 + 4 + 4 + 4])
-        return position, velocity, current
+        feedback, position, velocity, current, torque = struct.unpack('>Bffff', data[0:1 + 4 + 4 + 4 + 4])
+        return position, velocity, current, torque
 
     except socket.timeout:  # fail after 1 second of no activity
         Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
         return None
 
     except:
-        Logger().print_trace_warning(server_ip + " fast_get_pvc() except")
+        Logger().print_trace_warning(server_ip + " fast_get_pvct() except")
         return None
 
 

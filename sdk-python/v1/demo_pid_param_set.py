@@ -2,7 +2,7 @@ import fi_fsa_v1 as fi_fsa
 import time
 
 server_ip_list = []
-server_ip_list = ["192.168.137.164"]
+# server_ip_list = ["192.168.137.164"]
 class SpeedParamList :
     #         相对电流环分频系数| 前馈增益 |   KP   |   KI       |  Wc   |   Wo   |   B0   |0PI/1LADRC |SPD_FC|带宽  #
     MOTOR_NULL = [     2,          0.0,    0.1   ,  0.01      ,  0    ,  0     ,   0     ,   0      , 5000 , 600  ]
@@ -17,7 +17,7 @@ class SpeedParamList :
 
 
 def main():
-    # server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="Actuator")
+    server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
