@@ -1577,6 +1577,42 @@ def set_fsa_abs_offset(server_ip, offset):
         return FSAFunctionResult.FAIL
 
 
+def set_double_encoder_enable(server_ip, is_enable):
+    data = {
+        "method": "SET",
+        "reqTarget": "/set_double_encoder_enable",
+        "double_encoder_enable": is_enable,
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_flag_debug is True:
+        Logger().print_trace("Send JSON Obj:", json_str)
+
+    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = fsa_socket.recvfrom(1024)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return True
+        else:
+            Logger().print_trace_error(server_ip, " receive status is not OK!")
+            return FSAFunctionResult.FAIL
+
+    except socket.timeout:  # fail after 1 second of no activity
+        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return FSAFunctionResult.TIMEOUT
+
+    except:
+        Logger().print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
+        return FSAFunctionResult.FAIL
+
+
 def get_ntc_temperature(server_ip):
     data = {
         "method": "GET",
