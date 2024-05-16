@@ -25,7 +25,7 @@ def main():
         time.sleep(1)
 
         for i in range(len(server_ip_list)):
-            pvc = fi_fsa.fast_get_cvp(server_ip_list[i])
+            pvc = fi_fsa.fast_get_pvc(server_ip_list[i])
             print("Position = %.2f, Velocity = %.0f, Current = %.4f" % (pvc[0], pvc[1], pvc[2]))
             time.sleep(0.01)
 

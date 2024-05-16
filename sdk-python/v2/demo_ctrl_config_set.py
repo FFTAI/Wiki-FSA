@@ -1,5 +1,6 @@
 import fi_fsa_v2 as fi_fsa
 import time
+import fi_fsa_predefine
 
 server_ip_list = []
 
@@ -12,17 +13,17 @@ def main():
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
-                'actuator_type': fi_fsa.FSAActuatorType.TYPE_DEFAULT,
-                'actuator_direction': fi_fsa.FSAActuatorDirection.DIRECTION_NORMAL,
-                'actuator_reduction_ratio': fi_fsa.FSAActuatorReductionRatio.REDUCTION_RATIO_36,
-                'motor_type': fi_fsa.FSAMotorType.FSA36_10V0,
-                'motor_hardware_type': fi_fsa.FSAHardwareType.TYPE_H46V104,
-                "motor_vbus": fi_fsa.FSAMotorVBUS.VBUS_48V,
-                'motor_direction': fi_fsa.FSAMotorDirection.ABC,
-                "motor_max_speed": fi_fsa.FSAMotorMaxSpeed.MAX_SPEED_3000,
-                "motor_max_acceleration": fi_fsa.FSAMotorMaxAcceleration.MAX_ACCELERATION_60000,
-                'motor_max_current': 100,
-                "actuator_comm_hardware_type": TYPE_NULL,
+                'actuator_type': fi_fsa_predefine.FSAActuatorType.TYPE_DEFAULT,
+                'actuator_direction': fi_fsa_predefine.FSAActuatorDirection.DIRECTION_NORMAL,
+                'actuator_reduction_ratio': fi_fsa_predefine.FSAActuatorReductionRatio.REDUCTION_RATIO_7,
+                'motor_type': fi_fsa_predefine.FSAMotorType.FSA130_20V0,
+                'motor_hardware_type': fi_fsa_predefine.FSAHardwareType.TYPE_H95V104,
+                "motor_vbus": fi_fsa_predefine.FSAMotorVBUS.VBUS_48V,
+                'motor_direction': fi_fsa_predefine.FSAMotorDirection.ABC,
+                "motor_max_speed": fi_fsa_predefine.FSAMotorMaxSpeed.MAX_SPEED_3000,
+                "motor_max_acceleration": fi_fsa_predefine.FSAMotorMaxAcceleration.MAX_ACCELERATION_60000,
+                'motor_max_current': 60,
+                "actuator_comm_hardware_type": fi_fsa_predefine.FSAActuatorCommHardwareType.TYPE_NULL,
             }
             fi_fsa.set_config(server_ip_list[i], dict)
 
