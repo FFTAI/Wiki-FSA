@@ -1233,6 +1233,7 @@ def set_config(server_ip, dict):
         "motor_max_current": dict["motor_max_current"],
 
         "actuator_comm_hardware_type": dict["actuator_comm_hardware_type"],
+        "actuator_double_encoder_enable": dict["actuator_double_encoder_enable"]
 
     }
 
@@ -4165,6 +4166,30 @@ def broadcast_func_with_filter(filter_type=None):
             else:
                 Logger().print_trace_error("Do not have any server! [Timeout] \n")
                 return False
+
+
+def set_subscribe(server_ip, cfg_dict):
+
+    cfg_dict["method"] = "SET"
+    cfg_dict["reqTarget"] = "/subscribe"
+    cfg_dict["property"] = ""
+
+    json_str = json.dumps(cfg_dict)
+
+    if fsa_flag_debug is True:
+        Logger().print_trace("Send JSON Obj:", json_str)
+
+    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    try:
+        data, address = fsa_socket.recvfrom(1024)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode('utf-8'))
+
+    except socket.timeout:  # fail after 1 second of no activity
+        print("Didn't receive anymore data! [Timeout]")
 
 
 def ota(server_ip):

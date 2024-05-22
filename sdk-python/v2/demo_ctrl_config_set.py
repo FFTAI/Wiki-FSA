@@ -24,6 +24,7 @@ def main():
                 "motor_max_acceleration": fi_fsa_predefine.FSAMotorMaxAcceleration.MAX_ACCELERATION_60000,
                 'motor_max_current': 60,
                 "actuator_comm_hardware_type": fi_fsa_predefine.FSAActuatorCommHardwareType.TYPE_NULL,
+                "actuator_double_encoder_enable": 0
             }
             fi_fsa.set_config(server_ip_list[i], dict)
 
