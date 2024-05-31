@@ -1215,29 +1215,11 @@ def get_config(server_ip):
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
 # Return success or failure
 def set_config(server_ip, dict):
-    data = {
-        "method": "SET",
-        "reqTarget": "/config",
-        "property": "",
+    dict['method'] = "SET"
+    dict['reqTarget'] = "/config"
+    dict['property'] = ''
 
-        "actuator_type": dict["actuator_type"],
-        "actuator_direction": dict["actuator_direction"],
-        "actuator_reduction_ratio": dict["actuator_reduction_ratio"],
-
-        "motor_type": dict["motor_type"],
-        "motor_hardware_type": dict["motor_hardware_type"],
-        "motor_vbus": dict["motor_vbus"],
-        "motor_direction": dict["motor_direction"],
-        "motor_max_speed": dict["motor_max_speed"],
-        "motor_max_acceleration": dict["motor_max_acceleration"],
-        "motor_max_current": dict["motor_max_current"],
-
-        "actuator_comm_hardware_type": dict["actuator_comm_hardware_type"],
-        "actuator_double_encoder_enable": dict["actuator_double_encoder_enable"]
-
-    }
-
-    json_str = json.dumps(data)
+    json_str = json.dumps(dict)
 
     if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
@@ -1547,42 +1529,6 @@ def set_fsa_abs_offset(server_ip, offset):
         "method": "SET",
         "reqTarget": "/set_abs_offset",
         "abs_offset": offset,
-    }
-
-    json_str = json.dumps(data)
-
-    if fsa_flag_debug is True:
-        Logger().print_trace("Send JSON Obj:", json_str)
-
-    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
-    try:
-        data, address = fsa_socket.recvfrom(1024)
-
-        if fsa_flag_debug is True:
-            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        json_obj = json.loads(data.decode("utf-8"))
-
-        if json_obj.get("status") == "OK":
-            return True
-        else:
-            Logger().print_trace_error(server_ip, " receive status is not OK!")
-            return FSAFunctionResult.FAIL
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return FSAFunctionResult.TIMEOUT
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
-        return FSAFunctionResult.FAIL
-
-
-def set_double_encoder_enable(server_ip, is_enable):
-    data = {
-        "method": "SET",
-        "reqTarget": "/set_double_encoder_enable",
-        "double_encoder_enable": is_enable,
     }
 
     json_str = json.dumps(data)
