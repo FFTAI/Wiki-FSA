@@ -152,7 +152,8 @@ class FSAHardwareType:
     TYPE_H106V100 = 10
     TYPE_H142V100 = 11
     TYPE_H142V102 = 12
-    Hardware_ALL = 13
+    TYPE_H66V202 = 13
+    Hardware_ALL = 14
 
 
 class FSAMotorDirection:

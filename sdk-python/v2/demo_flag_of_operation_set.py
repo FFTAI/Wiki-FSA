@@ -11,18 +11,19 @@ def main():
 
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            dict = {
+            dict_cfg = {
                 'flag_do_use_store_actuator_param': fi_fsa.FSAFlagState.CLEAR,
-                'flag_do_use_store_motor_param': fi_fsa.FSAFlagState.CLEAR,
+                'flag_do_use_store_motor_param': fi_fsa.FSAFlagState.SET,
                 'flag_do_use_store_encoder_param': fi_fsa.FSAFlagState.CLEAR,
                 'flag_do_use_store_pid_param': fi_fsa.FSAFlagState.CLEAR,
+                "actuator_double_encoder_enable": fi_fsa.FSAFlagState.SET,
 
                 # 'flag_do_use_store_actuator_param': fi_fsa.FSAFlagState.SET,
                 # 'flag_do_use_store_motor_param': fi_fsa.FSAFlagState.SET,
                 # 'flag_do_use_store_encoder_param': fi_fsa.FSAFlagState.SET,
                 # 'flag_do_use_store_pid_param': fi_fsa.FSAFlagState.SET,
             }
-            fi_fsa.set_flag_of_operation(server_ip_list[i], dict)
+            fi_fsa.set_flag_of_operation(server_ip_list[i], dict_cfg)
 
         print('\n')
         time.sleep(1)

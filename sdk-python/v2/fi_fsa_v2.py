@@ -1089,20 +1089,11 @@ def get_flag_of_operation(server_ip):
         return None
 
 
-def set_flag_of_operation(server_ip,
-                          flag_do_use_store_actuator_param,
-                          flag_do_use_store_motor_param,
-                          flag_do_use_store_encoder_param,
-                          flag_do_use_store_pid_param):
-    data = {
-        "method": "SET",
-        "reqTarget": "/flag_of_operation",
-        "property": "",
-        "flag_do_use_store_actuator_param": flag_do_use_store_actuator_param,
-        "flag_do_use_store_motor_param": flag_do_use_store_motor_param,
-        "flag_do_use_store_encoder_param": flag_do_use_store_encoder_param,
-        "flag_do_use_store_pid_param": flag_do_use_store_pid_param,
-    }
+def set_flag_of_operation(server_ip, dict_cfg):
+    data = dict_cfg
+    data["method"] = "SET"
+    data["reqTarget"] = "/flag_of_operation"
+    data["property"] = ""
 
     json_str = json.dumps(data)
 
