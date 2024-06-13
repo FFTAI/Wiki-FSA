@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/lookup_ctrlbox.dir/demo_lookup_ctrlbox.cpp.o CMakeFiles/lookup_ctrlbox.dir/fsa.cpp.o CMakeFiles/lookup_ctrlbox.dir/os.cpp.o CMakeFiles/lookup_ctrlbox.dir/logger.cpp.o  -o ../../bin/lookup_ctrlbox  -lpthread 

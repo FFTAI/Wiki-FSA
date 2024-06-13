@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/ctrl_config_save.dir/demo_ctrl_config_save.cpp.o CMakeFiles/ctrl_config_save.dir/fsa.cpp.o CMakeFiles/ctrl_config_save.dir/os.cpp.o CMakeFiles/ctrl_config_save.dir/logger.cpp.o  -o ../../bin/ctrl_config_save  -lpthread 

@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/home_offset_get.dir/demo_home_offset_get.cpp.o CMakeFiles/home_offset_get.dir/fsa.cpp.o CMakeFiles/home_offset_get.dir/os.cpp.o CMakeFiles/home_offset_get.dir/logger.cpp.o  -o ../../bin/home_offset_get  -lpthread 

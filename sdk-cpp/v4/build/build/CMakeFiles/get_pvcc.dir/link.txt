@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/get_pvcc.dir/demo_get_pvcc.cpp.o CMakeFiles/get_pvcc.dir/fsa.cpp.o CMakeFiles/get_pvcc.dir/os.cpp.o CMakeFiles/get_pvcc.dir/logger.cpp.o  -o ../../bin/get_pvcc  -lpthread 

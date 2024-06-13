@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/ctrl_config_get.dir/demo_ctrl_config_get.cpp.o CMakeFiles/ctrl_config_get.dir/fsa.cpp.o CMakeFiles/ctrl_config_get.dir/os.cpp.o CMakeFiles/ctrl_config_get.dir/logger.cpp.o  -o ../../bin/ctrl_config_get  -lpthread 

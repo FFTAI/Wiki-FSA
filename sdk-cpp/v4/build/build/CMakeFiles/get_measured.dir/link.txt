@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/get_measured.dir/demo_get_measured.cpp.o CMakeFiles/get_measured.dir/fsa.cpp.o CMakeFiles/get_measured.dir/os.cpp.o CMakeFiles/get_measured.dir/logger.cpp.o  -o ../../bin/get_measured  -lpthread 
