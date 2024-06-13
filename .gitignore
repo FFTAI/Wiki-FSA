@@ -1,5 +1,8 @@
 .idea/
 .vscode/
 
+*/bin/
+*/build/
+
 *.log
 *.pyc
