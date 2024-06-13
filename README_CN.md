@@ -48,9 +48,7 @@ $$
 
 ##### 位置控制
 
-$$
-e_{j} = q_{d_{j}} - q_{j}
-$$
+$$e_{j} = q_{d_{j}} - q_{j}$$
 
 $$
 \dot{e}_{j} = K_{p}^{pos} e_{j} G_{\theta} - \dot{q}_{j} G_{\omega}
