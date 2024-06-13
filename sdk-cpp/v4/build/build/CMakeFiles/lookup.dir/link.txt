@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/lookup.dir/demo_lookup.cpp.o CMakeFiles/lookup.dir/fsa.cpp.o CMakeFiles/lookup.dir/os.cpp.o CMakeFiles/lookup.dir/logger.cpp.o  -o ../../bin/lookup  -lpthread 

@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/ota_cloud.dir/demo_ota_cloud.cpp.o CMakeFiles/ota_cloud.dir/fsa.cpp.o CMakeFiles/ota_cloud.dir/os.cpp.o CMakeFiles/ota_cloud.dir/logger.cpp.o  -o ../../bin/ota_cloud  -lpthread 

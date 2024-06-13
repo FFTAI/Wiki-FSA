@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/home_position_set.dir/demo_home_position_set.cpp.o CMakeFiles/home_position_set.dir/fsa.cpp.o CMakeFiles/home_position_set.dir/os.cpp.o CMakeFiles/home_position_set.dir/logger.cpp.o  -o ../../bin/home_position_set  -lpthread 
