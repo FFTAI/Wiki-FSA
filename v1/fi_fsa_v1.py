@@ -685,8 +685,6 @@ def set_pid_param(server_ip, dict):
         "control_position_kp": dict['control_position_kp'],
         "control_velocity_kp": dict['control_velocity_kp'],
         "control_velocity_ki": dict['control_velocity_ki'],
-        "control_PD_kp": dict['control_PD_kp'],
-        "control_PD_kd": dict['control_PD_kd'],
     }
     json_str = json.dumps(data)
 
@@ -805,8 +803,6 @@ def set_pid_param_imm(server_ip, dict):
         "control_position_kp_imm": dict['control_position_kp_imm'],
         "control_velocity_kp_imm": dict['control_velocity_kp_imm'],
         "control_velocity_ki_imm": dict['control_velocity_ki_imm'],
-        "control_PD_kp_imm": dict['control_PD_kp_imm'],
-        "control_PD_kd_imm": dict['control_PD_kd_imm'],
     }
 
     json_str = json.dumps(data)

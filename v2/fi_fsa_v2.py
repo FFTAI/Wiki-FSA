@@ -1089,20 +1089,11 @@ def get_flag_of_operation(server_ip):
         return None
 
 
-def set_flag_of_operation(server_ip,
-                          flag_do_use_store_actuator_param,
-                          flag_do_use_store_motor_param,
-                          flag_do_use_store_encoder_param,
-                          flag_do_use_store_pid_param):
-    data = {
-        "method": "SET",
-        "reqTarget": "/flag_of_operation",
-        "property": "",
-        "flag_do_use_store_actuator_param": flag_do_use_store_actuator_param,
-        "flag_do_use_store_motor_param": flag_do_use_store_motor_param,
-        "flag_do_use_store_encoder_param": flag_do_use_store_encoder_param,
-        "flag_do_use_store_pid_param": flag_do_use_store_pid_param,
-    }
+def set_flag_of_operation(server_ip, dict_cfg):
+    data = dict_cfg
+    data["method"] = "SET"
+    data["reqTarget"] = "/flag_of_operation"
+    data["property"] = ""
 
     json_str = json.dumps(data)
 
@@ -1215,28 +1206,11 @@ def get_config(server_ip):
 # Parameter: The protection threshold of bus voltage overvoltage and undervoltage
 # Return success or failure
 def set_config(server_ip, dict):
-    data = {
-        "method": "SET",
-        "reqTarget": "/config",
-        "property": "",
+    dict['method'] = "SET"
+    dict['reqTarget'] = "/config"
+    dict['property'] = ''
 
-        "actuator_type": dict["actuator_type"],
-        "actuator_direction": dict["actuator_direction"],
-        "actuator_reduction_ratio": dict["actuator_reduction_ratio"],
-
-        "motor_type": dict["motor_type"],
-        "motor_hardware_type": dict["motor_hardware_type"],
-        "motor_vbus": dict["motor_vbus"],
-        "motor_direction": dict["motor_direction"],
-        "motor_max_speed": dict["motor_max_speed"],
-        "motor_max_acceleration": dict["motor_max_acceleration"],
-        "motor_max_current": dict["motor_max_current"],
-
-        "actuator_comm_hardware_type": dict["actuator_comm_hardware_type"],
-
-    }
-
-    json_str = json.dumps(data)
+    json_str = json.dumps(dict)
 
     if fsa_flag_debug is True:
         Logger().print_trace("Send JSON Obj:", json_str)
@@ -1546,42 +1520,6 @@ def set_fsa_abs_offset(server_ip, offset):
         "method": "SET",
         "reqTarget": "/set_abs_offset",
         "abs_offset": offset,
-    }
-
-    json_str = json.dumps(data)
-
-    if fsa_flag_debug is True:
-        Logger().print_trace("Send JSON Obj:", json_str)
-
-    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
-    try:
-        data, address = fsa_socket.recvfrom(1024)
-
-        if fsa_flag_debug is True:
-            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
-
-        json_obj = json.loads(data.decode("utf-8"))
-
-        if json_obj.get("status") == "OK":
-            return True
-        else:
-            Logger().print_trace_error(server_ip, " receive status is not OK!")
-            return FSAFunctionResult.FAIL
-
-    except socket.timeout:  # fail after 1 second of no activity
-        Logger().print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return FSAFunctionResult.TIMEOUT
-
-    except:
-        Logger().print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
-        return FSAFunctionResult.FAIL
-
-
-def set_double_encoder_enable(server_ip, is_enable):
-    data = {
-        "method": "SET",
-        "reqTarget": "/set_double_encoder_enable",
-        "double_encoder_enable": is_enable,
     }
 
     json_str = json.dumps(data)
@@ -4165,6 +4103,30 @@ def broadcast_func_with_filter(filter_type=None):
             else:
                 Logger().print_trace_error("Do not have any server! [Timeout] \n")
                 return False
+
+
+def set_subscribe(server_ip, cfg_dict):
+
+    cfg_dict["method"] = "SET"
+    cfg_dict["reqTarget"] = "/subscribe"
+    cfg_dict["property"] = ""
+
+    json_str = json.dumps(cfg_dict)
+
+    if fsa_flag_debug is True:
+        Logger().print_trace("Send JSON Obj:", json_str)
+
+    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    try:
+        data, address = fsa_socket.recvfrom(1024)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode('utf-8'))
+
+    except socket.timeout:  # fail after 1 second of no activity
+        print("Didn't receive anymore data! [Timeout]")
 
 
 def ota(server_ip):
