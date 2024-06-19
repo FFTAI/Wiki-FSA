@@ -8,11 +8,12 @@
  ******************************************************************************
  */
 
-//-------------------------------- Includes ----------------------------------------------------------------------------------------------
+//-------------------------------- Includes
+//----------------------------------------------------------------------------------------------
 
 #include <stdlib.h>
-#include <unistd.h>
 #include <sys/time.h>
+#include <unistd.h>
 
 #include "function_result.h"
 #include "os.h"
@@ -20,22 +21,28 @@
 using namespace Predefine;
 using namespace Utils;
 
-//-------------------------------- Includes ----------------------------------------------------------------------------------------------
+//-------------------------------- Includes
+//----------------------------------------------------------------------------------------------
 
-//-------------------------------- Macro Definition --------------------------------------------------------------------------------------
+//-------------------------------- Macro Definition
+//--------------------------------------------------------------------------------------
 
-//-------------------------------- Macro Definition --------------------------------------------------------------------------------------
+//-------------------------------- Macro Definition
+//--------------------------------------------------------------------------------------
 
-//-------------------------------- Variables Definition ----------------------------------------------------------------------------------
+//-------------------------------- Variables Definition
+//----------------------------------------------------------------------------------
 // Extern
 
 // Global
 
 // Static
 
-//-------------------------------- Variables Definition ----------------------------------------------------------------------------------
+//-------------------------------- Variables Definition
+//----------------------------------------------------------------------------------
 
-//-------------------------------- Function Definition -----------------------------------------------------------------------------------
+//-------------------------------- Function Definition
+//-----------------------------------------------------------------------------------
 
 /**
  ****************************************************************************
@@ -44,9 +51,8 @@ using namespace Utils;
  *
  *****************************************************************************
  */
-OS::OS()
-{
-    this->get_time_in_s(&this->start_time_in_s_);
+OS::OS() {
+    this->get_time_in_s( &this->start_time_in_s_ );
 }
 
 /**
@@ -56,9 +62,7 @@ OS::OS()
  *
  *****************************************************************************
  */
-OS::~OS()
-{
-}
+OS::~OS() {}
 
 // OS *OS::get_instance()
 // {
@@ -75,11 +79,10 @@ OS::~OS()
  *
  *****************************************************************************
  */
-int OS::get_time_in_us(double *us)
-{
+int OS::get_time_in_us( double* us ) {
     struct timeval tv;
-    gettimeofday(&tv, NULL);
-    *us = (double)tv.tv_sec * 1000000 + tv.tv_usec - this->start_time_in_s_ * 1000000;
+    gettimeofday( &tv, NULL );
+    *us = ( double )tv.tv_sec * 1000000 + tv.tv_usec - this->start_time_in_s_ * 1000000;
     return FunctionResult::SUCCESS;
 }
 
@@ -92,11 +95,10 @@ int OS::get_time_in_us(double *us)
  *
  *****************************************************************************
  */
-int OS::get_time_in_ms(double *ms)
-{
+int OS::get_time_in_ms( double* ms ) {
     struct timeval tv;
-    gettimeofday(&tv, NULL);
-    *ms = (double)tv.tv_sec * 1000 + tv.tv_usec * 0.001f - this->start_time_in_s_ * 1000;
+    gettimeofday( &tv, NULL );
+    *ms = ( double )tv.tv_sec * 1000 + tv.tv_usec * 0.001f - this->start_time_in_s_ * 1000;
     return FunctionResult::SUCCESS;
 }
 
@@ -109,11 +111,10 @@ int OS::get_time_in_ms(double *ms)
  *
  *****************************************************************************
  */
-int OS::get_time_in_s(double *s)
-{
+int OS::get_time_in_s( double* s ) {
     struct timeval tv;
-    gettimeofday(&tv, NULL);
-    *s = (double)tv.tv_sec + tv.tv_usec * 0.000001f - this->start_time_in_s_;
+    gettimeofday( &tv, NULL );
+    *s = ( double )tv.tv_sec + tv.tv_usec * 0.000001f - this->start_time_in_s_;
     return FunctionResult::SUCCESS;
 }
 
@@ -126,8 +127,7 @@ int OS::get_time_in_s(double *s)
  *
  *****************************************************************************
  */
-int OS::get_time_in_tick(double *tick)
-{
+int OS::get_time_in_tick( double* tick ) {
     *tick = this->tick_;
     return FunctionResult::SUCCESS;
 }
@@ -141,8 +141,7 @@ int OS::get_time_in_tick(double *tick)
  *
  ******************************************************************************
  */
-int OS::sleep_s(float s)
-{
+int OS::sleep_s( float s ) {
     return FunctionResult::SUCCESS;
 }
 
@@ -155,22 +154,19 @@ int OS::sleep_s(float s)
  *
  ******************************************************************************
  */
-int OS::sleep_ms(float ms)
-{
-    double start_time = 0;
+int OS::sleep_ms( float ms ) {
+    double start_time   = 0;
     double current_time = 0;
 
-    this->get_time_in_ms(&start_time);
-    this->get_time_in_ms(&current_time);
+    this->get_time_in_ms( &start_time );
+    this->get_time_in_ms( &current_time );
 
-    while (1)
-    {
-        if (current_time - ms > start_time)
-        {
+    while ( 1 ) {
+        if ( current_time - ms > start_time ) {
             break;
         }
 
-        this->get_time_in_ms(&current_time);
+        this->get_time_in_ms( &current_time );
     }
 
     return FunctionResult::SUCCESS;
@@ -185,22 +181,19 @@ int OS::sleep_ms(float ms)
  *
  ******************************************************************************
  */
-int OS::sleep_us(float us)
-{
-    double start_time = 0;
+int OS::sleep_us( float us ) {
+    double start_time   = 0;
     double current_time = 0;
 
-    this->get_time_in_us(&start_time);
-    this->get_time_in_us(&current_time);
+    this->get_time_in_us( &start_time );
+    this->get_time_in_us( &current_time );
 
-    while (1)
-    {
-        if (current_time - us > start_time)
-        {
+    while ( 1 ) {
+        if ( current_time - us > start_time ) {
             break;
         }
 
-        this->get_time_in_us(&current_time);
+        this->get_time_in_us( &current_time );
     }
 
     return FunctionResult::SUCCESS;
@@ -215,10 +208,8 @@ int OS::sleep_us(float us)
  *
  ******************************************************************************
  */
-int OS::sleep_tick(float tick)
-{
-    for (int i = 0; i < tick; i++)
-    {
+int OS::sleep_tick( float tick ) {
+    for ( int i = 0; i < tick; i++ ) {
     }
 
     return FunctionResult::SUCCESS;
@@ -233,9 +224,8 @@ int OS::sleep_tick(float tick)
  *
  ******************************************************************************
  */
-int OS::delay_s(float s)
-{
-    usleep(s * 1000 * 1000);
+int OS::delay_s( float s ) {
+    usleep( s * 1000 * 1000 );
     return FunctionResult::SUCCESS;
 }
 
@@ -248,9 +238,8 @@ int OS::delay_s(float s)
  *
  ******************************************************************************
  */
-int OS::delay_ms(float ms)
-{
-    usleep(ms * 1000);
+int OS::delay_ms( float ms ) {
+    usleep( ms * 1000 );
     return FunctionResult::SUCCESS;
 }
 
@@ -263,9 +252,8 @@ int OS::delay_ms(float ms)
  *
  ******************************************************************************
  */
-int OS::delay_us(float us)
-{
-    usleep(us);
+int OS::delay_us( float us ) {
+    usleep( us );
     return FunctionResult::SUCCESS;
 }
 
@@ -278,20 +266,19 @@ int OS::delay_us(float us)
  *
  ******************************************************************************
  */
-int OS::delay_tick(float tick)
-{
-    usleep(tick);
+int OS::delay_tick( float tick ) {
+    usleep( tick );
     return FunctionResult::SUCCESS;
 }
 
 /**
  * @brief return interval time unit:s
  */
-double OS::get_interval_time_in_s(struct timeval ts, struct timeval te)
-{
-    return (te.tv_sec - ts.tv_sec) + (te.tv_usec - ts.tv_usec) / 1000000.0;
+double OS::get_interval_time_in_s( struct timeval ts, struct timeval te ) {
+    return ( te.tv_sec - ts.tv_sec ) + ( te.tv_usec - ts.tv_usec ) / 1000000.0;
 }
 
-//-------------------------------- Function Definition -----------------------------------------------------------------------------------
+//-------------------------------- Function Definition
+//-----------------------------------------------------------------------------------
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -108,11 +108,11 @@
         "ctrl_config_set": {
             "xxx": 360.0
         },
-        "flag_of_operation_set":{
-            "flag_do_use_store_actuator_param":0,
-            "flag_do_use_store_motor_param":0,
-            "flag_do_use_store_encoder_param":0,
-            "flag_do_use_store_pid_param":0
+        "flag_of_operation_set": {
+            "flag_do_use_store_actuator_param": 0,
+            "flag_do_use_store_motor_param": 0,
+            "flag_do_use_store_encoder_param": 0,
+            "flag_do_use_store_pid_param": 0
         },
         "home_offset_set": {
             "home_offset": 0.0

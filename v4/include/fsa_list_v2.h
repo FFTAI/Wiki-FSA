@@ -1,9 +1,9 @@
 #pragma once
 
+#include "main.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include "main.h"
 
 using namespace Actuator;
 using namespace Utils;
