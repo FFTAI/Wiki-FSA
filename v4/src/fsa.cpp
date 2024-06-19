@@ -58,6 +58,36 @@ int FSA::communicate( char* ip, int port, const char* msg, char* client_recv_msg
     return FunctionResult::FAILURE;
 }
 
+int FSA::fast_communicate( char* ip, int port, uint8_t* sendmsg, uint16_t send_size, uint8_t* client_recv_msg, uint16_t recv_size ) {
+    if ( !this->is_init ) {
+        this->init_network();
+        Logger::get_instance()->print_trace( "init fsa\n" );
+        this->is_init = 1;
+        usleep( 20 );
+    }
+
+    int ret = -1;
+
+    this->work_ip                         = ip;
+    this->fsa_sockaddr_in_work.sin_family = AF_INET;
+    this->fsa_sockaddr_in_work.sin_port   = htons( port );
+    inet_pton( AF_INET, this->work_ip, &this->fsa_sockaddr_in_work.sin_addr.s_addr );
+    usleep( 1 );
+
+    ret = sendto( this->fsa_socket, sendmsg, send_size, 0, ( struct sockaddr* )&this->fsa_sockaddr_in_work, sizeof( this->fsa_sockaddr_in_work ) );
+    if ( ret == -1 ) {
+        Logger::get_instance()->print_trace_error( "sigle sendto() failed\n" );
+        return FunctionResult::FAILURE;
+    }
+
+    ret = recvfrom( this->fsa_socket, client_recv_msg, recv_size, 0, NULL, NULL );
+    if ( ret == -1 ) {
+        Logger::get_instance()->print_trace_error( "sigle recvfrom() failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    return FunctionResult::SUCCESS;
+}
+
 int FSA::decode( char* msg ) {
     // usleep(100);
     if ( this->msg_json.Parse( msg ).HasParseError() ) {
@@ -2118,4 +2148,241 @@ int Actuator::set_encrypt( char* ip, const char* username, const char* passwold 
         return FunctionResult::SUCCESS;
     }
     return FunctionResult::FAILURE;
+}
+
+// ==================================新增fast接口=======================================================
+
+int Actuator::fast_disable_set( char* ip ) {
+    uint8_t send_pkg = 0x02;
+    uint8_t recv_pkg = 0x00;
+    if ( fsa->fast_communicate( ip, SERVER_PORT_FAST, &send_pkg, sizeof( send_pkg ), &recv_pkg, sizeof( recv_pkg ) ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "fast disable set failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace( "fast disable set reply: %d\n", recv_pkg );
+    if ( recv_pkg != send_pkg ) {
+        Logger::get_instance()->print_trace_error( "fast disable set failed, receive package: %d\n", recv_pkg );
+        return FunctionResult::FAILURE;
+    }
+    return FunctionResult::SUCCESS;
+}
+
+int Actuator::fast_enable_set( char* ip ) {
+    uint8_t send_pkg = 0x01;
+    uint8_t recv_pkg = 0x00;
+    if ( fsa->fast_communicate( ip, SERVER_PORT_FAST, &send_pkg, sizeof( send_pkg ), &recv_pkg, sizeof( recv_pkg ) ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "fast disable set failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace( "fast enable set reply: %d\n", recv_pkg );
+    if ( recv_pkg != send_pkg ) {
+        Logger::get_instance()->print_trace_error( "fast disable set failed, receive package: %d\n", recv_pkg );
+        return FunctionResult::FAILURE;
+    }
+    return FunctionResult::SUCCESS;
+}
+
+int Actuator::fast_get_pvc( char* ip, double& position, double& velocity, double& current ) {
+    uint8_t send_pkg       = 0x1a;
+    uint8_t recv_pkg[ 13 ] = { 0x00 };
+    if ( fsa->fast_communicate( ip, SERVER_PORT_FAST, &send_pkg, sizeof( send_pkg ), recv_pkg, sizeof( recv_pkg ) ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "fast get pvc failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace( "fast get pvc reply: %d\n", recv_pkg[ 0 ] );
+    if ( recv_pkg[ 0 ] != send_pkg ) {
+        Logger::get_instance()->print_trace_error( "fast get pvc failed, receive package: %d\n", recv_pkg[ 0 ] );
+        return FunctionResult::FAILURE;
+    }
+    unsigned int fed_position_uint    = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+    unsigned int fed_velocity_ff_uint = ( unsigned int )recv_pkg[ 5 ] << 24 | ( unsigned int )recv_pkg[ 6 ] << 16 | ( unsigned int )recv_pkg[ 7 ] << 8 | ( unsigned int )recv_pkg[ 8 ] << 0;
+    unsigned int fed_current_ff_uint  = ( unsigned int )recv_pkg[ 9 ] << 24 | ( unsigned int )recv_pkg[ 10 ] << 16 | ( unsigned int )recv_pkg[ 11 ] << 8 | ( unsigned int )recv_pkg[ 12 ] << 0;
+
+    position = *( double* )&fed_position_uint;
+    velocity = *( double* )&fed_velocity_ff_uint;
+    current  = *( double* )&fed_current_ff_uint;
+    return FunctionResult::SUCCESS;
+}
+
+int Actuator::fast_get_error( char* ip, int& error_code ) {
+    uint8_t send_pkg      = 0x1b;
+    uint8_t recv_pkg[ 5 ] = { 0x00 };
+    if ( fsa->fast_communicate( ip, SERVER_PORT_FAST, &send_pkg, sizeof( send_pkg ), recv_pkg, sizeof( recv_pkg ) ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "fast get error code failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace( "fast get error code reply: %d\n", recv_pkg[ 0 ] );
+    if ( recv_pkg[ 0 ] != send_pkg ) {
+        Logger::get_instance()->print_trace_error( "fast get error code failed, receive package: %d\n", recv_pkg[ 0 ] );
+        return FunctionResult::FAILURE;
+    }
+    unsigned int error_code_uint = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+
+    error_code = *( int* )&error_code_uint;
+    return FunctionResult::SUCCESS;
+}
+
+int Actuator::fast_set_clear_fault( char* ip ) {
+    int error_code = -1;
+    if ( fast_get_error( ip, error_code ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "get error code failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    uint8_t send_pkg = 0x03;
+    uint8_t recv_pkg = 0x00;
+    if ( fsa->fast_communicate( ip, SERVER_PORT_FAST, &send_pkg, sizeof( send_pkg ), &recv_pkg, sizeof( recv_pkg ) ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "fast clear fault failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace( "fast clear fault reply: %d\n", recv_pkg );
+    if ( recv_pkg != send_pkg ) {
+        Logger::get_instance()->print_trace_error( "fast clear fault failed, receive package: %d\n", recv_pkg );
+        return FunctionResult::FAILURE;
+    }
+    return FunctionResult::SUCCESS;
+}
+
+int Actuator::fast_set_current_control( char* ip, float current, double& fdb_position, double& fdb_velocity, double& fdb_current ) {
+    uint8_t      send_pkg[ 5 ]             = { 0x00 };
+    uint8_t      recv_pkg[ 13 ]            = { 0x00 };
+    unsigned int val_measured_current_uint = *( unsigned int* )&current;
+
+    send_pkg[ 0 ] = 0x0D;
+    send_pkg[ 1 ] = ( val_measured_current_uint >> 24 ) & 0xFF;
+    send_pkg[ 2 ] = ( val_measured_current_uint >> 16 ) & 0xFF;
+    send_pkg[ 3 ] = ( val_measured_current_uint >> 8 ) & 0xFF;
+    send_pkg[ 4 ] = ( val_measured_current_uint >> 0 ) & 0xFF;
+
+    if ( fsa->fast_communicate( ip, SERVER_PORT_FAST, send_pkg, sizeof( send_pkg ), recv_pkg, sizeof( recv_pkg ) ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "fast set current failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace( "fast set current reply: %d\n", recv_pkg[ 0 ] );
+    if ( recv_pkg[ 0 ] != 0x1a ) {
+        Logger::get_instance()->print_trace_error( "fast set current failed, receive package: %d\n", recv_pkg[ 0 ] );
+        return FunctionResult::FAILURE;
+    }
+    unsigned int fed_position_uint    = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+    unsigned int fed_velocity_ff_uint = ( unsigned int )recv_pkg[ 5 ] << 24 | ( unsigned int )recv_pkg[ 6 ] << 16 | ( unsigned int )recv_pkg[ 7 ] << 8 | ( unsigned int )recv_pkg[ 8 ] << 0;
+    unsigned int fed_current_ff_uint  = ( unsigned int )recv_pkg[ 9 ] << 24 | ( unsigned int )recv_pkg[ 10 ] << 16 | ( unsigned int )recv_pkg[ 11 ] << 8 | ( unsigned int )recv_pkg[ 12 ] << 0;
+
+    fdb_position = *( double* )&fed_position_uint;
+    fdb_velocity = *( double* )&fed_velocity_ff_uint;
+    fdb_current  = *( double* )&fed_current_ff_uint;
+
+    return FunctionResult::SUCCESS;
+}
+
+int Actuator::fast_set_position_control( char* ip, float position, float velocity_ff, float current_ff, double& fdb_position, double& fdb_velocity, double& fdb_current ) {
+    uint8_t      send_pkg[ 13 ]                = { 0x00 };
+    uint8_t      recv_pkg[ 13 ]                = { 0x00 };
+    unsigned int val_measured_position_uint    = *( unsigned int* )&position;
+    unsigned int val_measured_velocity_ff_uint = *( unsigned int* )&velocity_ff;
+    unsigned int val_measured_current_ff_uint  = *( unsigned int* )&current_ff;
+
+    send_pkg[ 0 ]  = 0x0A;
+    send_pkg[ 1 ]  = ( val_measured_position_uint >> 24 ) & 0xFF;
+    send_pkg[ 2 ]  = ( val_measured_position_uint >> 16 ) & 0xFF;
+    send_pkg[ 3 ]  = ( val_measured_position_uint >> 8 ) & 0xFF;
+    send_pkg[ 4 ]  = ( val_measured_position_uint >> 0 ) & 0xFF;
+    send_pkg[ 5 ]  = ( val_measured_velocity_ff_uint >> 24 ) & 0xFF;
+    send_pkg[ 6 ]  = ( val_measured_velocity_ff_uint >> 16 ) & 0xFF;
+    send_pkg[ 7 ]  = ( val_measured_velocity_ff_uint >> 8 ) & 0xFF;
+    send_pkg[ 8 ]  = ( val_measured_velocity_ff_uint >> 0 ) & 0xFF;
+    send_pkg[ 9 ]  = ( val_measured_current_ff_uint >> 24 ) & 0xFF;
+    send_pkg[ 10 ] = ( val_measured_current_ff_uint >> 16 ) & 0xFF;
+    send_pkg[ 11 ] = ( val_measured_current_ff_uint >> 8 ) & 0xFF;
+    send_pkg[ 12 ] = ( val_measured_current_ff_uint >> 0 ) & 0xFF;
+
+    if ( fsa->fast_communicate( ip, SERVER_PORT_FAST, send_pkg, sizeof( send_pkg ), recv_pkg, sizeof( recv_pkg ) ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "fast set current failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace( "fast set position reply: %d\n", recv_pkg[ 0 ] );
+    if ( recv_pkg[ 0 ] != 0x1a ) {
+        Logger::get_instance()->print_trace_error( "fast set position failed, receive package: %d\n", recv_pkg );
+        return FunctionResult::FAILURE;
+    }
+    unsigned int fed_position_uint    = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+    unsigned int fed_velocity_ff_uint = ( unsigned int )recv_pkg[ 5 ] << 24 | ( unsigned int )recv_pkg[ 6 ] << 16 | ( unsigned int )recv_pkg[ 7 ] << 8 | ( unsigned int )recv_pkg[ 8 ] << 0;
+    unsigned int fed_current_ff_uint  = ( unsigned int )recv_pkg[ 9 ] << 24 | ( unsigned int )recv_pkg[ 10 ] << 16 | ( unsigned int )recv_pkg[ 11 ] << 8 | ( unsigned int )recv_pkg[ 12 ] << 0;
+
+    fdb_position = *( double* )&fed_position_uint;
+    fdb_velocity = *( double* )&fed_velocity_ff_uint;
+    fdb_current  = *( double* )&fed_current_ff_uint;
+    return FunctionResult::SUCCESS;
+}
+
+int Actuator::fast_set_velocity_control( char* ip, float velocity, float current_ff, double& fdb_position, double& fdb_velocity, double& fdb_current ) {
+    uint8_t      send_pkg[ 13 ]               = { 0x00 };
+    uint8_t      recv_pkg[ 9 ]                = { 0x00 };
+    unsigned int val_measured_velocity_uint   = *( unsigned int* )&velocity;
+    unsigned int val_measured_current_ff_uint = *( unsigned int* )&current_ff;
+
+    send_pkg[ 0 ] = 0x0B;
+    send_pkg[ 1 ] = ( val_measured_velocity_uint >> 24 ) & 0xFF;
+    send_pkg[ 2 ] = ( val_measured_velocity_uint >> 16 ) & 0xFF;
+    send_pkg[ 3 ] = ( val_measured_velocity_uint >> 8 ) & 0xFF;
+    send_pkg[ 4 ] = ( val_measured_velocity_uint >> 0 ) & 0xFF;
+    send_pkg[ 5 ] = ( val_measured_current_ff_uint >> 24 ) & 0xFF;
+    send_pkg[ 6 ] = ( val_measured_current_ff_uint >> 16 ) & 0xFF;
+    send_pkg[ 7 ] = ( val_measured_current_ff_uint >> 8 ) & 0xFF;
+    send_pkg[ 8 ] = ( val_measured_current_ff_uint >> 0 ) & 0xFF;
+
+    if ( fsa->fast_communicate( ip, SERVER_PORT_FAST, send_pkg, sizeof( send_pkg ), recv_pkg, sizeof( recv_pkg ) ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "fast set velocity failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace( "fast set velocity reply: %d\n", recv_pkg[ 0 ] );
+    if ( recv_pkg[ 0 ] != 0x1a ) {
+        Logger::get_instance()->print_trace_error( "fast set velocity failed, receive package: %d\n", recv_pkg[ 0 ] );
+        return FunctionResult::FAILURE;
+    }
+    unsigned int fed_position_uint    = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+    unsigned int fed_velocity_ff_uint = ( unsigned int )recv_pkg[ 5 ] << 24 | ( unsigned int )recv_pkg[ 6 ] << 16 | ( unsigned int )recv_pkg[ 7 ] << 8 | ( unsigned int )recv_pkg[ 8 ] << 0;
+    unsigned int fed_current_ff_uint  = ( unsigned int )recv_pkg[ 9 ] << 24 | ( unsigned int )recv_pkg[ 10 ] << 16 | ( unsigned int )recv_pkg[ 11 ] << 8 | ( unsigned int )recv_pkg[ 12 ] << 0;
+
+    fdb_position = *( double* )&fed_position_uint;
+    fdb_velocity = *( double* )&fed_velocity_ff_uint;
+    fdb_current  = *( double* )&fed_current_ff_uint;
+    return FunctionResult::SUCCESS;
+}
+
+int Actuator::fast_set_mode_of_operation( char* ip, int mode ) {
+    uint8_t            send_pkg = 0x00;
+    FsaModeOfOperation modeOfOper;
+    if ( modeOfOper.NONE == mode ) {
+        Logger::get_instance()->print_trace_error( "Control mode: NONE, Please set really control mode\n" );
+        return FunctionResult::FAILURE;
+    }
+    else if ( mode == modeOfOper.CURRENT_CLOSE_LOOP_CONTROL ) {
+        send_pkg = 0x07;
+    }
+    else if ( mode == modeOfOper.POSITION_CONTROL ) {
+        send_pkg = 0x04;
+    }
+    else if ( mode == modeOfOper.TRAPEZOIDAL_CONTROL ) {
+        Logger::get_instance()->print_trace_error( "Control mode: NONE, Please set really control mode\n" );
+        return FunctionResult::FAILURE;
+        4;
+    }
+    else if ( mode == modeOfOper.VELOCITY_CONTROL ) {
+        send_pkg = 0x05;
+    }
+    else {
+        Logger::get_instance()->print_trace_error( "Please set really control mode\n" );
+        return FunctionResult::FAILURE;
+    }
+
+    uint8_t recv_pkg = 0x00;
+    if ( fsa->fast_communicate( ip, SERVER_PORT_FAST, &send_pkg, sizeof( send_pkg ), &recv_pkg, sizeof( recv_pkg ) ) == FunctionResult::FAILURE ) {
+        Logger::get_instance()->print_trace_error( "fast set mode of operation failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    Logger::get_instance()->print_trace( "fast set mode of operation reply: %d\n", recv_pkg );
+    if ( recv_pkg != send_pkg ) {
+        Logger::get_instance()->print_trace_error( "fast set mode of operation failed, receive package: %d\n", recv_pkg );
+        return FunctionResult::FAILURE;
+    }
+    return FunctionResult::SUCCESS;
 }

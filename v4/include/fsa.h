@@ -22,6 +22,7 @@
 #define BUFFER_SIZE 1024
 #define SERVER_PORT_COMM 2334
 #define SERVER_PORT_CTRL 2333
+#define SERVER_PORT_FAST 2335
 
 #define ABSCODER "AbsEncoder"
 #define ACTUATOR "Actuator"
@@ -144,6 +145,8 @@ private:
 public:
     FSA( /* args */ );
     ~FSA();
+
+    int fast_communicate( char* ip, int port, uint8_t* sendmsg, uint16_t send_size, uint8_t* client_recv_msg, uint16_t recv_size );
 
     int init();
 
@@ -400,6 +403,17 @@ int reboot_actuator( char* ip );
 int set_calibrate_encoder( char* ip );
 int set_encrypt( char* ip, const char* username, const char* passwold );
 
+// ===================================新增fast接口==================================
+
+int fast_disable_set( char* ip );
+int fast_enable_set( char* ip );
+int fast_get_pvc( char* ip, double& position, double& velocity, double& current );
+int fast_get_error( char* ip, int& error_code );
+int fast_set_clear_fault( char* ip );
+int fast_set_current_control( char* ip, float current, double& fdb_position, double& fdb_velocity, double& fdb_current );
+int fast_set_position_control( char* ip, float position, float velocity_ff, float current_ff, double& fdb_position, double& fdb_velocity, double& fdb_current );
+int fast_set_velocity_control( char* ip, float velocity, float current_ff, double& fdb_position, double& fdb_velocity, double& fdb_current );
+int fast_set_mode_of_operation( char* ip, int mode );
 }  // namespace Actuator
 
 #endif  // !__IF_FSA_H__
