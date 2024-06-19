@@ -1,13 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(sdk_cpp_fsa)
+project(fsasdk_v4)
 
 include_directories(include)
-set(SOURCES
-    ${PROJECT_SOURCE_DIR}/source/fsa.cpp
-    ${PROJECT_SOURCE_DIR}/source/os.cpp
-    ${PROJECT_SOURCE_DIR}/source/logger.cpp
-)
+
+aux_source_directory(${PROJECT_SOURCE_DIR}/src SOURCES)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -19,6 +16,7 @@ set_target_properties(${PROJECT_NAME}_static PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib
 )
 
+# 编译示例程序
 add_subdirectory(example build)
 
 # 格式化代码
@@ -26,7 +24,7 @@ add_custom_target(
     clangformat
     COMMAND /usr/bin/clang-format
     -i
-    ${CMAKE_CURRENT_SOURCE_DIR}/**/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/**/*.h
+    ${PROJECT_SOURCE_DIR}/**/*.cpp ${PROJECT_SOURCE_DIR}/**/*.h
     COMMENT "Formatting Cpp Files"
 )
 
@@ -39,6 +37,6 @@ add_custom_target(
     cmakeformat 
     COMMAND ${HOME_DIR}/.local/bin/cmake-format
     -i
-    ${CMAKE_CURRENT_SOURCE_DIR}/**/CMakeLists.txt
+    ${PROJECT_SOURCE_DIR}/**/CMakeLists.txt
     COMMENT "Formatting CMakeLists.txt"
 )
