@@ -1,18 +1,6 @@
-# Cpp API 介绍
+# V4 Cpp API 介绍
 
-## 通信反馈
-
-### 检索可连接 FSA
-
-```cpp
-// Declaration
-int Actuator::lookup( char* ip_ser, int& ser_num );
-
-// Example
-std::string ser_list[ 254 ] = { "" };
-int         ip_num          = 0;
-lookup( ( char* )ser_list, ip_num ); // lookup 函数会将扫描到的 IP 地址和 IP 数量分别添加到 ser_list 和ip_num 中，
-```
+## 参数获取
 
 ### 获取 FSA 当前 PVC（位置、速度、电流）
 
@@ -25,11 +13,74 @@ double pos = 0, vel = 0, cur = 0;
 get_pvc( "192.168.137.101", pos, vel, cur ); // 将 FSA 当前的位置、速度和电流数据存入 pos, vel 和 cur
 ```
 
+### 获取三环 PID 参数
+
+```cpp
+// Declartion
+int Actuator::pid_param_get( char* ip, rapidjson::Document* config_buffer );
+
+// Example
+rapidjson::Document pid_json;
+pid_param_get( "192.168.137.101", &pid_json );
+```
+
+### 获取 PD 参数
+
+```cpp
+
+```
+
+### 获取 FSA 参数
+
+```cpp
+// Declaration
+int Actuator::ctrl_config_get( char* ip, rapidjson::Document* config_buffer );
+
+// Example
+rapidjson::Document ctrl_config_json;
+ctrl_config_get( "192.168.137.101", &ctrl_config_json );
+```
+
+### 获取 FSA 限制参数
+
+```cpp
+// Declaration
+int Actuator::control_param_get( char* ip, float& vel, float& acc, float& cur );
+
+// Example
+float motor_max_speed, motor_max_acc, max_cur;
+control_param_get( "192.168.137.101", motor_max_speed, motor_max_acc, max_cur );
+```
+
+### 获取通信配置
+
+```cpp
+// Declaration
+int Actuator::comm_config_get( char* ip, rapidjson::Document* config_buffer );
+
+// Example
+rapidjson::Document msg_json;
+comm_config_get( "192.168.137.101", &msg_json );
+```
 
 
-## 参数配置
 
-### 配置三环 PID 参数
+### 获取操作标志位
+
+```cpp
+// Declaration
+int Actuator::flag_of_operation_get( char* ip, bool& act_val, bool& motor_val, bool& encoder_val, bool& pid_val );
+
+// Example
+bool act_val, motor_val, encoder_val, pid_val;
+flag_of_operation_get( "192.168.137.101", act_val, motor_val, encoder_val, pid_val );
+```
+
+
+
+## 参数设置
+
+### 设置三环 PID 参数
 
 ```cpp
 // Declaration
@@ -47,13 +98,13 @@ pid_param_imm_set( "192.168.137.101", 0.001, 0.001, 0.001, 0, 0 );
 
 > 注：电流环 PI 参数暂时无法自定义。
 
-### 配置 PD 参数
+### 设置 PD 参数
 
 ```cpp
 
 ```
 
-### 配置 FSA 参数
+### 设置 FSA 参数
 
 ```cpp
 // Declaration
@@ -182,7 +233,7 @@ FSAEncoderDirection       encoderDir;
 ctrl_config_set( "192.168.137.101", actuatorType.TYPE_DEFAULT, actuatorDir.DIRECTION_NORMAL, actuatorRedTat.REDUCTION_RATIO_30, motorType.FSA80_10V0, hardwareType.TYPE_H66V104, motorBus.VBUS_36V, motorDir.ACB, motorPolePairs.POLE_PAIRS_10, motorMaxSpeed.MAX_SPEED_3000, motorMaxAcc.MAX_ACCELERATION_60000, encoderDir.DIRECTION_CCW );
 ```
 
-### 配置 FSA 限制参数
+### 设置 FSA 限制参数
 
 ```cpp
 // Declaration
@@ -197,7 +248,17 @@ int Actuator::control_param_imm_set( char* ip, float vel, float acc, float cur )
 control_param_set( "192.168.137.101", 3000, 60000, 8 ); //限制 FSA 最大转速为 3000RPM，最大加速度 60000RPM/s，最大 Q 轴电流为 8A
 ```
 
-### 配置操作标志位
+### 设置通信配置
+
+```cpp
+// Declaration
+int Actuator::comm_config_set( char* ip, std::string name, bool dhcp_enable, std::string ssid, std::string password, uint8_t static_ip );
+
+// Example
+comm_config_set( "192.168.137.101", "FSA", false, "fftai-12", "fftai2015", 102 );
+```
+
+### 设置操作标志位
 
 ```cpp
 // Declaration
@@ -215,9 +276,19 @@ FSAFlagState flagState;
 flag_of_operation_set("192.168.137.101", flagState.CLEAR, flagState.SET, flagState.CLEAR, flagState.SET ); // 将电机和 PID 的保存参数标志位开启
 ```
 
-
-
 ## 运动控制
+
+### 检索可连接 FSA
+
+```cpp
+// Declaration
+int Actuator::lookup( char* ip_ser, int& ser_num );
+
+// Example
+std::string ser_list[ 254 ] = { "" };
+int         ip_num          = 0;
+lookup( ( char* )ser_list, ip_num ); // lookup 函数会将扫描到的 IP 地址和 IP 数量分别添加到 ser_list 和ip_num 中
+```
 
 ### 使能/失能
 
