@@ -81,6 +81,6 @@ cd bin
 
 ### API 文档
 
- [V3_Cpp_API_Introduction_CN.md](doc\V3_Cpp_API_Introduction_CN.md) 
+ [V3_Cpp_API_Introduction_CN.md](doc/V3_Cpp_API_Introduction_CN.md) 
 
- [V4_Cpp_API_Introduction_CN.md](doc\V4_Cpp_API_Introduction_CN.md) 
+ [V4_Cpp_API_Introduction_CN.md](doc/V4_Cpp_API_Introduction_CN.md) 
