@@ -77,7 +77,7 @@ cd bin
 
 ### FSA 控制原理
 
- [Control_System_Introduction_CN.md](doc\Control_System_Introduction_CN.md) 
+ [Control_System_Introduction_CN.md](doc/Control_System_Introduction_CN.md) 
 
 ### API 文档
 
