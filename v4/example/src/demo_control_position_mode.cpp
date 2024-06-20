@@ -67,7 +67,8 @@ int main() {
                 Logger::get_instance()->print_trace_error( "%s set position mode failed\n", ser_list[ i ].c_str() );
             }
         }
-        usleep( 1000 );
+        // usleep( 1000 );
+        std::this_thread::sleep_for( std::chrono::milliseconds( 1 ) );
     }
 
     for ( int i = 0; i < ip_num; i++ ) {

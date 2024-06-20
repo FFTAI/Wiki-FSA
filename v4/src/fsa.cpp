@@ -1,5 +1,6 @@
 #include "fsa.h"
 #include "function_result.h"
+#include <chrono>
 #include <pthread.h>
 
 using namespace Predefine;
@@ -18,7 +19,13 @@ int FSA::init_network() {
     timeout.tv_sec  = 1;
     timeout.tv_usec = 10;
 
+#ifdef _WIN32
+    /* Windows-specific code */
+    char tv = 1;
+#else
+    /* Linux-specific code */
     int tv = 1;
+#endif
 
     this->broadcast_socket = socket( AF_INET, SOCK_DGRAM, 0 );
     short set_sock_opt_flg = setsockopt( this->broadcast_socket, SOL_SOCKET, SO_BROADCAST, &tv, sizeof( tv ) );
@@ -28,7 +35,7 @@ int FSA::init_network() {
     }
 
     this->fsa_socket = socket( AF_INET, SOCK_DGRAM, 0 );
-    set_sock_opt_flg = setsockopt( this->fsa_socket, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof( timeout ) );
+    set_sock_opt_flg = setsockopt( this->fsa_socket, SOL_SOCKET, SO_RCVTIMEO, ( const char* )&timeout, sizeof( timeout ) );
     if ( set_sock_opt_flg == -1 ) {
         Logger::get_instance()->print_trace_error( "Error: init_network() setsockopt() failed\n" );
         return FunctionResult::FAILURE;
@@ -49,7 +56,8 @@ int FSA::init_network() {
 
 int FSA::communicate( char* ip, int port, const char* msg, char* client_recv_msg ) {
     if ( !( this->send_msg( ip, port, msg ) ) ) {
-        usleep( 100 );
+        // usleep( 100 );
+        std::this_thread::sleep_for( std::chrono::microseconds( 100 ) );
         if ( !( this->recv_msg( client_recv_msg ) ) ) {
             return FunctionResult::SUCCESS;
         }
@@ -63,7 +71,8 @@ int FSA::fast_communicate( char* ip, int port, uint8_t* sendmsg, uint16_t send_s
         this->init_network();
         Logger::get_instance()->print_trace( "init fsa\n" );
         this->is_init = 1;
-        usleep( 20 );
+        // usleep( 20 );
+        std::this_thread::sleep_for( std::chrono::microseconds( 20 ) );
     }
 
     int ret = -1;
@@ -72,15 +81,16 @@ int FSA::fast_communicate( char* ip, int port, uint8_t* sendmsg, uint16_t send_s
     this->fsa_sockaddr_in_work.sin_family = AF_INET;
     this->fsa_sockaddr_in_work.sin_port   = htons( port );
     inet_pton( AF_INET, this->work_ip, &this->fsa_sockaddr_in_work.sin_addr.s_addr );
-    usleep( 1 );
+    // usleep( 1 );
+    std::this_thread::sleep_for( std::chrono::microseconds( 1 ) );
 
-    ret = sendto( this->fsa_socket, sendmsg, send_size, 0, ( struct sockaddr* )&this->fsa_sockaddr_in_work, sizeof( this->fsa_sockaddr_in_work ) );
+    ret = sendto( this->fsa_socket, ( const char* )sendmsg, send_size, 0, ( struct sockaddr* )&this->fsa_sockaddr_in_work, sizeof( this->fsa_sockaddr_in_work ) );
     if ( ret == -1 ) {
         Logger::get_instance()->print_trace_error( "sigle sendto() failed\n" );
         return FunctionResult::FAILURE;
     }
 
-    ret = recvfrom( this->fsa_socket, client_recv_msg, recv_size, 0, NULL, NULL );
+    ret = recvfrom( this->fsa_socket, ( char* )client_recv_msg, recv_size, 0, NULL, NULL );
     if ( ret == -1 ) {
         Logger::get_instance()->print_trace_error( "sigle recvfrom() failed\n" );
         return FunctionResult::FAILURE;
@@ -133,7 +143,8 @@ int FSA::send_msg( char* ip, int port, const char* msg ) {
         this->init_network();
         Logger::get_instance()->print_trace( "init fsa\n" );
         this->is_init = 1;
-        usleep( 20 );
+        // usleep( 20 );
+        std::this_thread::sleep_for( std::chrono::microseconds( 20 ) );
     }
     int ret = -1;
 
@@ -163,7 +174,8 @@ int FSA::send_msg( char* ip, int port, const char* msg ) {
         this->fsa_sockaddr_in_work.sin_family = AF_INET;
         this->fsa_sockaddr_in_work.sin_port   = htons( port );
         inet_pton( AF_INET, this->work_ip, &this->fsa_sockaddr_in_work.sin_addr.s_addr );
-        usleep( 1 );
+        // usleep( 1 );
+        std::this_thread::sleep_for( std::chrono::microseconds( 1 ) );
         ret = sendto( this->fsa_socket, this->send_buff, BUFFER_SIZE, 0, ( struct sockaddr* )&this->fsa_sockaddr_in_work, sizeof( this->fsa_sockaddr_in_work ) );
         if ( ret == -1 ) {
             Logger::get_instance()->print_trace_error( "sigle sendto() failed\n" );
@@ -758,15 +770,16 @@ int Actuator::broadcast( char* ip_ser, int& ser_num ) {
 int Actuator::broadcast( char* ip_ser, int& ser_num, const char* type ) {
     fsa->server_filter_type = type;
 
-    memset( ip_ser, 0, sizeof( fsa->server_ip ) );
+    memset( ip_ser, 0, sizeof( fsa->server_ip_filter ) );
     ser_num = 0;
 
     pthread_t boreadcast_thread_pd;
     pthread_create( &boreadcast_thread_pd, NULL, broadcast_filter_recv, NULL );
     pthread_detach( boreadcast_thread_pd );
-    usleep( 10000 );
+    // usleep( 10000 );
+    std::this_thread::sleep_for( std::chrono::seconds( 1 ) );
 
-    memcpy( ip_ser, fsa->server_ip_filter, sizeof( fsa->server_ip ) );
+    memcpy( ip_ser, fsa->server_ip_filter, sizeof( fsa->server_ip_filter ) );
     ser_num = fsa->server_ip_filter_num;
     pthread_cancel( boreadcast_thread_pd );
     if ( ser_num > 0 ) {

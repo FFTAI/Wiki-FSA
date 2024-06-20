@@ -11,9 +11,11 @@
 //-------------------------------- Includes
 //----------------------------------------------------------------------------------------------
 
-#include <stdlib.h>
-#include <sys/time.h>
-#include <unistd.h>
+#include <chrono>
+// #include <stdlib.h>
+#include <thread>
+// #include <sys/time.h>
+// #include <unistd.h>
 
 #include "function_result.h"
 #include "os.h"
@@ -80,9 +82,10 @@ OS::~OS() {}
  *****************************************************************************
  */
 int OS::get_time_in_us( double* us ) {
-    struct timeval tv;
-    gettimeofday( &tv, NULL );
-    *us = ( double )tv.tv_sec * 1000000 + tv.tv_usec - this->start_time_in_s_ * 1000000;
+    auto now          = std::chrono::system_clock::now();
+    auto duration     = now.time_since_epoch();
+    auto microseconds = std::chrono::duration_cast< std::chrono::microseconds >( duration );
+    *us               = microseconds.count() - this->start_time_in_s_ * 1000000;
     return FunctionResult::SUCCESS;
 }
 
@@ -96,9 +99,10 @@ int OS::get_time_in_us( double* us ) {
  *****************************************************************************
  */
 int OS::get_time_in_ms( double* ms ) {
-    struct timeval tv;
-    gettimeofday( &tv, NULL );
-    *ms = ( double )tv.tv_sec * 1000 + tv.tv_usec * 0.001f - this->start_time_in_s_ * 1000;
+    auto now          = std::chrono::system_clock::now();
+    auto duration     = now.time_since_epoch();
+    auto milliseconds = std::chrono::duration_cast< std::chrono::milliseconds >( duration );
+    *ms               = milliseconds.count() - this->start_time_in_s_ * 1000;
     return FunctionResult::SUCCESS;
 }
 
@@ -112,9 +116,10 @@ int OS::get_time_in_ms( double* ms ) {
  *****************************************************************************
  */
 int OS::get_time_in_s( double* s ) {
-    struct timeval tv;
-    gettimeofday( &tv, NULL );
-    *s = ( double )tv.tv_sec + tv.tv_usec * 0.000001f - this->start_time_in_s_;
+    auto now      = std::chrono::system_clock::now();
+    auto duration = now.time_since_epoch();
+    auto seconds  = std::chrono::duration_cast< std::chrono::seconds >( duration );
+    *s            = seconds.count() - this->start_time_in_s_;
     return FunctionResult::SUCCESS;
 }
 
@@ -225,7 +230,8 @@ int OS::sleep_tick( float tick ) {
  ******************************************************************************
  */
 int OS::delay_s( float s ) {
-    usleep( s * 1000 * 1000 );
+    // usleep( s * 1000 * 1000 );
+    std::this_thread::sleep_for( std::chrono::seconds( static_cast< long >( s ) ) );
     return FunctionResult::SUCCESS;
 }
 
@@ -239,7 +245,8 @@ int OS::delay_s( float s ) {
  ******************************************************************************
  */
 int OS::delay_ms( float ms ) {
-    usleep( ms * 1000 );
+    // usleep( ms * 1000 );
+    std::this_thread::sleep_for( std::chrono::milliseconds( static_cast< long >( ms ) ) );
     return FunctionResult::SUCCESS;
 }
 
@@ -253,7 +260,8 @@ int OS::delay_ms( float ms ) {
  ******************************************************************************
  */
 int OS::delay_us( float us ) {
-    usleep( us );
+    // usleep( us );
+    std::this_thread::sleep_for( std::chrono::microseconds( static_cast< long >( us ) ) );
     return FunctionResult::SUCCESS;
 }
 
@@ -267,7 +275,8 @@ int OS::delay_us( float us ) {
  ******************************************************************************
  */
 int OS::delay_tick( float tick ) {
-    usleep( tick );
+    // usleep( tick );
+    std::this_thread::sleep_for( std::chrono::microseconds( static_cast< long >( tick ) ) );
     return FunctionResult::SUCCESS;
 }
 

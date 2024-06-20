@@ -1,4 +1,5 @@
 #include "main.h"
+#include <thread>
 using namespace Actuator;
 using namespace Utils;
 using namespace Predefine;
@@ -68,7 +69,8 @@ int main() {
             }
         }
 
-        usleep( 1000 );
+        // usleep( 1000 );
+        std::this_thread::sleep_for( std::chrono::milliseconds( 1 ) );
     }
 
     for ( int i = 0; i < ip_num; i++ ) {

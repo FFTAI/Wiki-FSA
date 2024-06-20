@@ -6,15 +6,15 @@ include_directories(include)
 
 aux_source_directory(${PROJECT_SOURCE_DIR}/src SOURCES)
 
-add_library(${PROJECT_NAME} SHARED ${SOURCES})
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib
-)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_SYSTEM_NAME})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib/${CMAKE_SYSTEM_NAME})
 
+add_library(${PROJECT_NAME} SHARED ${SOURCES})
 add_library(${PROJECT_NAME}_static STATIC ${SOURCES})
-set_target_properties(${PROJECT_NAME}_static PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib
-)
+
+if(WIN32)
+    target_link_libraries(${PROJECT_NAME} ws2_32)
+endif()
 
 # 编译示例程序
 add_subdirectory(example build)

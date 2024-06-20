@@ -1,12 +1,15 @@
 #ifndef _FSA_H_
 #define _FSA_H_
 
-#include <arpa/inet.h>
-#include <ctime>
+// #include <arpa/inet.h>
+#include <boost/asio.hpp>
+// #include <ctime>
 #include <iostream>
 #include <sstream>
 #include <string.h>
-#include <unistd.h>
+// #include <unistd.h>
+#include <chrono>
+#include <thread>
 #include <vector>
 
 #include "rapidjson/stringbuffer.h"
@@ -129,7 +132,7 @@ public:
         BROADCASE_FILTER_MODE,
         SERVER_IP_MODE,
     };
-    char*       server_ip[ 254 ];
+    std::string server_ip[ 254 ];
     std::string server_ip_filter[ 254 ];
     int         server_ip_num        = 0;
     int         server_ip_filter_num = 0;
