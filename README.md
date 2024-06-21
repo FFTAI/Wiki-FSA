@@ -4,26 +4,29 @@
 
 ```shell
 .
-├── README.md                                                      # English README
-├── README_CN.md                                                   # Chinese README
+├── README.md                    # English README
+├── README_CN.md                 # Chinese README
 │
-├── doc                                                            # Documentation
-│   ├── Control_System_Introduction_CN.md                          # FSA Control System Introduction (Chinese)
-│   └── images                                                     # Images
+├── doc/                         # Documentation
+│   ├── chinese/                 # Chinese Documentation
+│   ├── english/                 # English Documentation
+│   └── images/                  # Images
 │
-├── v1                                                             # Version 1 Python SDK
-│   ├── config.yaml                                                # YAML Configuration File
-│   ├── demo_clear_fault.py                                        # Example Script
-│   ├── demo_comm_config_get.py
-│   ├── ... 
-│   └── pyscurve                                                   # Trajectory Planning Scripts
+├── v1/                          # Python SDK V1 Library and Example Scripts
+│   ├── example/                 # Example Scripts
+│   ├── pyscurve/                # Trajectory Planning Scripts
+│   ├── fi_config.py             # Configuration
+│   ├── fi_fsa_predefine.py      # Predefined Settings
+│   ├── fi_fsa_v1.py             # Main Functions
+│   └── fi_logger.py             # Logging
 │
-└── v2                                                             # Version 2 Python SDK
-    ├── config.yaml                                                # YAML Configuration File
-    ├── demo_clear_fault.py                                        # Example Script
-    ├── demo_comm_config_get.py
-    ├── ... 
-    └── pyscurve                                                   # Trajectory Planning Scripts
+└── v2/                          # Python SDK V2 Library and Example Scripts
+    ├── example/                 # Example Scripts
+    ├── pyscurve/                # Trajectory Planning Scripts
+    ├── fi_config.py             # Configuration
+    ├── fi_fsa_predefine.py      # Predefined Settings
+    ├── fi_fsa_v2.py             # Main Functions
+    └── fi_logger.py             # Logging
 ```
 
 ## Getting Started
@@ -47,7 +50,7 @@ pip install 'fi_fsa>=0.2.0'
 ### Clone the Repository
 
 ```shell
-git clone --recursive https://gitee.com/FourierIntelligence/wiki-fsa.git -b python
+git clone https://gitee.com/FourierIntelligence/wiki-fsa.git -b python
 ```
 
 ### Communication Configuration
@@ -73,10 +76,10 @@ The `demo_lookup.py` script will scan all FSAs in the `192.168.137.xxx` subnet a
 
 ### FSA Control Principle
 
- [Control_System_Introduction_EN.md](doc/English/Control_System_Introduction_EN.md)
+ [Control_System_Introduction_EN.md](doc/EN/Control_System_Introduction_EN.md) 
 
 ### API Documentation
 
- [V1_Python_API_Introduction_EN.md](doc/English/V1_Python_API_Introduction_EN.md)
+ [V1_Python_API_Introduction_EN.md](doc/EN/V1_Python_API_Introduction_EN.md) 
 
- [V2_Python_API_Introduction_EN.md](doc/English/V2_Python_API_Introduction_EN.md)
+ [V2_Python_API_Introduction_EN.md](doc/EN/V2_Python_API_Introduction_EN.md) 

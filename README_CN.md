@@ -4,26 +4,29 @@
 
 ```shell
 .
-├── README.md                                                      # 英文 README
-├── README_CN.md                                                   # 中文 README
+├── README.md                    # 英文 README
+├── README_CN.md                 # 中文 README
 │
-├── doc                                                            # 文档
-│   ├── Control_System_Introduction_CN.md                          # FSA 控制系统介绍
-│   └── images                                                     # 图片
+├── doc/                         # 文档
+│   ├── chinese/                 # 中文文档
+│   ├── english/                 # 英文文档
+│   └── images/                  # 图片
 │
-├── v1                                                             # V1 版本 Python SDK
-│   ├── config.yaml                                                # YAML 配置文件
-│   ├── demo_clear_fault.py                                        # 示例脚本
-│   ├── demo_comm_config_get.py
-│   ├── ... 
-│   └── pyscurve                                                   # 轨迹规划相关脚本
+├── v1/                          # Python SDK V1 库与示例脚本
+│   ├── example/                 # 示例脚本
+│   ├── pyscurve/                # 轨迹规划相关脚本
+│   ├── fi_config.py             # 配置
+│   ├── fi_fsa_predefine.py      # 预定义
+│   ├── fi_fsa_v1.py             # 主要功能
+│   └── fi_logger.py             # 日志
 │
-└── v2                                                             # V2 版本 Python SDK
-    ├── config.yaml                                                # YAML 配置文件
-    ├── demo_clear_fault.py                                        # 示例脚本
-    ├── demo_comm_config_get.py
-    ├── ... 
-    └── pyscurve                                                   # 轨迹规划相关脚本
+└── v2/                          # Python SDK V2 库与示例脚本
+    ├── example/                 # 示例脚本
+    ├── pyscurve/                # 轨迹规划相关脚本
+    ├── fi_config.py             # 配置
+    ├── fi_fsa_predefine.py      # 预定义
+    ├── fi_fsa_v2.py             # 主要功能
+    └── fi_logger.py             # 日志
 ```
 
 ## 上手指南
@@ -47,7 +50,7 @@ pip install 'fi_fsa>=0.2.0'
 ### 克隆仓库
 
 ```shell
-git clone --recursive https://gitee.com/FourierIntelligence/wiki-fsa.git -b python
+git clone https://gitee.com/FourierIntelligence/wiki-fsa.git -b python
 ```
 
 ### 通信配置
@@ -73,10 +76,10 @@ python ./demo_lookup.py
 
 ### FSA 控制原理
 
- [Control_System_Introduction_CN.md](doc/Chinese/Control_System_Introduction_CN.md) 
+ [Control_System_Introduction_CN.md](doc/CN/Control_System_Introduction_CN.md) 
 
 ### API 文档
 
- [V1_Python_API_Introduction_CN.md](doc/Chinese/V1_Python_API_Introduction_CN.md) 
+ [V1_Python_API_Introduction_CN.md](doc/CN/V1_Python_API_Introduction_CN.md) 
 
- [V2_Python_API_Introduction_CN.md](doc/Chinese/V2_Python_API_Introduction_CN.md) 
+ [V2_Python_API_Introduction_CN.md](doc/CN/V2_Python_API_Introduction_CN.md) 
