@@ -3,6 +3,7 @@
 
 */bin/
 */build/
+*/log/
 
 *.log
 *.pyc

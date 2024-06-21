@@ -68,9 +68,10 @@ class Trajectory(object):
 
             if self.debug:
                 trajectory_logger.debug(
-                    "DOF {} point number: {}: {}:{}:{}".format(dof,
-                                                               self._p_logged,
-                                                               *point[dof]))
+                    "DOF {} point number: {}: {}:{}:{}".format(
+                        dof, self._p_logged, *point[dof]
+                    )
+                )
             self._p_logged += 1
         return point
 
@@ -101,19 +102,19 @@ def plot_trajectory(traj, dt):
     # fig.suptitle("DOF profiles")
 
     for i, profile in zip(range(dof), r_profiles):
-        plt.subplot(300 + dof*10 + (i+1))
+        plt.subplot(300 + dof * 10 + (i + 1))
         plt.title("Acceleration profile")
         plt.plot(time, profile[ACCELERATION_ID][:])
         plt.xlim()
         plt.ylim()
 
-        plt.subplot(300 + dof*10 + (i+1)+dof)
+        plt.subplot(300 + dof * 10 + (i + 1) + dof)
         plt.title("Speed profile")
         plt.plot(time, profile[SPEED_ID][:])
         plt.xlim()
         plt.ylim()
 
-        plt.subplot(300 + dof*10 + (i+1)+dof*2)
+        plt.subplot(300 + dof * 10 + (i + 1) + dof * 2)
         plt.title("Position profile")
         plt.plot(time, profile[POSITION_ID][:])
         plt.xlim()

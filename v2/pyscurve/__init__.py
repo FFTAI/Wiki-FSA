@@ -20,15 +20,15 @@ if DEBUG:
     planning_logger.setLevel(logging.DEBUG)
     trajectory_logger.setLevel(logging.DEBUG)
 
-    plan_fhandler = logging.FileHandler(PLANNING_LOG_FNAME, 'w')
+    plan_fhandler = logging.FileHandler(PLANNING_LOG_FNAME, "w")
     plan_fhandler.setLevel(logging.DEBUG)
 
-    traj_fhandler = logging.FileHandler(TRAJECTORY_LOG_FNAME, 'w')
+    traj_fhandler = logging.FileHandler(TRAJECTORY_LOG_FNAME, "w")
     traj_fhandler.setLevel(logging.DEBUG)
 
-    planning_formatter = logging.Formatter("%(asctime)s - %(levelname)s - "
-                                        "LINE %(lineno)s "
-                                        "-\r\n%(message)s")
+    planning_formatter = logging.Formatter(
+        "%(asctime)s - %(levelname)s - " "LINE %(lineno)s " "-\r\n%(message)s"
+    )
     trajectory_formatter = logging.Formatter("%(message)s")
 
     plan_fhandler.setFormatter(planning_formatter)

@@ -32,7 +32,7 @@ class RCSConfig:
         config_json_path = current_workspace_path + "/" + path
         print("config_json_path = \n", config_json_path)
 
-        with open(config_json_path, 'r', encoding="utf-8") as json_file:
+        with open(config_json_path, "r", encoding="utf-8") as json_file:
             parameters = json.load(fp=json_file)
 
         # print json in beautiful format
@@ -52,7 +52,7 @@ class RCSConfig:
         config_yaml_path = current_workspace_path + "/" + path
         print("config_yaml_path = \n", config_yaml_path)
 
-        with open(config_yaml_path, 'r') as yaml_file:
+        with open(config_yaml_path, "r") as yaml_file:
             parameters = yaml.load(yaml_file, Loader=yaml.FullLoader)
 
         # print yaml in beautiful format
