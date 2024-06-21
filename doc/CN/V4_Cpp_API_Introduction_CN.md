@@ -63,8 +63,6 @@ rapidjson::Document msg_json;
 comm_config_get( "192.168.137.101", &msg_json );
 ```
 
-
-
 ### 获取操作标志位
 
 ```cpp
@@ -75,8 +73,6 @@ int Actuator::flag_of_operation_get( char* ip, bool& act_val, bool& motor_val, b
 bool act_val, motor_val, encoder_val, pid_val;
 flag_of_operation_get( "192.168.137.101", act_val, motor_val, encoder_val, pid_val );
 ```
-
-
 
 ## 参数设置
 
@@ -369,4 +365,3 @@ int Actuator::set_calibrate_encoder( char* ip );
 // Example
 set_calibrate_encoder( "192.168.137.101" );
 ```
-

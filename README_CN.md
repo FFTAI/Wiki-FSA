@@ -4,38 +4,38 @@
 
 ```shell
 .
-├── README_CN.md									# 中文 README
-├── doc												# 文档
-│   ├── Control_System_Introduction_CN.md			# 控制系统介绍
-│   ├── Cpp_API_Introduction_CN.md					# Cpp API 介绍
-│   └── images										# 图片
+├── README.md                   # 英文 README
+├── README_CN.md                # 中文 README
 │
-├── v3												# v3 版本 SDK
+├── doc/                        # 文档
+│   ├── CN/                     # 中文文档
+│   ├── EN/                     # 英文文档
+│   └── images/                 # 图片
+│
+├── v3/                         # Cpp SDK V3
 │   ├── CMakeLists.txt
-│   ├── ThirdParty									# 第三方库
-│   ├── build										# 编译输出
-│   ├── example										# 示例程序
-│   ├── include										# 头文件
-│   ├── lib											# 动态库/静态库
-│   └── src											# 源文件
+│   ├── ThirdParty/             # 第三方库
+│   ├── build/                  # 编译输出
+│   ├── example/                # 示例程序
+│   ├── include/                # 头文件
+│   ├── lib/                    # 动态库/静态库
+│   └── src/                    # 源文件
 │
-└── v4												# v4 版本 SDK
+└── v4/                         # Cpp SDK V4
     ├── CMakeLists.txt
-    ├── build										# 第三方库
-    ├── config										# Json 配置文件
-    ├── example										# 编译输出
-    ├── include										# 头文件
-    ├── lib											# 动态库/静态库
-    └── src											# 源文件
+    ├── build/                  # 第三方库
+    ├── config/                 # Json 配置文件
+    ├── example/                # 编译输出
+    ├── include/                # 头文件
+    ├── lib/                    # 动态库/静态库
+    └── src/                    # 源文件
 ```
 
 ## 上手指南
 
 ### 开发环境
 
-`clang >= 14.0.0`
-
-`gcc >= 11.4.0`
+`clang >= 14.0.0` 或 `gcc >= 11.4.0`
 
 `GLIBC >= 2.35`
 
@@ -48,7 +48,7 @@ sudo apt install build-essential cmake
 ### 克隆仓库
 
 ```shell
-git clone --recursive https://gitee.com/FourierIntelligence/wiki-fsa.git
+git clone https://gitee.com/FourierIntelligence/wiki-fsa.git -b cpp
 ```
 
 ### 编译
@@ -73,14 +73,16 @@ cd bin
 
 `lookup` 程序将会扫描所有 `192.168.137.xxx` 网段下的所有 FSA 并打印出来。
 
+> 若要驱动电机，则需接通 48V 直流电源，若仅与电机通信，只需接通 USB 供电。
+
 ## 开发指南
 
 ### FSA 控制原理
 
- [Control_System_Introduction_CN.md](doc/Control_System_Introduction_CN.md) 
+ [Control_System_Introduction_CN.md](doc/CN/Control_System_Introduction_CN.md) 
 
 ### API 文档
 
- [V3_Cpp_API_Introduction_CN.md](doc/V3_Cpp_API_Introduction_CN.md) 
+ [V3_Cpp_API_Introduction_CN.md](doc/CN/V3_Cpp_API_Introduction_CN.md) 
 
- [V4_Cpp_API_Introduction_CN.md](doc/V4_Cpp_API_Introduction_CN.md) 
+ [V4_Cpp_API_Introduction_CN.md](doc/CN/V4_Cpp_API_Introduction_CN.md) 

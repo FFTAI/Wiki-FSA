@@ -4,58 +4,55 @@
 
 ### 伺服三环控制
 
-由于计算机控制是一种采样控制，它只能根据采样时刻的偏差计算控制量，而不能像模拟控制那样连续输出控制量，进行连续控制。由于这一特点，$PID$ 控制器中的积分项和微分项不能直接使用，必须进行离散化处理。离散化处理的方法为：以 $T$ 作为采样周期，$k$ 作为采样序号，则离散采样时间 $kT$ 对应着连续时间 $t$​，用矩形法数值积分近似代替积分，用一阶后向差分近似代替微分，可作如下近似变换：
+由于计算机控制是一种采样控制，它只能根据采样时刻的偏差计算控制量，而不能像模拟控制那样连续输出控制量，进行连续控制。由于这一特点，PID 控制器中的积分项和微分项不能直接使用，必须进行离散化处理。离散化处理的方法为：以 $T$ 作为采样周期，$k$ 作为采样序号，则离散采样时间 $kT$ 对应着连续时间 $t$​，用矩形法数值积分近似代替积分，用一阶后向差分近似代替微分，可作如下近似变换：
+
 $$
 t \approx kT \left(k = 0, 1, 2, \dots \right)
-
-\tag{1}
 $$
 
 $$
-\int e(t) dt \approx T \sum_{j = 0}^{k} e(jT) = T \sum_{j = 0}^{k} e_{j}
-
-\tag{2}
+\int{e(t) dt} \approx T \sum_{j = 0}^{k} e(jT) = T \sum_{j = 0}^{k} e_{j}
 $$
 
 $$
 \frac{d}{dt} e(t) \approx \frac{e(kT) - e[(k - 1) T]}{T} = \frac{e_{k} - e_{k - 1}}{T}
-
-\tag{3}
 $$
 
 上式中，为了表达方便，将类似于 $e(jT)$ 简化成 $e_{j}$​ 等。
 
 #### 位置控制
 
-![FSA控制框图-位置控制](./images/FSA%E6%8E%A7%E5%88%B6%E6%A1%86%E5%9B%BE-%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6.svg)
+![FSA控制框图-位置控制](../images/FSA%E6%8E%A7%E5%88%B6%E6%A1%86%E5%9B%BE-%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6.svg)
+
 $$
 e_{j} = q_{d_{j}} - q_{j}
 $$
 
 $$
-\dot{e}_{j} = K_{p}^{pos} e_{j} G_{\theta} - \dot{q}_{j} G_{\omega}
+\dot{e}_ {j} = K_{p}^{pos} e_{j} G_{\theta} - \dot{q}_ {j} G_{\omega}
 $$
 
 $$
-I_{q_{set_{j}}} = K_{p}^{vel} \dot{e}_{j} + T_{\omega} K_{i}^{vel} \sum_{j = 0}^{k} \dot{e}_{j}
+I_{q_{set_{j}}} = K_{p}^{vel} \dot{e}_ {j} + T_{\omega} K_{i}^{vel} \sum_{j = 0}^{k} \dot{e}_{j}
 $$
 
 #### 速度控制
 
-![FSA控制框图-速度控制](./images/FSA%E6%8E%A7%E5%88%B6%E6%A1%86%E5%9B%BE-%E9%80%9F%E5%BA%A6%E6%8E%A7%E5%88%B6.svg)
+![FSA控制框图-速度控制](../images/FSA%E6%8E%A7%E5%88%B6%E6%A1%86%E5%9B%BE-%E9%80%9F%E5%BA%A6%E6%8E%A7%E5%88%B6.svg)
+
 $$
-\dot{e}_{j} = \dot{q}_{d_{j}} - \dot{q}_{j} G_{\omega}
+\dot{e}_ {j} = \dot{q}_ {d_{j}} - \dot{q}_ {j} G_{\omega}
 $$
 
 $$
-I_{q_{set_{j}}} = K_{p}^{vel} \dot{e}_{j} + T_{\omega} K_{i}^{vel} \sum_{j = 0}^{k} \dot{e}_{j}
+I_{q_{set_{j}}} = K_{p}^{vel} \dot{e}_ {j} + T_{\omega} K_{i}^{vel} \sum_{j = 0}^{k} \dot{e}_{j}
 $$
 
 #### 电流控制
 
-![FSA控制框图-电流控制](./images/FSA%E6%8E%A7%E5%88%B6%E6%A1%86%E5%9B%BE-%E7%94%B5%E6%B5%81%E6%8E%A7%E5%88%B6.svg)
+![FSA控制框图-电流控制](../images/FSA%E6%8E%A7%E5%88%B6%E6%A1%86%E5%9B%BE-%E7%94%B5%E6%B5%81%E6%8E%A7%E5%88%B6.svg)
 
-理想情况下，用户给定 $I_{q}$ 值后 FSA 将会瞬间输出最大为 $\tau = K_{t} I_{q}$ 的力矩，此处的 $K_{t}$​ 为电流力矩系数，执行器出厂后 $K_{t}$ 值即确定。
+理想情况下，用户给定 $I_{q}$ 值后 FSA 将会输出最大为 $\tau = K_{t} I_{q}$ 的力矩，此处的 $K_{t}$​ 为电流力矩系数，执行器出厂后 $K_{t}$ 值即确定。
 
 > Tips：
 >
@@ -63,13 +60,14 @@ $$
 
 ### PD 控制
 
-![FSA控制框图-PD控制](./images/FSA%E6%8E%A7%E5%88%B6%E6%A1%86%E5%9B%BE-PD%E6%8E%A7%E5%88%B6.svg)
+![FSA控制框图-PD控制](../images/FSA%E6%8E%A7%E5%88%B6%E6%A1%86%E5%9B%BE-PD%E6%8E%A7%E5%88%B6.svg)
+
 $$
 e_{j} = q_{d_{j}} - q_{j}
 $$
 
 $$
-\dot{e_{j}} = 0 - \dot{q_{j}}
+\dot{e}_ {j} = 0 - \dot{q_{j}}
 $$
 
 $$
@@ -96,4 +94,3 @@ $$
 | $G_{\theta}$  |             $i$              |        -         |                 位置转换系数                 |
 | $G_{\omega}$  | $\frac{i \cdot N_{pp}}{360}$ |        -         |                 速度转换系数                 |
 |   $G_{pd}$    |          $0.01745$           |        -         | $\rm{deg/s} \rightarrow \rm{rad/s}$ 转换系数 |
-
