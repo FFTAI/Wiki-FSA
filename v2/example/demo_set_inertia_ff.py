@@ -10,15 +10,11 @@ def main():
     if server_ip_list:
 
         for i in range(len(server_ip_list)):
-            print("now is setting: " + server_ip_list[i])
-            ret = fi_fsa.set_fsa_abs_zero(server_ip_list[i])
+            inertia_ff = 0.5
+            ret = fi_fsa.set_inertia_ff(server_ip_list[i], inertia_ff)
             print(ret)
-            time.sleep(1)
 
-        time.sleep(3)
-
-        for i in range(len(server_ip_list)):
-            fi_fsa.reboot(server_ip_list[i])
+        time.sleep(1)  # sleep 1 second
 
 
 if __name__ == "__main__":

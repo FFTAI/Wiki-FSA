@@ -713,7 +713,7 @@ def get_pid_param(server_ip):
 def set_pid_param(server_ip, dict):
     data = {
         "method": "SET",
-        "reqTarget": "/pid_param_imm",
+        "reqTarget": "/pid_param",
         "property": "",
         "control_position_kp": dict["control_position_kp"],
         "control_velocity_kp": dict["control_velocity_kp"],
@@ -1600,11 +1600,10 @@ def get_fsa_abs_position(server_ip):
         return FSAFunctionResult.FAIL
 
 
-def set_fsa_abs_offset(server_ip, offset):
+def set_fsa_abs_zero(server_ip):
     data = {
         "method": "SET",
-        "reqTarget": "/set_abs_offset",
-        "abs_offset": offset,
+        "reqTarget": "/set_abs_zero",
     }
 
     json_str = json.dumps(data)
@@ -1637,6 +1636,86 @@ def set_fsa_abs_offset(server_ip, offset):
 
     except:
         Logger().print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
+        return FSAFunctionResult.FAIL
+
+
+def set_torque_limit_max(server_ip, torque_limit_max):
+    data = {
+        "method": "SET",
+        "reqTarget": "/torque_limit_max",
+        "torque_limit_max": torque_limit_max,
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_flag_debug is True:
+        Logger().print_trace("Send JSON Obj:", json_str)
+
+    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = fsa_socket.recvfrom(1024)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(
+                "Received from {}:{}".format(address, data.decode("utf-8"))
+            )
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return True
+        else:
+            Logger().print_trace_error(server_ip, " receive status is not OK!")
+            return FSAFunctionResult.FAIL
+
+    except socket.timeout:  # fail after 1 second of no activity
+        Logger().print_trace_error(
+            server_ip + " : Didn't receive anymore data! [Timeout]"
+        )
+        return FSAFunctionResult.TIMEOUT
+
+    except:
+        Logger().print_trace_warning(server_ip + " fi_fsa.set_torque_limit_max() except")
+        return FSAFunctionResult.FAIL
+
+
+def set_inertia_ff(server_ip, inertia_ff):
+    data = {
+        "method": "SET",
+        "reqTarget": "/inertia_ff",
+        "inertia_ff": inertia_ff,
+    }
+
+    json_str = json.dumps(data)
+
+    if fsa_flag_debug is True:
+        Logger().print_trace("Send JSON Obj:", json_str)
+
+    fsa_socket.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    try:
+        data, address = fsa_socket.recvfrom(1024)
+
+        if fsa_flag_debug is True:
+            Logger().print_trace(
+                "Received from {}:{}".format(address, data.decode("utf-8"))
+            )
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return True
+        else:
+            Logger().print_trace_error(server_ip, " receive status is not OK!")
+            return FSAFunctionResult.FAIL
+
+    except socket.timeout:  # fail after 1 second of no activity
+        Logger().print_trace_error(
+            server_ip + " : Didn't receive anymore data! [Timeout]"
+        )
+        return FSAFunctionResult.TIMEOUT
+
+    except:
+        Logger().print_trace_warning(server_ip + " fi_fsa.set_inertia_ff() except")
         return FSAFunctionResult.FAIL
 
 
