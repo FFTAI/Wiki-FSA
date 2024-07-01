@@ -13,7 +13,7 @@ def main():
             # start_time = time.time()
 
             for i in range(len(server_ip_list)):
-                (_,) = fi_fsa.fast_set_disable(server_ip_list[i])
+                _ = fi_fsa.fast_set_disable(server_ip_list[i])
 
             # end_time = time.time()
             #
