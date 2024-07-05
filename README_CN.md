@@ -35,16 +35,10 @@
 
 `Python >= 3.10.12`
 
-安装 Python SDK V1：
+安装 Python SDK V1 和 V2：
 
 ```shell
-pip install 'fi_fsa>=0.1.0, <0.2.0'
-```
-
-安装 Python SDK V2：
-
-```shell
-pip install 'fi_fsa>=0.2.0'
+pip install fi_fsa
 ```
 
 ### 克隆仓库

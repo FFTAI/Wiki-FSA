@@ -1,11 +1,11 @@
-import fi_fsa
+from fi_fsa import fi_fsa_v2
 import time
 
 server_ip_list = []
 
 
 def main():
-    server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="Actuator")
+    server_ip_list = fi_fsa_v2.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
@@ -13,7 +13,7 @@ def main():
             # start_time = time.time()
 
             for i in range(len(server_ip_list)):
-                pvc = fi_fsa.get_pvc(server_ip_list[i])
+                pvc = fi_fsa_v2.get_pvc(server_ip_list[i])
                 print(
                     "Position = %f, Velocity = %f, Current = %.4f"
                     % (pvc[0], pvc[1], pvc[2])

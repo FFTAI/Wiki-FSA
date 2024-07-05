@@ -1,10 +1,10 @@
-import fi_fsa
+from fi_fsa import fi_fsa_v1
 
 server_ip_list = []
 
 
 def main():
-    server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="Actuator")
+    server_ip_list = fi_fsa_v1.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
@@ -14,10 +14,10 @@ def main():
                 "username": "test",
                 "password": "test",
             }
-            fi_fsa.encrypt(server_ip_list[i], dict)
+            fi_fsa_v1.encrypt(server_ip_list[i], dict)
 
         for i in range(len(server_ip_list)):
-            fi_fsa.reboot(server_ip_list[i])
+            fi_fsa_v1.reboot(server_ip_list[i])
 
 
 if __name__ == "__main__":

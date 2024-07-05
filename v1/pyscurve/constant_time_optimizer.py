@@ -6,7 +6,7 @@ def optimization_function(S, v0, a_max, T):
         ta = x[0]
         a = x[1]
 
-        return (S - a * (ta**2) - 2 * v0 * ta - (v0 + a * ta) * (T - 2 * ta)) ** 2
+        return (S - a * (ta ** 2) - 2 * v0 * ta - (v0 + a * ta) * (T - 2 * ta)) ** 2
 
     def cost_func_grad(x):
         ta = x[0]
@@ -15,14 +15,14 @@ def optimization_function(S, v0, a_max, T):
         # According to MATLAB (cost_gradient.m)
         da = (
             2
-            * ((ta**2) * (T - 2 * ta) + (ta**2))
-            * (2 * ta * v0 - S + (a * (ta**2) + v0) * (T - 2 * ta) + a * (ta**2))
+            * ((ta ** 2) * (T - 2 * ta) + (ta ** 2))
+            * (2 * ta * v0 - S + (a * (ta ** 2) + v0) * (T - 2 * ta) + a * (ta ** 2))
         )
 
         dta = (
             2
-            * (2 * a * ta - 2 * a * (ta**2) + 2 * a * ta * (T - 2 * ta))
-            * (2 * ta * v0 - S + (a * (ta**2) + v0) * (T - 2 * ta) + a * (ta**2))
+            * (2 * a * ta - 2 * a * (ta ** 2) + 2 * a * ta * (T - 2 * ta))
+            * (2 * ta * v0 - S + (a * (ta ** 2) + v0) * (T - 2 * ta) + a * (ta ** 2))
         )
 
         return [dta, da]

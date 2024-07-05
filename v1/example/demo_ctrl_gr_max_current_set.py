@@ -1,6 +1,6 @@
-import fi_fsa
+from fi_fsa import fi_fsa_v1
 import time
-import fi_fsa_predefine
+from fi_fsa_v1 import fi_fsa_v1_predefine
 import json
 
 server_ip_list = []
@@ -44,30 +44,30 @@ max_current_dict = {
 
 
 def main():
-    server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="Actuator")
+    server_ip_list = fi_fsa_v1.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            data = fi_fsa.get_config_data(server_ip_list[i])
+            data = fi_fsa_v1.get_config_data(server_ip_list[i])
 
             time.sleep(1)
             json_obj = json.loads(data.decode("utf-8"))
             json_obj["motor_max_current"] = max_current_dict[server_ip_list[i]]
             if "actuator_comm_hardware_type" not in json_obj:
                 json_obj["actuator_comm_hardware_type"] = 0
-            fi_fsa.set_config(server_ip_list[i], json_obj)
+            fi_fsa_v1.set_config(server_ip_list[i], json_obj)
 
         time.sleep(1)
         for i in range(len(server_ip_list)):
-            fi_fsa.get_config(server_ip_list[i])
+            fi_fsa_v1.get_config(server_ip_list[i])
 
         print("\n")
 
         # reboot all FSA
         for i in range(len(server_ip_list)):
-            fi_fsa.reboot(server_ip_list[i])
+            fi_fsa_v1.reboot(server_ip_list[i])
         print("\n")
         time.sleep(1)
 

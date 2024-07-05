@@ -17,7 +17,6 @@ planning_logger = logging.getLogger(__name__)
 
 
 class ScurvePlanner(TrajectoryPlanner):
-
     def __init__(self, debug=False):
         if debug:
             planning_logger.setLevel(logging.DEBUG)
@@ -55,7 +54,7 @@ class ScurvePlanner(TrajectoryPlanner):
         planning_logger.info("Computing maximum speed reached profile")
 
         # Acceleration period
-        if (v_max - v0) * j_max < a_max**2:
+        if (v_max - v0) * j_max < a_max ** 2:
             # a_max is not reached
             Tj1 = np.sqrt((v_max - v0) / j_max)
             Ta = 2 * Tj1
@@ -65,7 +64,7 @@ class ScurvePlanner(TrajectoryPlanner):
             Ta = Tj1 + (v_max - v0) / a_max
 
         # Deceleration period
-        if (v_max - v1) * j_max < a_max**2:
+        if (v_max - v1) * j_max < a_max ** 2:
             # a_min is not reached
             Tj2 = np.sqrt((v_max - v1) / j_max)
             Td = 2 * Tj2
@@ -98,10 +97,10 @@ class ScurvePlanner(TrajectoryPlanner):
         Tj1 = Tj2 = Tj = a_max / j_max
         Tv = 0
 
-        v = (a_max**2) / j_max
+        v = (a_max ** 2) / j_max
         delta = (
-            ((a_max**4) / (j_max**2))
-            + 2 * ((v0**2) + (v1**2))
+            ((a_max ** 4) / (j_max ** 2))
+            + 2 * ((v0 ** 2) + (v1 ** 2))
             + a_max * (4 * (q1 - q0) - 2 * (a_max / j_max) * (v0 + v1))
         )
 
@@ -211,20 +210,20 @@ class ScurvePlanner(TrajectoryPlanner):
             # Acceleration phase
             if 0 <= t < Tj1:
                 a = j_max * t
-                v = v0 + j_max * (t**2) / 2
-                q = q0 + v0 * t + j_max * (t**3) / 6
+                v = v0 + j_max * (t ** 2) / 2
+                q = q0 + v0 * t + j_max * (t ** 3) / 6
 
             elif Tj1 <= t < Ta - Tj1:
                 a = a_lim_a
                 v = v0 + a_lim_a * (t - Tj1 / 2)
-                q = q0 + v0 * t + a_lim_a * (3 * (t**2) - 3 * Tj1 * t + Tj1**2) / 6
+                q = q0 + v0 * t + a_lim_a * (3 * (t ** 2) - 3 * Tj1 * t + Tj1 ** 2) / 6
 
             elif Ta - Tj1 <= t < Ta:
                 tt = Ta - t
 
                 a = j_max * tt
-                v = v_lim - j_max * (tt**2) / 2
-                q = q0 + (v_lim + v0) * Ta / 2 - v_lim * tt + j_max * (tt**3) / 6
+                v = v_lim - j_max * (tt ** 2) / 2
+                q = q0 + (v_lim + v0) * Ta / 2 - v_lim * tt + j_max * (tt ** 3) / 6
 
             # Constant velocity phase
             elif Ta <= t < Ta + Tv:
@@ -237,8 +236,8 @@ class ScurvePlanner(TrajectoryPlanner):
                 tt = t - T + Td
 
                 a = -j_max * tt
-                v = v_lim - j_max * (tt**2) / 2
-                q = q1 - (v_lim + v1) * Td / 2 + v_lim * tt - j_max * (tt**3) / 6
+                v = v_lim - j_max * (tt ** 2) / 2
+                q = q1 - (v_lim + v1) * Td / 2 + v_lim * tt - j_max * (tt ** 3) / 6
 
             elif T - Td + Tj2 <= t < T - Tj2:
                 tt = t - T + Td
@@ -249,15 +248,15 @@ class ScurvePlanner(TrajectoryPlanner):
                     q1
                     - (v_lim + v1) * Td / 2
                     + v_lim * tt
-                    + a_lim_d * (3 * (tt**2) - 3 * Tj2 * tt + Tj2**2) / 6
+                    + a_lim_d * (3 * (tt ** 2) - 3 * Tj2 * tt + Tj2 ** 2) / 6
                 )
 
             elif T - Tj2 <= t < T:
                 tt = T - t
 
                 a = -j_max * tt
-                v = v1 + j_max * (tt**2) / 2
-                q = q1 - v1 * tt - j_max * (tt**3) / 6
+                v = v1 + j_max * (tt ** 2) / 2
+                q = q1 - v1 * tt - j_max * (tt ** 3) / 6
 
             else:
                 a = 0

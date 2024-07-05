@@ -35,16 +35,10 @@
 
 `Python >= 3.10.12`
 
-Install Python SDK V1:
+Install Python SDK V1 & V2:
 
 ```shell
-pip install 'fi_fsa>=0.1.0, <0.2.0'
-```
-
-Install Python SDK V2:
-
-```shell
-pip install 'fi_fsa>=0.2.0'
+pip install fi_fsa
 ```
 
 ### Clone the Repository

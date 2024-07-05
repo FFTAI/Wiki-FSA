@@ -1,4 +1,4 @@
-import fi_fsa
+from fi_fsa import fi_fsa_v1
 import time
 import math
 
@@ -6,26 +6,26 @@ server_ip_list = []
 
 
 def main():
-    server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="Actuator")
+    server_ip_list = fi_fsa_v1.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
         fsa_state = True
         for i in range(len(server_ip_list)):
-            fsa_state = fi_fsa.get_state(server_ip_list[i])
+            fsa_state = fi_fsa_v1.get_state(server_ip_list[i])
             print("State = %d" % fsa_state)
 
         print("\n")
         time.sleep(1)
 
         for i in range(len(server_ip_list)):
-            fi_fsa.get_config(server_ip_list[i])
+            fi_fsa_v1.get_config(server_ip_list[i])
 
         print("\n")
         time.sleep(1)
 
         for i in range(len(server_ip_list)):
-            pvc = fi_fsa.get_pvc(server_ip_list[i])
+            pvc = fi_fsa_v1.get_pvc(server_ip_list[i])
             print(
                 "Position = %.2f, Velocity = %.3f, Current = %.4f"
                 % (pvc[0], pvc[1], pvc[2])
@@ -37,29 +37,29 @@ def main():
 
         # set current control current to 0.0
         for i in range(len(server_ip_list)):
-            fi_fsa.set_position_control(server_ip_list[i], position=0.0)
+            fi_fsa_v1.set_position_control(server_ip_list[i], position=0.0)
 
         print("\n")
         time.sleep(1)
 
         # enable all the motors
         for i in range(len(server_ip_list)):
-            fi_fsa.set_enable(server_ip_list[i])
+            fi_fsa_v1.set_enable(server_ip_list[i])
 
         print("\n")
         time.sleep(1)
 
         # set work at current control mode
         for i in range(len(server_ip_list)):
-            fi_fsa.set_mode_of_operation(
-                server_ip_list[i], fi_fsa.FSAModeOfOperation.POSITION_CONTROL
+            fi_fsa_v1.set_mode_of_operation(
+                server_ip_list[i], fi_fsa_v1.FSAModeOfOperation.POSITION_CONTROL
             )
 
         print("\n")
         time.sleep(1)
 
         for i in range(len(server_ip_list)):
-            fi_fsa.set_position_control(server_ip_list[i], 0.0)
+            fi_fsa_v1.set_position_control(server_ip_list[i], 0.0)
 
         time.sleep(1)
 
@@ -73,7 +73,7 @@ def main():
         #         'control_current_kp_imm': 7.25,  # not work for now
         #         'control_current_ki_imm': 0.08,  # not work for now
         #     }
-        #     fi_fsa.set_pid_param_imm(server_ip_list[i], dict)
+        #     fi_fsa_v1.set_pid_param_imm(server_ip_list[i], dict)
         #
         # print('\n')
         # time.sleep(1)
@@ -83,7 +83,7 @@ def main():
         # for t in range(0, count_max):
         #     for i in range(len(server_ip_list)):
         #         set_velocity = 30.0  # * math.sin(t / 1000.0)  # [deg/s]
-        #         fi_fsa.set_position_control(server_ip_list[i], position=0, velocity_ff=set_velocity)
+        #         fi_fsa_v1.set_position_control(server_ip_list[i], position=0, velocity_ff=set_velocity)
         #     time.sleep(0.01)
         #
         # time.sleep(1)
@@ -100,7 +100,7 @@ def main():
                 "control_current_kp_imm": 7.25,  # not work for now
                 "control_current_ki_imm": 0.08,  # not work for now
             }
-            fi_fsa.set_pid_param_imm(server_ip_list[i], dict)
+            fi_fsa_v1.set_pid_param_imm(server_ip_list[i], dict)
 
         print("\n")
         time.sleep(1)
@@ -110,7 +110,7 @@ def main():
         for t in range(0, count_max):
             for i in range(len(server_ip_list)):
                 set_current = 0.4  # A
-                fi_fsa.set_position_control(
+                fi_fsa_v1.set_position_control(
                     server_ip_list[i], position=0, current_ff=set_current
                 )
             time.sleep(0.01)
@@ -120,14 +120,14 @@ def main():
         # current ff ------------------------------------------------------
 
         for i in range(len(server_ip_list)):
-            fi_fsa.set_disable(server_ip_list[i])
+            fi_fsa_v1.set_disable(server_ip_list[i])
 
         time.sleep(1)
 
         # set work at none control mode
         for i in range(len(server_ip_list)):
-            fi_fsa.set_mode_of_operation(
-                server_ip_list[i], fi_fsa.FSAModeOfOperation.POSITION_CONTROL
+            fi_fsa_v1.set_mode_of_operation(
+                server_ip_list[i], fi_fsa_v1.FSAModeOfOperation.POSITION_CONTROL
             )
 
 

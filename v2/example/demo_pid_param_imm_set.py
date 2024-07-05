@@ -1,4 +1,4 @@
-import fi_fsa
+from fi_fsa import fi_fsa_v2
 import time
 
 server_ip_list = []
@@ -18,7 +18,7 @@ class SpeedParamList:
 
 
 def main():
-    server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="Actuator")
+    server_ip_list = fi_fsa_v2.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
 
@@ -33,14 +33,14 @@ def main():
                 "control_PD_kp_imm": 1.0,
                 "control_PD_kd_imm": 1.0,
             }
-            fi_fsa.set_pid_param_imm(server_ip_list[i], dict)
+            fi_fsa_v2.set_pid_param_imm(server_ip_list[i], dict)
 
         print("\n")
         time.sleep(1)
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
-            fi_fsa.get_pid_param_imm(server_ip_list[i])
+            fi_fsa_v2.get_pid_param_imm(server_ip_list[i])
 
 
 if __name__ == "__main__":

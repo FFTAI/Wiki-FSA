@@ -14,13 +14,11 @@ trajectory_logger = logging.getLogger("trajectory_logger")
 
 
 class PlanningError(Exception):
-
     def __init__(self, msg):
         super(Exception, self).__init__(msg)
 
 
 class Trajectory(object):
-
     def __init__(self, debug=True):
         self._debug = debug
         self._trajectory = None
