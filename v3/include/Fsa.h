@@ -147,23 +147,42 @@ public:
      * @return return result code, find in "FsaResult.h"
      */
     int EnableCurControl();
+
+    /**
+     * @fn SetTorqueLimitMax
+     * @brief Torque limiter parameter configuration
+     * @details Set the maximum torque limit of the actuator
+     * @return return result code, find in "FsaResult.h"
+     */
+    int SetTorqueLimitMax( const double& torque_limit_max );
+
+    /**
+     * @fn SetInertiaCompensation
+     * @brief Inertia compensation coefficient configuration
+     * @details Set the inertia compensation coefficient of the actuator
+     * @return return result code, find in "FsaResult.h"
+     */
+    int SetInertiaCompensation( const double& inertia_ff );
+
     // std::shared_ptr<Transmit::UDPSocket> pt_udp_socket;
     std::string ip_;
 
 private:
-    int get_root_config   = 0;
-    int get_state         = 0;
-    int poweron_state     = 0;
-    int poweroff_state    = 0;
-    int set_ctrlcfg_state = 0;
-    int get_ctrlcfg_state = 0;
-    int set_pid_state     = 0;
-    int get_pid_state     = 0;
-    int set_pos_state     = 0;
-    int set_vel_state     = 0;
-    int set_cur_state     = 0;
-    int get_pvc_state     = 0;
-    int control_state     = 0;
+    int get_root_config            = 0;
+    int get_state                  = 0;
+    int poweron_state              = 0;
+    int poweroff_state             = 0;
+    int set_ctrlcfg_state          = 0;
+    int get_ctrlcfg_state          = 0;
+    int set_pid_state              = 0;
+    int get_pid_state              = 0;
+    int set_pos_state              = 0;
+    int set_vel_state              = 0;
+    int set_cur_state              = 0;
+    int get_pvc_state              = 0;
+    int control_state              = 0;
+    int set_torque_limit_max_state = 0;
+    int set_inertia_ff_state       = 0;
 
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;

@@ -1836,3 +1836,157 @@ int FSA_CONNECT::FSA::GetPVC( double& pos, double& vel, double& cur ) {
 
     return NOT_EXECUTE;
 };
+
+/**
+ * @brief Set actuator torque limit parameters
+ *
+ * @param torque_limit_max
+ * @return int
+ */
+int FSA_CONNECT::FSA::SetTorqueLimitMax( const double& torque_limit_max ) {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    while ( 1 ) {
+        switch ( set_torque_limit_max_state ) {
+        case 0:  // enable
+            begin = std::chrono::steady_clock::now();
+
+            set_torque_limit_max_json[ "torque_limit_max" ] = torque_limit_max;
+
+            ret = ctrl_udp_socket->SendData( set_torque_limit_max_json.dump() );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            set_torque_limit_max_state = 1;
+            break;
+
+        case 1:  // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_rt( recv_data_str );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                set_torque_limit_max_state = 0;
+                return ret;
+            }
+            // receive something
+            if ( !recv_data_str.empty() ) {
+                recv_data_json = json::parse( recv_data_str );
+                receive_state  = recv_data_json.at( "status" );
+                if ( receive_state.compare( "OK" ) ) {
+                    set_torque_limit_max_state = 0;
+                    std::cout << "MOTOR: " << ip_ << ", SET TORQUE LIMIT MAX FAILED! " << std::endl;
+
+                    return DISABLE_FAILED;
+                }
+                set_torque_limit_max_state = 0;
+                // std::cout<<"MOTOR: "<<ip_<<",  SET POS SUCCESS! "<<ip_<<std::endl;;
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+            if ( int_ms.count() > 3000 ) {
+                set_torque_limit_max_state = 0;
+                std::cout << "MOTOR: " << ip_ << ", SET TORQUE LIMIT MAX TIMEOUT! " << std::endl;
+
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            set_torque_limit_max_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+}
+
+/**
+ * @brief Set the inertia compensation coefficient
+ *
+ * @param inertia_ff
+ * @return int
+ */
+int FSA_CONNECT::FSA::SetInertiaCompensation( const double& inertia_ff ) {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    while ( 1 ) {
+        switch ( set_inertia_ff_state ) {
+        case 0:  // enable
+            begin = std::chrono::steady_clock::now();
+
+            set_inertia_ff_json[ "inertia_ff" ] = inertia_ff;
+
+            ret = ctrl_udp_socket->SendData( set_inertia_ff_json.dump() );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            set_inertia_ff_state = 1;
+            break;
+
+        case 1:  // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_rt( recv_data_str );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                set_inertia_ff_state = 0;
+                return ret;
+            }
+            // receive something
+            if ( !recv_data_str.empty() ) {
+                recv_data_json = json::parse( recv_data_str );
+                receive_state  = recv_data_json.at( "status" );
+                if ( receive_state.compare( "OK" ) ) {
+                    set_inertia_ff_state = 0;
+                    std::cout << "MOTOR: " << ip_ << ", SET INERTIA COMPENSATION FAILED! " << std::endl;
+
+                    return DISABLE_FAILED;
+                }
+                set_inertia_ff_state = 0;
+                // std::cout<<"MOTOR: "<<ip_<<",  SET POS SUCCESS! "<<ip_<<std::endl;;
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+            if ( int_ms.count() > 3000 ) {
+                set_inertia_ff_state = 0;
+                std::cout << "MOTOR: " << ip_ << ", SET INERTIA COMPENSATION TIMEOUT! " << std::endl;
+
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            set_inertia_ff_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+}

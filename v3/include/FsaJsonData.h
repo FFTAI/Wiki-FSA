@@ -22,6 +22,8 @@ namespace JsonData {
     extern ordered_json set_vel_json;
     extern ordered_json set_cur_json;
     extern ordered_json get_pvc_json;
+    extern ordered_json set_torque_limit_max_json;
+    extern ordered_json set_inertia_ff_json;
 
 }  // namespace JsonData
 }  // namespace FSA_CONNECT

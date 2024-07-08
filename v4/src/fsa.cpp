@@ -703,6 +703,22 @@ int FSA::set_current_control( char* server_ip, char* define_msg_sendto, char* cl
     return FunctionResult::FAILURE;
 }
 
+int FSA::set_torque_limit_max( char* server_ip, char* define_msg_sendto, char* client_recv_msg ) {
+    this->work_mode = WorkMode::SERVER_IP_MODE;
+    if ( !( this->communicate( server_ip, this->server_port_ctrl, define_msg_sendto, client_recv_msg ) ) ) {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+int FSA::set_inertia_ff( char* server_ip, char* define_msg_sendto, char* client_recv_msg ) {
+    this->work_mode = WorkMode::SERVER_IP_MODE;
+    if ( !( this->communicate( server_ip, this->server_port_ctrl, define_msg_sendto, client_recv_msg ) ) ) {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
 // FSA INTERFACE END
 
 // =================================user command================================
@@ -1312,6 +1328,92 @@ int Actuator::set_velocity_control( char* ip, double vel, double cur_ff ) {
     memcpy( set_param, set_json.GetString(), set_json.GetSize() );
     char feedback_buffer[ 1024 ] = { 0 };
     if ( fsa->set_velocity_control( ip, set_param, feedback_buffer ) == FunctionResult::FAILURE ) {
+        return FunctionResult::FAILURE;
+    }
+    rapidjson::Document fed_json;
+    if ( fed_json.Parse( feedback_buffer ).HasParseError() ) {
+        Logger::get_instance()->print_trace_error( "rapidjson parse failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    std::string success_flg = "OK";
+    if ( fed_json[ "status" ].GetString() == success_flg ) {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+/**
+ * @brief Set actuator torque limit parameters
+ *
+ * @param ip
+ * @param torque_limit_max
+ * @return int
+ */
+int Actuator::set_torque_limit_max( char* ip, double torque_limit_max ) {
+    rapidjson::StringBuffer                      set_json;
+    rapidjson::Writer< rapidjson::StringBuffer > writer( set_json );
+
+    writer.StartObject();
+
+    writer.Key( "method" );
+    writer.String( "SET" );
+
+    writer.Key( "reqTarget" );
+    writer.String( "/torque_limit_max" );
+
+    writer.Key( "torque_limit_max" );
+    writer.Double( torque_limit_max );
+
+    writer.EndObject();
+
+    char set_param[ 1024 ] = { 0 };
+    memset( set_param, 0, sizeof( set_param ) );
+    memcpy( set_param, set_json.GetString(), set_json.GetSize() );
+    char feedback_buffer[ 1024 ] = { 0 };
+    if ( fsa->set_torque_limit_max( ip, set_param, feedback_buffer ) == FunctionResult::FAILURE ) {
+        return FunctionResult::FAILURE;
+    }
+    rapidjson::Document fed_json;
+    if ( fed_json.Parse( feedback_buffer ).HasParseError() ) {
+        Logger::get_instance()->print_trace_error( "rapidjson parse failed\n" );
+        return FunctionResult::FAILURE;
+    }
+    std::string success_flg = "OK";
+    if ( fed_json[ "status" ].GetString() == success_flg ) {
+        return FunctionResult::SUCCESS;
+    }
+    return FunctionResult::FAILURE;
+}
+
+/**
+ * @brief 设置惯性补偿系数
+ *
+ * @param ip
+ * @param inertia_ff
+ * @return int
+ */
+int Actuator::set_inertia_ff( char* ip, double inertia_ff ) {
+    rapidjson::StringBuffer                      set_json;
+    rapidjson::Writer< rapidjson::StringBuffer > writer( set_json );
+
+    writer.StartObject();
+
+    writer.Key( "method" );
+    writer.String( "SET" );
+
+    writer.Key( "reqTarget" );
+    writer.String( "/inertia_ff" );
+
+    writer.Key( "inertia_ff" );
+    writer.Double( inertia_ff );
+
+    writer.EndObject();
+
+    char set_param[ 1024 ] = { 0 };
+    memset( set_param, 0, sizeof( set_param ) );
+    memcpy( set_param, set_json.GetString(), set_json.GetSize() );
+    char feedback_buffer[ 1024 ] = { 0 };
+    if ( fsa->set_inertia_ff( ip, set_param, feedback_buffer ) == FunctionResult::FAILURE ) {
         return FunctionResult::FAILURE;
     }
     rapidjson::Document fed_json;

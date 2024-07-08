@@ -225,6 +225,8 @@ public:
     int set_position_control( char* server_ip, char* define_msg_sendto, char* client_recv_msg );
     int set_velocity_control( char* server_ip, char* define_msg_sendto, char* client_recv_msg );
     int set_current_control( char* server_ip, char* define_msg_sendto, char* client_recv_msg );
+    int set_torque_limit_max( char* server_ip, char* define_msg_sendto, char* client_recv_msg );
+    int set_inertia_ff( char* server_ip, char* define_msg_sendto, char* client_recv_msg );
 };
 
 class FSAActuatorType {
@@ -357,6 +359,8 @@ int set_current_control( char* ip, double current_val );
 int set_position_control( char* ip, double pos, double vel, double acc );
 int set_velocity_control( char* ip, double vel, double cur_ff );
 int set_mode_of_operation( char* ip, uint8_t mode );
+int set_torque_limit_max( char* ip, double torque_limit_max );
+int set_inertia_ff( char* ip, double inertia_ff );
 
 int ctrl_config_get( char* ip, rapidjson::Document* config_buffer );
 int ctrl_config_set( char* ip, uint64_t act_type, int dir, int redTat, int motor_type, int hardware_type, int vbus, int motor_dir, int pole_pairs, int max_speed, int max_acc, int encoder_dir );

@@ -46,5 +46,9 @@ namespace JsonData {
 
     ordered_json get_pvc_json = { { "method", "GET" }, { "reqTarget", "/measured" }, { "position", true }, { "velocity", true }, { "current", true } };
 
+    ordered_json set_torque_limit_max_json = { { "method", "SET" }, { "reqTarget", "/torque_limit_max" }, { "torque_limit_max", 0 } };
+
+    ordered_json set_inertia_ff_json = { { "method", "SET" }, { "reqTarget", "/inertia_ff" }, { "inertia_ff", 0 } };
+
 }  // namespace JsonData
 }  // namespace FSA_CONNECT
