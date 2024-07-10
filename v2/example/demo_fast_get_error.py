@@ -13,7 +13,7 @@ def main():
             # start_time = time.time()
 
             for i in range(len(server_ip_list)):
-                _, error = fi_fsa_v2.fast_get_error(server_ip_list[i])
+                error = fi_fsa_v2.fast_get_error(server_ip_list[i])
                 print("Error = %d" % error)
 
             # end_time = time.time()

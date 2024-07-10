@@ -13,7 +13,7 @@ def main():
             # start_time = time.time()
 
             for i in range(len(server_ip_list)):
-                data = fi_fsa_v2.fast_set_watchdog(server_ip_list[i])
+                data = fi_fsa_v2.fast_get_watchdog(server_ip_list[i])
                 print("received data : {}".format(data))
             time.sleep(0.2)  # sleep 1 second
 
