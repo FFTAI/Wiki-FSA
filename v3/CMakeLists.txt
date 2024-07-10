@@ -13,11 +13,13 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib
 )
+target_link_libraries(${PROJECT_NAME} pthread)
 
 add_library(${PROJECT_NAME}_static STATIC ${SOURCES})
 set_target_properties(${PROJECT_NAME}_static PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib
 )
+target_link_libraries(${PROJECT_NAME}_static pthread)
 
 # 编译示例程序
 add_subdirectory(example build)
