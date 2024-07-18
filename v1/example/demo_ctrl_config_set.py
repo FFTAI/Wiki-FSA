@@ -1,6 +1,5 @@
-from fi_fsa import fi_fsa_v1
+from fi_fsa import fi_fsa_v1, fi_fsa_predefine_v1
 import time
-from fi_fsa_v1 import fi_fsa_v1_predefine
 
 server_ip_list = []
 
@@ -13,17 +12,17 @@ def main():
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
-                "actuator_type": fi_fsa_predefine.FSAActuatorType.TYPE_DEFAULT,
-                "actuator_direction": fi_fsa_predefine.FSAActuatorDirection.DIRECTION_NORMAL,
-                "actuator_reduction_ratio": fi_fsa_predefine.FSAActuatorReductionRatio.REDUCTION_RATIO_36,
-                "motor_type": fi_fsa_predefine.FSAMotorType.FSA36_10V0,
-                "motor_hardware_type": fi_fsa_predefine.FSAHardwareType.TYPE_H46V104,
-                "motor_vbus": fi_fsa_predefine.FSAMotorVBUS.VBUS_48V,
-                "motor_direction": fi_fsa_predefine.FSAMotorDirection.ABC,
-                "motor_max_speed": fi_fsa_predefine.FSAMotorMaxSpeed.MAX_SPEED_3000,
-                "motor_max_acceleration": fi_fsa_predefine.FSAMotorMaxAcceleration.MAX_ACCELERATION_60000,
+                "actuator_type": fi_fsa_predefine_v1.FSAActuatorType.TYPE_DEFAULT,
+                "actuator_direction": fi_fsa_predefine_v1.FSAActuatorDirection.DIRECTION_NORMAL,
+                "actuator_reduction_ratio": fi_fsa_predefine_v1.FSAActuatorReductionRatio.REDUCTION_RATIO_36,
+                "motor_type": fi_fsa_predefine_v1.FSAMotorType.FSA36_10V0,
+                "motor_hardware_type": fi_fsa_predefine_v1.FSAHardwareType.TYPE_H46V104,
+                "motor_vbus": fi_fsa_predefine_v1.FSAMotorVBUS.VBUS_48V,
+                "motor_direction": fi_fsa_predefine_v1.FSAMotorDirection.ABC,
+                "motor_max_speed": fi_fsa_predefine_v1.FSAMotorMaxSpeed.MAX_SPEED_3000,
+                "motor_max_acceleration": fi_fsa_predefine_v1.FSAMotorMaxAcceleration.MAX_ACCELERATION_60000,
                 "motor_max_current": 100,
-                "actuator_comm_hardware_type": fi_fsa_predefine.FSAActuatorCommHardwareType.TYPE_NULL,
+                "actuator_comm_hardware_type": fi_fsa_predefine_v1.FSAActuatorCommHardwareType.TYPE_NULL,
             }
             fi_fsa_v1.set_config(server_ip_list[i], dict)
 
