@@ -71,9 +71,3 @@ The `demo_lookup.py` script will scan all FSAs in the `192.168.137.xxx` subnet a
 ### FSA Control Principle
 
  [Control_System_Introduction_EN.md](doc/EN/Control_System_Introduction_EN.md) 
-
-### API Documentation
-
- [V1_Python_API_Introduction_EN.md](doc/EN/V1_Python_API_Introduction_EN.md) 
-
- [V2_Python_API_Introduction_EN.md](doc/EN/V2_Python_API_Introduction_EN.md) 

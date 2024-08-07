@@ -71,9 +71,3 @@ python ./demo_lookup.py
 ### FSA 控制原理
 
  [Control_System_Introduction_CN.md](doc/CN/Control_System_Introduction_CN.md) 
-
-### API 文档
-
- [V1_Python_API_Introduction_CN.md](doc/CN/V1_Python_API_Introduction_CN.md) 
-
- [V2_Python_API_Introduction_CN.md](doc/CN/V2_Python_API_Introduction_CN.md) 
