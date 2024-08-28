@@ -11,10 +11,10 @@ def main():
     if server_ip_list:
         position_loop_freq_div = 1
         velocity_loop_freq_div = 1
-        current_loop_freq_div = 1
+        PD_loop_freq_div = 1
         for i in range(len(server_ip_list)):
             ret = fi_fsa_v2.set_control_loop_freq_div(
-                server_ip_list[i], position_loop_freq_div, velocity_loop_freq_div, current_loop_freq_div)
+                server_ip_list[i], position_loop_freq_div, velocity_loop_freq_div, PD_loop_freq_div)
             print(ret)
 
         time.sleep(1)
