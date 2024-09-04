@@ -1871,7 +1871,7 @@ int FSA_CONNECT::FSA::SetTorqueLimitMax( const double& torque_limit_max ) {
 
         case 1:  // wait for feedback
             // receive error
-            ret = ctrl_udp_socket->ReceiveData_rt( recv_data_str );
+            ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
             if ( ret < 0 ) {
                 std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
 
@@ -1948,7 +1948,7 @@ int FSA_CONNECT::FSA::SetInertiaCompensation( const double& inertia_ff ) {
 
         case 1:  // wait for feedback
             // receive error
-            ret = ctrl_udp_socket->ReceiveData_rt( recv_data_str );
+            ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
             if ( ret < 0 ) {
                 std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
 
