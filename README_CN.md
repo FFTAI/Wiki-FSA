@@ -12,7 +12,7 @@
 │   ├── EN/                     # 英文文档
 │   └── images/                 # 图片
 │
-├── v3/                         # Cpp SDK V3
+├── v1/                         # Cpp SDK V1
 │   ├── CMakeLists.txt
 │   ├── ThirdParty/             # 第三方库
 │   ├── build/                  # 编译输出
@@ -21,7 +21,7 @@
 │   ├── lib/                    # 动态库/静态库
 │   └── src/                    # 源文件
 │
-└── v4/                         # Cpp SDK V4
+└── v2/                         # Cpp SDK V2
     ├── CMakeLists.txt
     ├── build/                  # 第三方库
     ├── config/                 # Json 配置文件
@@ -54,7 +54,7 @@ git clone https://gitee.com/FourierIntelligence/wiki-fsa.git -b cpp
 ### 编译
 
 ```shell
-cd wiki-fsa/v4 # 或者 cd wiki-fsa/fsa-cpp-sdk/v3
+cd wiki-fsa/v1 # 或者 cd wiki-fsa/fsa-cpp-sdk/v2
 mkdir build & cd build
 cmake ..
 make
@@ -83,6 +83,6 @@ cd bin
 
 ### API 文档
 
- [V3_Cpp_API_Introduction_CN.md](doc/CN/V3_Cpp_API_Introduction_CN.md) 
+ [V1_Cpp_API_Introduction_CN.md](doc/CN/V1_Cpp_API_Introduction_CN.md) 
 
- [V4_Cpp_API_Introduction_CN.md](doc/CN/V4_Cpp_API_Introduction_CN.md) 
+ [V2_Cpp_API_Introduction_CN.md](doc/CN/V2_Cpp_API_Introduction_CN.md) 

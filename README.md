@@ -12,7 +12,7 @@
 │   ├── EN/                     # English Documentation
 │   └── images/                 # Images
 │
-├── v3/                         # Cpp SDK V3
+├── v1/                         # Cpp SDK V1
 │   ├── CMakeLists.txt
 │   ├── ThirdParty/             # Third-Party Libraries
 │   ├── build/                  # Build Output
@@ -21,7 +21,7 @@
 │   ├── lib/                    # Dynamic/Static Libraries
 │   └── src/                    # Source Files
 │
-└── v4/                         # Cpp SDK V4
+└── v2/                         # Cpp SDK V2
     ├── CMakeLists.txt
     ├── build/                  # Build Output
     ├── config/                 # JSON Configuration Files
@@ -54,7 +54,7 @@ git clone https://gitee.com/FourierIntelligence/wiki-fsa.git -b cpp
 ### Building
 
 ```shell
-cd wiki-fsa/v4 # or cd wiki-fsa/fsa-cpp-sdk/v3
+cd wiki-fsa/v1 # or cd wiki-fsa/fsa-cpp-sdk/v2
 mkdir build & cd build
 cmake ..
 make
@@ -83,6 +83,6 @@ The `lookup` program will scan and list all FSAs in the `192.168.137.xxx` subnet
 
 ### API Documentation
 
- [V3_Cpp_API_Introduction_EN.md](doc/EN/V3_Cpp_API_Introduction_EN.md) 
+ [V1_Cpp_API_Introduction_EN.md](doc/EN/V1_Cpp_API_Introduction_EN.md) 
 
- [V4_Cpp_API_Introduction_EN.md](doc/EN/V4_Cpp_API_Introduction_EN.md)
+ [V2_Cpp_API_Introduction_EN.md](doc/EN/V2_Cpp_API_Introduction_EN.md)
