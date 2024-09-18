@@ -50,5 +50,7 @@ namespace JsonData {
 
     ordered_json set_inertia_ff_json = { { "method", "SET" }, { "reqTarget", "/inertia_ff" }, { "inertia_ff", 0 } };
 
+    ordered_json get_ntc_temperature_json = { { "method", "GET" }, { "reqTarget", "/get_ntc_temperature" }, { "property", "" } };
+
 }  // namespace JsonData
 }  // namespace FSA_CONNECT

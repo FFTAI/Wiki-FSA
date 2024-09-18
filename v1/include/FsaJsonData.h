@@ -24,6 +24,7 @@ namespace JsonData {
     extern ordered_json get_pvc_json;
     extern ordered_json set_torque_limit_max_json;
     extern ordered_json set_inertia_ff_json;
+    extern ordered_json get_ntc_temperature_json;
 
 }  // namespace JsonData
 }  // namespace FSA_CONNECT

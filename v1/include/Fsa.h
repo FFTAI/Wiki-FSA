@@ -164,6 +164,8 @@ public:
      */
     int SetInertiaCompensation( const double& inertia_ff );
 
+    int GetNtcTemperature( float& out_mos_temperature, float& out_armature_temperature );
+
     // std::shared_ptr<Transmit::UDPSocket> pt_udp_socket;
     std::string ip_;
 
@@ -183,6 +185,7 @@ private:
     int control_state              = 0;
     int set_torque_limit_max_state = 0;
     int set_inertia_ff_state       = 0;
+    int get_ntc_temperature_state  = 0;
 
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
