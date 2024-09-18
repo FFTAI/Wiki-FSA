@@ -33,13 +33,23 @@ def main():
                 print(": Server received from {}:{}".format(addr, data))
                 print(len(data))
                 # pi = position_index pv = position_value vi = velocity_index vv = velocity_value
-                pi, pv, vi, vv, ci, cv, ti, tv = struct.unpack(
-                    ">BfBfBfBf", data[0 : 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4]
-                )
-                print("index = %x, value = %f" % (pi, pv))
-                print("index = %x, value = %f" % (vi, vv))
-                print("index = %x, value = %f" % (ci, cv))
-                print("index = %x, value = %f" % (ti, tv))
+                if len(data) == 20:
+                    pi, pv, vi, vv, ci, cv, ti, tv = struct.unpack(
+                        ">BfBfBfBf", data[0 : 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4]
+                    )
+                    print("index = %x, value = %f" % (pi, pv))
+                    print("index = %x, value = %f" % (vi, vv))
+                    print("index = %x, value = %f" % (ci, cv))
+                    print("index = %x, value = %f" % (ti, tv))
+                if len(data) == 25:
+                    pi, pv, vi, vv, ci, cv, ti, tv, cnt_i, cnt_v = struct.unpack(
+                        ">BfBfBfBfBI", data[0: 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4]
+                    )
+                    print("index = %x, value = %f" % (pi, pv))
+                    print("index = %x, value = %f" % (vi, vv))
+                    print("index = %x, value = %f" % (ci, cv))
+                    print("index = %x, value = %f" % (ti, tv))
+                    print("index = %x, value = %d" % (cnt_i, cnt_v))
 
         print("\n")
         time.sleep(1)
