@@ -14,7 +14,10 @@ def main():
 
             for i in range(len(server_ip_list)):
                 error = fi_fsa_v2.fast_get_error(server_ip_list[i])
-                print("Error = %d" % error)
+                if type(error) is list:
+                    print("Error =" + str(error))
+                else:
+                    print("Error = %d" % error)
 
             # end_time = time.time()
             #
