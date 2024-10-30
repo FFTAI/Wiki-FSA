@@ -2016,7 +2016,7 @@ int FSA_CONNECT::FSA::GetNtcTemperature( float& out_mos_temperature, float& out_
 
         case 1:  // wait for feedback
             // receive error
-            ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
+            ret = ctrl_udp_socket->ReceiveData_rt( recv_data_str );
             if ( ret < 0 ) {
                 std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
 
@@ -2059,4 +2059,84 @@ int FSA_CONNECT::FSA::GetNtcTemperature( float& out_mos_temperature, float& out_
     }
 
     return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::SetControlWord( FSA_CONNECT::Status::FSAControlWord& control_word ) {
+    bool is_set_control_word_success = false;
+
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+
+    ordered_json send_data_json = { { "method", "SET" }, { "reqTarget", "/control_word" }, { "control_word", static_cast< int >( control_word ) } };
+    ordered_json recv_data_json;
+
+    int         ret;
+    std::string recv_data_str;
+    std::string receive_state;
+
+    while ( true ) {
+        if ( !is_set_control_word_success ) {
+            // 获取开始时间
+            begin = std::chrono::steady_clock::now();
+
+            ret = ctrl_udp_socket->SendData( send_data_json.dump() );
+
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+                return ret;
+            }
+
+            is_set_control_word_success = true;
+        }
+        else {
+            ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
+
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                is_set_control_word_success = false;
+                return ret;
+            }
+
+            if ( !recv_data_str.empty() ) {
+                recv_data_json = json::parse( recv_data_str );
+                receive_state  = recv_data_json.at( "status" );
+
+                if ( receive_state.compare( "OK" ) ) {
+                    is_set_control_word_success = false;
+                    std::cout << "MOTOR: " << ip_ << ", SET CONTROL WORD FAILED! " << std::endl;
+                    return DISABLE_FAILED;
+                }
+
+                is_set_control_word_success = false;
+                return SUCCESS;
+            }
+
+            // 获取结束时间
+            end = std::chrono::steady_clock::now();
+
+            // 计算时间间隔
+            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+
+            if ( int_ms.count() > 3000 ) {
+                is_set_control_word_success = false;
+                std::cout << "MOTOR: " << ip_ << ", SET CONTROL WORD TIMEOUT! " << std::endl;
+                return TIMEOUT;
+            }
+        }
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::SetReturnZeroMode( void ) {
+    using namespace FSA_CONNECT::Status;
+    FSAControlWord control_word = FSAControlWord::RETURN_ZERO;
+    return SetControlWord( control_word );
+}
+
+int FSA_CONNECT::FSA::SetFrictionIdentifyMode( void ) {
+    using namespace FSA_CONNECT::Status;
+    FSAControlWord control_word = FSAControlWord::FRICTION_IDENTIFY;
+    return SetControlWord( control_word );
 }

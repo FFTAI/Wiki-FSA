@@ -166,6 +166,12 @@ public:
 
     int GetNtcTemperature( float& out_mos_temperature, float& out_armature_temperature );
 
+    int SetControlWord( FSA_CONNECT::Status::FSAControlWord& control_word );
+
+    int SetReturnZeroMode( void );
+
+    int SetFrictionIdentifyMode( void );
+
     // std::shared_ptr<Transmit::UDPSocket> pt_udp_socket;
     std::string ip_;
 
