@@ -43,11 +43,11 @@ namespace Status {
         CALIBRATE_MOTOR   = 2,
         OPEN_LOOP_CONTORL = 3,
         // CURRENT_CLOSE_LOOP_CONTROL = 4,
-        SERVO_OFF   = 0X06,
-        SERVO_ON    = 0X0F,
-        MOTION_ABS  = 0X103F,
-        CLEAR_FAULT = 0X86,
-
+        SERVO_OFF         = 0X06,
+        SERVO_ON          = 0X0F,
+        CLEAR_FAULT       = 0X86,
+        RETURN_ZERO       = 0X103F,
+        FRICTION_IDENTIFY = 0X104F,
     };
 
     enum InternalControlMode {
