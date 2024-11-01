@@ -33,7 +33,9 @@ namespace JsonData {
                                              { "control_velocity_kp_imm", 0.0 },
                                              { "control_velocity_ki_imm", 0.0 },
                                              { "control_current_kp_imm", 0.0 },
-                                             { "control_current_ki_imm", 0.0 } };
+                                             { "control_current_ki_imm", 0.0 },
+                                             { "control_pd_kp_imm", 0.0 },
+                                             { "control_pd_kd_imm", 0.0 } };
     ordered_json set_operation_mode_json = { { "method", "SET" }, { "reqTarget", "/mode_of_operation" }, { "mode_of_operation", Status::POSITION_CONTROL } };
 
     ordered_json get_pid_params_json = { { "method", "GET" }, { "reqTarget", "/pid_param_imm" }, { "property", "" } };

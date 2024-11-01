@@ -1,6 +1,9 @@
 #include "Fsa.h"
+#include "FsaJsonData.h"
+#include "FsaStatus.h"
 #include <cstdint>
 #include <fstream>
+#include <unistd.h>
 
 void FSA_CONNECT::FSA::init( const string& ip ) {
     ip_             = ip;
@@ -674,6 +677,8 @@ int FSA_CONNECT::FSA::SetPIDParams( FSAConfig::FSAPIDParams& pidparams ) {
             set_pid_params_json[ "control_velocity_ki_imm" ] = pidparams.control_velocity_ki;
             set_pid_params_json[ "control_current_kp_imm" ]  = pidparams.control_current_kp;
             set_pid_params_json[ "control_current_ki_imm" ]  = pidparams.control_current_ki;
+            set_pid_params_json[ "control_PD_kp_imm" ]       = pidparams.control_pd_kp;
+            set_pid_params_json[ "control_PD_kd_imm" ]       = pidparams.control_pd_kd;
             // set_pid_params_json["control_position_output_max"] = pidparams.control_position_output_max;
             // set_pid_params_json["control_position_output_min"] = pidparams.control_position_output_min;
             // set_pid_params_json["control_velocity_output_max"] = pidparams.control_velocity_output_max;
@@ -2131,12 +2136,143 @@ int FSA_CONNECT::FSA::SetControlWord( FSA_CONNECT::Status::FSAControlWord& contr
 
 int FSA_CONNECT::FSA::SetReturnZeroMode( void ) {
     using namespace FSA_CONNECT::Status;
+
     FSAControlWord control_word = FSAControlWord::RETURN_ZERO;
-    return SetControlWord( control_word );
+
+    this->Disable();
+
+    sleep( 1 );
+
+    int ret = SetControlWord( control_word );
+
+    sleep( 1 );
+
+    this->Disable();
+
+    return ret;
 }
 
 int FSA_CONNECT::FSA::SetFrictionIdentifyMode( void ) {
     using namespace FSA_CONNECT::Status;
+
     FSAControlWord control_word = FSAControlWord::FRICTION_IDENTIFY;
-    return SetControlWord( control_word );
+
+    this->Disable();
+
+    sleep( 1 );
+
+    int ret = SetControlWord( control_word );
+
+    sleep( 1 );
+
+    this->Disable();
+
+    return ret;
+}
+
+int FSA_CONNECT::FSA::SetControlMode( FSA_CONNECT::Status::FSAModeOfOperation& control_mode ) {
+    bool is_set_control_mode_success = false;
+
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+
+    ordered_json send_data_json = { { "method", "SET" }, { "reqTarget", "/mode_of_operation" }, { "mode_of_operation", static_cast< int >( control_mode ) } };
+    ordered_json recv_data_json;
+
+    int         ret;
+    std::string recv_data_str;
+    std::string receive_state;
+
+    while ( true ) {
+        if ( !is_set_control_mode_success ) {
+            // 获取开始时间
+            begin = std::chrono::steady_clock::now();
+
+            ret = ctrl_udp_socket->SendData( send_data_json.dump() );
+
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+                return ret;
+            }
+
+            is_set_control_mode_success = true;
+        }
+        else {
+            ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
+
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                is_set_control_mode_success = false;
+                return ret;
+            }
+
+            if ( !recv_data_str.empty() ) {
+                recv_data_json = json::parse( recv_data_str );
+                receive_state  = recv_data_json.at( "status" );
+
+                if ( receive_state.compare( "OK" ) ) {
+                    is_set_control_mode_success = false;
+                    std::cout << "MOTOR: " << ip_ << ", SET CONTROL WORD FAILED! " << std::endl;
+                    return DISABLE_FAILED;
+                }
+
+                is_set_control_mode_success = false;
+                return SUCCESS;
+            }
+
+            // 获取结束时间
+            end = std::chrono::steady_clock::now();
+
+            // 计算时间间隔
+            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+
+            if ( int_ms.count() > 3000 ) {
+                is_set_control_mode_success = false;
+                std::cout << "MOTOR: " << ip_ << ", SET CONTROL WORD TIMEOUT! " << std::endl;
+                return TIMEOUT;
+            }
+        }
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::SetFrictionCompFlag( uint8_t friction_comp_flag ) {
+    using namespace FSA_CONNECT::ResultCode;
+
+    bool is_set_friction_comp_flag_success = false;
+
+    int ret = 0;
+
+    uint8_t send_pkg[ 5 ] = { 0 };
+
+    send_pkg[ 0 ] = 0xA3;
+    send_pkg[ 1 ] = 0x00;
+    send_pkg[ 2 ] = 0x00;
+    send_pkg[ 3 ] = 0x00;
+    send_pkg[ 4 ] = friction_comp_flag;
+
+    while ( true ) {
+        if ( !is_set_friction_comp_flag_success ) {
+
+            ret = fast_udp_socket->SendData( send_pkg, sizeof( send_pkg ) );
+
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+
+            is_set_friction_comp_flag_success = 1;
+            break;
+        }
+        else {
+            is_set_friction_comp_flag_success = 0;
+
+            return SUCCESS;
+        }
+    }
+
+    return NOT_EXECUTE;
 }

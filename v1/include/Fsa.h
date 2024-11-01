@@ -172,6 +172,10 @@ public:
 
     int SetFrictionIdentifyMode( void );
 
+    int SetFrictionCompFlag( uint8_t friction_comp_flag );
+
+    int SetControlMode( FSA_CONNECT::Status::FSAModeOfOperation& control_mode );
+
     // std::shared_ptr<Transmit::UDPSocket> pt_udp_socket;
     std::string ip_;
 

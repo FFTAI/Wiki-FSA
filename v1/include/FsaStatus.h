@@ -27,6 +27,7 @@ namespace Status {
         VELOCITY_CONTROL           = 3,
         CURRENT_CLOSE_LOOP_CONTROL = 4,
         TRAPEZOIDAL_CONTROL        = 5,
+        PD_CONTROL                 = 7,
     };
 
     // enum class FSAInputMode {

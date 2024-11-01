@@ -17,6 +17,8 @@ namespace FSAConfig {
         double control_velocity_ki;
         double control_current_kp;
         double control_current_ki;
+        double control_pd_kp;
+        double control_pd_kd;
         double control_position_output_max;
         double control_position_output_min;
         double control_velocity_output_max;
