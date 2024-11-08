@@ -1,7 +1,8 @@
 from fi_fsa import fi_fsa_v2, fi_fsa_predefine_v2
 import time
 
-server_ip_list = ["192.168.137.51"]
+# set a fsa ip e.g. server_ip_list = ["192.168.137.9"]
+server_ip_list = ["192.168.137.9"]
 
 FSA_cfg = {
     "FSA130-9E": {

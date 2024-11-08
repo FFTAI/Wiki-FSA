@@ -28,8 +28,6 @@ def main():
                 "control_position_kp_imm": 0.0,
                 "control_velocity_kp_imm": 0.1,
                 "control_velocity_ki_imm": 0.001,
-                "control_current_kp_imm": 0.0,  # not work for now
-                "control_current_ki_imm": 0.0,  # not work for now
                 "control_PD_kp_imm": 1.0,
                 "control_PD_kd_imm": 1.0,
             }

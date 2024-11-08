@@ -70,8 +70,8 @@ def main():
         #         'control_position_kp_imm': 0.0,
         #         'control_velocity_kp_imm': 0.04,
         #         'control_velocity_ki_imm': 0.0001,
-        #         'control_current_kp_imm': 7.25,  # not work for now
-        #         'control_current_ki_imm': 0.08,  # not work for now
+        #         'control_PD_kp_imm': 1.0,
+        #         'control_PD_kd_imm': 1.0,
         #     }
         #     fi_fsa_v2.set_pid_param_imm(server_ip_list[i], dict)
         #
@@ -97,8 +97,8 @@ def main():
                 "control_position_kp_imm": 0.0,
                 "control_velocity_kp_imm": 0.0,
                 "control_velocity_ki_imm": 0.0,
-                "control_current_kp_imm": 7.25,  # not work for now
-                "control_current_ki_imm": 0.08,  # not work for now
+                "control_PD_kp_imm": 1.0,
+                "control_PD_kd_imm": 1.0,
             }
             fi_fsa_v2.set_pid_param_imm(server_ip_list[i], dict)
 

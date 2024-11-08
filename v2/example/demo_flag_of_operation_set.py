@@ -12,14 +12,10 @@ def main():
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict_cfg = {
-                "flag_do_use_store_actuator_param": fi_fsa_v2.FSAFlagState.CLEAR,
                 "flag_do_use_store_motor_param": fi_fsa_v2.FSAFlagState.SET,
-                "flag_do_use_store_encoder_param": fi_fsa_v2.FSAFlagState.CLEAR,
                 "flag_do_use_store_pid_param": fi_fsa_v2.FSAFlagState.CLEAR,
                 "actuator_double_encoder_enable": fi_fsa_v2.FSAFlagState.SET,
-                # 'flag_do_use_store_actuator_param': fi_fsa_v2.FSAFlagState.SET,
                 # 'flag_do_use_store_motor_param': fi_fsa_v2.FSAFlagState.SET,
-                # 'flag_do_use_store_encoder_param': fi_fsa_v2.FSAFlagState.SET,
                 # 'flag_do_use_store_pid_param': fi_fsa_v2.FSAFlagState.SET,
             }
             fi_fsa_v2.set_flag_of_operation(server_ip_list[i], dict_cfg)
