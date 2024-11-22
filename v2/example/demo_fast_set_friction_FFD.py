@@ -14,6 +14,7 @@ def main():
         friction_FFD_Fs = 0
         friction_FFD_Fc = 0
         friction_FFD_B = 0
+        friction_FFD_percent = 1
         for i in range(len(server_ip_list)):
             ret = fi_fsa_v2.fast_set_friction_FFD(
                 server_ip_list[i], 
@@ -22,7 +23,8 @@ def main():
                 friction_FFD_DeadSpeed,
                 friction_FFD_Fs,
                 friction_FFD_Fc,
-                friction_FFD_B
+                friction_FFD_B,
+                friction_FFD_percent
             )
             print(ret)
 
