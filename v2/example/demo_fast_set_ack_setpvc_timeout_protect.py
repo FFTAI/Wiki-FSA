@@ -3,6 +3,7 @@ import random
 from fi_fsa import fi_fsa_v2
 import time
 
+
 # server_ip_list = ["192.168.137.101"]
 
 
@@ -26,18 +27,18 @@ def main():
         # 进入保护模式后是否禁止修改mode_of_operation,0: no, 1: yes
         ignore_set_mode_of_operation = 1
 
-        cnt = 0
+        tx_cnt = 0
         for i in range(len(server_ip_list)):
-            cnt = cnt + 1
-            print(cnt)
-            cnt, res = fi_fsa_v2.fast_set_ack_setpvc_timeout_protect(server_ip_list[i],
-                                                                cnt,
-                                                                protect_enable,
-                                                                timeout_ms,
-                                                                protect_mode_of_operation,
-                                                                close_back_last_mode_of_operation,
-                                                                ignore_set_mode_of_operation)
-            print("cnt = %u, res = %d" % (cnt, res))
+            tx_cnt = tx_cnt + 1
+            print(tx_cnt)
+            rx_cnt, res = fi_fsa_v2.fast_set_ack_setpvc_timeout_protect(server_ip_list[i],
+                                                                        tx_cnt,
+                                                                        protect_enable,
+                                                                        timeout_ms,
+                                                                        protect_mode_of_operation,
+                                                                        close_back_last_mode_of_operation,
+                                                                        ignore_set_mode_of_operation)
+            print("cnt = %u, res = %d" % (rx_cnt, res))
 
         time.sleep(1)
 
