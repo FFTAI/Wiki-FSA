@@ -22,6 +22,14 @@ def main():
             "velocity": 1,
             "current": 1,
             "torque": 1,
+            "error": 1,
+            "error_ext2": 1,
+            "error_ext3": 1,
+            "error_ext4": 1,
+            "error_ext5": 1,
+            "error_ext6": 1,
+            "error_ext7": 1,
+            "error_ext8": 1,
         }
 
         for i in range(len(server_ip_list)):
@@ -32,24 +40,48 @@ def main():
                 data, addr = udp_socket.recvfrom(2048)
                 print(": Server received from {}:{}".format(addr, data))
                 print(len(data))
-                # pi = position_index pv = position_value vi = velocity_index vv = velocity_value
-                if len(data) == 20:
-                    pi, pv, vi, vv, ci, cv, ti, tv = struct.unpack(
-                        ">BfBfBfBf", data[0 : 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4]
-                    )
-                    print("index = %x, value = %f" % (pi, pv))
-                    print("index = %x, value = %f" % (vi, vv))
-                    print("index = %x, value = %f" % (ci, cv))
-                    print("index = %x, value = %f" % (ti, tv))
-                if len(data) == 25:
-                    pi, pv, vi, vv, ci, cv, ti, tv, cnt_i, cnt_v = struct.unpack(
-                        ">BfBfBfBfBI", data[0: 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4 + 1 + 4]
-                    )
-                    print("index = %x, value = %f" % (pi, pv))
-                    print("index = %x, value = %f" % (vi, vv))
-                    print("index = %x, value = %f" % (ci, cv))
-                    print("index = %x, value = %f" % (ti, tv))
-                    print("index = %x, value = %d" % (cnt_i, cnt_v))
+                pointer = 0
+                while pointer < len(data):
+                    if data[pointer] == 0x02:
+                        value = struct.unpack(">f", data[pointer + 1: pointer + 5])
+                        print("index = 0x02, position = %f" % value)
+                    elif data[pointer] == 0x03:
+                        value = struct.unpack(">f", data[pointer + 1: pointer + 5])
+                        print("index = 0x03, velocity = %f" % value)
+                    elif data[pointer] == 0x04:
+                        value = struct.unpack(">f", data[pointer + 1: pointer + 5])
+                        print("index = 0x04, current = %f" % value)
+                    elif data[pointer] == 0x05:
+                        value = struct.unpack(">f", data[pointer + 1: pointer + 5])
+                        print("index = 0x05, torque = %f" % value)
+                    elif data[pointer] == 0x06:
+                        value = struct.unpack(">I", data[pointer + 1: pointer + 5])
+                        print("index = 0x06, cnt = %u" % value)
+                    elif data[pointer] == 0x07:
+                        value = struct.unpack(">I", data[pointer + 1: pointer + 5])
+                        print("index = 0x07, error = %u" % value)
+                    elif data[pointer] == 0x08:
+                        value = struct.unpack(">I", data[pointer + 1: pointer + 5])
+                        print("index = 0x08, error_ext2 = %u" % value)
+                    elif data[pointer] == 0x09:
+                        value = struct.unpack(">I", data[pointer + 1: pointer + 5])
+                        print("index = 0x09, error_ext3 = %u" % value)
+                    elif data[pointer] == 0x0A:
+                        value = struct.unpack(">I", data[pointer + 1: pointer + 5])
+                        print("index = 0x0A, error_ext4 = %u" % value)
+                    elif data[pointer] == 0x0B:
+                        value = struct.unpack(">I", data[pointer + 1: pointer + 5])
+                        print("index = 0x0B, error_ext5 = %u" % value)
+                    elif data[pointer] == 0x0C:
+                        value = struct.unpack(">I", data[pointer + 1: pointer + 5])
+                        print("index = 0x0C, error_ext6 = %u" % value)
+                    elif data[pointer] == 0x0D:
+                        value = struct.unpack(">I", data[pointer + 1: pointer + 5])
+                        print("index = 0x0D, error_ext7 = %u" % value)
+                    elif data[pointer] == 0x0E:
+                        value = struct.unpack(">I", data[pointer + 1: pointer + 5])
+                        print("index = 0x0E, error_ext8 = %u" % value)
+                    pointer = pointer + 5
 
         print("\n")
         time.sleep(1)
