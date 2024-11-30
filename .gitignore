@@ -4,3 +4,5 @@
 */bin/
 */build/
 */.cache/
+/v1/cmake-build-debug
+/v1/cmake-build-release
