@@ -1,6 +1,9 @@
 #pragma once
 
+#include "FsaStatus.h"
 #include <string>
+#include <vector>
+
 namespace FSA_CONNECT {
 /**
  * @brief this namespace for config of actuator, include pid config and control config.
@@ -42,6 +45,27 @@ namespace FSAConfig {
         double encoder_resolution;
         double encoder_phase_offset;
     };
+
+    typedef struct {
+        uint32_t                   protect_enable;
+        uint32_t                   timeout_ms;
+        Status::FSAModeOfOperation protect_mode_of_operation;
+        uint32_t                   close_back_last_mode_of_operation;
+        uint32_t                   ignore_set_mode_of_operation;
+    } set_pvc_timeout_protect_config_t;
+
+    typedef struct {
+        float                   position;
+        float                   velocity;
+        float                   current;
+        float                   torque;
+        std::vector< uint32_t > error_code;
+    } pvct_errcode_t;
+
+    typedef struct {
+        uint32_t count;
+        uint32_t res;
+    } ack_ret_t;
 
     // struct FSARootConfig {
     //     std::string serial_number;

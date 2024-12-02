@@ -6,19 +6,18 @@
 #include <unistd.h>
 
 int main( int argc, const char** argv ) {
-    string                                  ip = "192.168.137.101";
-    FSA_CONNECT::FSA                        fsa;
-    FSA_CONNECT::Status::FSAModeOfOperation pd_mode    = FSA_CONNECT::Status::FSAModeOfOperation::PD_CONTROL;
-    FSA_CONNECT::FSAConfig::FSAPIDParams    pid_params = { 0 };
-    double                                  p, v, c;
-    int                                     ret = 0;
+    string                               ip = "192.168.137.101";
+    FSA_CONNECT::FSA                     fsa;
+    FSA_CONNECT::FSAConfig::FSAPIDParams pid_params = { 0 };
+    double                               p, v, c;
+    int                                  ret = 0;
 
-    pid_params.control_pd_kp = 50;
+    pid_params.control_pd_kp = 30;
     pid_params.control_pd_kd = 2;
 
     fsa.init( ip );
-    fsa.SetPIDParams( pid_params );
-    fsa.SetControlMode( pd_mode );
+    fsa.SetPDParams( pid_params );
+    fsa.EnablePDControl();
 
     sleep( 1 );
 

@@ -9,11 +9,15 @@ int main( int argc, const char** argv ) {
     float armature_temperature = 0;
 
     fsa.init( ip );
-    fsa.GetNtcTemperature( mos_temperature, armature_temperature );
 
-    std::cout << "mos_temperature: " << mos_temperature << "\t"
-              << "armature_tempature: " << armature_temperature << std::endl;
+    while ( true ) {
+        fsa.GetNtcTemperature( mos_temperature, armature_temperature );
 
-    sleep( 1 );
+        std::cout << "mos_temperature: " << mos_temperature << "\t"
+                  << "armature_tempature: " << armature_temperature << std::endl;
+
+        sleep( 1 );
+    }
+
     return 0;
 }

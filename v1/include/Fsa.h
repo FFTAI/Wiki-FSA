@@ -90,6 +90,9 @@ public:
      * @details recommend use python sdk
      * @return return result code, find in "FsaResult.h"
      */
+
+    int SetPDParams( FSAConfig::FSAPIDParams& pidparams );
+
     int GetPIDParams( FSAConfig::FSAPIDParams& pidparams );
     /**
      * @fn GetControlConfig
@@ -148,6 +151,8 @@ public:
      */
     int EnableCurControl();
 
+    int EnablePDControl();
+
     /**
      * @fn SetTorqueLimitMax
      * @brief Torque limiter parameter configuration
@@ -176,26 +181,36 @@ public:
 
     int SetControlMode( FSA_CONNECT::Status::FSAModeOfOperation& control_mode );
 
+    int SetPVCTimeoutProtect( uint32_t count, const FSA_CONNECT::FSAConfig::set_pvc_timeout_protect_config_t& config, FSAConfig::ack_ret_t& set_pvc_timeout_protect_ret );
+
+    int ClearSetPVCTimeoutProtect( uint32_t count, uint32_t clear_back_last_mode_of_operation, FSAConfig::ack_ret_t& clear_set_pvc_timeout_protect_ret );
+
+    int GetPVCTError( FSAConfig::pvct_errcode_t& pvct_errcode );
+
     // std::shared_ptr<Transmit::UDPSocket> pt_udp_socket;
     std::string ip_;
 
 private:
-    int get_root_config            = 0;
-    int get_state                  = 0;
-    int poweron_state              = 0;
-    int poweroff_state             = 0;
-    int set_ctrlcfg_state          = 0;
-    int get_ctrlcfg_state          = 0;
-    int set_pid_state              = 0;
-    int get_pid_state              = 0;
-    int set_pos_state              = 0;
-    int set_vel_state              = 0;
-    int set_cur_state              = 0;
-    int get_pvc_state              = 0;
-    int control_state              = 0;
-    int set_torque_limit_max_state = 0;
-    int set_inertia_ff_state       = 0;
-    int get_ntc_temperature_state  = 0;
+    int get_root_config                 = 0;
+    int get_state                       = 0;
+    int poweron_state                   = 0;
+    int poweroff_state                  = 0;
+    int set_ctrlcfg_state               = 0;
+    int get_ctrlcfg_state               = 0;
+    int set_pid_state                   = 0;
+    int set_pd_state                    = 0;
+    int get_pid_state                   = 0;
+    int set_pos_state                   = 0;
+    int set_vel_state                   = 0;
+    int set_cur_state                   = 0;
+    int get_pvc_state                   = 0;
+    int control_state                   = 0;
+    int set_torque_limit_max_state      = 0;
+    int set_inertia_ff_state            = 0;
+    int get_ntc_temperature_state       = 0;
+    int set_pvc_timeout_protect_state   = 0;
+    int clear_pvc_timeout_protect_state = 0;
+    int get_pvct_errorcode_state        = 0;
 
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;

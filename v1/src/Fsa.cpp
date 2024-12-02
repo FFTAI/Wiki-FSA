@@ -5,6 +5,8 @@
 #include <fstream>
 #include <unistd.h>
 
+using namespace FSA_CONNECT;
+
 void FSA_CONNECT::FSA::init( const string& ip ) {
     ip_             = ip;
     ctrl_udp_socket = std::make_shared< Transmit::UDPSocket >( ip, 2333 );
@@ -661,6 +663,87 @@ int FSA_CONNECT::FSA::GetControlConfig() {
 
 int FSA_CONNECT::FSA::SetPIDParams( FSAConfig::FSAPIDParams& pidparams ) {
 
+    // using namespace FSA_CONNECT::JsonData;
+    // using namespace FSA_CONNECT::ResultCode;
+    // using namespace FSA_CONNECT::Status;
+    // int         ret;
+    // std::string recv_data_str;
+    // json        recv_data_json;
+    // std::string receive_state;
+    // while ( 1 ) {
+    //     switch ( set_pid_state ) {
+    //     case 0:  // enable
+    //         begin                                            = std::chrono::steady_clock::now();
+    //         set_pid_params_json[ "control_position_kp_imm" ] = pidparams.control_position_kp;
+    //         set_pid_params_json[ "control_velocity_kp_imm" ] = pidparams.control_velocity_kp;
+    //         set_pid_params_json[ "control_velocity_ki_imm" ] = pidparams.control_velocity_ki;
+    //         set_pid_params_json[ "control_current_kp_imm" ]  = pidparams.control_current_kp;
+    //         set_pid_params_json[ "control_current_ki_imm" ]  = pidparams.control_current_ki;
+    //         set_pid_params_json[ "control_PD_kp_imm" ]       = pidparams.control_pd_kp;
+    //         set_pid_params_json[ "control_PD_kd_imm" ]       = pidparams.control_pd_kd;
+    //         // set_pid_params_json["control_position_output_max"] = pidparams.control_position_output_max;
+    //         // set_pid_params_json["control_position_output_min"] = pidparams.control_position_output_min;
+    //         // set_pid_params_json["control_velocity_output_max"] = pidparams.control_velocity_output_max;
+    //         // set_pid_params_json["control_velocity_output_min"] = pidparams.control_velocity_output_min;
+    //         // set_pid_params_json["control_current_output_max"] = pidparams.control_current_output_max;
+    //         // set_pid_params_json["control_current_output_min"] = pidparams.control_current_output_min;
+    //
+    //         ret = ctrl_udp_socket->SendData( set_pid_params_json.dump() );
+    //         if ( ret < 0 ) {
+    //             std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+    //
+    //             return ret;
+    //         }
+    //         // data send succeed
+    //         // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+    //         set_pid_state = 1;
+    //         break;
+    //
+    //     case 1:  // wait for feedback
+    //         // receive error
+    //         ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
+    //         if ( ret < 0 ) {
+    //             std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+    //
+    //             set_pid_state = 0;
+    //             return ret;
+    //         }
+    //         // receive something
+    //         if ( !recv_data_str.empty() ) {
+    //             recv_data_json = json::parse( recv_data_str );
+    //             receive_state  = recv_data_json.at( "status" );
+    //             if ( receive_state.compare( "OK" ) ) {
+    //                 set_pid_state = 0;
+    //                 std::cout << "MOTOR: " << ip_ << ", SET PID PARAMS FAILED! " << std::endl;
+    //
+    //                 return DISABLE_FAILED;
+    //             }
+    //             set_pid_state = 0;
+    //             std::cout << "MOTOR: " << ip_ << ",  SET PID PARAMS SUCCESS! " << std::endl;
+    //
+    //             return SUCCESS;
+    //         }
+    //
+    //         // clock_gettime(CLOCK_MONOTONIC,&now_time);
+    //         end = std::chrono::steady_clock::now();
+    //         // time out
+    //         int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+    //         if ( int_ms.count() > 3000 ) {
+    //             set_pid_state = 0;
+    //             std::cout << "MOTOR: " << ip_ << ", SET PID PARAMS TIMEOUT! " << std::endl;
+    //
+    //             return TIMEOUT;
+    //         }
+    //         break;
+    //
+    //     default:
+    //         set_pid_state = 0;
+    //         break;
+    //     };
+    // }
+    //
+    // return NOT_EXECUTE;
+
     using namespace FSA_CONNECT::JsonData;
     using namespace FSA_CONNECT::ResultCode;
     using namespace FSA_CONNECT::Status;
@@ -668,80 +751,130 @@ int FSA_CONNECT::FSA::SetPIDParams( FSAConfig::FSAPIDParams& pidparams ) {
     std::string recv_data_str;
     json        recv_data_json;
     std::string receive_state;
+    uint8_t     send_pkg[ 13 ] = { 0x00 };
     while ( 1 ) {
         switch ( set_pid_state ) {
         case 0:  // enable
-            begin                                            = std::chrono::steady_clock::now();
-            set_pid_params_json[ "control_position_kp_imm" ] = pidparams.control_position_kp;
-            set_pid_params_json[ "control_velocity_kp_imm" ] = pidparams.control_velocity_kp;
-            set_pid_params_json[ "control_velocity_ki_imm" ] = pidparams.control_velocity_ki;
-            set_pid_params_json[ "control_current_kp_imm" ]  = pidparams.control_current_kp;
-            set_pid_params_json[ "control_current_ki_imm" ]  = pidparams.control_current_ki;
-            set_pid_params_json[ "control_PD_kp_imm" ]       = pidparams.control_pd_kp;
-            set_pid_params_json[ "control_PD_kd_imm" ]       = pidparams.control_pd_kd;
-            // set_pid_params_json["control_position_output_max"] = pidparams.control_position_output_max;
-            // set_pid_params_json["control_position_output_min"] = pidparams.control_position_output_min;
-            // set_pid_params_json["control_velocity_output_max"] = pidparams.control_velocity_output_max;
-            // set_pid_params_json["control_velocity_output_min"] = pidparams.control_velocity_output_min;
-            // set_pid_params_json["control_current_output_max"] = pidparams.control_current_output_max;
-            // set_pid_params_json["control_current_output_min"] = pidparams.control_current_output_min;
+        {
+            begin = std::chrono::steady_clock::now();
 
-            ret = ctrl_udp_socket->SendData( set_pid_params_json.dump() );
+            /**********add****/
+            float kp = 0, ki = 0, kd = 0;
+            kp = static_cast< float >( pidparams.control_position_kp );
+            ki = static_cast< float >( pidparams.control_velocity_ki );
+            kd = static_cast< float >( pidparams.control_velocity_kp );
+
+            unsigned int val_kp = *( unsigned int* )&kp;
+            unsigned int val_ki = *( unsigned int* )&ki;
+            unsigned int val_kd = *( unsigned int* )&kd;
+
+            send_pkg[ 0 ] = 0xA0;
+
+            send_pkg[ 1 ] = ( val_kp >> 24 ) & 0xFF;
+            send_pkg[ 2 ] = ( val_kp >> 16 ) & 0xFF;
+            send_pkg[ 3 ] = ( val_kp >> 8 ) & 0xFF;
+            send_pkg[ 4 ] = ( val_kp >> 0 ) & 0xFF;
+
+            send_pkg[ 5 ] = ( val_ki >> 24 ) & 0xFF;
+            send_pkg[ 6 ] = ( val_ki >> 16 ) & 0xFF;
+            send_pkg[ 7 ] = ( val_ki >> 8 ) & 0xFF;
+            send_pkg[ 8 ] = ( val_ki >> 0 ) & 0xFF;
+
+            send_pkg[ 9 ]  = ( val_kd >> 24 ) & 0xFF;
+            send_pkg[ 10 ] = ( val_kd >> 16 ) & 0xFF;
+            send_pkg[ 11 ] = ( val_kd >> 8 ) & 0xFF;
+            send_pkg[ 12 ] = ( val_kd >> 0 ) & 0xFF;
+
+            /********end******/
+
+            ret = fast_udp_socket->SendData( send_pkg, sizeof( send_pkg ) );
+
             if ( ret < 0 ) {
                 std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
 
                 return ret;
             }
-            // data send succeed
-            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+
             set_pid_state = 1;
             break;
+        }
 
-        case 1:  // wait for feedback
-            // receive error
-            ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
-            if ( ret < 0 ) {
-                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
-
-                set_pid_state = 0;
-                return ret;
-            }
-            // receive something
-            if ( !recv_data_str.empty() ) {
-                recv_data_json = json::parse( recv_data_str );
-                receive_state  = recv_data_json.at( "status" );
-                if ( receive_state.compare( "OK" ) ) {
-                    set_pid_state = 0;
-                    std::cout << "MOTOR: " << ip_ << ", SET PID PARAMS FAILED! " << std::endl;
-
-                    return DISABLE_FAILED;
-                }
-                set_pid_state = 0;
-                std::cout << "MOTOR: " << ip_ << ",  SET PID PARAMS SUCCESS! " << std::endl;
-
-                return SUCCESS;
-            }
-
-            // clock_gettime(CLOCK_MONOTONIC,&now_time);
-            end = std::chrono::steady_clock::now();
-            // time out
-            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
-            if ( int_ms.count() > 3000 ) {
-                set_pid_state = 0;
-                std::cout << "MOTOR: " << ip_ << ", SET PID PARAMS TIMEOUT! " << std::endl;
-
-                return TIMEOUT;
-            }
-            break;
-
-        default:
+        case 1: {
+            set_pid_state = 0;
+            return SUCCESS;
+        }
+        default: {
             set_pid_state = 0;
             break;
+        }
         };
     }
 
     return NOT_EXECUTE;
 };
+
+int FSA_CONNECT::FSA::SetPDParams( FSAConfig::FSAPIDParams& pidparams ) {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    uint8_t     send_pkg[ 9 ] = { 0x00 };
+    while ( 1 ) {
+        switch ( set_pd_state ) {
+        case 0:  // enable
+        {
+            begin = std::chrono::steady_clock::now();
+
+            /**********add****/
+            float kp = 0, kd = 0;
+            kp = static_cast< float >( pidparams.control_pd_kp );
+            kd = static_cast< float >( pidparams.control_pd_kd );
+
+            unsigned int val_kp = *( unsigned int* )&kp;
+            unsigned int val_kd = *( unsigned int* )&kd;
+
+            send_pkg[ 0 ] = 0xA1;
+
+            send_pkg[ 1 ] = ( val_kp >> 24 ) & 0xFF;
+            send_pkg[ 2 ] = ( val_kp >> 16 ) & 0xFF;
+            send_pkg[ 3 ] = ( val_kp >> 8 ) & 0xFF;
+            send_pkg[ 4 ] = ( val_kp >> 0 ) & 0xFF;
+
+            send_pkg[ 5 ] = ( val_kd >> 24 ) & 0xFF;
+            send_pkg[ 6 ] = ( val_kd >> 16 ) & 0xFF;
+            send_pkg[ 7 ] = ( val_kd >> 8 ) & 0xFF;
+            send_pkg[ 8 ] = ( val_kd >> 0 ) & 0xFF;
+
+            /********end******/
+
+            ret = fast_udp_socket->SendData( send_pkg, sizeof( send_pkg ) );
+
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+
+            set_pd_state = 1;
+            break;
+        }
+
+        case 1: {
+            set_pd_state = 0;
+            return SUCCESS;
+        }
+        default: {
+            set_pd_state = 0;
+            break;
+        }
+        };
+    }
+
+    return NOT_EXECUTE;
+}
 
 int FSA_CONNECT::FSA::GetPIDParams( FSAConfig::FSAPIDParams& pidparams ) {
 
@@ -792,6 +925,8 @@ int FSA_CONNECT::FSA::GetPIDParams( FSAConfig::FSAPIDParams& pidparams ) {
                 pidparams.control_velocity_ki = recv_data_json.at( "control_velocity_ki_imm" );
                 pidparams.control_current_kp  = recv_data_json.at( "control_current_kp_imm" );
                 pidparams.control_current_ki  = recv_data_json.at( "control_current_ki_imm" );
+                pidparams.control_pd_kp       = recv_data_json.at( "control_PD_kp_imm" );
+                pidparams.control_pd_kd       = recv_data_json.at( "control_PD_kd_imm" );
 
                 // pidparams.control_position_output_max = recv_data_json.at("control_position_output_max");
                 // pidparams.control_position_output_min = recv_data_json.at("control_position_output_min");
@@ -1214,6 +1349,43 @@ int FSA_CONNECT::FSA::EnableCurControl() {
 
     return NOT_EXECUTE;
 };
+
+int FSA_CONNECT::FSA::EnablePDControl() {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    uint8_t     send_pkg = 0x09;
+
+    while ( true ) {
+        switch ( control_state ) {
+        case 0:
+            ret = fast_udp_socket->SendData( &send_pkg, sizeof( send_pkg ) );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+
+            control_state = 1;
+            break;
+
+        case 1:
+            control_state = 0;
+            return SUCCESS;
+
+        default:
+            control_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+}
 
 int FSA_CONNECT::FSA::SetPosition( const double& pos, const double& vel_ff, const double& cur_ff ) {
 
@@ -2245,13 +2417,19 @@ int FSA_CONNECT::FSA::SetFrictionCompFlag( uint8_t friction_comp_flag ) {
 
     int ret = 0;
 
-    uint8_t send_pkg[ 5 ] = { 0 };
+    uint8_t send_pkg[ 29 ] = {};
 
     send_pkg[ 0 ] = 0xA3;
+
     send_pkg[ 1 ] = 0x00;
     send_pkg[ 2 ] = 0x00;
     send_pkg[ 3 ] = 0x00;
     send_pkg[ 4 ] = friction_comp_flag;
+
+    send_pkg[ 9 ]  = 0x41;
+    send_pkg[ 10 ] = 0x20;
+    send_pkg[ 11 ] = 0x00;
+    send_pkg[ 12 ] = 0x00;
 
     while ( true ) {
         if ( !is_set_friction_comp_flag_success ) {
@@ -2271,6 +2449,281 @@ int FSA_CONNECT::FSA::SetFrictionCompFlag( uint8_t friction_comp_flag ) {
             is_set_friction_comp_flag_success = 0;
 
             return SUCCESS;
+        }
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::SetPVCTimeoutProtect( uint32_t count, const FSAConfig::set_pvc_timeout_protect_config_t& config, FSAConfig::ack_ret_t& set_pvc_timeout_protect_ret ) {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    uint8_t     send_pkg[ 25 ] = {};
+    uint8_t     recv_pkg[ 9 ]  = {};
+
+    while ( true ) {
+        switch ( set_pvc_timeout_protect_state ) {
+        case 0: {
+            begin = std::chrono::steady_clock::now();
+
+            /**********add****/
+            send_pkg[ 0 ] = 0x64;
+
+            send_pkg[ 1 ] = ( count >> 24 ) & 0xFF;
+            send_pkg[ 2 ] = ( count >> 16 ) & 0xFF;
+            send_pkg[ 3 ] = ( count >> 8 ) & 0xFF;
+            send_pkg[ 4 ] = ( count >> 0 ) & 0xFF;
+
+            send_pkg[ 5 ] = ( config.protect_enable >> 24 ) & 0xFF;
+            send_pkg[ 6 ] = ( config.protect_enable >> 16 ) & 0xFF;
+            send_pkg[ 7 ] = ( config.protect_enable >> 8 ) & 0xFF;
+            send_pkg[ 8 ] = ( config.protect_enable >> 0 ) & 0xFF;
+
+            send_pkg[ 9 ]  = ( config.timeout_ms >> 24 ) & 0xFF;
+            send_pkg[ 10 ] = ( config.timeout_ms >> 16 ) & 0xFF;
+            send_pkg[ 11 ] = ( config.timeout_ms >> 8 ) & 0xFF;
+            send_pkg[ 12 ] = ( config.timeout_ms >> 0 ) & 0xFF;
+
+            send_pkg[ 13 ] = ( static_cast< uint32_t >( config.protect_mode_of_operation ) >> 24 ) & 0xFF;
+            send_pkg[ 14 ] = ( static_cast< uint32_t >( config.protect_mode_of_operation ) >> 16 ) & 0xFF;
+            send_pkg[ 15 ] = ( static_cast< uint32_t >( config.protect_mode_of_operation ) >> 8 ) & 0xFF;
+            send_pkg[ 16 ] = ( static_cast< uint32_t >( config.protect_mode_of_operation ) >> 0 ) & 0xFF;
+
+            send_pkg[ 17 ] = ( config.close_back_last_mode_of_operation >> 24 ) & 0xFF;
+            send_pkg[ 18 ] = ( config.close_back_last_mode_of_operation >> 16 ) & 0xFF;
+            send_pkg[ 19 ] = ( config.close_back_last_mode_of_operation >> 8 ) & 0xFF;
+            send_pkg[ 20 ] = ( config.close_back_last_mode_of_operation >> 0 ) & 0xFF;
+
+            send_pkg[ 21 ] = ( config.ignore_set_mode_of_operation >> 24 ) & 0xFF;
+            send_pkg[ 22 ] = ( config.ignore_set_mode_of_operation >> 16 ) & 0xFF;
+            send_pkg[ 23 ] = ( config.ignore_set_mode_of_operation >> 8 ) & 0xFF;
+            send_pkg[ 24 ] = ( config.ignore_set_mode_of_operation >> 0 ) & 0xFF;
+
+            /********end******/
+
+            ret = fast_udp_socket->SendData( send_pkg, sizeof( send_pkg ) );
+
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+
+            set_pvc_timeout_protect_state = 1;
+            break;
+        }
+
+        case 1: {
+            ret = fast_udp_socket->ReceiveData_nrt( recv_pkg, sizeof( recv_pkg ) );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                set_pvc_timeout_protect_state = 0;
+                return ret;
+            }
+
+            /************add**********/
+            if ( recv_pkg[ 0 ] != send_pkg[ 0 ] ) {
+                set_pvc_timeout_protect_state = 0;
+                std::cout << recv_pkg[ 0 ] << std::endl;
+                std::cout << "MOTOR: " << ip_ << ", SET PVC TIMEOUT PROTECT FAILED! " << std::endl;
+                return DISABLE_FAILED;
+            }
+
+            uint32_t fed_count = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+            uint32_t fed_res   = ( unsigned int )recv_pkg[ 5 ] << 24 | ( unsigned int )recv_pkg[ 6 ] << 16 | ( unsigned int )recv_pkg[ 7 ] << 8 | ( unsigned int )recv_pkg[ 8 ] << 0;
+
+            set_pvc_timeout_protect_ret.count = fed_count;
+            set_pvc_timeout_protect_ret.res   = fed_res;
+
+            set_pvc_timeout_protect_state = 0;
+
+            return SUCCESS;
+        }
+
+        default: {
+            set_pvc_timeout_protect_state = 0;
+            break;
+        }
+        }
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::ClearSetPVCTimeoutProtect( uint32_t count, uint32_t clear_back_last_mode_of_operation, FSAConfig::ack_ret_t& clear_set_pvc_timeout_protect_ret ) {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    uint8_t     send_pkg[ 9 ] = {};
+    uint8_t     recv_pkg[ 9 ] = {};
+
+    while ( true ) {
+        switch ( clear_pvc_timeout_protect_state ) {
+        case 0: {
+            begin = std::chrono::steady_clock::now();
+
+            /**********add****/
+            send_pkg[ 0 ] = 0x65;
+
+            send_pkg[ 1 ] = ( count >> 24 ) & 0xFF;
+            send_pkg[ 2 ] = ( count >> 16 ) & 0xFF;
+            send_pkg[ 3 ] = ( count >> 8 ) & 0xFF;
+            send_pkg[ 4 ] = ( count >> 0 ) & 0xFF;
+
+            send_pkg[ 5 ] = ( clear_back_last_mode_of_operation >> 24 ) & 0xFF;
+            send_pkg[ 6 ] = ( clear_back_last_mode_of_operation >> 16 ) & 0xFF;
+            send_pkg[ 7 ] = ( clear_back_last_mode_of_operation >> 8 ) & 0xFF;
+            send_pkg[ 8 ] = ( clear_back_last_mode_of_operation >> 0 ) & 0xFF;
+
+            /********end******/
+
+            ret = fast_udp_socket->SendData( send_pkg, sizeof( send_pkg ) );
+
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+
+            clear_pvc_timeout_protect_state = 1;
+            break;
+        }
+
+        case 1: {
+            ret = fast_udp_socket->ReceiveData_nrt( recv_pkg, sizeof( recv_pkg ) );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                clear_pvc_timeout_protect_state = 0;
+                return ret;
+            }
+
+            /************add**********/
+            if ( recv_pkg[ 0 ] != send_pkg[ 0 ] ) {
+                clear_pvc_timeout_protect_state = 0;
+                std::cout << recv_pkg[ 0 ] << std::endl;
+                std::cout << "MOTOR: " << ip_ << ", SET PVC TIMEOUT PROTECT FAILED! " << std::endl;
+                return DISABLE_FAILED;
+            }
+
+            uint32_t fed_count = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+            uint32_t fed_res   = ( unsigned int )recv_pkg[ 5 ] << 24 | ( unsigned int )recv_pkg[ 6 ] << 16 | ( unsigned int )recv_pkg[ 7 ] << 8 | ( unsigned int )recv_pkg[ 8 ] << 0;
+
+            clear_set_pvc_timeout_protect_ret.count = fed_count;
+            clear_set_pvc_timeout_protect_ret.res   = fed_res;
+
+            clear_pvc_timeout_protect_state = 0;
+
+            return SUCCESS;
+        }
+
+        default: {
+            clear_pvc_timeout_protect_state = 0;
+            break;
+        }
+        }
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::GetPVCTError( FSAConfig::pvct_errcode_t& pvct_errcode ) {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    uint8_t     send_pkg[ 1 ]  = { 0x21 };
+    uint8_t     recv_pkg[ 49 ] = {};
+
+    while ( true ) {
+        switch ( get_pvct_errorcode_state ) {
+        case 0: {
+            begin = std::chrono::steady_clock::now();
+
+            ret = fast_udp_socket->SendData( send_pkg, sizeof( send_pkg ) );
+
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+
+            get_pvct_errorcode_state = 1;
+            break;
+        }
+
+        case 1: {
+            ret = fast_udp_socket->ReceiveData_rt( recv_pkg, sizeof( recv_pkg ) );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                get_pvct_errorcode_state = 0;
+                return ret;
+            }
+
+            /************add**********/
+            if ( recv_pkg[ 0 ] != send_pkg[ 0 ] ) {
+                get_pvct_errorcode_state = 0;
+                std::cout << recv_pkg[ 0 ] << std::endl;
+                std::cout << "MOTOR: " << ip_ << ", GET PVCT_Error FAILED! " << std::endl;
+                return FAIL;
+            }
+
+            uint32_t uint32_pos = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+            uint32_t uint32_vel = ( unsigned int )recv_pkg[ 5 ] << 24 | ( unsigned int )recv_pkg[ 6 ] << 16 | ( unsigned int )recv_pkg[ 7 ] << 8 | ( unsigned int )recv_pkg[ 8 ] << 0;
+            uint32_t uint32_cur = ( unsigned int )recv_pkg[ 9 ] << 24 | ( unsigned int )recv_pkg[ 10 ] << 16 | ( unsigned int )recv_pkg[ 11 ] << 8 | ( unsigned int )recv_pkg[ 12 ] << 0;
+            uint32_t uint32_tor = ( unsigned int )recv_pkg[ 13 ] << 24 | ( unsigned int )recv_pkg[ 14 ] << 16 | ( unsigned int )recv_pkg[ 15 ] << 8 | ( unsigned int )recv_pkg[ 16 ] << 0;
+
+            uint32_t uint32_errcode1 = ( unsigned int )recv_pkg[ 17 ] << 24 | ( unsigned int )recv_pkg[ 18 ] << 16 | ( unsigned int )recv_pkg[ 19 ] << 8 | ( unsigned int )recv_pkg[ 20 ] << 0;
+            uint32_t uint32_errcode2 = ( unsigned int )recv_pkg[ 21 ] << 24 | ( unsigned int )recv_pkg[ 22 ] << 16 | ( unsigned int )recv_pkg[ 23 ] << 8 | ( unsigned int )recv_pkg[ 24 ] << 0;
+            uint32_t uint32_errcode3 = ( unsigned int )recv_pkg[ 25 ] << 24 | ( unsigned int )recv_pkg[ 26 ] << 16 | ( unsigned int )recv_pkg[ 27 ] << 8 | ( unsigned int )recv_pkg[ 28 ] << 0;
+            uint32_t uint32_errcode4 = ( unsigned int )recv_pkg[ 29 ] << 24 | ( unsigned int )recv_pkg[ 30 ] << 16 | ( unsigned int )recv_pkg[ 31 ] << 8 | ( unsigned int )recv_pkg[ 32 ] << 0;
+            uint32_t uint32_errcode5 = ( unsigned int )recv_pkg[ 33 ] << 24 | ( unsigned int )recv_pkg[ 34 ] << 16 | ( unsigned int )recv_pkg[ 35 ] << 8 | ( unsigned int )recv_pkg[ 36 ] << 0;
+            uint32_t uint32_errcode6 = ( unsigned int )recv_pkg[ 37 ] << 24 | ( unsigned int )recv_pkg[ 38 ] << 16 | ( unsigned int )recv_pkg[ 39 ] << 8 | ( unsigned int )recv_pkg[ 40 ] << 0;
+            uint32_t uint32_errcode7 = ( unsigned int )recv_pkg[ 41 ] << 24 | ( unsigned int )recv_pkg[ 42 ] << 16 | ( unsigned int )recv_pkg[ 43 ] << 8 | ( unsigned int )recv_pkg[ 44 ] << 0;
+            uint32_t uint32_errcode8 = ( unsigned int )recv_pkg[ 45 ] << 24 | ( unsigned int )recv_pkg[ 46 ] << 16 | ( unsigned int )recv_pkg[ 47 ] << 8 | ( unsigned int )recv_pkg[ 48 ] << 0;
+
+            pvct_errcode.position = *reinterpret_cast< float* >( &uint32_pos );
+            pvct_errcode.velocity = *reinterpret_cast< float* >( &uint32_vel );
+            pvct_errcode.current  = *reinterpret_cast< float* >( &uint32_cur );
+            pvct_errcode.torque   = *reinterpret_cast< float* >( &uint32_tor );
+
+            pvct_errcode.error_code.resize( 8 );
+
+            pvct_errcode.error_code.at( 0 ) = uint32_errcode1;
+            pvct_errcode.error_code.at( 1 ) = uint32_errcode2;
+            pvct_errcode.error_code.at( 2 ) = uint32_errcode3;
+            pvct_errcode.error_code.at( 3 ) = uint32_errcode4;
+            pvct_errcode.error_code.at( 4 ) = uint32_errcode5;
+            pvct_errcode.error_code.at( 5 ) = uint32_errcode6;
+            pvct_errcode.error_code.at( 6 ) = uint32_errcode7;
+            pvct_errcode.error_code.at( 7 ) = uint32_errcode8;
+
+            get_pvct_errorcode_state = 0;
+
+            return SUCCESS;
+        }
+
+        default: {
+            get_pvct_errorcode_state = 0;
+            break;
+        }
         }
     }
 
