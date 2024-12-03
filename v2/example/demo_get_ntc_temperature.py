@@ -10,10 +10,10 @@ def main():
     if server_ip_list:
 
         for i in range(len(server_ip_list)):
-            temperature = fi_fsa_v2.get_ntc_temperature(server_ip_list[i])
+            mos_temperature, armature_temperature = fi_fsa_v2.get_ntc_temperature(server_ip_list[i])
             print(
                 "mos_temperature = %f, armature_temperature = %f"
-                % (temperature[0], temperature[1])
+                % (mos_temperature, armature_temperature)
             )
 
         # end_time = time.time()
