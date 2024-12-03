@@ -54,5 +54,10 @@ namespace JsonData {
 
     ordered_json get_ntc_temperature_json = { { "method", "GET" }, { "reqTarget", "/get_ntc_temperature" } };
 
+    ordered_json set_abs_zero_json = { { "method", "SET" }, { "reqTarget", "/set_abs_zero" } };
+
+    ordered_json reboot_json = { { "method", "SET" }, { "reqTarget", "/reboot" } };
+
+    ordered_json get_abs_pos_json = { { "method", "GET" }, { "reqTarget", "/get_abs_position" } };
 }  // namespace JsonData
 }  // namespace FSA_CONNECT

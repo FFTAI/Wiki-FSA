@@ -2206,7 +2206,7 @@ int FSA_CONNECT::FSA::GetNtcTemperature( float& out_mos_temperature, float& out_
                 receive_state  = recv_data_json.at( "status" );
                 if ( receive_state.compare( "OK" ) ) {
                     get_ntc_temperature_state = 0;
-                    std::cout << "MOTOR: " << ip_ << ", SET CURRENT FAILED! " << std::endl;
+                    std::cout << "MOTOR: " << ip_ << ", GET TEMP FAILED! " << std::endl;
 
                     return DISABLE_FAILED;
                 }
@@ -2223,7 +2223,7 @@ int FSA_CONNECT::FSA::GetNtcTemperature( float& out_mos_temperature, float& out_
             int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
             if ( int_ms.count() > 3000 ) {
                 get_ntc_temperature_state = 0;
-                std::cout << "MOTOR: " << ip_ << ", SET CURRENT TIMEOUT! " << std::endl;
+                std::cout << "MOTOR: " << ip_ << ", GET TEMP TIMEOUT! " << std::endl;
 
                 return TIMEOUT;
             }
@@ -2725,6 +2725,214 @@ int FSA_CONNECT::FSA::GetPVCTError( FSAConfig::pvct_errcode_t& pvct_errcode ) {
             break;
         }
         }
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::SetABSZero() {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    while ( 1 ) {
+        switch ( set_abs_zero_state ) {
+        case 0:  // enable
+            begin = std::chrono::steady_clock::now();
+            ret   = ctrl_udp_socket->SendData( set_abs_zero_json.dump() );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            set_abs_zero_state = 1;
+            break;
+
+        case 1:  // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                set_abs_zero_state = 0;
+                return ret;
+            }
+            // receive something
+            if ( !recv_data_str.empty() ) {
+                recv_data_json = json::parse( recv_data_str );
+                receive_state  = recv_data_json.at( "status" );
+                if ( receive_state.compare( "OK" ) ) {
+                    set_abs_zero_state = 0;
+                    std::cout << "MOTOR: " << ip_ << ", SET ABS ZERO FAILED! " << std::endl;
+
+                    return DISABLE_FAILED;
+                }
+                set_abs_zero_state = 0;
+                // std::cout<<"MOTOR: "<<ip_<<",  SET POS SUCCESS! "<<ip_<<std::endl;;
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+            if ( int_ms.count() > 3000 ) {
+                set_abs_zero_state = 0;
+                std::cout << "MOTOR: " << ip_ << ", SET ABS ZERO TIMEOUT! " << std::endl;
+
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            set_abs_zero_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::Reboot() {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    while ( 1 ) {
+        switch ( reboot_state ) {
+        case 0:  // enable
+            begin = std::chrono::steady_clock::now();
+            ret   = ctrl_udp_socket->SendData( reboot_json.dump() );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            reboot_state = 1;
+            break;
+
+        case 1:  // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                reboot_state = 0;
+                return ret;
+            }
+            // receive something
+            if ( !recv_data_str.empty() ) {
+                recv_data_json = json::parse( recv_data_str );
+                receive_state  = recv_data_json.at( "status" );
+                if ( receive_state.compare( "OK" ) ) {
+                    reboot_state = 0;
+                    std::cout << "MOTOR: " << ip_ << ", REBOOT FAILED! " << std::endl;
+
+                    return DISABLE_FAILED;
+                }
+                reboot_state = 0;
+                // std::cout<<"MOTOR: "<<ip_<<",  SET POS SUCCESS! "<<ip_<<std::endl;;
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+            if ( int_ms.count() > 3000 ) {
+                reboot_state = 0;
+                std::cout << "MOTOR: " << ip_ << ", REBOOT TIMEOUT! " << std::endl;
+
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            reboot_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::GetABSPosition( float& abs_pos ) {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    while ( 1 ) {
+        switch ( get_abs_pos_state ) {
+        case 0:  // enable
+            begin = std::chrono::steady_clock::now();
+            ret   = ctrl_udp_socket->SendData( get_abs_pos_json.dump() );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            get_abs_pos_state = 1;
+            break;
+
+        case 1:  // wait for feedback
+            // receive error
+            ret = ctrl_udp_socket->ReceiveData_nrt( recv_data_str );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                get_abs_pos_state = 0;
+                return ret;
+            }
+            // receive something
+            if ( !recv_data_str.empty() ) {
+                recv_data_json = json::parse( recv_data_str );
+                receive_state  = recv_data_json.at( "status" );
+                if ( receive_state.compare( "OK" ) ) {
+                    get_abs_pos_state = 0;
+                    std::cout << "MOTOR: " << ip_ << ", GET ABS POS FAILED! " << std::endl;
+
+                    return DISABLE_FAILED;
+                }
+
+                abs_pos = recv_data_json.at( "abs_position" );
+
+                get_abs_pos_state = 0;
+
+                // std::cout<<"MOTOR: "<<ip_<<",  SET POS SUCCESS! "<<ip_<<std::endl;;
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+            if ( int_ms.count() > 3000 ) {
+                get_abs_pos_state = 0;
+                std::cout << "MOTOR: " << ip_ << ", GET ABS POS TIMEOUT! " << std::endl;
+
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            get_abs_pos_state = 0;
+            break;
+        };
     }
 
     return NOT_EXECUTE;

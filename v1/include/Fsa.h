@@ -187,6 +187,12 @@ public:
 
     int GetPVCTError( FSAConfig::pvct_errcode_t& pvct_errcode );
 
+    int SetABSZero();
+
+    int Reboot();
+
+    int GetABSPosition( float& abs_pos );
+
     // std::shared_ptr<Transmit::UDPSocket> pt_udp_socket;
     std::string ip_;
 
@@ -211,6 +217,9 @@ private:
     int set_pvc_timeout_protect_state   = 0;
     int clear_pvc_timeout_protect_state = 0;
     int get_pvct_errorcode_state        = 0;
+    int set_abs_zero_state              = 0;
+    int reboot_state                    = 0;
+    int get_abs_pos_state               = 0;
 
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
