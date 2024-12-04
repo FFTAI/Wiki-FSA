@@ -2238,6 +2238,82 @@ int FSA_CONNECT::FSA::GetNtcTemperature( float& out_mos_temperature, float& out_
     return NOT_EXECUTE;
 }
 
+int FSA_CONNECT::FSA::FastGetNtcTemperature( float& out_mos_temperature, float& out_armature_temperature ) {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    uint8_t     send_pkg      = 0x22;      // add
+    uint8_t     recv_pkg[ 9 ] = { 0x00 };  // add
+    while ( 1 ) {
+        switch ( get_ntc_temperature_state ) {
+        case 0:  // enable
+            begin = std::chrono::steady_clock::now();
+            // ret = ctrl_udp_socket->SendData(get_pvc_json.dump());
+            ret = fast_udp_socket->SendData( &send_pkg, sizeof( send_pkg ) );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            get_ntc_temperature_state = 1;
+            break;
+
+        case 1:  // wait for feedback
+            // receive error
+            // ret = ctrl_udp_socket->ReceiveData_rt(recv_data_str);
+            {
+                ret = fast_udp_socket->ReceiveData_rt( recv_pkg, sizeof( recv_pkg ) );
+                if ( ret < 0 ) {
+                    std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                    get_ntc_temperature_state = 0;
+                    return ret;
+                }
+
+                /************add**********/
+                if ( recv_pkg[ 0 ] != send_pkg ) {
+                    get_ntc_temperature_state = 0;
+                    std::cout << recv_pkg[ 0 ] << std::endl;
+                    std::cout << "MOTOR: " << ip_ << ", GET TEMP FAILED! " << std::endl;
+                    return DISABLE_FAILED;
+                }
+
+                unsigned int uint32_mos_temp      = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+                unsigned int uint32_armature_temp = ( unsigned int )recv_pkg[ 5 ] << 24 | ( unsigned int )recv_pkg[ 6 ] << 16 | ( unsigned int )recv_pkg[ 7 ] << 8 | ( unsigned int )recv_pkg[ 8 ] << 0;
+
+                out_mos_temperature      = *( float* )&uint32_mos_temp;
+                out_armature_temperature = *( float* )&uint32_armature_temp;
+
+                get_ntc_temperature_state = 0;
+                return SUCCESS;
+                /**********end************/
+                end = std::chrono::steady_clock::now();
+                // time out
+                int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+                if ( int_ms.count() > 3000 ) {
+                    get_ntc_temperature_state = 0;
+                    std::cout << "MOTOR: " << ip_ << ", GET TEMP TIMEOUT! " << std::endl;
+
+                    return TIMEOUT;
+                }
+                break;
+            }
+        default: {
+            get_ntc_temperature_state = 0;
+            break;
+        }
+        };
+    }
+
+    return NOT_EXECUTE;
+}
+
 int FSA_CONNECT::FSA::SetControlWord( FSA_CONNECT::Status::FSAControlWord& control_word ) {
     bool is_set_control_word_success = false;
 
@@ -2648,7 +2724,7 @@ int FSA_CONNECT::FSA::GetPVCTError( FSAConfig::pvct_errcode_t& pvct_errcode ) {
     std::string recv_data_str;
     json        recv_data_json;
     std::string receive_state;
-    uint8_t     send_pkg[ 1 ]  = { 0x21 };
+    uint8_t     send_pkg       = 0x21;
     uint8_t     recv_pkg[ 49 ] = {};
 
     while ( true ) {
@@ -2656,7 +2732,7 @@ int FSA_CONNECT::FSA::GetPVCTError( FSAConfig::pvct_errcode_t& pvct_errcode ) {
         case 0: {
             begin = std::chrono::steady_clock::now();
 
-            ret = fast_udp_socket->SendData( send_pkg, sizeof( send_pkg ) );
+            ret = fast_udp_socket->SendData( &send_pkg, sizeof( send_pkg ) );
 
             if ( ret < 0 ) {
                 std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
@@ -2678,7 +2754,7 @@ int FSA_CONNECT::FSA::GetPVCTError( FSAConfig::pvct_errcode_t& pvct_errcode ) {
             }
 
             /************add**********/
-            if ( recv_pkg[ 0 ] != send_pkg[ 0 ] ) {
+            if ( recv_pkg[ 0 ] != send_pkg ) {
                 get_pvct_errorcode_state = 0;
                 std::cout << recv_pkg[ 0 ] << std::endl;
                 std::cout << "MOTOR: " << ip_ << ", GET PVCT_Error FAILED! " << std::endl;
@@ -2932,6 +3008,80 @@ int FSA_CONNECT::FSA::GetABSPosition( float& abs_pos ) {
         default:
             get_abs_pos_state = 0;
             break;
+        };
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::GetVBus( float& VBus ) {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    uint8_t     send_pkg      = 0x23;      // add
+    uint8_t     recv_pkg[ 5 ] = { 0x00 };  // add
+    while ( 1 ) {
+        switch ( get_vbus_state ) {
+        case 0:  // enable
+            begin = std::chrono::steady_clock::now();
+            // ret = ctrl_udp_socket->SendData(get_pvc_json.dump());
+            ret = fast_udp_socket->SendData( &send_pkg, sizeof( send_pkg ) );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            get_vbus_state = 1;
+            break;
+
+        case 1:  // wait for feedback
+            // receive error
+            // ret = ctrl_udp_socket->ReceiveData_rt(recv_data_str);
+            {
+                ret = fast_udp_socket->ReceiveData_rt( recv_pkg, sizeof( recv_pkg ) );
+                if ( ret < 0 ) {
+                    std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                    get_vbus_state = 0;
+                    return ret;
+                }
+
+                /************add**********/
+                if ( recv_pkg[ 0 ] != send_pkg ) {
+                    get_vbus_state = 0;
+                    std::cout << recv_pkg[ 0 ] << std::endl;
+                    std::cout << "MOTOR: " << ip_ << ", GET VBUS FAILED! " << std::endl;
+                    return DISABLE_FAILED;
+                }
+
+                unsigned int uint32_vbus = ( unsigned int )recv_pkg[ 1 ] << 24 | ( unsigned int )recv_pkg[ 2 ] << 16 | ( unsigned int )recv_pkg[ 3 ] << 8 | ( unsigned int )recv_pkg[ 4 ] << 0;
+
+                VBus = *( float* )&uint32_vbus;
+
+                get_vbus_state = 0;
+                return SUCCESS;
+                /**********end************/
+                end = std::chrono::steady_clock::now();
+                // time out
+                int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+                if ( int_ms.count() > 3000 ) {
+                    get_vbus_state = 0;
+                    std::cout << "MOTOR: " << ip_ << ", GET VBUS TIMEOUT! " << std::endl;
+
+                    return TIMEOUT;
+                }
+                break;
+            }
+        default: {
+            get_vbus_state = 0;
+            break;
+        }
         };
     }
 
