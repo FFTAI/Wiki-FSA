@@ -30,13 +30,13 @@
 
 * 速度模式关键API
 
-  | 接口名称                                                    | 描述                            |
-  | ----------------------------------------------------------- | ------------------------------- |
-  | int SetVelocity( const double& vel, const double& cur_ff ); | 设置目标速度$\dot{q}_d$         |
-  | int SetCurrent( const double& cur );                        | 设置电流前馈$I_{q_{ffd_{set}}}$ |
-  |                                                             | 设置最大速度$V_{max}$           |
-  |                                                             | 设置最大电流$I_{q_{max}}$       |
-  | int GetPVC( double& pos, double& vel, double& cur );        | 获取执行器的位置速度电流        |
+  | 接口名称                                                    | 描述                      |
+  | ----------------------------------------------------------- | ------------------------- |
+  | int SetVelocity( const double& vel, const double& cur_ff ); | 设置目标速度$\dot{q}_d$   |
+  | int SetCurrent( const double& cur );                        | 设置电流前馈$I_{q_{set}}$ |
+  |                                                             | 设置最大速度$V_{max}$     |
+  |                                                             | 设置最大电流$I_{q_{max}}$ |
+  | int GetPVC( double& pos, double& vel, double& cur );        | 获取执行器的位置速度电流  |
 
 ### 位置控制模式
 
@@ -46,14 +46,14 @@
 
 * 位置模式关键API
 
-  | 接口名称                                                     | 描述                              |
-  | ------------------------------------------------------------ | --------------------------------- |
-  | int SetPosition( const double& pos, const double& vel_ff, const double& cur_ff ); | 设置目标速度$\dot{q}_d$           |
-  | int SetVelocity( const double& vel, const double& cur_ff );  | 设置速度前馈$\dot{q}_{ffd_{set}}$ |
-  | int SetCurrent( const double& cur );                         | 设置电流前馈$I_{q_{ffd_{set}}}$   |
-  |                                                              | 设置最大速度$V_{max}$             |
-  |                                                              | 设置最大电流$I_{q_{max}}$         |
-  | int GetPVC( double& pos, double& vel, double& cur );         | 获取执行器的位置速度电流          |
+  | 接口名称                                                     | 描述                        |
+  | ------------------------------------------------------------ | --------------------------- |
+  | int SetPosition( const double& pos, const double& vel_ff, const double& cur_ff ); | 设置目标速度$\dot{q}_d$     |
+  | int SetVelocity( const double& vel, const double& cur_ff );  | 设置速度前馈$\dot{q}_{set}$ |
+  | int SetCurrent( const double& cur );                         | 设置电流前馈$I_{q_{set}}$   |
+  |                                                              | 设置最大速度$V_{max}$       |
+  |                                                              | 设置最大电流$I_{q_{max}}$   |
+  | int GetPVC( double& pos, double& vel, double& cur );         | 获取执行器的位置速度电流    |
 
 ### PD控制模式
 
