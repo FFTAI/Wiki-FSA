@@ -171,6 +171,8 @@ public:
 
     int GetNtcTemperature( float& out_mos_temperature, float& out_armature_temperature );
 
+    int FastGetNtcTemperature( float& out_mos_temperature, float& out_armature_temperature );
+
     int SetControlWord( FSA_CONNECT::Status::FSAControlWord& control_word );
 
     int SetReturnZeroMode( void );
@@ -192,6 +194,8 @@ public:
     int Reboot();
 
     int GetABSPosition( float& abs_pos );
+
+    int GetVBus( float& VBus );
 
     // std::shared_ptr<Transmit::UDPSocket> pt_udp_socket;
     std::string ip_;
@@ -220,6 +224,7 @@ private:
     int set_abs_zero_state              = 0;
     int reboot_state                    = 0;
     int get_abs_pos_state               = 0;
+    int get_vbus_state                  = 0;
 
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;

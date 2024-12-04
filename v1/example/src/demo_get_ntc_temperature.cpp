@@ -11,7 +11,8 @@ int main( int argc, const char** argv ) {
     fsa.init( ip );
 
     while ( true ) {
-        fsa.GetNtcTemperature( mos_temperature, armature_temperature );
+        // fsa.GetNtcTemperature( mos_temperature, armature_temperature );
+        fsa.FastGetNtcTemperature( mos_temperature, armature_temperature );
 
         std::cout << "mos_temperature: " << mos_temperature << "\t"
                   << "armature_tempature: " << armature_temperature << std::endl;
