@@ -9,11 +9,19 @@ def main():
 
     if server_ip_list:
 
+        match_version = "0.2.15.5"
+        for i in range(len(server_ip_list)):
+            firmware_version = fi_fsa_v1.get_comm_firmware_version(server_ip_list[i])
+            if fi_fsa_v1.version_compare(firmware_version, match_version) < 0:
+                print("the firmware version of %s is %s, less than the match version %s" % (
+                    server_ip_list[i], firmware_version, match_version))
+                return
+
         for j in range(10000):
             # start_time = time.time()
 
             for i in range(len(server_ip_list)):
-                (_,) = fi_fsa_v1.fast_set_clear_fault(server_ip_list[i])
+                _ = fi_fsa_v1.fast_set_clear_fault(server_ip_list[i])
 
             # end_time = time.time()
             #
