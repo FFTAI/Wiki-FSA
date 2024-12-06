@@ -775,15 +775,15 @@ int FSA_CONNECT::FSA::SetPIDParams( FSAConfig::FSAPIDParams& pidparams ) {
             send_pkg[ 3 ] = ( val_kp >> 8 ) & 0xFF;
             send_pkg[ 4 ] = ( val_kp >> 0 ) & 0xFF;
 
-            send_pkg[ 5 ] = ( val_ki >> 24 ) & 0xFF;
-            send_pkg[ 6 ] = ( val_ki >> 16 ) & 0xFF;
-            send_pkg[ 7 ] = ( val_ki >> 8 ) & 0xFF;
-            send_pkg[ 8 ] = ( val_ki >> 0 ) & 0xFF;
+            send_pkg[ 5 ] = ( val_kd >> 24 ) & 0xFF;
+            send_pkg[ 6 ] = ( val_kd >> 16 ) & 0xFF;
+            send_pkg[ 7 ] = ( val_kd >> 8 ) & 0xFF;
+            send_pkg[ 8 ] = ( val_kd >> 0 ) & 0xFF;
 
-            send_pkg[ 9 ]  = ( val_kd >> 24 ) & 0xFF;
-            send_pkg[ 10 ] = ( val_kd >> 16 ) & 0xFF;
-            send_pkg[ 11 ] = ( val_kd >> 8 ) & 0xFF;
-            send_pkg[ 12 ] = ( val_kd >> 0 ) & 0xFF;
+            send_pkg[ 9 ]  = ( val_ki >> 24 ) & 0xFF;
+            send_pkg[ 10 ] = ( val_ki >> 16 ) & 0xFF;
+            send_pkg[ 11 ] = ( val_ki >> 8 ) & 0xFF;
+            send_pkg[ 12 ] = ( val_ki >> 0 ) & 0xFF;
 
             /********end******/
 
