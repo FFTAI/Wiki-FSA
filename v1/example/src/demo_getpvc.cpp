@@ -10,11 +10,17 @@ int main() {
 
     fsa.init( ip );
 
-    FSAPIDParams pidparams;
+    FSAPIDParams pidparams{ 0 };
     double       pvc[ 3 ] = {};
 
+    pidparams.control_position_kp = 0.1;
+    pidparams.control_velocity_kp = 0.01;
+    pidparams.control_velocity_ki = 0;
+
+    fsa.SetPIDParams( pidparams );
+    fsa.GetPIDParams( pidparams );
+
     while ( true ) {
-        fsa.GetPIDParams( pidparams );
         fsa.GetPVC( pvc[ 0 ], pvc[ 1 ], pvc[ 2 ] );
 
         std::cout << pvc[ 0 ] << " " << pvc[ 1 ] << " " << pvc[ 2 ] << std::endl;
