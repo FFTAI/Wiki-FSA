@@ -11,6 +11,15 @@ def main():
     server_ip_list = fi_fsa_v2.broadcast_func_with_filter(filter_type="Actuator")
 
     if server_ip_list:
+
+        match_version = "0.3.12.7"
+        for i in range(len(server_ip_list)):
+            firmware_version = fi_fsa_v2.get_comm_firmware_version(server_ip_list[i])
+            if fi_fsa_v2.version_compare(firmware_version, match_version) < 0:
+                print("the firmware version of %s is %s, less than the match version %s" % (
+                    server_ip_list[i], firmware_version, match_version))
+                return
+
         # 清除保护状态时是否恢复到进入保护状态前的操作模式 0: no, 1: yes
         clear_back_last_mode_of_operation = 0
 

@@ -9,6 +9,14 @@ def main():
 
     if server_ip_list:
 
+        match_version = "2.14.2"
+        for i in range(len(server_ip_list)):
+            firmware_version = fi_fsa_v1.get_comm_firmware_version(server_ip_list[i])
+            if fi_fsa_v1.version_compare(firmware_version, match_version) < 0:
+                print("the firmware version of %s is %s, less than the match version %s" % (
+                    server_ip_list[i], firmware_version, match_version))
+                return
+
         # set the communication configuration of all FAS
         # Notice : set static_IP should config DHCP_enable to be False! Otherwise, it will not work!
         for i in range(len(server_ip_list)):

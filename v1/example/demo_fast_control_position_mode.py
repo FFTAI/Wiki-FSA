@@ -10,6 +10,14 @@ def main():
 
     if server_ip_list:
 
+        match_version = "0.2.15.5"
+        for i in range(len(server_ip_list)):
+            firmware_version = fi_fsa_v1.get_comm_firmware_version(server_ip_list[i])
+            if fi_fsa_v1.version_compare(firmware_version, match_version) < 0:
+                print("the firmware version of %s is %s, less than the match version %s" % (
+                    server_ip_list[i], firmware_version, match_version))
+                return
+
         fsa_state = True
         for i in range(len(server_ip_list)):
             fsa_state = fi_fsa_v1.get_state(server_ip_list[i])
@@ -25,7 +33,7 @@ def main():
         time.sleep(1)
 
         for i in range(len(server_ip_list)):
-            pvc = fi_fsa_v1.fast_get_cvp(server_ip_list[i])
+            pvc = fi_fsa_v1.fast_get_pvc(server_ip_list[i])
             print(
                 "Position = %.2f, Velocity = %.0f, Current = %.4f"
                 % (pvc[0], pvc[1], pvc[2])
