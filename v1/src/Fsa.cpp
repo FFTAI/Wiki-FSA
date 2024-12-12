@@ -3087,3 +3087,147 @@ int FSA_CONNECT::FSA::GetVBus( float& VBus ) {
 
     return NOT_EXECUTE;
 }
+
+int FSA_CONNECT::FSA::OpenRelay() {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+
+    std::shared_ptr< Transmit::UDPSocket > power_control_udp_socket;
+    power_control_udp_socket = std::make_shared< Transmit::UDPSocket >( "192.168.137.202", 2333 );
+
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    while ( 1 ) {
+        switch ( open_relay_state ) {
+        case 0:  // enable
+            begin = std::chrono::steady_clock::now();
+            ret   = power_control_udp_socket->SendData( open_relay_json.dump() );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            open_relay_state = 1;
+            break;
+
+        case 1:  // wait for feedback
+            // receive error
+            ret = power_control_udp_socket->ReceiveData_nrt( recv_data_str );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                open_relay_state = 0;
+                return ret;
+            }
+            // receive something
+            if ( !recv_data_str.empty() ) {
+                recv_data_json = json::parse( recv_data_str );
+                receive_state  = recv_data_json.at( "status" );
+                if ( receive_state.compare( "OK" ) ) {
+                    open_relay_state = 0;
+                    std::cout << "MOTOR: " << ip_ << ", OPEN RELAY FAILED! " << std::endl;
+
+                    return FAIL;
+                }
+                open_relay_state = 0;
+
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+            if ( int_ms.count() > 3000 ) {
+                open_relay_state = 0;
+                std::cout << "MOTOR: " << ip_ << ", OPEN RELAY TIMEOUT! " << std::endl;
+
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            open_relay_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+}
+
+int FSA_CONNECT::FSA::CloseRelay() {
+    using namespace FSA_CONNECT::JsonData;
+    using namespace FSA_CONNECT::ResultCode;
+    using namespace FSA_CONNECT::Status;
+
+    std::shared_ptr< Transmit::UDPSocket > power_control_udp_socket;
+    power_control_udp_socket = std::make_shared< Transmit::UDPSocket >( "192.168.137.202", 2333 );
+
+    int         ret;
+    std::string recv_data_str;
+    json        recv_data_json;
+    std::string receive_state;
+    while ( 1 ) {
+        switch ( close_relay_state ) {
+        case 0:  // enable
+            begin = std::chrono::steady_clock::now();
+            ret   = power_control_udp_socket->SendData( close_relay_json.dump() );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET SEND FAILED! ERROR CODE: " << ret << std::endl;
+
+                return ret;
+            }
+            // data send succeed
+            // clock_gettime(CLOCK_MONOTONIC,&start_udp_socket_time);
+            close_relay_state = 1;
+            break;
+
+        case 1:  // wait for feedback
+            // receive error
+            ret = power_control_udp_socket->ReceiveData_nrt( recv_data_str );
+            if ( ret < 0 ) {
+                std::cout << "MOTOR: " << ip_ << ", UDP SOCKET RECEIVE FAILED! ERROR CODE: " << ret << std::endl;
+
+                close_relay_state = 0;
+                return ret;
+            }
+            // receive something
+            if ( !recv_data_str.empty() ) {
+                recv_data_json = json::parse( recv_data_str );
+                receive_state  = recv_data_json.at( "status" );
+                if ( receive_state.compare( "OK" ) ) {
+                    close_relay_state = 0;
+                    std::cout << "MOTOR: " << ip_ << ", CLOSE RELAY FAILED! " << std::endl;
+
+                    return FAIL;
+                }
+                close_relay_state = 0;
+
+                return SUCCESS;
+            }
+
+            // clock_gettime(CLOCK_MONOTONIC,&now_time);
+            end = std::chrono::steady_clock::now();
+            // time out
+            int_ms = chrono::duration_cast< chrono::milliseconds >( end - begin );
+            if ( int_ms.count() > 3000 ) {
+                close_relay_state = 0;
+                std::cout << "MOTOR: " << ip_ << ", CLOSE RELAY TIMEOUT! " << std::endl;
+
+                return TIMEOUT;
+            }
+            break;
+
+        default:
+            close_relay_state = 0;
+            break;
+        };
+    }
+
+    return NOT_EXECUTE;
+}

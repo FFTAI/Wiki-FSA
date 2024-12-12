@@ -197,6 +197,10 @@ public:
 
     int GetVBus( float& VBus );
 
+    int OpenRelay();
+
+    int CloseRelay();
+
     // std::shared_ptr<Transmit::UDPSocket> pt_udp_socket;
     std::string ip_;
 
@@ -225,6 +229,8 @@ private:
     int reboot_state                    = 0;
     int get_abs_pos_state               = 0;
     int get_vbus_state                  = 0;
+    int open_relay_state                = 0;
+    int close_relay_state               = 0;
 
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;

@@ -28,6 +28,8 @@ namespace JsonData {
     extern ordered_json set_abs_zero_json;
     extern ordered_json reboot_json;
     extern ordered_json get_abs_pos_json;
+    extern ordered_json open_relay_json;
+    extern ordered_json close_relay_json;
 
 }  // namespace JsonData
 }  // namespace FSA_CONNECT
