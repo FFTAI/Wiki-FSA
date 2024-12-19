@@ -17,9 +17,9 @@
 * 电流模式关键API
 
 | 接口名称                                             | 描述                     |
-| ---------------------------------------------------- | ------------------------ |
+| :--------------------------------------------------- | :----------------------- |
 | int SetCurrent( const double& cur );                 | 设置电流环目标电流       |
-|                                                      | 设置最大电流             |
+| bool SetControlParamsWithACK();                      | 设置最大电流             |
 | int GetPVC( double& pos, double& vel, double& cur ); | 获取执行器的位置速度电流 |
 
 ### 速度控制模式
@@ -31,11 +31,11 @@
 * 速度模式关键API
 
   | 接口名称                                                    | 描述                      |
-  | ----------------------------------------------------------- | ------------------------- |
+  | :---------------------------------------------------------- | :------------------------ |
   | int SetVelocity( const double& vel, const double& cur_ff ); | 设置目标速度$\dot{q}_d$   |
   | int SetCurrent( const double& cur );                        | 设置电流前馈$I_{q_{set}}$ |
-  |                                                             | 设置最大速度$V_{max}$     |
-  |                                                             | 设置最大电流$I_{q_{max}}$ |
+  | bool SetControlParamsWithACK();                             | 设置最大速度$V_{max}$     |
+  | bool SetControlParamsWithACK();                             | 设置最大电流$I_{q_{max}}$ |
   | int GetPVC( double& pos, double& vel, double& cur );        | 获取执行器的位置速度电流  |
 
 ### 位置控制模式
@@ -45,12 +45,12 @@
 * 位置模式关键API
 
   | 接口名称                                                     | 描述                        |
-  | ------------------------------------------------------------ | --------------------------- |
+  | :----------------------------------------------------------- | :-------------------------- |
   | int SetPosition( const double& pos, const double& vel_ff, const double& cur_ff ); | 设置目标速度$\dot{q}_d$     |
   | int SetVelocity( const double& vel, const double& cur_ff );  | 设置速度前馈$\dot{q}_{set}$ |
   | int SetCurrent( const double& cur );                         | 设置电流前馈$I_{q_{set}}$   |
-  |                                                              | 设置最大速度$V_{max}$       |
-  |                                                              | 设置最大电流$I_{q_{max}}$   |
+  | bool SetControlParamsWithACK();                              | 设置最大速度$V_{max}$       |
+  | bool SetControlParamsWithACK();                              | 设置最大电流$I_{q_{max}}$   |
   | int GetPVC( double& pos, double& vel, double& cur );         | 获取执行器的位置速度电流    |
 
 ### PD控制模式
@@ -59,14 +59,14 @@
 
 * PD模式关键API
 
-  | 接口名称                                             | 描述                      |
-  | ---------------------------------------------------- | ------------------------- |
-  |                                                      | 设置位置指令$q_d$         |
-  |                                                      | 设置速度指令$\dot{q}_{d}$ |
-  |                                                      | 设置力矩指令$\tau_d$      |
-  |                                                      | 设置最大力矩$T_{max}$     |
-  |                                                      |                           |
-  | int GetPVC( double& pos, double& vel, double& cur ); | 获取执行器的位置速度电流  |
+  | 接口名称                                                     | 描述                      |
+  | :----------------------------------------------------------- | :------------------------ |
+  | int SetPosition( const double& pos, const double& vel_ff, const double& cur_ff ); | 设置位置指令$q_d$         |
+  | int SetVelocity( const double& vel, const double& cur_ff );  | 设置速度指令$\dot{q}_{d}$ |
+  | int SetCurrent( const double& cur );                         | 设置力矩指令$\tau_d$      |
+  | bool SetTorqueMaxLimit()                                     | 设置最大力矩$T_{max}$     |
+  |                                                              |                           |
+  | int GetPVC( double& pos, double& vel, double& cur );         | 获取执行器的位置速度电流  |
 
 ### PD & 三环PD 控制参数转换
 
