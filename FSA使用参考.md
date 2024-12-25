@@ -1,12 +1,12 @@
 # FSA 使用参考
 
-[TOC]
-
 ## 上位机介绍
 
 [上位机文档链接](https://alidocs.dingtalk.com/i/nodes/a9E05BDRVQbZgLMvC9ZXxqrgJ63zgkYA?doc_type=wiki_doc)
 
-## 执行器控制模式介绍
+## FSA CPP SDK
+
+> [新版 FSA CPP SDK](https://gitee.com/FourierIntelligence/fsacppsdk.git)
 
 ### 电流控制模式
 
@@ -14,13 +14,13 @@
 
 ![电流模式](./image/FSA-电流控制模式-控制框图.drawio.svg)
 
-* 电流模式关键API
+* 电流模式关键 API
 
-| 接口名称                                             | 描述                     |
-| :--------------------------------------------------- | :----------------------- |
-| int SetCurrent( const double& cur );                 | 设置电流环目标电流       |
-| bool SetControlParamsWithACK();                      | 设置最大电流             |
-| int GetPVC( double& pos, double& vel, double& cur ); | 获取执行器的位置速度电流 |
+| 接口名称                                                 | 描述                      |
+|:-----------------------------------------------------|:------------------------|
+| `int EnableCurControl()`                             | 使能电流模式                  |
+| `int SetCurrent(const double& cur)`                  | 设置电流环目标电流 $I_{q_{set}}$ |
+| `int GetPVCT(double& pos, double& vel, double& cur)` | 获取执行器的位置速度电流力矩          |
 
 ### 速度控制模式
 
@@ -28,213 +28,131 @@
 
 ![速度模式](./image/FSA-速度控制模式-控制框图.drawio.svg)
 
-* 速度模式关键API
+* 速度模式关键 API
 
-  | 接口名称                                                    | 描述                      |
-  | :---------------------------------------------------------- | :------------------------ |
-  | int SetVelocity( const double& vel, const double& cur_ff ); | 设置目标速度$\dot{q}_d$   |
-  | int SetCurrent( const double& cur );                        | 设置电流前馈$I_{q_{set}}$ |
-  | bool SetControlParamsWithACK();                             | 设置最大速度$V_{max}$     |
-  | bool SetControlParamsWithACK();                             | 设置最大电流$I_{q_{max}}$ |
-  | int GetPVC( double& pos, double& vel, double& cur );        | 获取执行器的位置速度电流  |
+| 接口名称                                                       | 描述                                     |
+|:-----------------------------------------------------------|:---------------------------------------|
+| `int EnableVelControl()`                                   | 使能速度模式                                 |
+| `int SetVelocity(const double& vel, const double& cur_ff)` | 设置目标速度 $\dot{q}_d$ 和电流前馈 $I_{q_{set}}$ |
+| `int GetPVCT(double& pos, double& vel, double& cur)`       | 获取执行器的位置速度电流力矩                         |
 
 ### 位置控制模式
 
 ![位置模式](./image/FSA-位置控制模式-控制框图.drawio.svg)
 
-* 位置模式关键API
+* 位置模式关键 API
 
-  | 接口名称                                                     | 描述                        |
-  | :----------------------------------------------------------- | :-------------------------- |
-  | int SetPosition( const double& pos, const double& vel_ff, const double& cur_ff ); | 设置目标速度$\dot{q}_d$     |
-  | int SetVelocity( const double& vel, const double& cur_ff );  | 设置速度前馈$\dot{q}_{set}$ |
-  | int SetCurrent( const double& cur );                         | 设置电流前馈$I_{q_{set}}$   |
-  | bool SetControlParamsWithACK();                              | 设置最大速度$V_{max}$       |
-  | bool SetControlParamsWithACK();                              | 设置最大电流$I_{q_{max}}$   |
-  | int GetPVC( double& pos, double& vel, double& cur );         | 获取执行器的位置速度电流    |
+| 接口名称                                                                             | 描述                                                  |
+|:---------------------------------------------------------------------------------|:----------------------------------------------------|
+| `int EnablePosControl()`                                                         | 使能位置模式                                              |
+| `int SetPosition(const double& pos, const double& vel_ff, const double& cur_ff)` | 设置目标位置 $q_{d}$、速度前馈 $\dot{q}_d$ 和电流前馈 $I_{q_{set}}$ |
+| `int GetPVCT(double& pos, double& vel, double& cur)`                             | 获取执行器的位置速度电流力矩                                      |
 
 ### PD控制模式
 
 ![PD 模式](./image/FSA-PD控制模式-控制框图.drawio.svg)
 
-* PD模式关键API
+* PD 模式关键 API
 
-  | 接口名称                                                     | 描述                      |
-  | :----------------------------------------------------------- | :------------------------ |
-  | int SetPosition( const double& pos, const double& vel_ff, const double& cur_ff ); | 设置位置指令$q_d$         |
-  | int SetVelocity( const double& vel, const double& cur_ff );  | 设置速度指令$\dot{q}_{d}$ |
-  | int SetCurrent( const double& cur );                         | 设置力矩指令$\tau_d$      |
-  | bool SetTorqueMaxLimit()                                     | 设置最大力矩$T_{max}$     |
-  |                                                              |                           |
-  | int GetPVC( double& pos, double& vel, double& cur );         | 获取执行器的位置速度电流  |
+| 接口名称                                                                             | 描述                                                  |
+|:---------------------------------------------------------------------------------|:----------------------------------------------------|
+| `int EnablePDControl()`                                                          | 使能 PD 模式                                            |
+| `int SetPosition(const double& pos, const double& vel_ff, const double& tor_ff)` | 设置目标位置 $q_{d}$、速度前馈 $\dot{q}_d$ 和电流前馈 $I_{q_{set}}$ |
+| `int GetPVCT(double& pos, double& vel, double& cur)`                             | 获取执行器的位置速度电流力矩                                      |
+| `int SetTorqueLimitMax(const double& torque_limit_max )`                         | 设置最大力矩 $\tau_{max}$                                 |
 
-### PD & 三环PD 控制参数转换
+### PD & 三环 PD 控制参数转换
 
-* 伺服 PD 控制（旧 PD 控制器）
+* 串联 PD 控制
 
 $$
 I_{q_{set_{j}}} = i K_{d}^{old} (K_{p}^{old} q_{err} G_{\theta} - \dot{q} G_{\omega})
 $$
 
-* 直接PD控制（新 PD 控制器）
+* 并联 PD 控制
 
 $$
 I_{q_{set_{j}}} = \frac{(K_{p}^{new} q_{err} - K_{d}^{new} \dot{q}) G_{pd}}{K_{t}}
 $$
 
-* 旧参数到新参数
+* 串联参数到并联参数
 
 $$
-K_{p}^{new} = \frac{i K_{t} K_{p}^{old} K_{d}^{old} G_{\theta}}{G_{pd}}
-$$
-
-$$
-K_{d}^{new} = \frac{i K_{t} K_{d}^{old} G_{\omega}}{G_{pd}}
-$$
-
-* 新参数到老参数
-
-$$
-K_{p}^{old} = \frac{K_{p}^{new} G_{\omega}}{K_{d}^{new} G_{\theta}}
+K_{p}^{parallel} = \frac{i K_{t} K_{p}^{series} K_{d}^{series} G_{\theta}}{G_{pd}}
 $$
 
 $$
-K_{d}^{old} = \frac{K_{d}^{new} G_{pd}}{i K_{t} G_{\omega}}
+K_{d}^{parallel} = \frac{i K_{t} K_{d}^{series} G_{\omega}}{G_{pd}}
+$$
+
+* 并联参数到串联参数
+
+$$
+K_{p}^{series} = \frac{K_{p}^{parallel} G_{\omega}}{K_{d}^{parallel} G_{\theta}}
+$$
+
+$$
+K_{d}^{series} = \frac{K_{d}^{parallel} G_{pd}}{i K_{t} G_{\omega}}
 $$
 
 ### 符号表
 
-|      符号       |              值              |       单位       |                     释义                     |
-| :-------------: | :--------------------------: | :--------------: | :------------------------------------------: |
-|     $q_{d}$     |             变量             |    $\rm{deg}$    |                   目标位置                   |
-|       $q$       |             变量             |    $\rm{deg}$    |                   实际位置                   |
-|    $q_{err}$    |             变量             |    $\rm{deg}$    |                   位置误差                   |
-|  $\dot{q_{d}}$  |             变量             |   $\rm{deg/s}$   |                   目标速度                   |
-|    $\dot{q}$    |             变量             |   $\rm{deg/s}$   |                   实际速度                   |
-| $\dot{q}_{err}$ |             变量             |   $\rm{deg/s}$   |                   速度误差                   |
-|  $I_{q_{set}}$  |             变量             |     $\rm{A}$     |               目标 $Q$ 轴电流                |
-|     $I_{q}$     |             变量             |     $\rm{A}$     |               实际 $Q$ 轴电流                |
-|    $\tau_d$     |             变量             | $\rm{N \cdot m}$ |                   目标力矩                   |
-|  $T_{\omega}$   |            $0.2$             |    $\rm{ms}$     |                速度环控制周期                |
-|     $K_{t}$     |   常量（由执行器型号决定）   |        -         |               电流力矩转换系数               |
-|       $i$       |   常量（由执行器型号决定）   |        -         |                    减速比                    |
-|    $N_{pp}$     |   常量（由执行器型号决定）   |        -         |                    极对数                    |
-|  $G_{\theta}$   |             $i$              |        -         |                 位置转换系数                 |
-|  $G_{\omega}$   | $\frac{i \cdot N_{pp}}{360}$ |        -         |                 速度转换系数                 |
-|    $G_{pd}$     |          $0.01745$           |        -         | $\rm{deg/s} \rightarrow \rm{rad/s}$ 转换系数 |
+|       符号        |              值               |        单位        |                    释义                    |
+|:---------------:|:----------------------------:|:----------------:|:----------------------------------------:|
+|     $q_{d}$     |              变量              |    $\rm{deg}$    |                   目标位置                   |
+|       $q$       |              变量              |    $\rm{deg}$    |                   实际位置                   |
+|    $q_{err}$    |              变量              |    $\rm{deg}$    |                   位置误差                   |
+|  $\dot{q_{d}}$  |              变量              |   $\rm{deg/s}$   |                   目标速度                   |
+|    $\dot{q}$    |              变量              |   $\rm{deg/s}$   |                   实际速度                   |
+| $\dot{q}_{err}$ |              变量              |   $\rm{deg/s}$   |                   速度误差                   |
+|  $I_{q_{set}}$  |              变量              |     $\rm{A}$     |                目标 $q$ 轴电流                |
+|     $I_{q}$     |              变量              |     $\rm{A}$     |                实际 $q$ 轴电流                |
+|    $\tau_d$     |              变量              | $\rm{N \cdot m}$ |                   目标力矩                   |
+|  $T_{\omega}$   |            $0.2$             |    $\rm{ms}$     |                 速度环控制周期                  |
+|     $K_{t}$     |         常量（由执行器型号决定）         |        -         |                 电流力矩转换系数                 |
+|       $i$       |         常量（由执行器型号决定）         |        -         |                   减速比                    |
+|    $N_{pp}$     |         常量（由执行器型号决定）         |        -         |                   极对数                    |
+|  $G_{\theta}$   |             $i$              |        -         |                  位置转换系数                  |
+|  $G_{\omega}$   | $\frac{i \cdot N_{pp}}{360}$ |        -         |                  速度转换系数                  |
+|    $G_{pd}$     |      $\frac{\pi}{180}$       |        -         | $\rm{deg/s} \rightarrow \rm{rad/s}$ 转换系数 |
 
 ## 执行器状态监控
 
-列出 CPP API
-
-* 母线电压反馈
-* MOS温度反馈
-* 绕组温度反馈
-* 错误码
-* 执行器驱动版本号
-* 执行器通讯版本号
-* 执行器SDK版本号
+| 功能           | 接口                                                                                       | 描述 |
+|--------------|------------------------------------------------------------------------------------------|----|
+| 母线电压反馈       | `int GetVBus(float& VBus )`                                                              |    |
+| MOS / 绕组温度反馈 | `int FastGetNtcTemperature(float& out_mos_temperature, float& out_armature_temperature)` |    |
+| 错误码反馈        | `int GetPVCTError(FSAConfig::pvct_errcode_t& pvct_errcode)`                              |    |
 
 ## 执行器配置
 
 ### 控制类配置
 
-列出 CPP API or python
+| 功能            | 接口                                                                                                                                 | 描述                                          |
+|---------------|------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|
+| 立即生效 PID 配置   | `int SetPIDParams(FSAPIDParams& pidparams)`                                                                                        | 重启后失效                                       |
+| 立即生效 PD 配置    | `int SetPDParams(FSAPIDParams& pidparams)`                                                                                         | 重启后失效                                       |
+| PD 模式最大力矩配置   | `int SetTorqueLimitMax(const double& torque_limit_max);`                                                                           |                                             |
+| SetPVC 超时保护配置 | `int SetPVCTimeoutProtect(uint32_t count, const set_pvc_timeout_protect_config_t& config, ack_ret_t& set_pvc_timeout_protect_ret)` | 可以配置多长时间内执行器没有收到 `SetPVC` 指令则自动切换到某个控制模式且报错 |
 
-#### PID PD配置 
+## 特殊模式
 
-
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-#### 限幅配置 
-
-三环：电流、转速、加速度；PD：力矩
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-#### PVCT反馈滤波配置
-
-数据反馈接口会经过一个一阶低通滤波器，用户可按需配置低通滤波器的截止频率
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-#### 控制环路分频配置
-
-电流环固定为20KHz，配置基于电流环分频的系数，修改速度环、位置环、PD环的运行频率
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-#### 摩擦补偿
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-摩擦补偿模型如下图所示
+| 模式   | 接口                                                     | 描述                  |
+|------|--------------------------------------------------------|---------------------|
+| 回零模式 | `int SetReturnZeroMode(void)`                          | 使用出轴位置传感器回到设置的零点    |
+| 摩擦补偿 | `int SetFrictionCompFlag(uint8_t friction_comp_flag)`  | 经过摩擦辨识后的执行器可以开启摩擦补偿 |
+| 负载补偿 | `int SetInertiaCompensation(const double& inertia_ff)` | 减小低速时的转速波动          |
 
 ![摩擦补偿](./image/FSA-摩擦补偿-控制框图.drawio.svg)
 
-#### 负载观测器补偿增益配置
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
 ### 其它配置
 
-列出 Python Demo 或者提示使用上位机
+Python 脚本或上位机配置
 
-#### 执行器方向配置
+* 执行器方向配置
+* 执行器校准
+* 执行器设置零位
+* 执行器启用双编配置
+* 网络心跳保护配置
 
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-#### 执行器校准
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-#### 执行器设置零位
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-#### 执行器启用双编配置
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-#### 网络心跳保护配置
-
-| 接口名称 | 描述 |
-| -------- | ---- |
-|          |      |
-|          |      |
-
-
-
-
-
+![其他配置](./image/FSA参数配置.png)
